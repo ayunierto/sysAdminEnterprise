@@ -14,7 +14,7 @@
         "@inertiajs/inertia-vue": "^0.5.4",
         "@tailwindcss/forms": "^0.2.1",
         "@tailwindcss/typography": "^0.3.0",
-        "autoprefixer": "^10.0.2",
+        "autoprefixer": "10.4.5",
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
