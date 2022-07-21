@@ -26,35 +26,41 @@
                 <!-- CONTENIDO MENU VERTICAL -->
                 <v-list nav dense>
 
-                    <v-list-item link>
-                        <v-list-item-icon>
-                            <v-icon>mdi-view-dashboard</v-icon>
-                        </v-list-item-icon>
+                    <inertia-link :href="route('dashboard')">
+                        <v-list-item link>
+                            <v-list-item-icon>
+                                <v-icon>mdi-monitor-multiple</v-icon>
+                            </v-list-item-icon>
 
-                        <v-list-item-content>
-                            <v-list-item-title>DASHBOARD</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>INICIO</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </inertia-link>
 
-                    <v-list-item link>
-                        <v-list-item-icon>
-                            <v-icon>mdi-monitor-multiple</v-icon>
-                        </v-list-item-icon>
+                    <inertia-link :href="route('dashboard')">
+                        <v-list-item link>
+                            <v-list-item-icon>
+                                <v-icon>mdi-cube</v-icon>
+                            </v-list-item-icon>
 
-                        <v-list-item-content>
-                            <v-list-item-title>INICIO</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>PRODUCTOS</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </inertia-link>
 
-                    <v-list-item link>
-                        <v-list-item-icon>
-                            <v-icon>mdi-cube</v-icon>
-                        </v-list-item-icon>
+                    <inertia-link :href="route('categories.index')">
+                        <v-list-item link>
+                            <v-list-item-icon>
+                                <v-icon>mdi-cube</v-icon>
+                            </v-list-item-icon>
 
-                        <v-list-item-content>
-                            <v-list-item-title>PRODUCTOS</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                            <v-list-item-content>
+                                <v-list-item-title>CATEGORIAS</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </inertia-link>
 
                     <v-list-item link>
                         <v-list-item-icon>
