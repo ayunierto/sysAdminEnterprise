@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompanyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::resource('dashboard/categorias', CategoryController::class)->names('categories');
+Route::resource('dashboard/categories', CategoryController::class)->names('categories');
+Route::resource('dashboard/companies', CompanyController::class)->names('companies');
 
 Route::get('/test', function () {
    return Inertia::render('test');
