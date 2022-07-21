@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\User;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\MeasureSeeder;
+use Database\Seeders\PresentationSeeder;
 use Database\Seeders\ProviderSeeder;
 use Illuminate\Database\Seeder;
 
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
             MarkSeeder::class,
             MeasureSeeder::class,
             ProviderSeeder::class,
+            PresentationSeeder::class,
         ]);
     }
 }
