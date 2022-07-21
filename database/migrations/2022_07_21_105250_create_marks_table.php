@@ -15,8 +15,7 @@ class CreateMarksTable extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('companies_id');
-            $table->foreign('companies_id')->references('id')->on('companies');
+            $table->foreingId()->constrained('companies_id')->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('description');
             $table->timestamps();
