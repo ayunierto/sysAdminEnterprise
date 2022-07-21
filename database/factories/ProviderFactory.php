@@ -16,7 +16,7 @@ class ProviderFactory extends Factory
     {
         $companies = Company::count();
         return [
-            'companies_id' => rand(1,20),
+            'companies_id' => rand(1,$companies),
             'name' => $this->faker->sentence(2),
             'document' => 53256985,
             'description' => $this->faker->sentence(5),
