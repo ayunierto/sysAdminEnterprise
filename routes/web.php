@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\MeasureController;
+use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::resource('dashboard/empresas', CompanyController::class)->names('companie
 Route::resource('dashboard/marcas', MarkController::class)->names('marks');
 Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures');
 Route::resource('dashboard/proveedores', ProviderController::class)->names('providers');
+Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations');
 
 Route::get('/test', function () {
    return Inertia::render('test');

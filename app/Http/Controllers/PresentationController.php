@@ -15,7 +15,8 @@ class PresentationController extends Controller
      */
     public function index()
     {
-        //
+        $presentations = Presentation::all();
+        return $presentations;
     }
 
     /**
