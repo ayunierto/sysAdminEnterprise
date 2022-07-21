@@ -73,7 +73,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category::updated($request->validate());
+        $category::update($request->validate());
         return Inertia::render('Categories/Index');
     }
 
