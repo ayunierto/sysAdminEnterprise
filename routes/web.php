@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\MarkController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::resource('dashboard/categories', CategoryController::class)->names('categories');
 Route::resource('dashboard/companies', CompanyController::class)->names('companies');
+Route::resource('dashboard/marks', MarkController::class)->names('marks');
 
 Route::get('/test', function () {
    return Inertia::render('test');
