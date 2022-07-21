@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MarkController;
+use App\Http\Controllers\MeasureController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,9 +32,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::resource('dashboard/categories', CategoryController::class)->names('categories');
-Route::resource('dashboard/companies', CompanyController::class)->names('companies');
-Route::resource('dashboard/marks', MarkController::class)->names('marks');
+Route::resource('dashboard/categorias', CategoryController::class)->names('categories');
+Route::resource('dashboard/empresas', CompanyController::class)->names('companies');
+Route::resource('dashboard/marcas', MarkController::class)->names('marks');
+Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures');
 
 Route::get('/test', function () {
    return Inertia::render('test');

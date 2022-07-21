@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\User;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\MeasureSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CategorySeeder::class,
             MarkSeeder::class,
+            MeasureSeeder::class,
         ]);
     }
 }
