@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             ProviderSeeder::class,
             PresentationSeeder::class,
             BatchSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

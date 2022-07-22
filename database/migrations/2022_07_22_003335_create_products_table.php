@@ -20,14 +20,14 @@ class CreateProductsTable extends Migration
             $table->foreignId('marks_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->ForeignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('batches_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('code');
             $table->bigInteger('bar_code');
             $table->bigInteger('stock');
-            $table->decimal('purchase_price',5,2);
-            $table->decimal('sale_price',5,2);
+            $table->double('purchase_price', 15,8);
+            $table->double('sale_price', 15, 8);
             $table->string('description');
             $table->boolean('state');
             $table->timestamps();
