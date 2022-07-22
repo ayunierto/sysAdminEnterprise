@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\MarkController;
@@ -40,6 +41,7 @@ Route::resource('dashboard/marcas', MarkController::class)->names('marks');
 Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures');
 Route::resource('dashboard/proveedores', ProviderController::class)->names('providers');
 Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations');
+Route::resource('dashboard/lotes', BatchController::class)->names('batches');
 
 Route::get('/test', function () {
    return Inertia::render('test');
