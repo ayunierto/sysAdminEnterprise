@@ -24,7 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('province');
             $table->string('district');
             $table->string('country_code');
-            $table->string('state');
+            $table->boolean('state');
             $table->timestamps();
         });
     }
