@@ -33,7 +33,7 @@ class UpdateCompanyRequest extends FormRequest
             'province' => 'required|string|max:50',
             'district' => 'required|string|max:50',
             'country_code' => 'required|string|max:10',
-            'state' => 'required|string|max:50',
+            'state' => 'required|max:50',
         ];
     }
 }
