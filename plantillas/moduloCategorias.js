@@ -5,6 +5,7 @@ new Vue({
     drawer: true,
     dialog: false,
     dialogDelete: false,
+    search: '',
     headers: [
       {
         text: "#",
@@ -58,36 +59,6 @@ new Vue({
           name: "Frozen Yogurt",
           ruc: 159,
           rubro: 6.0,
-        },
-        {
-          name: "Ice cream sandwich",
-          ruc: 237,
-          rubro: 9.0,
-        },
-        {
-          name: "Eclair",
-          ruc: 262,
-          rubro: 16.0,
-        },
-        {
-          name: "Cupcake",
-          ruc: 305,
-          rubro: 3.7,
-        },
-        {
-          name: "Gingerbread",
-          ruc: 356,
-          rubro: 16.0,
-        },
-        {
-          name: "Jelly bean",
-          ruc: 375,
-          rubro: 0.0,
-        },
-        {
-          name: "Lollipop",
-          ruc: 392,
-          rubro: 0.2,
         },
         {
           name: "Honeycomb",

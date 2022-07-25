@@ -5,7 +5,7 @@ new Vue({
     drawer: true,
     dialog: false,
     dialogDelete: false,
-    search:'',
+    search: '',
     states: [
       { name: "Administrador", abbr: "YT", id: 1 },
       { name: "Gerente", abbr: "GA", id: 2 },
