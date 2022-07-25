@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <!-- memú vertical y horizontal -->
+        <!-- memú vertical y horizontal -->
         <template>
             <!-- Menú vertical -->
             <v-navigation-drawer app v-model="drawer">
@@ -30,14 +31,18 @@
                 <!-- CONTENIDO MENU VERTICAL -->
                 <v-list nav dense>
                     <v-list-item-group color="primary">
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-monitor-multiple</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>INICIO</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                        <inertia-link :href="route('dashboard')">
+                            <v-list-item link>
+                                <v-list-item-icon>
+                                    <v-icon>mdi-monitor-multiple</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title
+                                        >INICIO</v-list-item-title
+                                    >
+                                </v-list-item-content>
+                            </v-list-item>
+                        </inertia-link>
                         <v-list-item link>
                             <v-list-item-icon>
                                 <v-icon>mdi-cart</v-icon>
@@ -66,19 +71,21 @@
                                 </v-list-item-content>
                             </template>
                             <v-list-item-group color="primary">
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small
-                                            >mdi-format-list-bulleted</v-icon
+                                <inertia-link :href="route('dashboard')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small
+                                                >mdi-format-list-bulleted</v-icon
+                                            >
+                                        </v-list-item-icon>
+                                        <v-list-item-title
+                                            ><h5>
+                                                LISTA PRODUCTOS
+                                            </h5></v-list-item-title
                                         >
-                                    </v-list-item-icon>
-                                    <v-list-item-title
-                                        ><h5>
-                                            LISTA PRODUCTOS
-                                        </h5></v-list-item-title
-                                    >
-                                </v-list-item>
+                                    </v-list-item>
+                                </inertia-link>
                                 <v-list-item link>
                                     <v-list-item-icon>
                                         <v-spacer></v-spacer>
@@ -90,15 +97,21 @@
                                         </h5></v-list-item-title
                                     >
                                 </v-list-item>
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-book-variant</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title
-                                        ><h5>CATEGORIAS</h5></v-list-item-title
-                                    >
-                                </v-list-item>
+                                <inertia-link :href="route('categories.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small
+                                                >mdi-book-variant</v-icon
+                                            >
+                                        </v-list-item-icon>
+                                        <v-list-item-title
+                                            ><h5>
+                                                CATEGORIAS
+                                            </h5></v-list-item-title
+                                        >
+                                    </v-list-item>
+                                </inertia-link>
                                 <v-list-item link>
                                     <v-list-item-icon>
                                         <v-spacer></v-spacer>

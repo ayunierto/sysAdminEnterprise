@@ -5205,11 +5205,15 @@ var render = function render() {
     attrs: {
       color: "primary"
     }
+  }, [_c("inertia-link", {
+    attrs: {
+      href: _vm.route("dashboard")
+    }
   }, [_c("v-list-item", {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5233,6 +5237,10 @@ var render = function render() {
     attrs: {
       color: "primary"
     }
+  }, [_c("inertia-link", {
+    attrs: {
+      href: _vm.route("dashboard")
+    }
   }, [_c("v-list-item", {
     attrs: {
       link: ""
@@ -5241,7 +5249,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-format-list-bulleted")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        LISTA PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-format-list-bulleted")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            LISTA PRODUCTOS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5249,7 +5257,11 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cube-send")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        AGREGAR PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-cube-send")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        AGREGAR PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("inertia-link", {
+    attrs: {
+      href: _vm.route("categories.index")
+    }
+  }, [_c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5257,7 +5269,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("CATEGORIAS")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            CATEGORIAS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
