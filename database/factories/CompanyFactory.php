@@ -23,7 +23,7 @@ class CompanyFactory extends Factory
             'province' => $this->faker->country(),
             'district' => $this->faker->country(),
             'country_code' => $this->faker->countryCode(),
-            'state' => $this->faker->country(),
+            'state' => rand(0,1),
         ];
     }
 }

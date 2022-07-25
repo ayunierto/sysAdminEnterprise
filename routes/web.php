@@ -42,7 +42,9 @@ Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->name
 Route::resource('dashboard/proveedores', ProviderController::class)->names('providers');
 Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations');
 Route::resource('dashboard/lotes', BatchController::class)->names('batches');
+Route::resource('dashboard/compañias', CompanyController::class)->names('batches');
 
 Route::get('/test', function () {
    return Inertia::render('test');
  });
+ 
