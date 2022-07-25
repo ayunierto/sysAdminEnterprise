@@ -5,6 +5,7 @@ new Vue({
     drawer: true,
     dialog: false,
     dialogDelete: false,
+    search: '',
     headers: [
       {
         text: "#",

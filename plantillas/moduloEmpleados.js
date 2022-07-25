@@ -15,7 +15,7 @@ new Vue({
     ],
     headers: [
       {
-        text: "Empresas",
+        text: "EMPLEADOS",
         align: "start",
         sortable: false,
         value: "name",
@@ -31,16 +31,16 @@ new Vue({
     editedItem: {
       name: "",
       ruc: 0,
-      rubro: 0,
+      rubro: "",
       telefono: 0,
-      direccion: 0,
+      direccion: "",
     },
     defaultItem: {
       name: "",
       ruc: 0,
-      rubro: 0,
+      rubro: "",
       telefono: 0,
-      direccion: 0,
+      direccion: "",
     },
   }),
 
@@ -68,24 +68,24 @@ new Vue({
       this.desserts = [
         {
           name: "Frozen Yogurt",
-          ruc: 159,
-          rubro: 6.0,
-          telefono: 24,
-          direccion: 4.0,
+          ruc: 15956746982,
+          rubro: "alimetos",
+          telefono: 246178820,
+          direccion: "jr. ",
         },
         {
           name: "Ice cream sandwich",
-          ruc: 237,
-          rubro: 9.0,
-          telefono: 37,
-          direccion: 4.3,
+          ruc: 23776521489,
+          rubro: "alimentos",
+          telefono: 379476318,
+          direccion: "jr. ",
         },
         {
           name: "Eclair",
-          ruc: 262,
-          rubro: 16.0,
-          telefono: 23,
-          direccion: 6.0,
+          ruc: 26284672954,
+          rubro: "Alimentos",
+          telefono: 230217964,
+          direccion: "jr. ",
         },
       ];
     },

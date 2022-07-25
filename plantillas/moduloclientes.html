@@ -44,7 +44,7 @@
                                 <template v-slot:top>
                                     <v-toolbar flat>
                                         <v-toolbar-title
-                                            >Lote Producto</v-toolbar-title
+                                            >Clientes</v-toolbar-title
                                         >
                                         <v-spacer></v-spacer>
                                         <v-dialog
@@ -61,28 +61,28 @@
                                                     v-bind="attrs"
                                                     v-on="on"
                                                 >
-                                                    Lote Producto
+                                                    Clientes
                                                 </v-btn>
                                                 <v-card-title>
                                                     <v-spacer></v-spacer>
                                                     <v-text-field
                                                         v-model="search"
                                                         append-icon="mdi-magnify"
-                                                        label="Buscar Lote"
+                                                        label="Buscar Cliente"
                                                         single-line
                                                         hide-details
                                                     ></v-text-field>
                                                 </v-card-title>
                                             </template>
                                             <v-card>
-                                                <!-- Titulo de modal agreagar Lote Producto -->
+                                                <!-- Titulo de modal agreagar empresas -->
                                                 <v-card-title>
                                                     <span class="text-h5"
                                                         >{{ formTitle }}</span
                                                     >
                                                 </v-card-title>
 
-                                                <!-- contenido de modal agreagar Lote Producto -->
+                                                <!-- contenido de modal agreagar empresas -->
                                                 <v-card-text>
                                                     <v-container>
                                                         <v-row>
@@ -92,53 +92,59 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    label="Código*"
-                                                                    hint="Código de lote"
+                                                                    label="Nombre o Razon Social*"
+                                                                    required
                                                                 ></v-text-field>
                                                             </v-col>
                                                             <v-col
                                                                 cols="12"
-                                                                lg="6"
+                                                                sm="6"
+                                                                md="4"
                                                             >
-                                                                <v-menu
-                                                                    ref="menu1"
-                                                                    v-model="menu1"
-                                                                    :close-on-content-click="false"
-                                                                    transition="scale-transition"
-                                                                    offset-y
-                                                                    max-width="290px"
-                                                                    min-width="auto"
-                                                                >
-                                                                    <template
-                                                                        v-slot:activator="{ on, attrs }"
-                                                                    >
-                                                                        <v-text-field
-                                                                            v-model="dateFormatted"
-                                                                            label="Date"
-                                                                            hint="MM/DD/YYYY format"
-                                                                            persistent-hint
-                                                                            prepend-icon="mdi-calendar"
-                                                                            v-bind="attrs"
-                                                                            @blur="date = parseDate(dateFormatted)"
-                                                                            v-on="on"
-                                                                        ></v-text-field>
-                                                                    </template>
-                                                                    <v-date-picker
-                                                                        v-model="date"
-                                                                        no-title
-                                                                        @input="menu1 = false"
-                                                                    ></v-date-picker>
-                                                                </v-menu>
+                                                                <v-text-field
+                                                                    label="DNI/RUC"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Teléfono*"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Dirección*"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Correo*"
+                                                                    required
+                                                                ></v-text-field>
                                                             </v-col>
                                                         </v-row>
                                                     </v-container>
                                                     <small
-                                                        >*Datos necesarios para
-                                                        notificar productos por
-                                                        vencerse</small
+                                                        >*Datos
+                                                        obligatorios</small
                                                     >
                                                 </v-card-text>
-                                                <!-- Acciones de modal agregar Lote Producto -->
+                                                <!-- Acciones de modal agregar empresas -->
                                                 <v-card-actions>
                                                     <v-spacer></v-spacer>
                                                     <v-btn
@@ -215,6 +221,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-        <script src="moduloLote.js"></script>
+        <script src="moduloclientes.js"></script>
     </body>
 </html>

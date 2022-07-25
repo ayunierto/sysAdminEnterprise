@@ -5,6 +5,7 @@ new Vue({
     drawer: true,
     dialog: false,
     dialogDelete: false,
+    search: '',
     states: [
       { name: "Yogut", abbr: "YT", id: 1 },
       { name: "Galletas", abbr: "GA", id: 2 },

@@ -8,10 +8,10 @@ new Vue({
     search: '',
     headers: [
       {
-        text: "NOMBRE",
+        text: "PRODUCTOS",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "producto",
       },
       { text: "STOCK", value: "stock" },
       { text: "PRECIO", value: "precio" },
@@ -30,14 +30,14 @@ new Vue({
     initialize() {
       this.desserts = [
         {
-          name: "Frozen Yogurt",
+          producto: "Frozen Yogurt",
           stock: 10,
           precio: 6.0,
           marca: "Universal",
           categoria: "General",
         },
         {
-          name: "Ice cream sandwich",
+          producto: "Ice cream sandwich",
           stock: 5,
           precio: 9.0,
           marca: "Universal",

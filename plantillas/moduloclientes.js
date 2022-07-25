@@ -1,31 +1,21 @@
 new Vue({
     el: "#app",
     vuetify: new Vuetify(),
-    data: (vm) => ({
+    data: () => ({
         drawer: true,
         dialog: false,
         dialogDelete: false,
         search: "",
-        // Fecha de formualrio
-        date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-            .toISOString()
-            .substr(0, 10),
-        dateFormatted: vm.formatDate(
-            new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-                .toISOString()
-                .substr(0, 10)
-        ),
-        menu1: false,
-        // Datos de tabla
         headers: [
             {
-                text: "#",
+                text: "clientes",
                 align: "start",
                 sortable: false,
-                value: "ruc",
+                value: "name",
             },
-            { text: "Lote", value: "name" },
-            { text: "Fecha Vencimiento", value: "rubro" },
+            { text: "RUC", value: "ruc" },
+            { text: "Teléfono", value: "telefono" },
+            { text: "Dirección", value: "direccion" },
             { text: "Actions", value: "actions", sortable: false },
         ],
         desserts: [],
@@ -33,29 +23,26 @@ new Vue({
         editedItem: {
             name: "",
             ruc: 0,
-            rubro: 0,
+            telefono: 0,
+            direccion: 0,
         },
         defaultItem: {
             name: "",
             ruc: 0,
-            rubro: 0,
+            telefono: 0,
+            direccion: 0,
         },
     }),
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? "Registar Lote" : "Editar Lote";
-        },
-        computedDateFormatted() {
-            return this.formatDate(this.date);
+            return this.editedIndex === -1
+                ? "Registar Clientes"
+                : "Editar Clientes";
         },
     },
 
     watch: {
-        // fecha
-        date(val) {
-            this.dateFormatted = this.formatDate(this.date);
-        },
         dialog(val) {
             val || this.close();
         },
@@ -69,49 +56,25 @@ new Vue({
     },
 
     methods: {
-        formatDate(date) {
-            if (!date) return null;
-
-            const [year, month, day] = date.split("-");
-            return `${month}/${day}/${year}`;
-        },
-        parseDate(date) {
-            if (!date) return null;
-
-            const [month, day, year] = date.split("/");
-            return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-        },
         initialize() {
             this.desserts = [
                 {
-                    name: "Frozen Yogurt",
-                    ruc: 159,
-                    rubro: 6.0,
+                    name: "Frozen",
+                    ruc: 15938877164,
+                    telefono: 2445220078,
+                    direccion: 4.0,
                 },
                 {
-                    name: "Ice cream sandwich",
-                    ruc: 237,
-                    rubro: 9.0,
+                    name: "Ice",
+                    ruc: 23178476527,
+                    telefono: 3777154860,
+                    direccion: 4.3,
                 },
                 {
                     name: "Eclair",
-                    ruc: 262,
-                    rubro: 16.0,
-                },
-                {
-                    name: "Cupcake",
-                    ruc: 305,
-                    rubro: 3.7,
-                },
-                {
-                    name: "Donut",
-                    ruc: 452,
-                    rubro: 25.0,
-                },
-                {
-                    name: "KitKat",
-                    ruc: 518,
-                    rubro: 26.0,
+                    ruc: 26276522846,
+                    telefono: 234023078,
+                    direccion: 6.0,
                 },
             ];
         },

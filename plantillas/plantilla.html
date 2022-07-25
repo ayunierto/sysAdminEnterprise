@@ -1,58 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
-      rel="stylesheet"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
-    />
-  </head>
-  <body>
-    <div id="app">
-      <!-- App.vue -->
+    <head>
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+    <body>
+        <div id="app">
+            <!-- App.vue -->
 
-      <v-app>
-        <v-navigation-drawer app>
-          <!-- -->
-        </v-navigation-drawer>
+            <v-app>
+                <v-navigation-drawer app>
+                    <!-- -->
+                </v-navigation-drawer>
 
-        <v-app-bar app>
-          <!-- -->
-        </v-app-bar>
+                <v-app-bar app>
+                    <!-- -->
+                </v-app-bar>
 
-        <!-- Sizes your content based upon application components -->
-        <v-main>
-          <!-- Provides the application the proper gutter -->
-          <v-container fluid>
-            <!-- If using vue-router -->
-            <router-view></router-view>
-          </v-container>
-        </v-main>
+                <!-- Sizes your content based upon application components -->
+                <v-main>
+                    <!-- Provides the application the proper gutter -->
+                    <v-container fluid>
+                        <!-- If using vue-router -->
+                        <router-view></router-view>
+                    </v-container>
+                </v-main>
 
-        <v-footer app>
-          <!-- -->
-        </v-footer>
-      </v-app>
-    </div>
+                <v-footer app>
+                    <!-- -->
+                </v-footer>
+            </v-app>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-    <script>
-      new Vue({
-        el: "#app",
-        vuetify: new Vuetify(),
-      });
-    </script>
-  </body>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script>
+            new Vue({
+                el: "#app",
+                vuetify: new Vuetify(),
+            });
+        </script>
+    </body>
 </html>

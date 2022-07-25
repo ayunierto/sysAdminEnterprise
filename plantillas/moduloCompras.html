@@ -43,43 +43,32 @@
                                             <v-card
                                                 class="overflow-hidden"
                                                 color="white"
+                                                elevation-10
+                                                loading
                                             >
-                                                <v-toolbar flat color="white">
-                                                    <v-icon>mdi-office-building</v-icon>
+                                                <v-toolbar flat color="#ECEFF1">
                                                     <v-toolbar-title
                                                         class="font-weight-light"
                                                     >
-                                                        Información General
-                                                        Empresa
+                                                        Nueva Compra
                                                     </v-toolbar-title>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn
-                                                        fab
-                                                        small
-                                                        @click="isEditing = !isEditing"
-                                                    >
-                                                        <v-icon
-                                                            v-if="isEditing"
-                                                        >
-                                                            mdi-close
-                                                        </v-icon>
-                                                        <v-icon v-else>
-                                                            mdi-pencil
-                                                        </v-icon>
-                                                    </v-btn>
                                                 </v-toolbar>
                                                 <v-card-text>
                                                     <v-container>
                                                         <v-row>
                                                             <v-col
                                                                 cols="12"
-                                                                sm="4"
+                                                                sm="6"
                                                                 md="4"
                                                             >
-                                                                <v-text-field
-                                                                    :disabled="!isEditing"
-                                                                    label="Nombre/Razon Social"
-                                                                ></v-text-field>
+                                                                <v-autocomplete
+                                                                    :items="tipoComprobante"
+                                                                    color="primary"
+                                                                    item-text="name"
+                                                                    label="Comprobante"
+                                                                    :loading="isLoading"
+                                                                    placeholder="Seleccione tipo Comprobante"
+                                                                ></v-autocomplete>
                                                             </v-col>
                                                             <v-col
                                                                 cols="12"
@@ -87,9 +76,9 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
-                                                                    label="Ruc"
-                                                                    type="number"
+                                                                    label="Nro Comprobante"
+                                                                    value="C032-007852"
+                                                                    disabled
                                                                 ></v-text-field>
                                                             </v-col>
                                                             <v-col
@@ -97,10 +86,35 @@
                                                                 sm="4"
                                                                 md="4"
                                                             >
-                                                                <v-text-field
-                                                                    :disabled="!isEditing"
-                                                                    label="Teléfono"
-                                                                ></v-text-field>
+                                                                <v-menu
+                                                                    ref="menu1"
+                                                                    v-model="menu1"
+                                                                    :close-on-content-click="false"
+                                                                    transition="scale-transition"
+                                                                    offset-y
+                                                                    max-width="290px"
+                                                                    min-width="auto"
+                                                                >
+                                                                    <template
+                                                                        v-slot:activator="{ on, attrs }"
+                                                                    >
+                                                                        <v-text-field
+                                                                            v-model="dateFormatted"
+                                                                            label="Date"
+                                                                            hint="MM/DD/YYYY format"
+                                                                            persistent-hint
+                                                                            prepend-icon="mdi-calendar"
+                                                                            v-bind="attrs"
+                                                                            @blur="date = parseDate(dateFormatted)"
+                                                                            v-on="on"
+                                                                        ></v-text-field>
+                                                                    </template>
+                                                                    <v-date-picker
+                                                                        v-model="date"
+                                                                        no-title
+                                                                        @input="menu1 = false"
+                                                                    ></v-date-picker>
+                                                                </v-menu>
                                                             </v-col>
                                                             <v-col
                                                                 cols="12"
@@ -108,7 +122,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Dirección"
                                                                 ></v-text-field>
                                                             </v-col>
@@ -118,7 +131,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Correo"
                                                                 ></v-text-field>
                                                             </v-col>
@@ -128,7 +140,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Departamento"
                                                                 ></v-text-field>
                                                             </v-col>
@@ -138,7 +149,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Provincia"
                                                                 ></v-text-field>
                                                             </v-col>
@@ -148,7 +158,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Distrito"
                                                                 ></v-text-field>
                                                             </v-col>
@@ -158,7 +167,6 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Código Pais"
                                                                     type="number"
                                                                 ></v-text-field>
@@ -169,39 +177,8 @@
                                                                 md="4"
                                                             >
                                                                 <v-text-field
-                                                                    :disabled="!isEditing"
                                                                     label="Descripción"
                                                                 ></v-text-field>
-                                                            </v-col>
-                                                            <v-col
-                                                                cols="12"
-                                                                sm="4"
-                                                                md="4"
-                                                            >
-                                                                <v-file-input
-                                                                    :disabled="!isEditing"
-                                                                    :rules="rules"
-                                                                    accept="image/png, image/jpeg, image/bmp"
-                                                                    placeholder="Cargar logo"
-                                                                    prepend-icon="mdi-image"
-                                                                    label="Logo"
-                                                                ></v-file-input>
-                                                            </v-col>
-                                                            <v-col
-                                                                cols="12"
-                                                                sm="4"
-                                                                md="4"
-                                                            >
-                                                                <v-card
-                                                                    max-width="50"
-                                                                    max-height="50"
-                                                                    elevation-11
-                                                                >
-                                                                    <v-img
-                                                                        src="https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2"
-                                                                        alt="Logo"
-                                                                    ></v-img>
-                                                                </v-card>
                                                             </v-col>
                                                         </v-row>
                                                     </v-container>
@@ -210,11 +187,10 @@
                                                 <v-card-actions>
                                                     <v-spacer></v-spacer>
                                                     <v-btn
-                                                        :disabled="!isEditing"
                                                         color="primary"
                                                         @click="save"
                                                     >
-                                                        Guardar
+                                                        Confirmar
                                                     </v-btn>
                                                 </v-card-actions>
                                                 <v-snackbar
@@ -224,7 +200,7 @@
                                                     bottom
                                                     left
                                                 >
-                                                    Perfil Actualizado
+                                                    Compra Realizada
                                                     correctamente
                                                 </v-snackbar>
                                             </v-card>
@@ -244,27 +220,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-        <script>
-            new Vue({
-                el: "#app",
-                vuetify: new Vuetify(),
-                data: () => ({
-                    hasSaved: false,
-                    isEditing: null,
-                    rules: [
-                        (value) =>
-                            !value ||
-                            value.size < 2000000 ||
-                            "El logo no puede exeder los 2 MB!",
-                    ],
-                }),
-                methods: {
-                    save() {
-                        this.isEditing = !this.isEditing;
-                        this.hasSaved = true;
-                    },
-                },
-            });
-        </script>
+        <script src="moduloCompras.js"></script>
     </body>
 </html>
