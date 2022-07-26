@@ -26,7 +26,9 @@
                 <!-- CONTENIDO MENU VERTICAL -->
                 <v-list nav dense>
 
-                    <inertia-link :href="route('dashboard')">
+                <v-list-item-group color="primary">
+
+                    <inertia-link :href="route('dashboard')" >
                         <v-list-item link>
                             <v-list-item-icon>
                                 <v-icon>mdi-monitor-multiple</v-icon>
@@ -38,45 +40,22 @@
                         </v-list-item>
                     </inertia-link>
 
-                    <inertia-link :href="route('dashboard')">
+                    <inertia-link :href="route('companies.index')" >
                         <v-list-item link>
                             <v-list-item-icon>
-                                <v-icon>mdi-cube</v-icon>
+                                <v-icon>mdi-monitor-multiple</v-icon>
                             </v-list-item-icon>
 
                             <v-list-item-content>
-                                <v-list-item-title>PRODUCTOS</v-list-item-title>
+                                <v-list-item-title>EMPRESAS</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
                     </inertia-link>
-
-                    <inertia-link :href="route('categories.index')">
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-cube</v-icon>
-                            </v-list-item-icon>
-
-                            <v-list-item-content>
-                                <v-list-item-title>CATEGORIAS</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </inertia-link>
-
-                    <v-list-item link>
-                        <v-list-item-icon>
-                            <v-icon>mdi-account-star</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>CLIENTES</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
 
                     <v-list-item link>
                         <v-list-item-icon>
                             <v-icon>mdi-cart</v-icon>
                         </v-list-item-icon>
-
                         <v-list-item-content>
                             <v-list-item-title>VENTAS</v-list-item-title>
                         </v-list-item-content>
@@ -86,31 +65,130 @@
                         <v-list-item-icon>
                             <v-icon>mdi-cash-multiple</v-icon>
                         </v-list-item-icon>
-
                         <v-list-item-content>
                             <v-list-item-title>COMPRAS</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
-                    <v-list-item link>
+                    <v-list-group prepend-icon="mdi-cube" color="primary">
+
+                        <template v-slot:activator>
+                            <v-list-item-content>
+                            <v-list-item-title>PRODUCTOS</v-list-item-title>
+                            </v-list-item-content>
+                        </template>
+
+                    <v-list-item-group color="primary">
+
+                        <inertia-link :href="route('products.index')">
+                            <v-list-item link>
+                                <v-list-item-icon>
+                                    <v-spacer></v-spacer>
+                                    <v-icon small>mdi-cash-multiple</v-icon>
+                                </v-list-item-icon>
+
+                                    <v-list-item-title>LISTA PRODUCTOS</v-list-item-title>
+                            </v-list-item>
+                        </inertia-link>
+
+                        <v-list-item link>
+                            <v-list-item-icon>
+                                <v-spacer></v-spacer>
+                                <v-icon small>mdi-cash-multiple</v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-title>AGREGAR PRODUCTOS</v-list-item-title>
+                        </v-list-item>
+
+                        <v-list-item link>
                         <v-list-item-icon>
-                            <v-icon>mdi-wrench</v-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
                         </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>CONFIGURACION</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item link>
+                        <v-list-item-title
+                            >CATEGORIAS</v-list-item-title
+                        >
+                        </v-list-item>
+                        <v-list-item link>
                         <v-list-item-icon>
-                            <v-icon>mdi-account-key</v-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
                         </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>ADMINISTRACION</v-list-item-title>
-                        </v-list-item-content>
+                        <v-list-item-title
+                            >MARCAS</v-list-item-title
+                        >
+                        </v-list-item>
+                        <v-list-item link>
+                        <v-list-item-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title
+                            >PRECIOS DE PRODUCTOS</v-list-item-title
+                        >
+                        </v-list-item>
+                        <v-list-item link>
+                        <v-list-item-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title
+                            >UNIDADES DE MEDIDA</v-list-item-title
+                        >
+                        </v-list-item>
+                        <v-list-item link>
+                        <v-list-item-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title
+                            >PRESENTACIÓN DE PRODUCTOS</v-list-item-title
+                        >
+                        </v-list-item>
+                        <v-list-item link>
+                        <v-list-item-icon>
+                            <v-spacer></v-spacer>
+                            <v-icon small>mdi-cash-multiple</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title
+                            >LOTES DE PRODUCTOS</v-list-item-title
+                        >
+                        </v-list-item>
+                    </v-list-item-group>
+                    </v-list-group>
+                    <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-contacts</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>CLIENTES</v-list-item-title>
+                    </v-list-item-content>
                     </v-list-item>
+                    <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-account-settings</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>EMPLEADOS</v-list-item-title>
+                    </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-account-multiple</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>PROVEEDORES</v-list-item-title>
+                    </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item link>
+                    <v-list-item-icon>
+                        <v-icon>mdi-account-key</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>ADMINISTRACIÓN</v-list-item-title>
+                    </v-list-item-content>
+                    </v-list-item>
+                </v-list-item-group>
                 </v-list>
                 <!-- CONTENIDO MENU VERTICAL END-->
 
@@ -154,6 +232,8 @@
                 <!-- Dashboard contenido -->
                 <slot></slot>
             </v-container>
+
+            <pre>{{ $page }}</pre>
         </v-main>
         <!-- Dashboard end-->
 

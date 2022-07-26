@@ -44,6 +44,7 @@ class ProductFactory extends Factory
             'sale_price' => rand(1,100),
             'description' =>$this->faker->sentence(6),
             'state' => rand(0,1),
+            'expiration_date' => now(),
         ];
     }
 }

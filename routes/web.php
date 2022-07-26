@@ -7,6 +7,7 @@ use App\Http\Controllers\MarkController;
 use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,8 +44,5 @@ Route::resource('dashboard/proveedores', ProviderController::class)->names('prov
 Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations');
 Route::resource('dashboard/lotes', BatchController::class)->names('batches');
 Route::resource('dashboard/compañias', CompanyController::class)->names('batches');
-
-Route::get('/test', function () {
-   return Inertia::render('test');
- });
+Route::resource('dashboard/productos', ProductController::class)->names('products');
  
