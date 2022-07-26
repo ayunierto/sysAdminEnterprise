@@ -198,7 +198,9 @@
             <v-app-bar app color="white">
                 <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
 
-                <v-toolbar-title>INICIO</v-toolbar-title>
+                <v-toolbar-title>
+                    <!-- INICIO -->
+                </v-toolbar-title>
 
                 <v-spacer></v-spacer>
                 <v-list-item-avatar>
