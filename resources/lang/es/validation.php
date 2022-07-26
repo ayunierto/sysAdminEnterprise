@@ -154,7 +154,9 @@ return [
         'provider' => 'proveedor',
         'presentation' => 'presentación',
         'batch' => 'lote',
-        'code' => 'código'
+        'code' => 'código',
+        'name' => 'nombre',
+        'description' => 'descripción',
     ],
 
 ];
