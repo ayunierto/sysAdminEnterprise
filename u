@@ -1,0 +1,38 @@
+[33mb2ea4da[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m crud of categories finished
+[33m5808129[m adding store and destroy to categories crud
+[33m6f80a98[m adding translations of attributes
+[33m1f430aa[m delelte string INICIO
+[33mfd8bbbd[m adding messages flash
+[33m55fbfd1[m working products crud
+[33m5e9d5de[m adding translation
+[33mf10d091[m adding progress bar
+[33m35ae3c8[m Merge pull request #1 from ayunierto/colaborador
+[33m3d3e0c9[m adding app.js to gitignore
+[33m37d620c[m[33m ([m[1;31morigin/colaborador[m[33m)[m agregando ruta para las empresas y otros
+[33m9b3c5dd[m adding user ronal
+[33me0f09af[m cambio de campo state tabla companies
+[33m61116e1[m finish crud products
+[33m2607adc[m product table created
+[33m34df1d8[m adding batches crud
+[33m5b7524f[m test presentations
+[33m3b927c7[m adding presentations crud
+[33m3c21569[m code optimizations
+[33m2c25f0a[m adding providers crud
+[33mba9f219[m adding measures crud
+[33m3cb2527[m code optimizations
+[33m2066a65[m code optimizations
+[33m2de4aef[m adding more test data to the company table
+[33me457181[m correcting test data files categories
+[33m21b6fee[m add foreign key to categories table
+[33m6ba9a69[m sorting tables companies and categories
+[33ma7e92bd[m adding marks crud
+[33m2ddcdee[m adding categories.index views
+[33ma293732[m adding companies crud
+[33ma8ef3c8[m error repair
+[33mfabc573[m base template creation
+[33m36375e1[m adding some files
+[33mf883eb9[m crud categories added
+[33maf4600e[m init2
+[33m35f029a[m fixing webpack warning
+[33me229f92[m adding jetstream2.1 and vuetify
+[33mb240540[m init
