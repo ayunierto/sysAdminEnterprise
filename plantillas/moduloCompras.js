@@ -4,10 +4,10 @@ new Vue({
     data: () => ({
         hasSaved: false,
         isEditing: null,
-        // Fecha de formualrio
-        menu1: false,
         dialog: false,
         dialogDelete: false,
+        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu2: false,
         tipoComprobante: [
             { name: "Ticket", abbr: "YT", id: 1 },
             { name: "Boleta", abbr: "GA", id: 2 },

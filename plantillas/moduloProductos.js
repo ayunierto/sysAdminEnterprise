@@ -5,7 +5,8 @@ new Vue({
     drawer: true,
     dialog: false,
     search: '',
-
+    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu2: false,
     // Datos modal categoria
     categoria: [
       { name: "Categoria 1", abbr: "YT", id: 1 },
