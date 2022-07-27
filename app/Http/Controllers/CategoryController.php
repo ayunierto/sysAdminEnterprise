@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Company;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
@@ -54,7 +55,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description,
         ]);
-        return Inertia::render('Categories/Index');
+        return Redirect::route('categories.index')->with('message', 'Categoría agregada');
     }
 
     /**
@@ -76,7 +77,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Categories/Edit', compact('category'));
+        // return Inertia::render('Categories/Edit', compact('category'));
     }
 
     /**
@@ -86,10 +87,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        // $category::update($request->validate());
-        return Redirect::route('users.index');
+        $category = Category::find($id);
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return Redirect::route('categories.index')->with('message', 'Categoría actualizada');
+
+
     }
 
     /**
@@ -100,14 +108,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        // $flight = Flight::find(1);
- 
-        // $flight->delete();
-
-        // return $id;
         $category = Category::find($id);
         $category->delete();
-        return Redirect::route('categories.index')->with('message', 'Categoría Eliminada');
+        return Redirect::route('categories.index')->with('message', 'Categoría eliminada');
 
     }
 }

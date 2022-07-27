@@ -24,20 +24,10 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
+            'company' => 'required',
             'name' => 'required|string|max:25',
-            'description' => 'string|nullable|max:250'
-
+            'description' => 'required|string|max:250'
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'name.required'=> 'El campo nombre es requerido',
-            'name.string'=> 'El campo nombre solo debe contener letras.',
-            'name.max'=> 'El campo nombre solo permite máximo 50 caracteres',
-            'description.required'=> 'El campo descripción es requerido',
-            'description.max'=> 'El campo descripción solo permite máximo 250 caracteres',
-        ];
-    }
 }

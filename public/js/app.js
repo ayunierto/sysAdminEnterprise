@@ -3404,7 +3404,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['categories', 'companies'],
+  props: ['categories', 'companies', 'datos'],
   components: {
     AdminLayout: _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3427,15 +3427,26 @@ __webpack_require__.r(__webpack_exports__);
       editedIndex: -1,
       editedItem: {
         company: '',
+        companies_id: '',
         name: '',
         description: ''
       },
       defaultItem: {
         company: '',
+        companies_id: '',
         name: '',
         description: ''
       },
-      itemToDelete: 0
+      // este es el id del objeto que se va a eliminar
+      itemToDelete: 0,
+      itemToUpdate: {
+        id: 0,
+        companies_id: 0,
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      }
     };
   },
   computed: {
@@ -3454,6 +3465,15 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.initialize();
   },
+  // Para que agregue en el data table despues de saber que no hay errores en 
+  // en el formulario de crear
+  updated: function updated() {
+    if (Object.values(this.$page.props.errors).length == 0) {
+      this.initialize();
+    } else {
+      console.log('Hay ' + Object.values(this.$page.props.errors).length + ' errores');
+    }
+  },
   methods: {
     initialize: function initialize() {
       this.desserts = this.categories;
@@ -3466,14 +3486,17 @@ __webpack_require__.r(__webpack_exports__);
     deleteItem: function deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true;
-      console.log('deleteItem', item.id);
+      this.dialogDelete = true; // ***************************************
+      // agregar el id del objeto a itemToDelete para luego enviarlo en el
+      // formulario
+
       this.itemToDelete = item.id;
     },
     deleteItemConfirm: function deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1);
-      this.closeDelete();
-      console.log('deleteItemConfirm ' + this.itemToDelete);
+      this.closeDelete(); // ***************************************
+      // enviando formulario con el itemToDelete
+
       this.$inertia["delete"](this.route('categories.destroy', this.itemToDelete));
     },
     close: function close() {
@@ -3496,13 +3519,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-        console.log('actualizar');
+        // esto agragaba el item a la tabla con solo javascrip 
+        //pero ya no es necesario porque se renderiza el componente desde
+        // el servidor
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        // Update
+        // ***************************************
+        // enviado formulario de almacenar 
+        this.$inertia.patch((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.update', this.editedItem), this.editedItem);
       } else {
         // Store
-        this.desserts.push(this.editedItem);
-        console.log('almacenar');
-        this.$inertia.post((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.store'), this.editedItem);
+        // ***************************************
+        // enviado formulario de almacenar 
+        this.$inertia.post((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.store'), this.editedItem); // this.desserts.push(this.editedItem)
       }
 
       this.close();
@@ -7064,15 +7093,24 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("admin-layout", [_vm.$page.props.flash.message ? _c("v-alert", {
+  return _c("admin-layout", [_vm._v("\n\n    " + _vm._s(_vm.editedItem) + "\n\n    "), _vm.$page.props.flash.message ? _c("v-alert", {
     attrs: {
       type: "success",
       border: "left",
       dismissible: ""
     }
-  }, [_vm._v("\n        " + _vm._s(_vm.$page.props.flash.message) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm.$page.props.errorBags["default"] ? _c("div", [_vm._l(_vm.$page.props.errorBags["default"].name, function (item) {
+  }, [_vm._v("\n        " + _vm._s(_vm.$page.props.flash.message) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm.$page.props.errorBags["default"] ? _c("div", [_vm._l(_vm.$page.props.errorBags["default"].company, function (item) {
     return _c("v-alert", {
-      key: _vm.$page.props.errorBags["default"].name,
+      key: _vm.$page.props.errorBags["default"].company[0],
+      attrs: {
+        type: "warning",
+        border: "left",
+        dismissible: ""
+      }
+    }, [_vm._v("\n            " + _vm._s(item) + "\n        ")]);
+  }), _vm._v(" "), _vm._l(_vm.$page.props.errorBags["default"].name, function (item) {
+    return _c("v-alert", {
+      key: _vm.$page.props.errorBags["default"].name[0],
       attrs: {
         type: "warning",
         border: "left",
@@ -7081,7 +7119,7 @@ var render = function render() {
     }, [_vm._v("\n            " + _vm._s(item) + "\n        ")]);
   }), _vm._v(" "), _vm._l(_vm.$page.props.errorBags["default"].description, function (item) {
     return _c("v-alert", {
-      key: _vm.$page.props.errorBags["default"].description,
+      key: _vm.$page.props.errorBags["default"].description[0],
       attrs: {
         type: "warning",
         border: "left",
@@ -7146,9 +7184,8 @@ var render = function render() {
             hint: "Selecciones empresa",
             items: _vm.companies,
             "item-text": "name",
-            "item-value": "id",
+            "item-value": "abbr",
             label: "Selecciones empresa",
-            "persistent-hint": "",
             "return-object": "",
             "single-line": ""
           },
@@ -7167,7 +7204,8 @@ var render = function render() {
           }
         }, [_c("v-text-field", {
           attrs: {
-            label: "Nombre"
+            label: "Nombre",
+            required: ""
           },
           model: {
             value: _vm.editedItem.name,
@@ -7204,6 +7242,7 @@ var render = function render() {
         }, [_vm._v("\n                            Cancelar\n                        ")]), _vm._v(" "), _c("v-btn", {
           attrs: {
             color: "blue darken-1",
+            type: "submit",
             text: ""
           },
           on: {

@@ -1,6 +1,8 @@
 <template>
     <admin-layout>
 
+        {{ editedItem }}
+
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -8,16 +10,23 @@
 
         <div v-if="$page.props.errorBags.default">
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.name" :key="$page.props.errorBags.default.name"   
+             v-for="item in $page.props.errorBags.default.company" 
+             :key="$page.props.errorBags.default.company[0]"   
+            >
+                {{ item }}
+            </v-alert>
+             <v-alert type="warning" border="left" dismissible 
+             v-for="item in $page.props.errorBags.default.name" 
+             :key="$page.props.errorBags.default.name[0]"   
             >
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.description" :key="$page.props.errorBags.default.description"   
+             v-for="item in $page.props.errorBags.default.description" 
+             :key="$page.props.errorBags.default.description[0]"   
             >
                 {{ item }}
             </v-alert>
-
         </div>
         
         <v-data-table :headers="headers" :items="desserts" sort-by="calories" 
@@ -46,15 +55,14 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="4" >
+                                    <v-col cols="12" sm="6" md="4">
                                         <v-select
                                         v-model="editedItem.company"
                                         hint="Selecciones empresa"
                                         :items="companies"
                                         item-text="name"
-                                        item-value="id"
+                                        item-value="abbr"
                                         label="Selecciones empresa"
-                                        persistent-hint
                                         return-object
                                         single-line
                                         ></v-select>
@@ -63,6 +71,7 @@
                                         <v-text-field
                                         v-model="editedItem.name"
                                         label="Nombre"
+                                        required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="4" >
@@ -82,7 +91,7 @@
                                 Cancelar
                             </v-btn>
 
-                            <v-btn color="blue darken-1" text @click="save" >
+                            <v-btn color="blue darken-1" type="submit" text @click="save" >
                                 Guardar
                             </v-btn>
                         </v-card-actions>
@@ -131,7 +140,7 @@
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['categories', 'companies'],
+        props: ['categories', 'companies', 'datos'],
         components: {
             AdminLayout,
         },
@@ -151,17 +160,30 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 
                 editedItem: {
                     company: '',
+                    companies_id: '',
                     name: '',
                     description: '',
                 },
 
                 defaultItem: {
                     company: '',
+                    companies_id: '',
                     name: '',
                     description: '',
                 },
-
+                
+                // este es el id del objeto que se va a eliminar
                 itemToDelete: 0,
+
+                
+                itemToUpdate: {
+                    id: 0,
+                    companies_id: 0,
+                    name: '',
+                    description: '',
+                    created_at: '', 
+                    updated_at: '',
+                },
 
             }
         },
@@ -184,7 +206,21 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
         },
 
         created () {
-            this.initialize()
+            this.initialize();
+        },
+
+        
+        // Para que agregue en el data table despues de saber que no hay errores en 
+        // en el formulario de crear
+        updated() {
+            if (Object.values(this.$page.props.errors).length == 0) {
+
+                this.initialize();
+
+            } else {
+                console.log('Hay ' + Object.values(this.$page.props.errors).length + ' errores')
+            }
+
         },
 
         methods: {
@@ -202,14 +238,19 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialogDelete = true
-                console.log('deleteItem', item.id)
+                
+                // ***************************************
+                // agregar el id del objeto a itemToDelete para luego enviarlo en el
+                // formulario
                 this.itemToDelete = item.id
             },
 
             deleteItemConfirm () {
                 this.desserts.splice(this.editedIndex, 1)
                 this.closeDelete()
-                console.log('deleteItemConfirm ' + this.itemToDelete)
+                
+                // ***************************************
+                // enviando formulario con el itemToDelete
                 this.$inertia.delete(this.route('categories.destroy', this.itemToDelete))
             },
 
@@ -232,17 +273,24 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
             save () {
                 if (this.editedIndex > -1) {
 
-                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
-                    console.log('actualizar')
+                        // esto agragaba el item a la tabla con solo javascrip 
+                        //pero ya no es necesario porque se renderiza el componente desde
+                        // el servidor
+                    // Object.assign(this.desserts[this.editedIndex], this.editedItem)
+
+                    // Update
+                    // ***************************************
+                    // enviado formulario de almacenar 
+                    this.$inertia.patch(route('categories.update', this.editedItem ), this.editedItem)
 
                 } else {
 
                     // Store
-                    this.desserts.push(this.editedItem)
-                    console.log('almacenar')
-
+                    // ***************************************
+                    // enviado formulario de almacenar 
                     this.$inertia.post(route('categories.store'), this.editedItem)
 
+                    // this.desserts.push(this.editedItem)
 
                 }
 
