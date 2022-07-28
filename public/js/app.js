@@ -5426,15 +5426,7 @@ var render = function render() {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1)], 1), _vm._v(" "), _c("inertia-link", {
-    attrs: {
-      href: _vm.route("companies.index")
-    }
-  }, [_c("v-list-item", {
-    attrs: {
-      link: ""
-    }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("EMPRESAS")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5444,7 +5436,7 @@ var render = function render() {
     }
   }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("COMPRAS")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
     attrs: {
-      "prepend-icon": "mdi-cube",
+      "prepend-icon": "mdi-spin mdi-cube",
       color: "primary"
     },
     scopedSlots: _vm._u([{
@@ -5460,7 +5452,7 @@ var render = function render() {
     }
   }, [_c("inertia-link", {
     attrs: {
-      href: _vm.route("products.index")
+      href: _vm.route("dashboard")
     }
   }, [_c("v-list-item", {
     attrs: {
@@ -5470,7 +5462,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("LISTA PRODUCTOS")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-format-list-bulleted")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            LISTA PRODUCTOS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5478,7 +5470,11 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("AGREGAR PRODUCTOS")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-cube-send")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        AGREGAR PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("inertia-link", {
+    attrs: {
+      href: _vm.route("categories.index")
+    }
+  }, [_c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5486,7 +5482,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("CATEGORIAS")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            CATEGORIAS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5494,7 +5490,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("MARCAS")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-bookmark-plus")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("MARCAS")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5502,7 +5498,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("PRECIOS DE PRODUCTOS")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-currency-usd")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        PRECIOS DE PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5510,7 +5506,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("UNIDADES DE MEDIDA")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        UNIDADES DE MEDIDA\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5518,7 +5514,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("PRESENTACIÓN DE PRODUCTOS")])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-package-variant-closed")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        PRESENTACIÓN DE PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5526,23 +5522,55 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-title", [_vm._v("LOTES DE PRODUCTOS")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-package-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("LOTES DE PRODUCTOS")])])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-contacts")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("CLIENTES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-group")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("CLIENTES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-settings")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("EMPLEADOS")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-heart-outline")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("EMPLEADOS")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("PROVEEDORES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-hard-hat")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("PROVEEDORES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-key")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("ADMINISTRACIÓN")])], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", {
+  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-spin mdi-cog")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("AJUSTES")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
+    attrs: {
+      "prepend-icon": "mdi-account-tie",
+      color: "primary"
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn() {
+        return [_c("v-list-item-content", [_c("v-list-item-title", [_vm._v("ADMINISTRACION")])], 1)];
+      },
+      proxy: true
+    }])
+  }, [_vm._v(" "), _c("v-list-item-group", {
+    attrs: {
+      color: "primary"
+    }
+  }, [_c("v-list-item", {
+    attrs: {
+      link: ""
+    }
+  }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
+    attrs: {
+      small: ""
+    }
+  }, [_vm._v("mdi-office-building")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("EMPRESAS")])])], 1), _vm._v(" "), _c("v-list-item", {
+    attrs: {
+      link: ""
+    }
+  }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
+    attrs: {
+      small: ""
+    }
+  }, [_vm._v("mdi-account-key")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("ACCESOS")])])], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", {
     attrs: {
       app: "",
       color: "white"

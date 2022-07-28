@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+    <body
+        background="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+    >
+        <div id="app">
+            <v-app>
+                <template>
+                    <v-container>
+                        <v-layout
+                            align-center
+                            justify-center
+                            row
+                            fill-height
+                            style="height: 100vh"
+                        >
+                            <v-flex xs4 md2>
+                                <v-card elevation="24">
+                                    <v-img
+                                        style="height: 250px"
+                                        src="https://picsum.photos/510/300?random"
+                                        aspect-ratio="1.7"
+                                    ></v-img>
+                                </v-card>
+                            </v-flex>
+                            <v-flex xs6 md3 ma-1>
+                                <v-card
+                                    style="height: 250px"
+                                    elevation="24"
+                                    color="#ECEFF1"
+                                >
+                                    <v-form>
+                                        <v-container>
+                                            <v-text-field
+                                                label="Usuario"
+                                                required
+                                            ></v-text-field>
+
+                                            <v-text-field
+                                                v-model="password"
+                                                label="Contraseña"
+                                                :type="show1 ? 'text' : 'password'"
+                                                counter
+                                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                                @click:append="show1 = !show1"
+                                                required
+                                            ></v-text-field>
+                                            <div class="text-center">
+                                                <v-hover>
+                                                    <v-btn
+                                                        color="primary"
+                                                        elevation="10"
+                                                    >
+                                                        Iniciar
+                                                    </v-btn>
+                                                </v-hover>
+                                            </div>
+                                        </v-container>
+                                    </v-form>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </template>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script>
+            new Vue({
+                el: "#app",
+                vuetify: new Vuetify(),
+                data() {
+                    return {
+                        show1: false,
+                        password: "",
+                    };
+                },
+                methods: {},
+            });
+        </script>
+    </body>
+</html>
