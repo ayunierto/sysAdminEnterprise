@@ -19,10 +19,11 @@ class ProviderFactory extends Factory
             'companies_id' => rand(1,$companies),
             'name' => $this->faker->sentence(2),
             'document' => 53256985,
-            'description' => $this->faker->sentence(5),
+            'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
             'city' => $this->faker->country(),
             'state' => $this->faker->country(),
+            'description' => $this->faker->sentence(5),
         ];
     }
 }
