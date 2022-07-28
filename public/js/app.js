@@ -3404,7 +3404,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['categories', 'companies', 'datos'],
+  props: ['categories', 'companies'],
   components: {
     AdminLayout: _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3436,16 +3436,6 @@ __webpack_require__.r(__webpack_exports__);
         companies_id: '',
         name: '',
         description: ''
-      },
-      // este es el id del objeto que se va a eliminar
-      itemToDelete: 0,
-      itemToUpdate: {
-        id: 0,
-        companies_id: 0,
-        name: '',
-        description: '',
-        created_at: '',
-        updated_at: ''
       }
     };
   },
@@ -3465,13 +3455,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.initialize();
   },
-  // Para que agregue en el data table despues de saber que no hay errores en 
-  // en el formulario de crear
   updated: function updated() {
+    // Para que agregue en el data table el item despues de saber que no hay errores en 
+    // en el formulario de crear
     if (Object.values(this.$page.props.errors).length == 0) {
       this.initialize();
-    } else {
-      console.log('Hay ' + Object.values(this.$page.props.errors).length + ' errores');
     }
   },
   methods: {
@@ -3486,18 +3474,14 @@ __webpack_require__.r(__webpack_exports__);
     deleteItem: function deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
-      this.dialogDelete = true; // ***************************************
-      // agregar el id del objeto a itemToDelete para luego enviarlo en el
-      // formulario
-
-      this.itemToDelete = item.id;
+      this.dialogDelete = true;
     },
     deleteItemConfirm: function deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1);
       this.closeDelete(); // ***************************************
-      // enviando formulario con el itemToDelete
+      // enviando formulario para eliminar
 
-      this.$inertia["delete"](this.route('categories.destroy', this.itemToDelete));
+      this.$inertia["delete"](this.route('categories.destroy', this.editedItem)); // ***************************************
     },
     close: function close() {
       var _this = this;
@@ -3519,14 +3503,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       if (this.editedIndex > -1) {
-        // esto agragaba el item a la tabla con solo javascrip 
+        // esto agregaba el item a la tabla con solo javascrip 
         //pero ya no es necesario porque se renderiza el componente desde
         // el servidor
         // Object.assign(this.desserts[this.editedIndex], this.editedItem)
         // Update
         // ***************************************
         // enviado formulario de almacenar 
-        this.$inertia.patch((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.update', this.editedItem), this.editedItem);
+        this.$inertia.patch((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.update', this.editedItem), this.editedItem); // ***************************************
       } else {
         // Store
         // ***************************************
@@ -7121,7 +7105,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("admin-layout", [_vm._v("\n\n    " + _vm._s(_vm.editedItem) + "\n\n    "), _vm.$page.props.flash.message ? _c("v-alert", {
+  return _c("admin-layout", [_vm.$page.props.flash.message ? _c("v-alert", {
     attrs: {
       type: "success",
       border: "left",

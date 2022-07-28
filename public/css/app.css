@@ -11,6 +11,9 @@
 * Forged by John Leider
 * Released under the MIT License.
 */
+a {
+  text-decoration: none;
+}
 
 @-webkit-keyframes v-shake{
   59%{

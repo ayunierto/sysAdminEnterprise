@@ -1,8 +1,6 @@
 <template>
     <admin-layout>
 
-        {{ editedItem }}
-
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -131,7 +129,6 @@
 
         </v-data-table>
 
-        <!-- {{ $page.props.categories }} -->
     </admin-layout>
 </template>
 
@@ -140,7 +137,7 @@
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['categories', 'companies', 'datos'],
+        props: ['categories', 'companies'],
         components: {
             AdminLayout,
         },
@@ -172,19 +169,6 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
                     description: '',
                 },
                 
-                // este es el id del objeto que se va a eliminar
-                itemToDelete: 0,
-
-                
-                itemToUpdate: {
-                    id: 0,
-                    companies_id: 0,
-                    name: '',
-                    description: '',
-                    created_at: '', 
-                    updated_at: '',
-                },
-
             }
         },
 
@@ -210,16 +194,17 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
         },
 
         
-        // Para que agregue en el data table despues de saber que no hay errores en 
-        // en el formulario de crear
+        
         updated() {
-            if (Object.values(this.$page.props.errors).length == 0) {
+
+            // Para que agregue en el data table el item despues de saber que no hay errores en 
+            // en el formulario de crear
+            
+            if (Object.values(this.$page.props.errors).length == 0) { 
 
                 this.initialize();
 
-            } else {
-                console.log('Hay ' + Object.values(this.$page.props.errors).length + ' errores')
-            }
+            } 
 
         },
 
@@ -238,11 +223,6 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
                 this.editedIndex = this.desserts.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialogDelete = true
-                
-                // ***************************************
-                // agregar el id del objeto a itemToDelete para luego enviarlo en el
-                // formulario
-                this.itemToDelete = item.id
             },
 
             deleteItemConfirm () {
@@ -250,8 +230,9 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
                 this.closeDelete()
                 
                 // ***************************************
-                // enviando formulario con el itemToDelete
-                this.$inertia.delete(this.route('categories.destroy', this.itemToDelete))
+                // enviando formulario para eliminar
+                this.$inertia.delete(this.route('categories.destroy', this.editedItem))
+                // ***************************************
             },
 
             close () {
@@ -273,15 +254,16 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
             save () {
                 if (this.editedIndex > -1) {
 
-                        // esto agragaba el item a la tabla con solo javascrip 
-                        //pero ya no es necesario porque se renderiza el componente desde
-                        // el servidor
+                    // esto agregaba el item a la tabla con solo javascrip 
+                    //pero ya no es necesario porque se renderiza el componente desde
+                    // el servidor
                     // Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
                     // Update
                     // ***************************************
                     // enviado formulario de almacenar 
                     this.$inertia.patch(route('categories.update', this.editedItem ), this.editedItem)
+                    // ***************************************
 
                 } else {
 

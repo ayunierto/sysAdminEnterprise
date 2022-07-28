@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -33,7 +33,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,7 +43,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created category in storage.
      *
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
      * @return \Illuminate\Http\Response
@@ -59,7 +59,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified category.
      *
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
@@ -70,7 +70,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified category.
      *
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
@@ -81,15 +81,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified category in storage.
      *
      * @param  \App\Http\Requests\UpdateCategoryRequest  $request
-     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::find($id);
+
         $category->update([
             'name' => $request->name,
             'description' => $request->description,
@@ -97,17 +97,17 @@ class CategoryController extends Controller
 
         return Redirect::route('categories.index')->with('message', 'Categoría actualizada');
 
-
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified category from storage.
      *
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
+
         $category = Category::find($id);
         $category->delete();
         return Redirect::route('categories.index')->with('message', 'Categoría eliminada');
