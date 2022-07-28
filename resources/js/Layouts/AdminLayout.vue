@@ -68,6 +68,7 @@
                             </template>
 
                             <v-list-item-group color="primary">
+
                                 <inertia-link :href="route('products.index')">
                                     <v-list-item link>
                                         <v-list-item-icon>
@@ -108,15 +109,18 @@
                                     </v-list-item>
                                 </inertia-link>
 
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-bookmark-plus</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>MARCAS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
+                                <inertia-link :href="route('marks.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-bookmark-plus</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>MARCAS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
+
 
                                 <v-list-item link>
                                     <v-list-item-icon>
@@ -128,15 +132,17 @@
                                         </v-list-item-title>
                                 </v-list-item>
 
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-weight-kilogram</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>UNIDADES DE MEDIDA</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
+                                <inertia-link :href="route('measures.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-weight-kilogram</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>UNIDADES DE MEDIDA</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
 
                                 <v-list-item link>
                                     <v-list-item-icon>
