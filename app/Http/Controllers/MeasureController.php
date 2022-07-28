@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Measure;
 use App\Http\Requests\StoreMeasureRequest;
 use App\Http\Requests\UpdateMeasureRequest;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class MeasureController extends Controller
 {
@@ -15,8 +17,15 @@ class MeasureController extends Controller
      */
     public function index()
     {
-        $measures = Measure::all();
-        return $measures;
+        return Inertia::render('Measures/Index', [
+            'measures' => Measure::all()->map(function ($measure) {
+                return [
+                    'id' => $measure->id,
+                    'code' => $measure->code,
+                    'name' => $measure->name,
+                ];
+            }),
+        ]);
     }
 
     /**
@@ -26,7 +35,7 @@ class MeasureController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Measures/Create');
     }
 
     /**
@@ -37,7 +46,11 @@ class MeasureController extends Controller
      */
     public function store(StoreMeasureRequest $request)
     {
-        //
+        Measure::create([
+            'code' => $request->code,
+            'name' => $request->name,
+        ]);
+        return Redirect::route('measures.index')->with('message', 'Unidad de Medida agregada');
     }
 
     /**
@@ -69,9 +82,14 @@ class MeasureController extends Controller
      * @param  \App\Models\Measure  $measure
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateMeasureRequest $request, Measure $measure)
+    public function update(UpdateMeasureRequest $request, $id)
     {
-        //
+        $measure = Measure::find($id);
+        $measure->update([
+            'code' => $request->code,
+            'name' => $request->name,
+        ]);
+        return Redirect::route('measures.index')->with('message', 'Unidad de Medida actualizada');
     }
 
     /**
@@ -80,8 +98,10 @@ class MeasureController extends Controller
      * @param  \App\Models\Measure  $measure
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Measure $measure)
+    public function destroy($id)
     {
-        //
+        $measure = Measure::find($id);
+        $measure->delete();
+        return Redirect::route('measures.index')->with('message', 'Unidad de Medida eliminada');
     }
 }
