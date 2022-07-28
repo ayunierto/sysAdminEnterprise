@@ -49,7 +49,7 @@
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Proveedor"
+                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Proveedores"
                                     single-line hide-details></v-text-field>
                             </v-card-title>
                         </template>

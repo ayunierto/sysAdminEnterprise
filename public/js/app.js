@@ -9822,7 +9822,7 @@ var render = function render() {
               }, "v-btn", attrs, false), on), [_vm._v("\n                            Nuevo Proveedor\n                        ")]), _vm._v(" "), _c("v-card-title", [_c("v-spacer"), _vm._v(" "), _c("v-text-field", {
                 attrs: {
                   "append-icon": "mdi-magnify",
-                  label: "Buscar Proveedor",
+                  label: "Buscar Proveedores",
                   "single-line": "",
                   "hide-details": ""
                 },
