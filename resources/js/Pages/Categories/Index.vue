@@ -28,10 +28,12 @@
         </div>
         
         <v-data-table :headers="headers" :items="desserts" sort-by="calories" 
-        class="elevation-1">
+        class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Categorías</v-toolbar-title>
+                    <v-toolbar-title>Categorías
+                        
+                    </v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
@@ -43,6 +45,14 @@
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" >
                             Nueva Categoría
                         </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        ></v-text-field>
                     </template>
 
                     <v-card>
@@ -144,7 +154,8 @@
         },
         data () {
             return {
-
+                
+                search: '',
                 dialog: false,
                 dialogDelete: false,
                 headers: [
