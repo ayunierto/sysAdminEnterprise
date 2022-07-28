@@ -8,8 +8,8 @@
                     <v-list-item class="px-2">
                         <v-list-item-avatar>
                             <v-img
-                                src="https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2"
-                            ></v-img>
+                                src="https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2">
+                            </v-img>
                         </v-list-item-avatar>
                         <v-list-item-title class="text-h6">ALPA PERÚ</v-list-item-title>
                     </v-list-item>
@@ -57,9 +57,7 @@
                                 <v-list-item-title>COMPRAS</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-                        <v-list-group
-                            prepend-icon="mdi-spin mdi-cube"
-                            color="primary">
+                        <v-list-group prepend-icon="mdi-spin mdi-cube" color="primary">
 
                             <template v-slot:activator>
                                 <v-list-item-content>
@@ -76,8 +74,8 @@
                                             <v-icon small>mdi-format-list-bulleted</v-icon>
                                         </v-list-item-icon>
 
-                                        <v-list-item-title
-                                            ><h5>
+                                        <v-list-item-title>
+                                            <h5>
                                                 LISTA PRODUCTOS
                                             </h5>
                                         </v-list-item-title>
@@ -90,8 +88,8 @@
                                         <v-icon small>mdi-cube-send</v-icon>
                                     </v-list-item-icon>
 
-                                    <v-list-item-title
-                                        ><h5>
+                                    <v-list-item-title>
+                                        <h5>
                                             AGREGAR PRODUCTOS
                                         </h5>
                                     </v-list-item-title>
@@ -129,20 +127,8 @@
                                     </v-list-item-icon>
                                     <v-list-item-title>
                                         <h5>PRECIOS DE PRODUCTOS</h5>
-                                        </v-list-item-title>
+                                    </v-list-item-title>
                                 </v-list-item>
-
-                                <inertia-link :href="route('measures.index')">
-                                    <v-list-item link>
-                                        <v-list-item-icon>
-                                            <v-spacer></v-spacer>
-                                            <v-icon small>mdi-weight-kilogram</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-title>
-                                            <h5>UNIDADES DE MEDIDA</h5>
-                                        </v-list-item-title>
-                                    </v-list-item>
-                                </inertia-link>
 
                                 <v-list-item link>
                                     <v-list-item-icon>
@@ -186,15 +172,17 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-list-item link>
-                            <v-list-item-icon>
-                                <v-icon>mdi-account-hard-hat</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>PROVEEDORES</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                        
+                        <inertia-link :href="route('providers.index')">
+                            <v-list-item link>
+                                <v-list-item-icon>
+                                    <v-icon>mdi-account-hard-hat</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>PROVEEDORES</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </inertia-link>
+
                         <v-list-item link>
                             <v-list-item-icon>
                                 <v-icon>mdi-spin mdi-cog</v-icon>
@@ -229,10 +217,21 @@
                                         <v-spacer></v-spacer>
                                         <v-icon small>mdi-account-key</v-icon>
                                     </v-list-item-icon>
-                                    <v-list-item-title
-                                        ><h5>ACCESOS</h5>
+                                    <v-list-item-title>
+                                        <h5>ACCESOS</h5>
                                     </v-list-item-title>
                                 </v-list-item>
+                                <inertia-link :href="route('measures.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-weight-kilogram</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>UNIDADES DE MEDIDA</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
 
                             </v-list-item-group>
 
@@ -242,14 +241,12 @@
 
                 </v-list>
             </v-navigation-drawer>
-                <!-- CONTENIDO MENU VERTICAL END-->
+            <!-- CONTENIDO MENU VERTICAL END-->
 
 
             <!-- Menú horizontal -->
             <v-app-bar app color="white">
-                <v-app-bar-nav-icon
-                    @click="drawer = !drawer"
-                ></v-app-bar-nav-icon>
+                <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>
                     <!-- INICIO -->
@@ -258,8 +255,8 @@
                 <v-spacer></v-spacer>
                 <v-list-item-avatar>
                     <v-img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwr_zZjgvmu4BccwDNIHic8K5dyehw7cSYA&usqp=CAU"
-                    ></v-img>
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwr_zZjgvmu4BccwDNIHic8K5dyehw7cSYA&usqp=CAU">
+                    </v-img>
                 </v-list-item-avatar>
                 <v-menu left bottom>
                     <template v-slot:activator="{ on, attrs }">
@@ -268,10 +265,10 @@
                         </v-btn>
                     </template>
                     <v-list>
-                        <v-list-item @click="() => {}">
+                        <v-list-item @click="() => { }">
                             <v-list-item-title>Perfil</v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="() => {}">
+                        <v-list-item @click="() => { }">
                             <v-list-item-title>Cerrar Session</v-list-item-title>
                         </v-list-item>
                     </v-list>

@@ -18,10 +18,11 @@ class CreateProvidersTable extends Migration
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('document');
-            $table->string('description');
+            $table->string('address');
             $table->string('phone');
             $table->string('city');
             $table->string('state');
+            $table->string('description');
             $table->timestamps();
         });
     }

@@ -13,9 +13,10 @@ class Provider extends Model
         'companies_id',
         'name',
         'document',
-        'description',
+        'address',
         'phone',
         'city',
         'state',
+        'description',
     ];
 }
