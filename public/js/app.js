@@ -25,6 +25,18 @@ function e(e){return e&&"object"==typeof e&&"default"in e?e.default:e}var t=e(__
 
 /***/ }),
 
+/***/ "./node_modules/@inertiajs/progress/dist/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@inertiajs/progress/dist/index.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+var n,e=(n=__webpack_require__(/*! nprogress */ "./node_modules/nprogress/nprogress.js"))&&"object"==typeof n&&"default"in n?n.default:n,t=null;function r(n){document.addEventListener("inertia:start",o.bind(null,n)),document.addEventListener("inertia:progress",i),document.addEventListener("inertia:finish",s)}function o(n){t=setTimeout(function(){return e.start()},n)}function i(n){e.isStarted()&&n.detail.progress.percentage&&e.set(Math.max(e.status,n.detail.progress.percentage/100*.9))}function s(n){clearTimeout(t),e.isStarted()&&(n.detail.visit.completed?e.done():n.detail.visit.interrupted?e.set(0):n.detail.visit.cancelled&&(e.done(),e.remove()))}exports.InertiaProgress={init:function(n){var t=void 0===n?{}:n,o=t.delay,i=t.color,s=void 0===i?"#29d":i,a=t.includeCSS,p=void 0===a||a,d=t.showSpinner,l=void 0!==d&&d;r(void 0===o?250:o),e.configure({showSpinner:l}),p&&function(n){var e=document.createElement("style");e.type="text/css",e.textContent="\n    #nprogress {\n      pointer-events: none;\n    }\n\n    #nprogress .bar {\n      background: "+n+";\n\n      position: fixed;\n      z-index: 1031;\n      top: 0;\n      left: 0;\n\n      width: 100%;\n      height: 2px;\n    }\n\n    #nprogress .peg {\n      display: block;\n      position: absolute;\n      right: 0px;\n      width: 100px;\n      height: 100%;\n      box-shadow: 0 0 10px "+n+", 0 0 5px "+n+";\n      opacity: 1.0;\n\n      -webkit-transform: rotate(3deg) translate(0px, -4px);\n          -ms-transform: rotate(3deg) translate(0px, -4px);\n              transform: rotate(3deg) translate(0px, -4px);\n    }\n\n    #nprogress .spinner {\n      display: block;\n      position: fixed;\n      z-index: 1031;\n      top: 15px;\n      right: 15px;\n    }\n\n    #nprogress .spinner-icon {\n      width: 18px;\n      height: 18px;\n      box-sizing: border-box;\n\n      border: solid 2px transparent;\n      border-top-color: "+n+";\n      border-left-color: "+n+";\n      border-radius: 50%;\n\n      -webkit-animation: nprogress-spinner 400ms linear infinite;\n              animation: nprogress-spinner 400ms linear infinite;\n    }\n\n    .nprogress-custom-parent {\n      overflow: hidden;\n      position: relative;\n    }\n\n    .nprogress-custom-parent #nprogress .spinner,\n    .nprogress-custom-parent #nprogress .bar {\n      position: absolute;\n    }\n\n    @-webkit-keyframes nprogress-spinner {\n      0%   { -webkit-transform: rotate(0deg); }\n      100% { -webkit-transform: rotate(360deg); }\n    }\n    @keyframes nprogress-spinner {\n      0%   { transform: rotate(0deg); }\n      100% { transform: rotate(360deg); }\n    }\n  ",document.head.appendChild(e)}(s)}};
+//# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -3388,23 +3400,142 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AdminLayout */ "./resources/js/Layouts/AdminLayout.vue");
+/* harmony import */ var _vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../vendor/tightenco/ziggy/src/js */ "./vendor/tightenco/ziggy/src/js/index.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['categories'],
+  props: ['categories', 'companies', 'datos'],
   components: {
     AdminLayout: _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
+      dialog: false,
+      dialogDelete: false,
       headers: [{
-        text: 'Nombre',
+        text: 'NOMBRE',
         value: 'name'
       }, {
-        text: 'Descripción',
+        text: 'DESCRIPCION',
         value: 'description'
+      }, {
+        text: 'ACCIONES',
+        value: 'actions',
+        sortable: false
       }],
-      desserts: this.categories
+      desserts: [],
+      editedIndex: -1,
+      editedItem: {
+        company: '',
+        companies_id: '',
+        name: '',
+        description: ''
+      },
+      defaultItem: {
+        company: '',
+        companies_id: '',
+        name: '',
+        description: ''
+      },
+      // este es el id del objeto que se va a eliminar
+      itemToDelete: 0,
+      itemToUpdate: {
+        id: 0,
+        companies_id: 0,
+        name: '',
+        description: '',
+        created_at: '',
+        updated_at: ''
+      }
     };
+  },
+  computed: {
+    formTitle: function formTitle() {
+      return this.editedIndex === -1 ? 'Nueva categoría' : 'Editar categoría';
+    }
+  },
+  watch: {
+    dialog: function dialog(val) {
+      val || this.close();
+    },
+    dialogDelete: function dialogDelete(val) {
+      val || this.closeDelete();
+    }
+  },
+  created: function created() {
+    this.initialize();
+  },
+  // Para que agregue en el data table despues de saber que no hay errores en 
+  // en el formulario de crear
+  updated: function updated() {
+    if (Object.values(this.$page.props.errors).length == 0) {
+      this.initialize();
+    } else {
+      console.log('Hay ' + Object.values(this.$page.props.errors).length + ' errores');
+    }
+  },
+  methods: {
+    initialize: function initialize() {
+      this.desserts = this.categories;
+    },
+    editItem: function editItem(item) {
+      this.editedIndex = this.desserts.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+    deleteItem: function deleteItem(item) {
+      this.editedIndex = this.desserts.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true; // ***************************************
+      // agregar el id del objeto a itemToDelete para luego enviarlo en el
+      // formulario
+
+      this.itemToDelete = item.id;
+    },
+    deleteItemConfirm: function deleteItemConfirm() {
+      this.desserts.splice(this.editedIndex, 1);
+      this.closeDelete(); // ***************************************
+      // enviando formulario con el itemToDelete
+
+      this.$inertia["delete"](this.route('categories.destroy', this.itemToDelete));
+    },
+    close: function close() {
+      var _this = this;
+
+      this.dialog = false;
+      this.$nextTick(function () {
+        _this.editedItem = Object.assign({}, _this.defaultItem);
+        _this.editedIndex = -1;
+      });
+    },
+    closeDelete: function closeDelete() {
+      var _this2 = this;
+
+      this.dialogDelete = false;
+      this.$nextTick(function () {
+        _this2.editedItem = Object.assign({}, _this2.defaultItem);
+        _this2.editedIndex = -1;
+      });
+    },
+    save: function save() {
+      if (this.editedIndex > -1) {
+        // esto agragaba el item a la tabla con solo javascrip 
+        //pero ya no es necesario porque se renderiza el componente desde
+        // el servidor
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        // Update
+        // ***************************************
+        // enviado formulario de almacenar 
+        this.$inertia.patch((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.update', this.editedItem), this.editedItem);
+      } else {
+        // Store
+        // ***************************************
+        // enviado formulario de almacenar 
+        this.$inertia.post((0,_vendor_tightenco_ziggy_src_js__WEBPACK_IMPORTED_MODULE_1__["default"])('categories.store'), this.editedItem); // this.desserts.push(this.editedItem)
+      }
+
+      this.close();
+    }
   }
 });
 
@@ -3491,6 +3622,88 @@ __webpack_require__.r(__webpack_exports__);
   props: ['policy'],
   components: {
     JetAuthenticationCardLogo: _Jetstream_AuthenticationCardLogo__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AdminLayout */ "./resources/js/Layouts/AdminLayout.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['companies', 'categories', 'marks', 'measures', 'providers', 'presentations', 'batches'],
+  components: {
+    AdminLayout: _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      form: this.$inertia.form({
+        name: '',
+        code: '',
+        bar_code: '',
+        stock: '',
+        purchase_price: '',
+        sale_price: '',
+        description: '',
+        state: 1,
+        expiration_date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().substr(0, 10),
+        category: '',
+        mark: '',
+        measure: '',
+        provider: '',
+        presentation: '',
+        batch: '',
+        company: ''
+      })
+    };
+  },
+  methods: {
+    submit: function submit() {
+      var _this = this;
+
+      this.form.post(this.route('products.store'), {
+        onFinish: function onFinish() {
+          return _this.form.reset();
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AdminLayout */ "./resources/js/Layouts/AdminLayout.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['products', 'companies', 'categories', 'marks', 'measures', 'providers', 'presentations', 'batches'],
+  components: {
+    AdminLayout: _Layouts_AdminLayout__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      dialog: false
+    };
   }
 });
 
@@ -5368,7 +5581,7 @@ var render = function render() {
         _vm.drawer = !_vm.drawer;
       }
     }
-  }), _vm._v(" "), _c("v-toolbar-title", [_vm._v("INICIO")]), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-list-item-avatar", [_c("v-img", {
+  }), _vm._v(" "), _c("v-toolbar-title"), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-list-item-avatar", [_c("v-img", {
     attrs: {
       src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwr_zZjgvmu4BccwDNIHic8K5dyehw7cSYA&usqp=CAU"
     }
@@ -5397,7 +5610,7 @@ var render = function render() {
     on: {
       click: function click() {}
     }
-  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2)], 1), _vm._v(" "), _c("v-footer", {
+  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2), _vm._v(" "), _c("pre", [_vm._v(_vm._s(_vm.$page))])], 1), _vm._v(" "), _c("v-footer", {
     attrs: {
       app: ""
     }
@@ -6908,24 +7121,233 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("admin-layout", [_c("inertia-link", {
+  return _c("admin-layout", [_vm._v("\n\n    " + _vm._s(_vm.editedItem) + "\n\n    "), _vm.$page.props.flash.message ? _c("v-alert", {
     attrs: {
-      href: _vm.route("categories.create")
+      type: "success",
+      border: "left",
+      dismissible: ""
     }
-  }, [_c("v-btn", {
-    staticClass: "mb-4",
-    attrs: {
-      color: "primary",
-      elevation: "2"
-    }
-  }, [_vm._v("Crear Categoría")])], 1), _vm._v(" "), [_c("v-data-table", {
+  }, [_vm._v("\n        " + _vm._s(_vm.$page.props.flash.message) + "\n    ")]) : _vm._e(), _vm._v(" "), _vm.$page.props.errorBags["default"] ? _c("div", [_vm._l(_vm.$page.props.errorBags["default"].company, function (item) {
+    return _c("v-alert", {
+      key: _vm.$page.props.errorBags["default"].company[0],
+      attrs: {
+        type: "warning",
+        border: "left",
+        dismissible: ""
+      }
+    }, [_vm._v("\n            " + _vm._s(item) + "\n        ")]);
+  }), _vm._v(" "), _vm._l(_vm.$page.props.errorBags["default"].name, function (item) {
+    return _c("v-alert", {
+      key: _vm.$page.props.errorBags["default"].name[0],
+      attrs: {
+        type: "warning",
+        border: "left",
+        dismissible: ""
+      }
+    }, [_vm._v("\n            " + _vm._s(item) + "\n        ")]);
+  }), _vm._v(" "), _vm._l(_vm.$page.props.errorBags["default"].description, function (item) {
+    return _c("v-alert", {
+      key: _vm.$page.props.errorBags["default"].description[0],
+      attrs: {
+        type: "warning",
+        border: "left",
+        dismissible: ""
+      }
+    }, [_vm._v("\n            " + _vm._s(item) + "\n        ")]);
+  })], 2) : _vm._e(), _vm._v(" "), _c("v-data-table", {
     staticClass: "elevation-1",
     attrs: {
       headers: _vm.headers,
       items: _vm.desserts,
-      "items-per-page": 5
-    }
-  })]], 2);
+      "sort-by": "calories"
+    },
+    scopedSlots: _vm._u([{
+      key: "top",
+      fn: function fn() {
+        return [_c("v-toolbar", {
+          attrs: {
+            flat: ""
+          }
+        }, [_c("v-toolbar-title", [_vm._v("Categorías")]), _vm._v(" "), _c("v-divider", {
+          staticClass: "mx-4",
+          attrs: {
+            inset: "",
+            vertical: ""
+          }
+        }), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("v-dialog", {
+          attrs: {
+            "max-width": "600px"
+          },
+          scopedSlots: _vm._u([{
+            key: "activator",
+            fn: function fn(_ref) {
+              var on = _ref.on,
+                  attrs = _ref.attrs;
+              return [_c("v-btn", _vm._g(_vm._b({
+                staticClass: "mb-2",
+                attrs: {
+                  color: "primary",
+                  dark: ""
+                }
+              }, "v-btn", attrs, false), on), [_vm._v("\n                        Nueva Categoría\n                    ")])];
+            }
+          }]),
+          model: {
+            value: _vm.dialog,
+            callback: function callback($$v) {
+              _vm.dialog = $$v;
+            },
+            expression: "dialog"
+          }
+        }, [_vm._v(" "), _c("v-card", [_c("v-card-title", [_c("span", {
+          staticClass: "text-h5"
+        }, [_vm._v(_vm._s(_vm.formTitle))])]), _vm._v(" "), _c("v-card-text", [_c("v-container", [_c("v-row", [_c("v-col", {
+          attrs: {
+            cols: "12",
+            sm: "6",
+            md: "4"
+          }
+        }, [_c("v-select", {
+          attrs: {
+            hint: "Selecciones empresa",
+            items: _vm.companies,
+            "item-text": "name",
+            "item-value": "abbr",
+            label: "Selecciones empresa",
+            "return-object": "",
+            "single-line": ""
+          },
+          model: {
+            value: _vm.editedItem.company,
+            callback: function callback($$v) {
+              _vm.$set(_vm.editedItem, "company", $$v);
+            },
+            expression: "editedItem.company"
+          }
+        })], 1), _vm._v(" "), _c("v-col", {
+          attrs: {
+            cols: "12",
+            sm: "6",
+            md: "4"
+          }
+        }, [_c("v-text-field", {
+          attrs: {
+            label: "Nombre",
+            required: ""
+          },
+          model: {
+            value: _vm.editedItem.name,
+            callback: function callback($$v) {
+              _vm.$set(_vm.editedItem, "name", $$v);
+            },
+            expression: "editedItem.name"
+          }
+        })], 1), _vm._v(" "), _c("v-col", {
+          attrs: {
+            cols: "12",
+            sm: "6",
+            md: "4"
+          }
+        }, [_c("v-text-field", {
+          attrs: {
+            label: "Descripción"
+          },
+          model: {
+            value: _vm.editedItem.description,
+            callback: function callback($$v) {
+              _vm.$set(_vm.editedItem, "description", $$v);
+            },
+            expression: "editedItem.description"
+          }
+        })], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+          attrs: {
+            color: "blue darken-1",
+            text: ""
+          },
+          on: {
+            click: _vm.close
+          }
+        }, [_vm._v("\n                            Cancelar\n                        ")]), _vm._v(" "), _c("v-btn", {
+          attrs: {
+            color: "blue darken-1",
+            type: "submit",
+            text: ""
+          },
+          on: {
+            click: _vm.save
+          }
+        }, [_vm._v("\n                            Guardar\n                        ")])], 1)], 1)], 1), _vm._v(" "), _c("v-dialog", {
+          attrs: {
+            "max-width": "500px"
+          },
+          model: {
+            value: _vm.dialogDelete,
+            callback: function callback($$v) {
+              _vm.dialogDelete = $$v;
+            },
+            expression: "dialogDelete"
+          }
+        }, [_c("v-card", [_c("v-card-title", {
+          staticClass: "text-h5"
+        }, [_vm._v("Está seguro que desea eliminar?")]), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+          attrs: {
+            color: "blue darken-1",
+            text: ""
+          },
+          on: {
+            click: _vm.closeDelete
+          }
+        }, [_vm._v("Cancelar")]), _vm._v(" "), _c("v-btn", {
+          attrs: {
+            color: "blue darken-1",
+            text: ""
+          },
+          on: {
+            click: _vm.deleteItemConfirm
+          }
+        }, [_vm._v("OK")]), _vm._v(" "), _c("v-spacer")], 1)], 1)], 1)], 1)];
+      },
+      proxy: true
+    }, {
+      key: "item.actions",
+      fn: function fn(_ref2) {
+        var item = _ref2.item;
+        return [_c("v-icon", {
+          staticClass: "mr-2",
+          attrs: {
+            small: ""
+          },
+          on: {
+            click: function click($event) {
+              return _vm.editItem(item);
+            }
+          }
+        }, [_vm._v("\n                mdi-pencil\n            ")]), _vm._v(" "), _c("v-icon", {
+          attrs: {
+            small: ""
+          },
+          on: {
+            click: function click($event) {
+              return _vm.deleteItem(item);
+            }
+          }
+        }, [_vm._v("\n                mdi-delete\n            ")])];
+      }
+    }, {
+      key: "no-data",
+      fn: function fn() {
+        return [_c("v-btn", {
+          attrs: {
+            color: "primary"
+          },
+          on: {
+            click: _vm.initialize
+          }
+        }, [_vm._v("\n                Resetear\n            ")])];
+      },
+      proxy: true
+    }])
+  })], 1);
 };
 
 var staticRenderFns = [];
@@ -7037,6 +7459,507 @@ var render = function render() {
       innerHTML: _vm._s(_vm.policy)
     }
   })])])]);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("admin-layout", [_c("v-container", [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.submit();
+      }
+    }
+  }, [_c("v-card", [_c("v-card-title", [_c("span", {
+    staticClass: "text-h5"
+  }, [_vm._v("Agregar producto")])]), _vm._v(" "), _c("v-card-text", [_c("v-container", [_c("v-row", [_c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Nombre",
+      required: ""
+    },
+    model: {
+      value: _vm.form.name,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "name", $$v);
+      },
+      expression: "form.name"
+    }
+  }), _vm._v(" "), _vm.form.errors.name ? _c("div", [_vm._v(_vm._s(_vm.form.errors.name))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Código",
+      required: ""
+    },
+    model: {
+      value: _vm.form.code,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "code", $$v);
+      },
+      expression: "form.code"
+    }
+  }), _vm._v(" "), _vm.form.errors.code ? _c("div", [_vm._v(_vm._s(_vm.form.errors.code))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Código de barra",
+      required: ""
+    },
+    model: {
+      value: _vm.form.bar_code,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "bar_code", $$v);
+      },
+      expression: "form.bar_code"
+    }
+  }), _vm._v(" "), _vm.form.errors.bar_code ? _c("div", [_vm._v(_vm._s(_vm.form.errors.bar_code))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      m: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Stock",
+      required: ""
+    },
+    model: {
+      value: _vm.form.stock,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "stock", $$v);
+      },
+      expression: "form.stock"
+    }
+  }), _vm._v(" "), _vm.form.errors.stock ? _c("div", [_vm._v(_vm._s(_vm.form.errors.stock))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      m: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Precio de venta",
+      required: ""
+    },
+    model: {
+      value: _vm.form.purchase_price,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "purchase_price", $$v);
+      },
+      expression: "form.purchase_price"
+    }
+  }), _vm._v(" "), _vm.form.errors.purchase_price ? _c("div", [_vm._v(_vm._s(_vm.form.errors.purchase_price))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      m: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Precio de compra",
+      required: ""
+    },
+    model: {
+      value: _vm.form.sale_price,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "sale_price", $$v);
+      },
+      expression: "form.sale_price"
+    }
+  }), _vm._v(" "), _vm.form.errors.sale_price ? _c("div", [_vm._v(_vm._s(_vm.form.errors.sale_price))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "Fecha de vencimiento",
+      required: ""
+    },
+    model: {
+      value: _vm.form.expiration_date,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "expiration_date", $$v);
+      },
+      expression: "form.expiration_date"
+    }
+  }), _vm._v(" "), _vm.form.errors.expiration_date ? _c("div", [_vm._v(_vm._s(_vm.form.errors.expiration_date))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      m: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.categories,
+      hint: "Seleccione Categoría",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Categoría",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.category,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "category", $$v);
+      },
+      expression: "form.category"
+    }
+  }), _vm._v(" "), _vm.form.errors.category ? _c("div", [_vm._v(_vm._s(_vm.form.errors.category))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.marks,
+      hint: "Seleccione Marca",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Marca",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.mark,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "mark", $$v);
+      },
+      expression: "form.mark"
+    }
+  }), _vm._v(" "), _vm.form.errors.mark ? _c("div", [_vm._v(_vm._s(_vm.form.errors.mark))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.measures,
+      hint: "Seleccione Medida",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Medida",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.measure,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "measure", $$v);
+      },
+      expression: "form.measure"
+    }
+  }), _vm._v(" "), _vm.form.errors.measure ? _c("div", [_vm._v(_vm._s(_vm.form.errors.measure))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.providers,
+      hint: "Seleccione proveedor",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Proveedor",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.provider,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "provider", $$v);
+      },
+      expression: "form.provider"
+    }
+  }), _vm._v(" "), _vm.form.errors.provider ? _c("div", [_vm._v(_vm._s(_vm.form.errors.provider))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.presentations,
+      hint: "Seleccione presentación",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Presentación",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.presentation,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "presentation", $$v);
+      },
+      expression: "form.presentation"
+    }
+  }), _vm._v(" "), _vm.form.errors.presentation ? _c("div", [_vm._v(_vm._s(_vm.form.errors.presentation))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.batches,
+      hint: "Seleccione Lote",
+      "item-text": "code",
+      "item-value": "id",
+      label: "Lote",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.batch,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "batch", $$v);
+      },
+      expression: "form.batch"
+    }
+  }), _vm._v(" "), _vm.form.errors.batch ? _c("div", [_vm._v(_vm._s(_vm.form.errors.batch))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      sm: "6",
+      md: "4"
+    }
+  }, [_c("v-select", {
+    attrs: {
+      items: _vm.companies,
+      hint: "Seleccione Compañía",
+      "item-text": "name",
+      "item-value": "id",
+      label: "Compañías",
+      "return-object": "",
+      "single-line": "",
+      required: "",
+      "menu-props": {
+        top: true,
+        offsetY: true
+      }
+    },
+    model: {
+      value: _vm.form.company,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "company", $$v);
+      },
+      expression: "form.company"
+    }
+  }), _vm._v(" "), _vm.form.errors.company ? _c("div", [_vm._v(_vm._s(_vm.form.errors.company))]) : _vm._e()], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      m: "12",
+      md: "12"
+    }
+  }, [_c("v-textarea", {
+    attrs: {
+      counter: "",
+      label: "Descripción",
+      value: _vm.form.description,
+      required: ""
+    },
+    model: {
+      value: _vm.form.description,
+      callback: function callback($$v) {
+        _vm.$set(_vm.form, "description", $$v);
+      },
+      expression: "form.description"
+    }
+  })], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-card-actions", [_c("v-spacer"), _vm._v(" "), _c("v-btn", {
+    staticClass: "mb-2",
+    attrs: {
+      color: "primary",
+      dark: "",
+      type: "submit",
+      disabled: _vm.form.processing,
+      loading: _vm.form.processing
+    }
+  }, [_vm._v("\n                        Agregar\n                    ")])], 1)], 1)], 1)])], 1);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("admin-layout", [_c("v-card", {
+    attrs: {
+      elevation: "12"
+    }
+  }, [_c("v-card-title", {
+    attrs: {
+      "primary-title": ""
+    }
+  }, [_c("v-row", [_c("v-col", [_c("h3", {
+    staticClass: "headline mb-0"
+  }, [_vm._v("Listado de Productos")])]), _vm._v(" "), _c("v-col", {
+    staticClass: "text-right"
+  }, [_c("inertia-link", {
+    attrs: {
+      href: _vm.route("products.create")
+    }
+  }, [_c("v-btn", {
+    attrs: {
+      color: "success"
+    }
+  }, [_vm._v("Agregar Producto")])], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-card-text", [_c("v-simple-table", {
+    scopedSlots: _vm._u([{
+      key: "default",
+      fn: function fn() {
+        return [_c("thead", [_c("tr", [_c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            NOMBRE\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            CODIGO\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            STOCK\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            PRECIO VENTA\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            CATEGORIA\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            MEDIDA\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-left"
+        }, [_vm._v("\n                            PROVEEDOR\n                        ")]), _vm._v(" "), _c("th", {
+          staticClass: "text-center"
+        }, [_vm._v("\n                            ACCIONES\n                        ")])])]), _vm._v(" "), _c("tbody", _vm._l(_vm.products, function (item) {
+          return _c("tr", {
+            key: item.name
+          }, [_c("td", [_vm._v(_vm._s(item.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.code))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.stock))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.sale_price))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.category))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.measure))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(item.provider))]), _vm._v(" "), _c("td", [_c("v-row", {
+            attrs: {
+              justify: "center"
+            }
+          }, [_c("v-col", {
+            attrs: {
+              cols: "4"
+            }
+          }, [_c("inertia-link", {
+            attrs: {
+              href: _vm.route("products.show", item.id)
+            }
+          }, [_c("v-btn", {
+            attrs: {
+              icon: "",
+              color: "green"
+            }
+          }, [_c("v-icon", [_vm._v("mdi-eye")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+            attrs: {
+              cols: "4"
+            }
+          }, [_c("inertia-link", {
+            attrs: {
+              href: _vm.route("products.edit", item.id)
+            }
+          }, [_c("v-btn", {
+            attrs: {
+              icon: "",
+              color: "blue"
+            }
+          }, [_c("v-icon", [_vm._v("mdi-pencil")])], 1)], 1)], 1), _vm._v(" "), _c("v-col", {
+            attrs: {
+              cols: "4"
+            }
+          }, [_c("inertia-link", {
+            attrs: {
+              href: _vm.route("products.destroy", item.id)
+            }
+          }, [_c("v-btn", {
+            attrs: {
+              icon: "",
+              color: "red"
+            }
+          }, [_c("v-icon", [_vm._v("mdi-delete")])], 1)], 1)], 1)], 1)], 1)]);
+        }), 0)];
+      },
+      proxy: true
+    }])
+  })], 1)], 1)], 1);
 };
 
 var staticRenderFns = [];
@@ -8234,13 +9157,15 @@ render._withStripped = true;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue */ "./node_modules/@inertiajs/inertia-vue/dist/index.js");
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var _inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Import modules...
+
 
 
 
@@ -8249,19 +9174,20 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Import
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].mixin({
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].mixin({
   methods: {
     route: route
   }
 });
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.plugin);
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(portal_vue__WEBPACK_IMPORTED_MODULE_1__["default"]); //also add this line
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.plugin);
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use(portal_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+_inertiajs_progress__WEBPACK_IMPORTED_MODULE_2__.InertiaProgress.init(); //also add this line
 
-vue__WEBPACK_IMPORTED_MODULE_3__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_4___default()));
+vue__WEBPACK_IMPORTED_MODULE_4__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_5___default()));
 var app = document.getElementById('app');
-new vue__WEBPACK_IMPORTED_MODULE_3__["default"]({
+new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
   //finally add this line 
-  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_4___default())(),
+  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_5___default())(),
   render: function render(h) {
     return h(_inertiajs_inertia_vue__WEBPACK_IMPORTED_MODULE_0__.App, {
       props: {
@@ -8304,6 +9230,628 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./vendor/tightenco/ziggy/src/js/Route.js":
+/*!************************************************!*\
+  !*** ./vendor/tightenco/ziggy/src/js/Route.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Route)
+/* harmony export */ });
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+/**
+ * A Laravel route. This class represents one route and its configuration and metadata.
+ */
+
+var Route = /*#__PURE__*/function () {
+  /**
+   * @param {String} name - Route name.
+   * @param {Object} definition - Route definition.
+   * @param {Object} config - Ziggy configuration.
+   */
+  function Route(name, definition, config) {
+    var _definition$bindings, _definition$wheres;
+
+    _classCallCheck(this, Route);
+
+    this.name = name;
+    this.definition = definition;
+    this.bindings = (_definition$bindings = definition.bindings) !== null && _definition$bindings !== void 0 ? _definition$bindings : {};
+    this.wheres = (_definition$wheres = definition.wheres) !== null && _definition$wheres !== void 0 ? _definition$wheres : {};
+    this.config = config;
+  }
+  /**
+   * Get a 'template' of the complete URL for this route.
+   *
+   * @example
+   * https://{team}.ziggy.dev/user/{user}
+   *
+   * @return {String} Route template.
+   */
+
+
+  _createClass(Route, [{
+    key: "template",
+    get: function get() {
+      // If  we're building just a path there's no origin, otherwise: if this route has a
+      // domain configured we construct the origin with that, if not we use the app URL
+      var origin = !this.config.absolute ? '' : this.definition.domain ? "".concat(this.config.url.match(/^\w+:\/\//)[0]).concat(this.definition.domain).concat(this.config.port ? ":".concat(this.config.port) : '') : this.config.url;
+      return "".concat(origin, "/").concat(this.definition.uri).replace(/\/+$/, '');
+    }
+    /**
+     * Get an array of objects representing the parameters that this route accepts.
+     *
+     * @example
+     * [{ name: 'team', required: true }, { name: 'user', required: false }]
+     *
+     * @return {Array} Parameter segments.
+     */
+
+  }, {
+    key: "parameterSegments",
+    get: function get() {
+      var _this$template$match$, _this$template$match;
+
+      return (_this$template$match$ = (_this$template$match = this.template.match(/{[^}?]+\??}/g)) === null || _this$template$match === void 0 ? void 0 : _this$template$match.map(function (segment) {
+        return {
+          name: segment.replace(/{|\??}/g, ''),
+          required: !/\?}$/.test(segment)
+        };
+      })) !== null && _this$template$match$ !== void 0 ? _this$template$match$ : [];
+    }
+    /**
+     * Get whether this route's template matches the given URL.
+     *
+     * @param {String} url - URL to check.
+     * @return {Object|false} - If this route matches, returns the matched parameters.
+     */
+
+  }, {
+    key: "matchesUrl",
+    value: function matchesUrl(url) {
+      var _this = this;
+
+      if (!this.definition.methods.includes('GET')) return false; // Transform the route's template into a regex that will match a hydrated URL,
+      // by replacing its parameter segments with matchers for parameter values
+
+      var pattern = this.template.replace(/(\/?){([^}?]*)(\??)}/g, function (_, slash, segment, optional) {
+        var _this$wheres$segment;
+
+        var regex = "(?<".concat(segment, ">").concat(((_this$wheres$segment = _this.wheres[segment]) === null || _this$wheres$segment === void 0 ? void 0 : _this$wheres$segment.replace(/(^\^)|(\$$)/g, '')) || '[^/?]+', ")");
+        return optional ? "(".concat(slash).concat(regex, ")?") : "".concat(slash).concat(regex);
+      }).replace(/^\w+:\/\//, '');
+
+      var _url$replace$split = url.replace(/^\w+:\/\//, '').split('?'),
+          _url$replace$split2 = _slicedToArray(_url$replace$split, 2),
+          location = _url$replace$split2[0],
+          query = _url$replace$split2[1];
+
+      var matches = new RegExp("^".concat(pattern, "/?$")).exec(location);
+      return matches ? {
+        params: matches.groups,
+        query: (0,qs__WEBPACK_IMPORTED_MODULE_0__.parse)(query)
+      } : false;
+    }
+    /**
+     * Hydrate and return a complete URL for this route with the given parameters.
+     *
+     * @param {Object} params
+     * @return {String}
+     */
+
+  }, {
+    key: "compile",
+    value: function compile(params) {
+      var _this2 = this;
+
+      var segments = this.parameterSegments;
+      if (!segments.length) return this.template;
+      return this.template.replace(/{([^}?]+)(\??)}/g, function (_, segment, optional) {
+        var _params$segment2, _params$segment3;
+
+        // If the parameter is missing but is not optional, throw an error
+        if (!optional && [null, undefined].includes(params[segment])) {
+          throw new Error("Ziggy error: '".concat(segment, "' parameter is required for route '").concat(_this2.name, "'."));
+        }
+
+        if (segments[segments.length - 1].name === segment && _this2.wheres[segment] === '.*') {
+          var _params$segment;
+
+          return encodeURIComponent((_params$segment = params[segment]) !== null && _params$segment !== void 0 ? _params$segment : '').replace(/%2F/g, '/');
+        }
+
+        if (_this2.wheres[segment] && !new RegExp("^".concat(optional ? "(".concat(_this2.wheres[segment], ")?") : _this2.wheres[segment], "$")).test((_params$segment2 = params[segment]) !== null && _params$segment2 !== void 0 ? _params$segment2 : '')) {
+          throw new Error("Ziggy error: '".concat(segment, "' parameter does not match required format '").concat(_this2.wheres[segment], "' for route '").concat(_this2.name, "'."));
+        }
+
+        return encodeURIComponent((_params$segment3 = params[segment]) !== null && _params$segment3 !== void 0 ? _params$segment3 : '');
+      }).replace(/\/+$/, '');
+    }
+  }]);
+
+  return Route;
+}();
+
+
+
+/***/ }),
+
+/***/ "./vendor/tightenco/ziggy/src/js/Router.js":
+/*!*************************************************!*\
+  !*** ./vendor/tightenco/ziggy/src/js/Router.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Router)
+/* harmony export */ });
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Route */ "./vendor/tightenco/ziggy/src/js/Route.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct.bind(); } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/**
+ * A collection of Laravel routes. This class constitutes Ziggy's main API.
+ */
+
+var Router = /*#__PURE__*/function (_String) {
+  _inherits(Router, _String);
+
+  var _super = _createSuper(Router);
+
+  /**
+   * @param {String} [name] - Route name.
+   * @param {(String|Number|Array|Object)} [params] - Route parameters.
+   * @param {Boolean} [absolute] - Whether to include the URL origin.
+   * @param {Object} [config] - Ziggy configuration.
+   */
+  function Router(name, params) {
+    var _this;
+
+    var absolute = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    var config = arguments.length > 3 ? arguments[3] : undefined;
+
+    _classCallCheck(this, Router);
+
+    _this = _super.call(this);
+    _this._config = config !== null && config !== void 0 ? config : typeof Ziggy !== 'undefined' ? Ziggy : globalThis === null || globalThis === void 0 ? void 0 : globalThis.Ziggy;
+    _this._config = _objectSpread(_objectSpread({}, _this._config), {}, {
+      absolute: absolute
+    });
+
+    if (name) {
+      if (!_this._config.routes[name]) {
+        throw new Error("Ziggy error: route '".concat(name, "' is not in the route list."));
+      }
+
+      _this._route = new _Route__WEBPACK_IMPORTED_MODULE_1__["default"](name, _this._config.routes[name], _this._config);
+      _this._params = _this._parse(params);
+    }
+
+    return _this;
+  }
+  /**
+   * Get the compiled URL string for the current route and parameters.
+   *
+   * @example
+   * // with 'posts.show' route 'posts/{post}'
+   * (new Router('posts.show', 1)).toString(); // 'https://ziggy.dev/posts/1'
+   *
+   * @return {String}
+   */
+
+
+  _createClass(Router, [{
+    key: "toString",
+    value: function toString() {
+      var _this2 = this;
+
+      // Get parameters that don't correspond to any route segments to append them to the query
+      var unhandled = Object.keys(this._params).filter(function (key) {
+        return !_this2._route.parameterSegments.some(function (_ref) {
+          var name = _ref.name;
+          return name === key;
+        });
+      }).filter(function (key) {
+        return key !== '_query';
+      }).reduce(function (result, current) {
+        return _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, current, _this2._params[current]));
+      }, {});
+      return this._route.compile(this._params) + (0,qs__WEBPACK_IMPORTED_MODULE_0__.stringify)(_objectSpread(_objectSpread({}, unhandled), this._params['_query']), {
+        addQueryPrefix: true,
+        arrayFormat: 'indices',
+        encodeValuesOnly: true,
+        skipNulls: true,
+        encoder: function encoder(value, _encoder) {
+          return typeof value === 'boolean' ? Number(value) : _encoder(value);
+        }
+      });
+    }
+    /**
+     * Get the parameters, values, and metadata from the given URL.
+     *
+     * @param {String} [url] - The URL to inspect, defaults to the current window URL.
+     * @return {{ name: string, params: Object, query: Object, route: Route }}
+     */
+
+  }, {
+    key: "_unresolve",
+    value: function _unresolve(url) {
+      var _this3 = this;
+
+      if (!url) {
+        url = this._currentUrl();
+      } else if (this._config.absolute && url.startsWith('/')) {
+        // If we are using absolute URLs and a relative URL
+        // is passed, prefix the host to make it absolute
+        url = this._location().host + url;
+      }
+
+      var matchedParams = {};
+
+      var _ref2 = Object.entries(this._config.routes).find(function (_ref4) {
+        var _ref5 = _slicedToArray(_ref4, 2),
+            name = _ref5[0],
+            route = _ref5[1];
+
+        return matchedParams = new _Route__WEBPACK_IMPORTED_MODULE_1__["default"](name, route, _this3._config).matchesUrl(url);
+      }) || [undefined, undefined],
+          _ref3 = _slicedToArray(_ref2, 2),
+          name = _ref3[0],
+          route = _ref3[1];
+
+      return _objectSpread(_objectSpread({
+        name: name
+      }, matchedParams), {}, {
+        route: route
+      });
+    }
+  }, {
+    key: "_currentUrl",
+    value: function _currentUrl() {
+      var _this$_location = this._location(),
+          host = _this$_location.host,
+          pathname = _this$_location.pathname,
+          search = _this$_location.search;
+
+      return (this._config.absolute ? host + pathname : pathname.replace(this._config.url.replace(/^\w*:\/\/[^/]+/, ''), '').replace(/^\/+/, '/')) + search;
+    }
+    /**
+     * Get the name of the route matching the current window URL, or, given a route name
+     * and parameters, check if the current window URL and parameters match that route.
+     *
+     * @example
+     * // at URL https://ziggy.dev/posts/4 with 'posts.show' route 'posts/{post}'
+     * route().current(); // 'posts.show'
+     * route().current('posts.index'); // false
+     * route().current('posts.show'); // true
+     * route().current('posts.show', { post: 1 }); // false
+     * route().current('posts.show', { post: 4 }); // true
+     *
+     * @param {String} [name] - Route name to check.
+     * @param {(String|Number|Array|Object)} [params] - Route parameters.
+     * @return {(Boolean|String|undefined)}
+     */
+
+  }, {
+    key: "current",
+    value: function current(name, params) {
+      var _this$_unresolve = this._unresolve(),
+          current = _this$_unresolve.name,
+          currentParams = _this$_unresolve.params,
+          query = _this$_unresolve.query,
+          route = _this$_unresolve.route; // If a name wasn't passed, return the name of the current route
+
+
+      if (!name) return current; // Test the passed name against the current route, matching some
+      // basic wildcards, e.g. passing `events.*` matches `events.show`
+
+      var match = new RegExp("^".concat(name.replace(/\./g, '\\.').replace(/\*/g, '.*'), "$")).test(current);
+      if ([null, undefined].includes(params) || !match) return match;
+      var routeObject = new _Route__WEBPACK_IMPORTED_MODULE_1__["default"](current, route, this._config);
+      params = this._parse(params, routeObject);
+
+      var routeParams = _objectSpread(_objectSpread({}, currentParams), query); // If the current window URL has no route parameters, and the passed parameters are empty, return true
+
+
+      if (Object.values(params).every(function (p) {
+        return !p;
+      }) && !Object.values(routeParams).some(function (v) {
+        return v !== undefined;
+      })) return true; // Check that all passed parameters match their values in the current window URL
+      // Use weak equality because all values in the current window URL will be strings
+
+      return Object.entries(params).every(function (_ref6) {
+        var _ref7 = _slicedToArray(_ref6, 2),
+            key = _ref7[0],
+            value = _ref7[1];
+
+        return routeParams[key] == value;
+      });
+    }
+    /**
+     * Get an object representing the current location (by default this will be
+     * the JavaScript `window` global if it's available).
+     *
+     * @return {Object}
+     */
+
+  }, {
+    key: "_location",
+    value: function _location() {
+      var _this$_config$locatio, _this$_config$locatio2, _this$_config$locatio3, _this$_config$locatio4, _this$_config$locatio5, _this$_config$locatio6;
+
+      var _ref8 = typeof window !== 'undefined' ? window.location : {},
+          _ref8$host = _ref8.host,
+          host = _ref8$host === void 0 ? '' : _ref8$host,
+          _ref8$pathname = _ref8.pathname,
+          pathname = _ref8$pathname === void 0 ? '' : _ref8$pathname,
+          _ref8$search = _ref8.search,
+          search = _ref8$search === void 0 ? '' : _ref8$search;
+
+      return {
+        host: (_this$_config$locatio = (_this$_config$locatio2 = this._config.location) === null || _this$_config$locatio2 === void 0 ? void 0 : _this$_config$locatio2.host) !== null && _this$_config$locatio !== void 0 ? _this$_config$locatio : host,
+        pathname: (_this$_config$locatio3 = (_this$_config$locatio4 = this._config.location) === null || _this$_config$locatio4 === void 0 ? void 0 : _this$_config$locatio4.pathname) !== null && _this$_config$locatio3 !== void 0 ? _this$_config$locatio3 : pathname,
+        search: (_this$_config$locatio5 = (_this$_config$locatio6 = this._config.location) === null || _this$_config$locatio6 === void 0 ? void 0 : _this$_config$locatio6.search) !== null && _this$_config$locatio5 !== void 0 ? _this$_config$locatio5 : search
+      };
+    }
+    /**
+     * Get all parameter values from the current window URL.
+     *
+     * @example
+     * // at URL https://tighten.ziggy.dev/posts/4?lang=en with 'posts.show' route 'posts/{post}' and domain '{team}.ziggy.dev'
+     * route().params; // { team: 'tighten', post: 4, lang: 'en' }
+     *
+     * @return {Object}
+     */
+
+  }, {
+    key: "params",
+    get: function get() {
+      var _this$_unresolve2 = this._unresolve(),
+          params = _this$_unresolve2.params,
+          query = _this$_unresolve2.query;
+
+      return _objectSpread(_objectSpread({}, params), query);
+    }
+    /**
+     * Check whether the given route exists.
+     *
+     * @param {String} name
+     * @return {Boolean}
+     */
+
+  }, {
+    key: "has",
+    value: function has(name) {
+      return Object.keys(this._config.routes).includes(name);
+    }
+    /**
+     * Parse Laravel-style route parameters of any type into a normalized object.
+     *
+     * @example
+     * // with route parameter names 'event' and 'venue'
+     * _parse(1); // { event: 1 }
+     * _parse({ event: 2, venue: 3 }); // { event: 2, venue: 3 }
+     * _parse(['Taylor', 'Matt']); // { event: 'Taylor', venue: 'Matt' }
+     * _parse([4, { uuid: 56789, name: 'Grand Canyon' }]); // { event: 4, venue: 56789 }
+     *
+     * @param {(String|Number|Array|Object)} params - Route parameters.
+     * @param {Route} route - Route instance.
+     * @return {Object} Normalized complete route parameters.
+     */
+
+  }, {
+    key: "_parse",
+    value: function _parse() {
+      var _this4 = this;
+
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var route = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._route;
+      // If `params` is a string or integer, wrap it in an array
+      params = ['string', 'number'].includes(_typeof(params)) ? [params] : params; // Separate segments with and without defaults, and fill in the default values
+
+      var segments = route.parameterSegments.filter(function (_ref9) {
+        var name = _ref9.name;
+        return !_this4._config.defaults[name];
+      });
+
+      if (Array.isArray(params)) {
+        // If the parameters are an array they have to be in order, so we can transform them into
+        // an object by keying them with the template segment names in the order they appear
+        params = params.reduce(function (result, current, i) {
+          return segments[i] ? _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, segments[i].name, current)) : _typeof(current) === 'object' ? _objectSpread(_objectSpread({}, result), current) : _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, current, ''));
+        }, {});
+      } else if (segments.length === 1 && !params[segments[0].name] && (params.hasOwnProperty(Object.values(route.bindings)[0]) || params.hasOwnProperty('id'))) {
+        // If there is only one template segment and `params` is an object, that object is
+        // ambiguous—it could contain the parameter key and value, or it could be an object
+        // representing just the value (e.g. a model); we can inspect it to find out, and
+        // if it's just the parameter value, we can wrap it in an object with its key
+        params = _defineProperty({}, segments[0].name, params);
+      }
+
+      return _objectSpread(_objectSpread({}, this._defaults(route)), this._substituteBindings(params, route));
+    }
+    /**
+     * Populate default parameters for the given route.
+     *
+     * @example
+     * // with default parameters { locale: 'en', country: 'US' } and 'posts.show' route '{locale}/posts/{post}'
+     * defaults(...); // { locale: 'en' }
+     *
+     * @param {Route} route
+     * @return {Object} Default route parameters.
+     */
+
+  }, {
+    key: "_defaults",
+    value: function _defaults(route) {
+      var _this5 = this;
+
+      return route.parameterSegments.filter(function (_ref10) {
+        var name = _ref10.name;
+        return _this5._config.defaults[name];
+      }).reduce(function (result, _ref11, i) {
+        var name = _ref11.name;
+        return _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, name, _this5._config.defaults[name]));
+      }, {});
+    }
+    /**
+     * Substitute Laravel route model bindings in the given parameters.
+     *
+     * @example
+     * _substituteBindings({ post: { id: 4, slug: 'hello-world', title: 'Hello, world!' } }, { bindings: { post: 'slug' } }); // { post: 'hello-world' }
+     *
+     * @param {Object} params - Route parameters.
+     * @param {Object} route - Route definition.
+     * @return {Object} Normalized route parameters.
+     */
+
+  }, {
+    key: "_substituteBindings",
+    value: function _substituteBindings(params, _ref12) {
+      var bindings = _ref12.bindings,
+          parameterSegments = _ref12.parameterSegments;
+      return Object.entries(params).reduce(function (result, _ref13) {
+        var _ref14 = _slicedToArray(_ref13, 2),
+            key = _ref14[0],
+            value = _ref14[1];
+
+        // If the value isn't an object, or if the key isn't a named route parameter,
+        // there's nothing to substitute so we return it as-is
+        if (!value || _typeof(value) !== 'object' || Array.isArray(value) || !parameterSegments.some(function (_ref15) {
+          var name = _ref15.name;
+          return name === key;
+        })) {
+          return _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, key, value));
+        }
+
+        if (!value.hasOwnProperty(bindings[key])) {
+          if (value.hasOwnProperty('id')) {
+            // As a fallback, we still accept an 'id' key not explicitly registered as a binding
+            bindings[key] = 'id';
+          } else {
+            throw new Error("Ziggy error: object passed as '".concat(key, "' parameter is missing route model binding key '").concat(bindings[key], "'."));
+          }
+        }
+
+        return _objectSpread(_objectSpread({}, result), {}, _defineProperty({}, key, value[bindings[key]]));
+      }, {});
+    }
+  }, {
+    key: "valueOf",
+    value: function valueOf() {
+      return this.toString();
+    }
+    /**
+     * @deprecated since v1.0, use `has()` instead.
+     */
+
+  }, {
+    key: "check",
+    value: function check(name) {
+      return this.has(name);
+    }
+  }]);
+
+  return Router;
+}( /*#__PURE__*/_wrapNativeSuper(String));
+
+
+
+/***/ }),
+
+/***/ "./vendor/tightenco/ziggy/src/js/index.js":
+/*!************************************************!*\
+  !*** ./vendor/tightenco/ziggy/src/js/index.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ route)
+/* harmony export */ });
+/* harmony import */ var _Router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Router */ "./vendor/tightenco/ziggy/src/js/Router.js");
+
+function route(name, params, absolute, config) {
+  var router = new _Router__WEBPACK_IMPORTED_MODULE_0__["default"](name, params, absolute, config);
+  return name ? router.toString() : router;
+}
 
 /***/ }),
 
@@ -28160,6 +29708,492 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/nprogress/nprogress.js":
+/*!*********************************************!*\
+  !*** ./node_modules/nprogress/nprogress.js ***!
+  \*********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
+ * @license MIT */
+
+;(function(root, factory) {
+
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+		__WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else {}
+
+})(this, function() {
+  var NProgress = {};
+
+  NProgress.version = '0.2.0';
+
+  var Settings = NProgress.settings = {
+    minimum: 0.08,
+    easing: 'ease',
+    positionUsing: '',
+    speed: 200,
+    trickle: true,
+    trickleRate: 0.02,
+    trickleSpeed: 800,
+    showSpinner: true,
+    barSelector: '[role="bar"]',
+    spinnerSelector: '[role="spinner"]',
+    parent: 'body',
+    template: '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+  };
+
+  /**
+   * Updates configuration.
+   *
+   *     NProgress.configure({
+   *       minimum: 0.1
+   *     });
+   */
+  NProgress.configure = function(options) {
+    var key, value;
+    for (key in options) {
+      value = options[key];
+      if (value !== undefined && options.hasOwnProperty(key)) Settings[key] = value;
+    }
+
+    return this;
+  };
+
+  /**
+   * Last number.
+   */
+
+  NProgress.status = null;
+
+  /**
+   * Sets the progress bar status, where `n` is a number from `0.0` to `1.0`.
+   *
+   *     NProgress.set(0.4);
+   *     NProgress.set(1.0);
+   */
+
+  NProgress.set = function(n) {
+    var started = NProgress.isStarted();
+
+    n = clamp(n, Settings.minimum, 1);
+    NProgress.status = (n === 1 ? null : n);
+
+    var progress = NProgress.render(!started),
+        bar      = progress.querySelector(Settings.barSelector),
+        speed    = Settings.speed,
+        ease     = Settings.easing;
+
+    progress.offsetWidth; /* Repaint */
+
+    queue(function(next) {
+      // Set positionUsing if it hasn't already been set
+      if (Settings.positionUsing === '') Settings.positionUsing = NProgress.getPositioningCSS();
+
+      // Add transition
+      css(bar, barPositionCSS(n, speed, ease));
+
+      if (n === 1) {
+        // Fade out
+        css(progress, { 
+          transition: 'none', 
+          opacity: 1 
+        });
+        progress.offsetWidth; /* Repaint */
+
+        setTimeout(function() {
+          css(progress, { 
+            transition: 'all ' + speed + 'ms linear', 
+            opacity: 0 
+          });
+          setTimeout(function() {
+            NProgress.remove();
+            next();
+          }, speed);
+        }, speed);
+      } else {
+        setTimeout(next, speed);
+      }
+    });
+
+    return this;
+  };
+
+  NProgress.isStarted = function() {
+    return typeof NProgress.status === 'number';
+  };
+
+  /**
+   * Shows the progress bar.
+   * This is the same as setting the status to 0%, except that it doesn't go backwards.
+   *
+   *     NProgress.start();
+   *
+   */
+  NProgress.start = function() {
+    if (!NProgress.status) NProgress.set(0);
+
+    var work = function() {
+      setTimeout(function() {
+        if (!NProgress.status) return;
+        NProgress.trickle();
+        work();
+      }, Settings.trickleSpeed);
+    };
+
+    if (Settings.trickle) work();
+
+    return this;
+  };
+
+  /**
+   * Hides the progress bar.
+   * This is the *sort of* the same as setting the status to 100%, with the
+   * difference being `done()` makes some placebo effect of some realistic motion.
+   *
+   *     NProgress.done();
+   *
+   * If `true` is passed, it will show the progress bar even if its hidden.
+   *
+   *     NProgress.done(true);
+   */
+
+  NProgress.done = function(force) {
+    if (!force && !NProgress.status) return this;
+
+    return NProgress.inc(0.3 + 0.5 * Math.random()).set(1);
+  };
+
+  /**
+   * Increments by a random amount.
+   */
+
+  NProgress.inc = function(amount) {
+    var n = NProgress.status;
+
+    if (!n) {
+      return NProgress.start();
+    } else {
+      if (typeof amount !== 'number') {
+        amount = (1 - n) * clamp(Math.random() * n, 0.1, 0.95);
+      }
+
+      n = clamp(n + amount, 0, 0.994);
+      return NProgress.set(n);
+    }
+  };
+
+  NProgress.trickle = function() {
+    return NProgress.inc(Math.random() * Settings.trickleRate);
+  };
+
+  /**
+   * Waits for all supplied jQuery promises and
+   * increases the progress as the promises resolve.
+   *
+   * @param $promise jQUery Promise
+   */
+  (function() {
+    var initial = 0, current = 0;
+
+    NProgress.promise = function($promise) {
+      if (!$promise || $promise.state() === "resolved") {
+        return this;
+      }
+
+      if (current === 0) {
+        NProgress.start();
+      }
+
+      initial++;
+      current++;
+
+      $promise.always(function() {
+        current--;
+        if (current === 0) {
+            initial = 0;
+            NProgress.done();
+        } else {
+            NProgress.set((initial - current) / initial);
+        }
+      });
+
+      return this;
+    };
+
+  })();
+
+  /**
+   * (Internal) renders the progress bar markup based on the `template`
+   * setting.
+   */
+
+  NProgress.render = function(fromStart) {
+    if (NProgress.isRendered()) return document.getElementById('nprogress');
+
+    addClass(document.documentElement, 'nprogress-busy');
+    
+    var progress = document.createElement('div');
+    progress.id = 'nprogress';
+    progress.innerHTML = Settings.template;
+
+    var bar      = progress.querySelector(Settings.barSelector),
+        perc     = fromStart ? '-100' : toBarPerc(NProgress.status || 0),
+        parent   = document.querySelector(Settings.parent),
+        spinner;
+    
+    css(bar, {
+      transition: 'all 0 linear',
+      transform: 'translate3d(' + perc + '%,0,0)'
+    });
+
+    if (!Settings.showSpinner) {
+      spinner = progress.querySelector(Settings.spinnerSelector);
+      spinner && removeElement(spinner);
+    }
+
+    if (parent != document.body) {
+      addClass(parent, 'nprogress-custom-parent');
+    }
+
+    parent.appendChild(progress);
+    return progress;
+  };
+
+  /**
+   * Removes the element. Opposite of render().
+   */
+
+  NProgress.remove = function() {
+    removeClass(document.documentElement, 'nprogress-busy');
+    removeClass(document.querySelector(Settings.parent), 'nprogress-custom-parent');
+    var progress = document.getElementById('nprogress');
+    progress && removeElement(progress);
+  };
+
+  /**
+   * Checks if the progress bar is rendered.
+   */
+
+  NProgress.isRendered = function() {
+    return !!document.getElementById('nprogress');
+  };
+
+  /**
+   * Determine which positioning CSS rule to use.
+   */
+
+  NProgress.getPositioningCSS = function() {
+    // Sniff on document.body.style
+    var bodyStyle = document.body.style;
+
+    // Sniff prefixes
+    var vendorPrefix = ('WebkitTransform' in bodyStyle) ? 'Webkit' :
+                       ('MozTransform' in bodyStyle) ? 'Moz' :
+                       ('msTransform' in bodyStyle) ? 'ms' :
+                       ('OTransform' in bodyStyle) ? 'O' : '';
+
+    if (vendorPrefix + 'Perspective' in bodyStyle) {
+      // Modern browsers with 3D support, e.g. Webkit, IE10
+      return 'translate3d';
+    } else if (vendorPrefix + 'Transform' in bodyStyle) {
+      // Browsers without 3D support, e.g. IE9
+      return 'translate';
+    } else {
+      // Browsers without translate() support, e.g. IE7-8
+      return 'margin';
+    }
+  };
+
+  /**
+   * Helpers
+   */
+
+  function clamp(n, min, max) {
+    if (n < min) return min;
+    if (n > max) return max;
+    return n;
+  }
+
+  /**
+   * (Internal) converts a percentage (`0..1`) to a bar translateX
+   * percentage (`-100%..0%`).
+   */
+
+  function toBarPerc(n) {
+    return (-1 + n) * 100;
+  }
+
+
+  /**
+   * (Internal) returns the correct CSS for changing the bar's
+   * position given an n percentage, and speed and ease from Settings
+   */
+
+  function barPositionCSS(n, speed, ease) {
+    var barCSS;
+
+    if (Settings.positionUsing === 'translate3d') {
+      barCSS = { transform: 'translate3d('+toBarPerc(n)+'%,0,0)' };
+    } else if (Settings.positionUsing === 'translate') {
+      barCSS = { transform: 'translate('+toBarPerc(n)+'%,0)' };
+    } else {
+      barCSS = { 'margin-left': toBarPerc(n)+'%' };
+    }
+
+    barCSS.transition = 'all '+speed+'ms '+ease;
+
+    return barCSS;
+  }
+
+  /**
+   * (Internal) Queues a function to be executed.
+   */
+
+  var queue = (function() {
+    var pending = [];
+    
+    function next() {
+      var fn = pending.shift();
+      if (fn) {
+        fn(next);
+      }
+    }
+
+    return function(fn) {
+      pending.push(fn);
+      if (pending.length == 1) next();
+    };
+  })();
+
+  /**
+   * (Internal) Applies css properties to an element, similar to the jQuery 
+   * css method.
+   *
+   * While this helper does assist with vendor prefixed property names, it 
+   * does not perform any manipulation of values prior to setting styles.
+   */
+
+  var css = (function() {
+    var cssPrefixes = [ 'Webkit', 'O', 'Moz', 'ms' ],
+        cssProps    = {};
+
+    function camelCase(string) {
+      return string.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function(match, letter) {
+        return letter.toUpperCase();
+      });
+    }
+
+    function getVendorProp(name) {
+      var style = document.body.style;
+      if (name in style) return name;
+
+      var i = cssPrefixes.length,
+          capName = name.charAt(0).toUpperCase() + name.slice(1),
+          vendorName;
+      while (i--) {
+        vendorName = cssPrefixes[i] + capName;
+        if (vendorName in style) return vendorName;
+      }
+
+      return name;
+    }
+
+    function getStyleProp(name) {
+      name = camelCase(name);
+      return cssProps[name] || (cssProps[name] = getVendorProp(name));
+    }
+
+    function applyCss(element, prop, value) {
+      prop = getStyleProp(prop);
+      element.style[prop] = value;
+    }
+
+    return function(element, properties) {
+      var args = arguments,
+          prop, 
+          value;
+
+      if (args.length == 2) {
+        for (prop in properties) {
+          value = properties[prop];
+          if (value !== undefined && properties.hasOwnProperty(prop)) applyCss(element, prop, value);
+        }
+      } else {
+        applyCss(element, args[1], args[2]);
+      }
+    }
+  })();
+
+  /**
+   * (Internal) Determines if an element or space separated list of class names contains a class name.
+   */
+
+  function hasClass(element, name) {
+    var list = typeof element == 'string' ? element : classList(element);
+    return list.indexOf(' ' + name + ' ') >= 0;
+  }
+
+  /**
+   * (Internal) Adds a class to an element.
+   */
+
+  function addClass(element, name) {
+    var oldList = classList(element),
+        newList = oldList + name;
+
+    if (hasClass(oldList, name)) return; 
+
+    // Trim the opening space.
+    element.className = newList.substring(1);
+  }
+
+  /**
+   * (Internal) Removes a class from an element.
+   */
+
+  function removeClass(element, name) {
+    var oldList = classList(element),
+        newList;
+
+    if (!hasClass(element, name)) return;
+
+    // Replace the class name.
+    newList = oldList.replace(' ' + name + ' ', ' ');
+
+    // Trim the opening and closing spaces.
+    element.className = newList.substring(1, newList.length - 1);
+  }
+
+  /**
+   * (Internal) Gets a space separated list of the class names on the element. 
+   * The list is wrapped with a single space on each end to facilitate finding 
+   * matches within the list.
+   */
+
+  function classList(element) {
+    return (' ' + (element.className || '') + ' ').replace(/\s+/gi, ' ');
+  }
+
+  /**
+   * (Internal) Removes an element from the DOM.
+   */
+
+  function removeElement(element) {
+    element && element.parentNode && element.parentNode.removeChild(element);
+  }
+
+  return NProgress;
+});
+
+
+
+/***/ }),
+
 /***/ "./node_modules/object-inspect/index.js":
 /*!**********************************************!*\
   !*** ./node_modules/object-inspect/index.js ***!
@@ -32603,6 +34637,84 @@ component.options.__file = "resources/js/Pages/PrivacyPolicy.vue"
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Products/Create.vue":
+/*!************************************************!*\
+  !*** ./resources/js/Pages/Products/Create.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=53ba9be4& */ "./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4&");
+/* harmony import */ var _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/Products/Create.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Products/Index.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/Pages/Products/Index.vue ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=fd0122a0& */ "./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0&");
+/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/Pages/Products/Index.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Profile/DeleteUserForm.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/Pages/Profile/DeleteUserForm.vue ***!
@@ -33546,6 +35658,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Profile/DeleteUserForm.vue?vue&type=script&lang=js&":
 /*!********************************************************************************!*\
   !*** ./resources/js/Pages/Profile/DeleteUserForm.vue?vue&type=script&lang=js& ***!
@@ -34384,6 +36528,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_41527301___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicy_vue_vue_type_template_id_41527301___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PrivacyPolicy.vue?vue&type=template&id=41527301& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/PrivacyPolicy.vue?vue&type=template&id=41527301&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_53ba9be4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=template&id=53ba9be4& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Create.vue?vue&type=template&id=53ba9be4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0& ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_fd0122a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Index.vue?vue&type=template&id=fd0122a0& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/Pages/Products/Index.vue?vue&type=template&id=fd0122a0&");
 
 
 /***/ }),
@@ -92870,6 +95048,10 @@ var map = {
 	"./Dashboard.vue": "./resources/js/Pages/Dashboard.vue",
 	"./PrivacyPolicy": "./resources/js/Pages/PrivacyPolicy.vue",
 	"./PrivacyPolicy.vue": "./resources/js/Pages/PrivacyPolicy.vue",
+	"./Products/Create": "./resources/js/Pages/Products/Create.vue",
+	"./Products/Create.vue": "./resources/js/Pages/Products/Create.vue",
+	"./Products/Index": "./resources/js/Pages/Products/Index.vue",
+	"./Products/Index.vue": "./resources/js/Pages/Products/Index.vue",
 	"./Profile/DeleteUserForm": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/DeleteUserForm.vue": "./resources/js/Pages/Profile/DeleteUserForm.vue",
 	"./Profile/LogoutOtherBrowserSessionsForm": "./resources/js/Pages/Profile/LogoutOtherBrowserSessionsForm.vue",

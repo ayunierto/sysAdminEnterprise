@@ -250,7 +250,9 @@
                     @click="drawer = !drawer"
                 ></v-app-bar-nav-icon>
 
-                <v-toolbar-title>INICIO</v-toolbar-title>
+                <v-toolbar-title>
+                    <!-- INICIO -->
+                </v-toolbar-title>
 
                 <v-spacer></v-spacer>
                 <v-list-item-avatar>
@@ -283,6 +285,8 @@
                 <!-- Dashboard contenido -->
                 <slot></slot>
             </v-container>
+
+            <pre>{{ $page }}</pre>
         </v-main>
         <!-- Dashboard end-->
 

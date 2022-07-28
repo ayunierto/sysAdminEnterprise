@@ -30,6 +30,7 @@ class CreateProductsTable extends Migration
             $table->double('sale_price', 15, 8);
             $table->string('description');
             $table->boolean('state');
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }
