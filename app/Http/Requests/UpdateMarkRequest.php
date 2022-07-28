@@ -13,7 +13,7 @@ class UpdateMarkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,9 +24,9 @@ class UpdateMarkRequest extends FormRequest
     public function rules()
     {
         return [
-            'companies_id'=> 'required|numeric',
-            'name'=> 'required|string|max:50',
-            'description'=> 'required|string|max:250',
+            'company' => 'required',
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:250',
         ];
     }
 }

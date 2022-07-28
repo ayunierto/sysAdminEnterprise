@@ -13,7 +13,7 @@ class StoreMarkRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreMarkRequest extends FormRequest
     public function rules()
     {
         return [
-            'companies_id'=> 'required|numeric',
+            'company'=> 'required',
             'name'=> 'required|string|max:50',
             'description'=> 'required|string|max:250',
         ];
