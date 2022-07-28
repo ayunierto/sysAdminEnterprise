@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+    <body>
+        <div id="app">
+            <!-- App.vue -->
+
+            <v-app>
+                <v-navigation-drawer app>
+                    <!-- -->
+                </v-navigation-drawer>
+
+                <v-app-bar app>
+                    <!-- -->
+                </v-app-bar>
+
+                <v-main>
+                    <v-container>
+                        <template>
+                            <v-data-table
+                                :headers="headers"
+                                :items="desserts"
+                                sort-by="stock"
+                                class="elevation-24"
+                                :search="search"
+                            >
+                                <template v-slot:top>
+                                    <v-toolbar flat>
+                                        <v-toolbar-title
+                                            >LISTA PRODUCTOS</v-toolbar-title
+                                        >
+                                        <v-spacer></v-spacer>
+                                        <v-dialog
+                                            v-model="dialog"
+                                            max-width="600px"
+                                        >
+                                            <template
+                                                v-slot:activator="{ on, attrs }"
+                                            >
+                                                <v-btn
+                                                    color="primary"
+                                                    dark
+                                                    class="mb-2"
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                >
+                                                    PRODUCTOS
+                                                </v-btn>
+                                                <v-card-title>
+                                                    <v-spacer></v-spacer>
+                                                    <v-text-field
+                                                        v-model="search"
+                                                        append-icon="mdi-magnify"
+                                                        label="Buscar Productos"
+                                                        single-line
+                                                        hide-details
+                                                    ></v-text-field>
+                                                </v-card-title>
+                                            </template>
+                                            <v-card>
+                                                <!-- Titulo de modal agreagar productos -->
+                                                <v-card-title>
+                                                    <span class="text-h5"
+                                                        >Productos</span
+                                                    >
+                                                </v-card-title>
+                                                <!-- contenido de modal agreagar empresas -->
+                                                <v-card-text>
+                                                    <v-container>
+                                                        <v-row>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Codigo"
+                                                                    hint="Campo Opcional: Consultar a Sunat"
+                                                                    persistent-hint
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Nombre*"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Descripcion"
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="categoria"
+                                                                    color="white"
+                                                                    item-text="name"
+                                                                    label="Categoria"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="marca"
+                                                                    color="white"
+                                                                    item-text="name"
+                                                                    label="Marca"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="unidadmedida"
+                                                                    color="white"
+                                                                    item-text="name"
+                                                                    label="Unidad de Medida"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="proveedor"
+                                                                    color="white"
+                                                                    item-text="name"
+                                                                    label="Proveedor"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="stock*"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Compra"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Venta*"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Código de Barra"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-menu
+                                                                    v-model="menu2"
+                                                                    :close-on-content-click="false"
+                                                                    :nudge-right="40"
+                                                                    transition="scale-transition"
+                                                                    offset-y
+                                                                    min-width="auto"
+                                                                >
+                                                                    <template
+                                                                        v-slot:activator="{ on, attrs }"
+                                                                    >
+                                                                        <v-text-field
+                                                                            v-model="date"
+                                                                            label="Fecha de Vencimiento"
+                                                                            prepend-icon="mdi-calendar-month"
+                                                                            readonly
+                                                                            v-bind="attrs"
+                                                                            v-on="on"
+                                                                        ></v-text-field>
+                                                                    </template>
+                                                                    <v-date-picker
+                                                                        v-model="date"
+                                                                        @input="menu2 = false"
+                                                                    ></v-date-picker>
+                                                                </v-menu>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-container>
+                                                    <small
+                                                        >*Campos
+                                                        Obligatorios</small
+                                                    >
+                                                </v-card-text>
+                                                <!-- Acciones de modal agregar productos -->
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn
+                                                        color="red darken-1"
+                                                        text
+                                                        @click="dialog = false"
+                                                    >
+                                                        Cerrar
+                                                    </v-btn>
+                                                    <v-btn
+                                                        color="blue darken-1"
+                                                        text
+                                                        @click="dialog = false"
+                                                    >
+                                                        Guardar
+                                                    </v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                        <!-- Mensaje de confirmacion de borrado de productos -->
+                                        <v-dialog
+                                            v-model="dialogDelete"
+                                            max-width="500px"
+                                        >
+                                            <v-card>
+                                                <v-card-title class="text-h5"
+                                                    >¿quiere borrar el
+                                                    prodducto?</v-card-title
+                                                >
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn
+                                                        color="red darken-1"
+                                                        text
+                                                        @click="closeDelete"
+                                                        >Cancelar</v-btn
+                                                    >
+                                                    <v-btn
+                                                        color="blue darken-1"
+                                                        text
+                                                        @click="deleteItemConfirm"
+                                                        >Aceptar</v-btn
+                                                    >
+                                                    <v-spacer></v-spacer>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                    </v-toolbar>
+                                </template>
+                                <!-- Acciones de la tabla -->
+                                <template v-slot:item.actions="{ item }">
+                                    <v-icon
+                                        small
+                                        class="mr-2"
+                                        @click="editItem(item)"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                    <v-icon small @click="deleteItem(item)">
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
+                            </v-data-table>
+                        </template>
+                    </v-container>
+                </v-main>
+
+                <v-footer app>
+                    <!-- -->
+                </v-footer>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script src="moduloProductos.js"></script>
+    </body>
+</html>

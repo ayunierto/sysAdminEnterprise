@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+    <body>
+        <div id="app">
+            <!-- App.vue -->
+
+            <v-app>
+                <v-navigation-drawer app>
+                    <!-- -->
+                </v-navigation-drawer>
+
+                <v-app-bar app>
+                    <!-- -->
+                </v-app-bar>
+
+                <v-main>
+                    <v-container>
+                        <template>
+                            <v-data-table
+                                :headers="headers"
+                                :items="desserts"
+                                sort-by="calories"
+                                class="elevation-1"
+                                :search="search"
+                            >
+                                <template v-slot:top>
+                                    <v-toolbar flat>
+                                        <v-toolbar-title
+                                            >Precio Productos</v-toolbar-title
+                                        >
+                                        <v-spacer></v-spacer>
+                                        <v-dialog
+                                            v-model="dialog"
+                                            max-width="600px"
+                                        >
+                                            <template
+                                                v-slot:activator="{ on, attrs }"
+                                            >
+                                                <v-btn
+                                                    color="primary"
+                                                    dark
+                                                    class="mb-2"
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                >
+                                                    Precios
+                                                </v-btn>
+                                                <v-card-title>
+                                                    <v-spacer></v-spacer>
+                                                    <v-text-field
+                                                        v-model="search"
+                                                        append-icon="mdi-magnify"
+                                                        label="Buscar Productos"
+                                                        single-line
+                                                        hide-details
+                                                    ></v-text-field>
+                                                </v-card-title>
+                                            </template>
+                                            <v-card>
+                                                <!-- Titulo de modal agreagar Precio Productos -->
+                                                <v-card-title>
+                                                    <span class="text-h5"
+                                                        >{{ formTitle }}</span
+                                                    >
+                                                </v-card-title>
+
+                                                <!-- contenido de modal agreagar Precio Productos -->
+                                                <v-card-text>
+                                                    <v-container>
+                                                        <v-row>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="states"
+                                                                    :filter="customFilter"
+                                                                    color="white"
+                                                                    item-text="name"
+                                                                    label="Productos"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Menor"
+                                                                    hint="Precio para Minoristas"
+                                                                    prefix="S/"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Mayor"
+                                                                    hint="Precio Para Mayoristas"
+                                                                    prefix="S/"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Especial"
+                                                                    hint="Precio Para Clientes Frecuentes..."
+                                                                    prefix="S/"
+                                                                    required
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-container>
+                                                    <small
+                                                        >*Precios sugeridos
+                                                        segun tipo de
+                                                        clientes</small
+                                                    >
+                                                </v-card-text>
+                                                <!-- Acciones de modal agregar Precio Productos -->
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn
+                                                        color="red darken-1"
+                                                        text
+                                                        @click="dialog = false"
+                                                    >
+                                                        Cerrar
+                                                    </v-btn>
+                                                    <v-btn
+                                                        color="blue darken-1"
+                                                        text
+                                                        @click="dialog = false"
+                                                    >
+                                                        Guardar
+                                                    </v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                        <!-- Mensaje de confirmacion de borrado de empresa -->
+                                        <v-dialog
+                                            v-model="dialogDelete"
+                                            max-width="500px"
+                                        >
+                                            <v-card>
+                                                <v-card-title class="text-h5"
+                                                    >¿Está seguro de querer
+                                                    borrar la
+                                                    empresa?</v-card-title
+                                                >
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn
+                                                        color="red darken-1"
+                                                        text
+                                                        @click="closeDelete"
+                                                        >Cancelar</v-btn
+                                                    >
+                                                    <v-btn
+                                                        color="blue darken-1"
+                                                        text
+                                                        @click="deleteItemConfirm"
+                                                        >Aceptar</v-btn
+                                                    >
+                                                    <v-spacer></v-spacer>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                    </v-toolbar>
+                                </template>
+                                <!-- Acciones de la tabla -->
+                                <template v-slot:item.actions="{ item }">
+                                    <v-icon
+                                        small
+                                        class="mr-2"
+                                        @click="editItem(item)"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                    <v-icon small @click="deleteItem(item)">
+                                        mdi-delete
+                                    </v-icon>
+                                </template>
+                            </v-data-table>
+                        </template>
+                    </v-container>
+                </v-main>
+
+                <v-footer app>
+                    <!-- -->
+                </v-footer>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script src="moduloPrecioProductos.js"></script>
+    </body>
+</html>

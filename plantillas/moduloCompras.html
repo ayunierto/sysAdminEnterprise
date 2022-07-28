@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+            rel="stylesheet"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+        />
+    </head>
+    <body>
+        <div id="app">
+            <!-- App.vue -->
+
+            <v-app>
+                <v-navigation-drawer app>
+                    <!-- -->
+                </v-navigation-drawer>
+
+                <v-app-bar app>
+                    <!-- -->
+                </v-app-bar>
+
+                <!-- Sizes your content based upon application components -->
+                <v-main>
+                    <!-- Provides the application the proper gutter -->
+                    <v-container fluid>
+                        <template>
+                            <v-container>
+                                <v-layout>
+                                    <v-flex>
+                                        <template>
+                                            <v-card
+                                                class="overflow-hidden"
+                                                color="white"
+                                                elevation-10
+                                                loading
+                                            >
+                                                <v-toolbar flat color="#ECEFF1">
+                                                    <v-toolbar-title
+                                                        class="font-weight-light"
+                                                    >
+                                                        Nueva Compra
+                                                    </v-toolbar-title>
+                                                </v-toolbar>
+                                                <v-card-text>
+                                                    <v-container>
+                                                        <v-row>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    :items="tipoComprobante"
+                                                                    color="primary"
+                                                                    item-text="name"
+                                                                    label="Comprobante"
+                                                                    placeholder="Seleccione tipo Comprobante"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Nro Comprobante"
+                                                                    value="C032-007852"
+                                                                    disabled
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="6"
+                                                                md="4"
+                                                            >
+                                                                <v-menu
+                                                                    v-model="menu2"
+                                                                    :close-on-content-click="false"
+                                                                    :nudge-right="40"
+                                                                    transition="scale-transition"
+                                                                    offset-y
+                                                                    min-width="auto"
+                                                                >
+                                                                    <template
+                                                                        v-slot:activator="{ on, attrs }"
+                                                                    >
+                                                                        <v-text-field
+                                                                            v-model="date"
+                                                                            label="Fecha"
+                                                                            readonly
+                                                                            v-bind="attrs"
+                                                                            v-on="on"
+                                                                        ></v-text-field>
+                                                                    </template>
+                                                                    <v-date-picker
+                                                                        v-model="date"
+                                                                        @input="menu2 = false"
+                                                                    ></v-date-picker>
+                                                                </v-menu>
+                                                            </v-col>
+                                                            <v-col cols="12">
+                                                                <h3>
+                                                                    DATOS
+                                                                    PROVEEDOR
+                                                                </h3>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    color="primary"
+                                                                    item-text="name"
+                                                                    label="DNI/RUC"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Nombre/Razon Social"
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Dirección"
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col cols="12">
+                                                                <h3>
+                                                                    DETALLE DE
+                                                                    COMPRA
+                                                                </h3>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    color="primary"
+                                                                    item-text="name"
+                                                                    label="Forma de Compra"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    color="primary"
+                                                                    item-text="name"
+                                                                    label="Tipo Moneda"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Tipo Cambio"
+                                                                    type="number"
+                                                                    value="3.910"
+                                                                    outlined
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="4"
+                                                                md="4"
+                                                            >
+                                                                <v-autocomplete
+                                                                    hide-no-data
+                                                                    hide-selected
+                                                                    label="Productos"
+                                                                    placeholder="Buscar Produto"
+                                                                ></v-autocomplete>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="3"
+                                                                md="3"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Cantidad"
+                                                                    type="number"
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="3"
+                                                                md="3"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Precio Compra"
+                                                                    type="number"
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="2"
+                                                                md="2"
+                                                            >
+                                                                <v-btn
+                                                                    class="mx-2"
+                                                                    fab
+                                                                    dark
+                                                                    medium
+                                                                    color="primary"
+                                                                >
+                                                                    <v-icon
+                                                                    >
+                                                                    mdi-cart-plus
+                                                                    </v-icon>
+                                                                </v-btn>
+                                                            </v-col>
+                                                            <v-col cols="12">
+                                                                <!-- tabla con detalle de compra-->
+                                                                <template>
+                                                                    <v-simple-table
+                                                                        fixed-header
+                                                                        height="200px"
+                                                                    >
+                                                                        <template
+                                                                            v-slot:default
+                                                                        >
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th
+                                                                                        class="text-left"
+                                                                                    >
+                                                                                        Producto
+                                                                                    </th>
+                                                                                    <th
+                                                                                        class="text-left"
+                                                                                    >
+                                                                                        Cantidad
+                                                                                    </th>
+                                                                                    <th
+                                                                                        class="text-left"
+                                                                                    >
+                                                                                        Precio
+                                                                                    </th>
+                                                                                    <th
+                                                                                        class="text-left"
+                                                                                    >
+                                                                                        Total
+                                                                                    </th>
+                                                                                    <th
+                                                                                        class="text-left"
+                                                                                    >
+                                                                                        Acciones
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr
+                                                                                    v-for="item in desserts"
+                                                                                    :key="item.name"
+                                                                                >
+                                                                                    <td>
+                                                                                        {{
+                                                                                        item.producto
+                                                                                        }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{
+                                                                                        item.cantidad
+                                                                                        }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{
+                                                                                        item.precio
+                                                                                        }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{
+                                                                                        item.cantidad*item.precio
+                                                                                        }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <template>
+                                                                                            <v-icon
+                                                                                                small
+                                                                                                class="mr-2"
+                                                                                                @click="editItem(item)"
+                                                                                            >
+                                                                                                mdi-pencil
+                                                                                            </v-icon>
+                                                                                            <v-icon
+                                                                                                small
+                                                                                                @click="deleteItem(item)"
+                                                                                            >
+                                                                                                mdi-delete
+                                                                                            </v-icon>
+                                                                                        </template>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                            <!-- Modal Editar productos carrito -->
+                                                                            <v-dialog
+                                                                                v-model="dialog"
+                                                                                max-width="500px"
+                                                                            >
+                                                                                <v-card>
+                                                                                    <v-card-title>
+                                                                                        <span
+                                                                                            class="text-h5"
+                                                                                            >Editar
+                                                                                            Producto</span
+                                                                                        >
+                                                                                    </v-card-title>
+
+                                                                                    <v-card-text>
+                                                                                        <v-container>
+                                                                                            <v-row>
+                                                                                                <v-col
+                                                                                                    cols="12"
+                                                                                                    sm="6"
+                                                                                                    md="4"
+                                                                                                >
+                                                                                                    <v-text-field
+                                                                                                        label="Producto"
+                                                                                                    ></v-text-field>
+                                                                                                </v-col>
+                                                                                                <v-col
+                                                                                                    cols="12"
+                                                                                                    sm="6"
+                                                                                                    md="4"
+                                                                                                >
+                                                                                                    <v-text-field
+                                                                                                        label="Cantidad"
+                                                                                                    ></v-text-field>
+                                                                                                </v-col>
+                                                                                                <v-col
+                                                                                                    cols="12"
+                                                                                                    sm="6"
+                                                                                                    md="4"
+                                                                                                >
+                                                                                                    <v-text-field
+                                                                                                        label="Precio"
+                                                                                                    ></v-text-field>
+                                                                                                </v-col>
+                                                                                            </v-row>
+                                                                                        </v-container>
+                                                                                    </v-card-text>
+
+                                                                                    <v-card-actions>
+                                                                                        <v-spacer></v-spacer>
+                                                                                        <v-btn
+                                                                                            color="red darken-1"
+                                                                                            text
+                                                                                            @click="close"
+                                                                                        >
+                                                                                            Cancelar
+                                                                                        </v-btn>
+                                                                                        <v-btn
+                                                                                            color="blue darken-1"
+                                                                                            text
+                                                                                            @click="save"
+                                                                                        >
+                                                                                            Confirmar
+                                                                                        </v-btn>
+                                                                                    </v-card-actions>
+                                                                                </v-card>
+                                                                            </v-dialog>
+                                                                            <!-- modal mensaje eliminar producto de carrito -->
+                                                                            <v-dialog
+                                                                                v-model="dialogDelete"
+                                                                                max-width="500px"
+                                                                            >
+                                                                                <v-card>
+                                                                                    <v-card-title
+                                                                                        class="text-h5"
+                                                                                        >¿Quiere
+                                                                                        borrar
+                                                                                        el
+                                                                                        producto?</v-card-title
+                                                                                    >
+                                                                                    <v-card-actions>
+                                                                                        <v-spacer></v-spacer>
+                                                                                        <v-btn
+                                                                                            color="red darken-1"
+                                                                                            text
+                                                                                            @click="closeDelete"
+                                                                                            >Cancelar</v-btn
+                                                                                        >
+                                                                                        <v-btn
+                                                                                            color="blue darken-1"
+                                                                                            text
+                                                                                            @click="deleteItemConfirm"
+                                                                                            >Confrimar</v-btn
+                                                                                        >
+                                                                                        <v-spacer></v-spacer>
+                                                                                    </v-card-actions>
+                                                                                </v-card>
+                                                                            </v-dialog>
+                                                                        </template>
+                                                                    </v-simple-table>
+                                                                </template>
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="9"
+                                                                md="9"
+                                                            >
+                                                            </v-col>
+                                                            <v-col
+                                                                cols="12"
+                                                                sm="3"
+                                                                md="3"
+                                                            >
+                                                                <v-text-field
+                                                                    label="Sub Total"
+                                                                    disabled
+                                                                ></v-text-field>
+                                                                <v-text-field
+                                                                    label="IGV"
+                                                                    disabled
+                                                                ></v-text-field>
+                                                                <v-text-field
+                                                                    label="Total S/."
+                                                                    disabled
+                                                                ></v-text-field>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </v-container>
+                                                </v-card-text>
+                                                <v-divider></v-divider>
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn
+                                                        color="primary"
+                                                        @click=""
+                                                    >
+                                                        Confirmar
+                                                    </v-btn>
+                                                </v-card-actions>
+                                                <v-snackbar
+                                                    v-model="hasSaved"
+                                                    :timeout="2000"
+                                                    absolute
+                                                    bottom
+                                                    left
+                                                >
+                                                    Compra Realizada
+                                                    correctamente
+                                                </v-snackbar>
+                                            </v-card>
+                                        </template>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </template>
+                    </v-container>
+                </v-main>
+
+                <v-footer app>
+                    <!-- -->
+                </v-footer>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script src="moduloCompras.js"></script>
+    </body>
+</html>
