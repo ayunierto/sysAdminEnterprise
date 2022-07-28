@@ -53,7 +53,7 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="4">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-select
                                         v-model="editedItem.company"
                                         hint="Selecciones empresa"
@@ -65,18 +65,19 @@
                                         single-line
                                         ></v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4" >
+
+                                    <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
                                         v-model="editedItem.name"
                                         label="Nombre"
                                         required
                                         ></v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="4" >
-                                        <v-text-field
-                                        v-model="editedItem.description"
-                                        label="Descripción"
-                                        ></v-text-field>
+                                    
+                                    <v-col cols="12" sm="12" md="12">
+                                        <v-textarea v-model="editedItem.description" class="mx-2"
+                                            label="Descripción" rows="2" hint="Descripcion de la categoría">
+                                        </v-textarea>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -134,7 +135,7 @@
 
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
-import route from '../../../../vendor/tightenco/ziggy/src/js'
+    import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
         props: ['categories', 'companies'],

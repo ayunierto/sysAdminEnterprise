@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateCategoryRequest;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Company;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
