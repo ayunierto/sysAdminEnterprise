@@ -5409,7 +5409,7 @@ var render = function render() {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-content", [_c("v-list-item-subtitle", [_vm._v("correo@gmail.com")])], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
+  }, [_c("v-list-item-content", [_c("v-list-item-subtitle", [_vm._v("\n                            correo@gmail.com\n                        ")])], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
     attrs: {
       nav: "",
       dense: ""
@@ -5452,7 +5452,7 @@ var render = function render() {
     }
   }, [_c("inertia-link", {
     attrs: {
-      href: _vm.route("dashboard")
+      href: _vm.route("products.index")
     }
   }, [_c("v-list-item", {
     attrs: {
@@ -5482,7 +5482,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            CATEGORIAS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("CATEGORIAS")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5498,7 +5498,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-currency-usd")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        PRECIOS DE PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-currency-usd")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("PRECIOS DE PRODUCTOS")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5506,7 +5506,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        UNIDADES DE MEDIDA\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("UNIDADES DE MEDIDA")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
@@ -5514,7 +5514,7 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-package-variant-closed")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        PRESENTACIÓN DE PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-package-variant-closed")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("PRESENTACIÓN DE PRODUCTOS")])])], 1), _vm._v(" "), _c("v-list-item", {
     attrs: {
       link: ""
     }
