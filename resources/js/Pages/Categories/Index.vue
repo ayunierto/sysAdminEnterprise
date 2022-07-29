@@ -27,7 +27,7 @@
             </v-alert>
         </div>
         
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" 
+        <v-data-table :headers="headers" :items="desserts" sort-by="name" 
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
