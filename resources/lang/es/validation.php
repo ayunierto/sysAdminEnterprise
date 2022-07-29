@@ -157,6 +157,9 @@ return [
         'code' => 'código',
         'name' => 'nombre',
         'description' => 'descripción',
+        'email' => 'correo',
+        'role' => 'rol',
+        'password' => 'clave',
     ],
 
 ];
