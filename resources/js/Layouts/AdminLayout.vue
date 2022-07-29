@@ -3,7 +3,9 @@
         <!-- memú vertical y horizontal -->
         <template>
             <!-- Menú vertical -->
-            <v-navigation-drawer app v-model="drawer">
+            <v-navigation-drawer app v-model="drawer" v-bind="color">
+                <!-- cambio colores -->
+                <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list>
                     <v-list-item class="px-2">
                         <v-list-item-avatar>
@@ -20,6 +22,14 @@
                                 correo@gmail.com
                             </v-list-item-subtitle>
                         </v-list-item-content>
+
+                        <!-- Personalizar colores -->
+                        <v-fab-transition>
+                            <v-btn v-show="!hidden" color="pink" fab dark small absolute bottom right>
+                                <v-icon>mdi-spin mdi-cog</v-icon>
+                            </v-btn>
+                        </v-fab-transition>
+
                     </v-list-item>
                 </v-list>
                 <!-- linea divisoria -->
@@ -151,7 +161,6 @@
                                 </v-list-item>
 
                             </v-list-item-group>
-
                         </v-list-group>
 
                         <v-list-item link>
@@ -238,14 +247,13 @@
                         </v-list-group>
 
                     </v-list-item-group>
-
                 </v-list>
             </v-navigation-drawer>
             <!-- CONTENIDO MENU VERTICAL END-->
 
 
             <!-- Menú horizontal -->
-            <v-app-bar app color="white">
+            <v-app-bar app v-bind="color">
                 <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>
@@ -273,6 +281,7 @@
                         </v-list-item>
                     </v-list>
                 </v-menu>
+
             </v-app-bar>
         </template>
 
@@ -280,13 +289,11 @@
             <v-container>
                 <slot></slot>
             </v-container>
-
             <pre>{{ $page }}</pre>
         </v-main>
-
         <!-- PIE DE PAGINA -->
-        <v-footer app>
-            <v-col class="text-center" cols="12">
+        <v-footer padless v-bind="color" height="60px">
+            <v-col class="text-center" cols="12" absolute>
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>
         </v-footer>
@@ -299,6 +306,10 @@ export default {
     data() {
         return {
             drawer: null,
+            hidden: false,
+            color: {
+                color: "blue",
+            }
         };
     },
 };

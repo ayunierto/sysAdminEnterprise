@@ -2751,7 +2751,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      drawer: null
+      drawer: null,
+      hidden: false,
+      color: {
+        color: "blue"
+      }
     };
   }
 });
@@ -5813,7 +5817,7 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("v-app", [[_c("v-navigation-drawer", {
+  return _c("v-app", [[_c("v-navigation-drawer", _vm._b({
     attrs: {
       app: ""
     },
@@ -5824,7 +5828,7 @@ var render = function render() {
       },
       expression: "drawer"
     }
-  }, [_c("v-list", [_c("v-list-item", {
+  }, "v-navigation-drawer", _vm.color, false), [_c("v-list", [_c("v-list-item", {
     staticClass: "px-2"
   }, [_c("v-list-item-avatar", [_c("v-img", {
     attrs: {
@@ -5836,7 +5840,23 @@ var render = function render() {
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-content", [_c("v-list-item-subtitle", [_vm._v("\n                            correo@gmail.com\n                        ")])], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
+  }, [_c("v-list-item-content", [_c("v-list-item-subtitle", [_vm._v("\n                            correo@gmail.com\n                        ")])], 1), _vm._v(" "), _c("v-fab-transition", [_c("v-btn", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: !_vm.hidden,
+      expression: "!hidden"
+    }],
+    attrs: {
+      color: "pink",
+      fab: "",
+      dark: "",
+      small: "",
+      absolute: "",
+      bottom: "",
+      right: ""
+    }
+  }, [_c("v-icon", [_vm._v("mdi-spin mdi-cog")])], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
     attrs: {
       nav: "",
       dense: ""
@@ -6009,12 +6029,11 @@ var render = function render() {
     attrs: {
       small: ""
     }
-  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("UNIDADES DE MEDIDA")])])], 1)], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", {
+  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("UNIDADES DE MEDIDA")])])], 1)], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", _vm._b({
     attrs: {
-      app: "",
-      color: "white"
+      app: ""
     }
-  }, [_c("v-app-bar-nav-icon", {
+  }, "v-app-bar", _vm.color, false), [_c("v-app-bar-nav-icon", {
     on: {
       click: function click($event) {
         _vm.drawer = !_vm.drawer;
@@ -6049,14 +6068,16 @@ var render = function render() {
     on: {
       click: function click() {}
     }
-  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2), _vm._v(" "), _c("pre", [_vm._v(_vm._s(_vm.$page))])], 1), _vm._v(" "), _c("v-footer", {
+  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2), _vm._v(" "), _c("pre", [_vm._v(_vm._s(_vm.$page))])], 1), _vm._v(" "), _c("v-footer", _vm._b({
     attrs: {
-      app: ""
+      padless: "",
+      height: "60px"
     }
-  }, [_c("v-col", {
+  }, "v-footer", _vm.color, false), [_c("v-col", {
     staticClass: "text-center",
     attrs: {
-      cols: "12"
+      cols: "12",
+      absolute: ""
     }
   }, [_vm._v("\n            " + _vm._s(new Date().getFullYear()) + " — "), _c("strong", [_vm._v("ALPA PERÚ")])])], 1)], 2);
 };
