@@ -160,6 +160,13 @@ return [
         'email' => 'correo',
         'role' => 'rol',
         'password' => 'clave',
+        'phone' => 'teléfono',
+        'address' => 'dirección',
+        'department' => 'departamento',
+        'province' => 'provincia',
+        'district' => 'distrito',
+        'country_code' => 'código de área',
+        'state' => 'stado',
     ],
 
 ];
