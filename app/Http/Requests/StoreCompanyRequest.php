@@ -24,8 +24,8 @@ class StoreCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:50',
-            'ruc' => 'required|numeric',
+            'name' => 'required|string|max:100',
+            'ruc' => 'required|string|max:50',
             'description' => 'required|string|max:250',
             'phone' => 'required|max:15',
             'address' => 'required|string|max:250',
