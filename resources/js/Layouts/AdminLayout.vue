@@ -50,15 +50,17 @@
 
                             <v-list-item-group color="primary">
 
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-office-building</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>EMPRESAS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
+                                <inertia-link :href="route('companies.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-office-building</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>EMPRESAS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
 
                                 <inertia-link :href="route('users.index')">
                                     <v-list-item link>
