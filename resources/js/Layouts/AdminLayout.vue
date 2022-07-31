@@ -50,21 +50,21 @@
                             </v-list-item>
                         </inertia-link>
 
-                                                <v-list-group prepend-icon="mdi-account-tie" color="primary">
-
+                        <v-list-group class="white--text" color="white">
+                            <v-icon slot="prependIcon" color="white">mdi-account-tie</v-icon>
                             <template v-slot:activator>
-                                <v-list-item-content>
+                                <v-list-item-content style="color:white;">
                                     <v-list-item-title>ADMINISTRACION</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-
-                            <v-list-item-group color="primary">
+                            <v-card color="#497fca">
+                                <v-list-item-group class="white--text" color="white">
 
                                 <inertia-link :href="route('companies.index')">
-                                    <v-list-item link>
+                                    <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon small>mdi-office-building</v-icon>
+                                            <v-icon color="white" small>mdi-office-building</v-icon>
                                         </v-list-item-icon>
                                         <v-list-item-title>
                                             <h5>EMPRESAS</h5>
@@ -73,10 +73,10 @@
                                 </inertia-link>
 
                                 <inertia-link :href="route('users.index')">
-                                    <v-list-item link>
+                                    <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon small>mdi-account-key</v-icon>
+                                            <v-icon color="white" small>mdi-account-key</v-icon>
                                         </v-list-item-icon>
                                         <v-list-item-title>
                                             <h5>USUARIOS</h5>
@@ -86,10 +86,10 @@
 
 
                                 <inertia-link :href="route('measures.index')">
-                                    <v-list-item link>
+                                    <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon small>mdi-weight-kilogram</v-icon>
+                                            <v-icon color="white" small>mdi-weight-kilogram</v-icon>
                                         </v-list-item-icon>
                                         <v-list-item-title>
                                             <h5>UNIDADES DE MEDIDA</h5>
@@ -98,10 +98,12 @@
                                 </inertia-link>
 
                             </v-list-item-group>
+                            </v-card>
+
 
                         </v-list-group>
 
-                        <v-list-item link>
+                        <v-list-item link style="color:white;">
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-cart</v-icon>
                             </v-list-item-icon>
@@ -127,92 +129,92 @@
                             </template>
 
                             <v-card color="#497fca">
-                              <v-list-item-group class="white--text" color="white">
+                                <v-list-item-group class="white--text" color="white">
 
-                                <inertia-link :href="route('products.index')">
+                                    <inertia-link :href="route('products.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-format-list-bulleted</v-icon>
+                                            </v-list-item-icon>
+
+                                            <v-list-item-title>
+                                                <h5>
+                                                    LISTA PRODUCTOS
+                                                </h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                     <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon color="white" small>mdi-format-list-bulleted</v-icon>
+                                            <v-icon color="white" small>mdi-cube-send</v-icon>
                                         </v-list-item-icon>
 
                                         <v-list-item-title>
                                             <h5>
-                                                LISTA PRODUCTOS
+                                                AGREGAR PRODUCTOS
                                             </h5>
                                         </v-list-item-title>
                                     </v-list-item>
-                                </inertia-link>
 
-                                <v-list-item link style="color:white;">
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon color="white" small>mdi-cube-send</v-icon>
-                                    </v-list-item-icon>
+                                    <inertia-link :href="route('categories.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-book-variant</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>CATEGORIAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
 
-                                    <v-list-item-title>
-                                        <h5>
-                                            AGREGAR PRODUCTOS
-                                        </h5>
-                                    </v-list-item-title>
-                                </v-list-item>
+                                    <inertia-link :href="route('marks.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-bookmark-plus</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>MARCAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
 
-                                <inertia-link :href="route('categories.index')">
+
                                     <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon color="white" small>mdi-book-variant</v-icon>
+                                            <v-icon color="white" small>mdi-currency-usd</v-icon>
                                         </v-list-item-icon>
                                         <v-list-item-title>
-                                            <h5>CATEGORIAS</h5>
+                                            <h5>PRECIOS DE PRODUCTOS</h5>
                                         </v-list-item-title>
                                     </v-list-item>
-                                </inertia-link>
 
-                                <inertia-link :href="route('marks.index')">
                                     <v-list-item link style="color:white;">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
-                                            <v-icon color="white" small>mdi-bookmark-plus</v-icon>
+                                            <v-icon color="white" small>mdi-package-variant-closed</v-icon>
                                         </v-list-item-icon>
                                         <v-list-item-title>
-                                            <h5>MARCAS</h5>
+                                            <h5>PRESENTACIÓN DE PRODUCTOS</h5>
                                         </v-list-item-title>
                                     </v-list-item>
-                                </inertia-link>
 
+                                    <v-list-item link style="color:white;">
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon color="white" small>mdi-package-variant</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>LOTES DE PRODUCTOS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
 
-                                <v-list-item link style="color:white;">
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon color="white" small>mdi-currency-usd</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>PRECIOS DE PRODUCTOS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
-
-                                <v-list-item link style="color:white;">
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon color="white" small>mdi-package-variant-closed</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>PRESENTACIÓN DE PRODUCTOS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
-
-                                <v-list-item link style="color:white;">
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon color="white" small>mdi-package-variant</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>LOTES DE PRODUCTOS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
-
-                            </v-list-item-group>
+                                </v-list-item-group>
                             </v-card>
 
                         </v-list-group>
@@ -305,7 +307,7 @@
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
         <v-footer padless height="60px" color="#1465bb">
-            <v-col class="text-center" cols="12" absolute>
+            <v-col class="text-center" cols="12" absolute style="color:white ;">
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>
         </v-footer>
