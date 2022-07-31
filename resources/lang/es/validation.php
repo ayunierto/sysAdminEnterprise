@@ -147,7 +147,7 @@ return [
     */
 
     'attributes' => [
-        'company' => 'compañía',
+        'company' => 'empresa',
         'category' => 'categoría',
         'mark' => 'marca',
         'measure' => 'medida',
@@ -166,7 +166,7 @@ return [
         'province' => 'provincia',
         'district' => 'distrito',
         'country_code' => 'código de área',
-        'state' => 'stado',
+        'state' => 'estado',
     ],
 
 ];
