@@ -18,8 +18,9 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
+        $role = Auth::user()->role;
         // Comprobando si el usuario es master
-        if (Auth::user()->role != 'master' || Auth::user()->role != 'admin') {
+        if ($role != 'admin' && $role != 'master') {
             abort(403, 'Acceso denegado.');
             return Redirect::route('login');
         }

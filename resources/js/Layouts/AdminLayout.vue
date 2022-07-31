@@ -50,7 +50,7 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-group class="white--text" color="white">
+                        <v-list-group class="white--text" color="white" v-if="$page.props.user.role == 'master'">
                             <v-icon slot="prependIcon" color="white">mdi-account-tie</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content style="color:white;">

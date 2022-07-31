@@ -41,32 +41,29 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('dashboard/categorias', CategoryController::class)->names('categories')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/empresas', CompanyController::class)->names('companies')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
 
 Route::resource('dashboard/marcas', MarkController::class)->names('marks')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
 
 Route::resource('dashboard/proveedores', ProviderController::class)->names('providers')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/lotes', BatchController::class)->names('batches')
-    ->middleware(['auth:sanctum']);
-
-Route::resource('dashboard/compañias', CompanyController::class)->names('batches')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/productos', ProductController::class)->names('products')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified']);
     
 Route::resource('dashboard/usuarios', UserController::class)->names('users')
-    ->middleware(['auth:sanctum']);
+    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
  
