@@ -274,9 +274,10 @@
                         <v-list-item @click="() => { }">
                             <v-list-item-title>Perfil</v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="() => { }">
+                        <v-list-item @click="logout">
                             <v-list-item-title>Cerrar Session</v-list-item-title>
                         </v-list-item>
+
                     </v-list>
                 </v-menu>
             </v-app-bar>
@@ -297,6 +298,7 @@
             </v-col>
         </v-footer>
         <!-- PIE DE PAGINA END -->
+
     </v-app>
 </template>
 
@@ -305,7 +307,22 @@ export default {
     data() {
         return {
             drawer: null,
+
         };
     },
+    methods: {
+
+        logout() {
+            this.$inertia.post(route('logout'));
+            // const win = window.open(this.route("logout"), "_blank");
+            // location.reload();
+
+            // setTimeout(function () {
+            //     // win.close();
+            //     this.$inertia.reload();
+            // }, 1000);
+            // location.reload();
+        },
+    }
 };
 </script>
