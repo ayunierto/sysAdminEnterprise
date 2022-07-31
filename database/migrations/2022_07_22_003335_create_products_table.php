@@ -21,16 +21,19 @@ class CreateProductsTable extends Migration
             $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('batches_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('code');
             $table->bigInteger('bar_code');
             $table->bigInteger('stock');
-            $table->double('purchase_price', 15,8);
-            $table->double('sale_price', 15, 8);
+            $table->decimal('purchase_price', 15,8);
+            $table->decimal('sale_price', 15, 8);
+            $table->decimal('price_by_unit', 15, 8)->nullable();
+            $table->decimal('wholesale_price', 15, 8)->nullable();
+            $table->decimal('special_price', 15, 8)->nullable();
             $table->string('description');
             $table->boolean('state');
             $table->date('expiration_date');
+            
             $table->timestamps();
         });
     }

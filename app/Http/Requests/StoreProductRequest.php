@@ -41,7 +41,6 @@ class StoreProductRequest extends FormRequest
             'measure' => 'required',
             'provider' => 'required',
             'presentation' => 'required',
-            'batch' => 'required',
         ];
     }
 }

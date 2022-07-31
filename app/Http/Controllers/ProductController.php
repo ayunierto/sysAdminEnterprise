@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use App\Models\Batch;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Mark;
 use App\Models\Measure;
 use App\Models\Presentation;
 use App\Models\Provider;
-use COM;
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ProductController extends Controller
@@ -37,7 +35,6 @@ class ProductController extends Controller
                     'measure' => Measure::find($product->measures_id)->name,
                     'provider' => Provider::find($product->providers_id)->name,
                     'presentation' => Presentation::find($product->presentations_id)->name,
-                    'batch' => Batch::find($product->batches_id)->code,
 
                     'name' => $product->name,
                     'code' => $product->code,
@@ -45,6 +42,9 @@ class ProductController extends Controller
                     'stock' => $product->stock,
                     'purchase_price' => $product->purchase_price,
                     'sale_price' => $product->sale_price,
+                    'price_by_unit' => $product->price_by_unit,
+                    'wholesale_price' => $product->wholesale_price,
+                    'special_price' => $product->special_price,
                     'description' => $product->description,
                     'state' => $product->state,
                     'expiration_date' => $product->expiration_date,
@@ -60,7 +60,6 @@ class ProductController extends Controller
             'measures' => Measure::all(),
             'providers' => Provider::all(),
             'presentations' => Presentation::all(),
-            'batches' => Batch::all(),
 
         ]);
     }
@@ -79,9 +78,6 @@ class ProductController extends Controller
             'measures' => Measure::all(),
             'providers' => Provider::all(),
             'presentations' => Presentation::all(),
-            'batches' => Batch::all(),
-            'csrf' => csrf_token(),
-
         ]);
     }
 
@@ -101,19 +97,22 @@ class ProductController extends Controller
             'measures_id' => $request->measure['id'],
             'providers_id' => $request->provider['id'],
             'presentations_id' => $request->presentation['id'],
-            'batches_id' => $request->batch['id'],
             'name' => $request->name,
             'code' => $request->code,
             'bar_code' => $request->bar_code,
             'stock' => $request->stock,
             'purchase_price' => $request->purchase_price,
             'sale_price' => $request->sale_price,
+            'price_by_unit' => $request->price_by_unit,
+            'wholesale_price' => $request->wholesale_price,
+            'special_price' => $request->special_price,
             'description' => $request->description,
             'state' => $request->state,
             'expiration_date' => $request->expiration_date,
 
         ]);
-        return Inertia::render('Products/Index');
+        return Redirect::route('products.index')->with('message', 'Producto agregado');
+
     }
 
     /**
@@ -145,9 +144,34 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+
+        $product = Product::find($id);
+
+        $product->update([
+            'companies_id' => $request->company['id'],
+            'categories_id' => $request->category['id'],
+            'marks_id' => $request->mark['id'],
+            'measures_id' => $request->measure['id'],
+            'providers_id' => $request->provider['id'],
+            'presentations_id' => $request->presentation['id'],
+            'name' => $request->name,
+            'code' => $request->code,
+            'bar_code' => $request->bar_code,
+            'stock' => $request->stock,
+            'purchase_price' => $request->purchase_price,
+            'sale_price' => $request->sale_price,
+            'price_by_unit' => $request->price_by_unit,
+            'wholesale_price' => $request->wholesale_price,
+            'special_price' => $request->special_price,
+            'description' => $request->description,
+            'state' => $request->state,
+            'expiration_date' => $request->expiration_date,
+        ]);
+
+        return Redirect::route('products.index')->with('message', 'Producto actualizado');
+
     }
 
     /**
@@ -156,8 +180,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+        return Redirect::route('products.index')->with('message', 'Producto eliminado');
+
     }
 }

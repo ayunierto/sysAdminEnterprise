@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Batch;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Mark;
@@ -26,7 +25,6 @@ class ProductFactory extends Factory
         $measures = Measure::count();
         $providers = Provider::count();
         $presentations = Presentation::count();
-        $batches = Batch::count();
 
         return [
             'companies_id' => rand(1, $companies),
@@ -35,13 +33,15 @@ class ProductFactory extends Factory
             'measures_id' => rand(1, $measures),
             'providers_id' => rand(1, $providers),
             'presentations_id' => rand(1, $presentations),
-            'batches_id' => rand(1, $batches),
             'name' =>$this->faker->sentence(2),
             'code' =>$this->faker->isbn10(),
             'bar_code' =>$this->faker->isbn13(),
             'stock' => rand(1, 999),
             'purchase_price' => rand(1,100),
             'sale_price' => rand(1,100),
+            'price_by_unit' => rand(1,100),
+            'wholesale_price' => rand(1,100),
+            'special_price' => rand(1,100),
             'description' =>$this->faker->sentence(6),
             'state' => rand(0,1),
             'expiration_date' => now(),
