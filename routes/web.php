@@ -40,14 +40,33 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::resource('dashboard/categorias', CategoryController::class)->names('categories');
-Route::resource('dashboard/empresas', CompanyController::class)->names('companies');
-Route::resource('dashboard/marcas', MarkController::class)->names('marks');
-Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures');
-Route::resource('dashboard/proveedores', ProviderController::class)->names('providers');
-Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations');
-Route::resource('dashboard/lotes', BatchController::class)->names('batches');
-Route::resource('dashboard/compañias', CompanyController::class)->names('batches');
-Route::resource('dashboard/productos', ProductController::class)->names('products');
-Route::resource('dashboard/usuarios', UserController::class)->names('users');
+Route::resource('dashboard/categorias', CategoryController::class)->names('categories')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/empresas', CompanyController::class)->names('companies')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/marcas', MarkController::class)->names('marks')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/proveedores', ProviderController::class)->names('providers')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/lotes', BatchController::class)->names('batches')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/compañias', CompanyController::class)->names('batches')
+    ->middleware(['auth:sanctum']);
+
+Route::resource('dashboard/productos', ProductController::class)->names('products')
+    ->middleware(['auth:sanctum']);
+    
+Route::resource('dashboard/usuarios', UserController::class)->names('users')
+    ->middleware(['auth:sanctum']);
  

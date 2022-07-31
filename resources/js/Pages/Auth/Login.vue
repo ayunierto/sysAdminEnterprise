@@ -23,14 +23,14 @@
                                             autofocus>
                                         </v-text-field>
 
-                                        <v-alert v-if="errors.email" 
+                                        <!-- <v-alert v-if="errors.email" 
                                         dense 
                                         dismissible 
                                         elevation="7" 
                                         outlined 
                                         text type="error">
                                         {{ errors.password }}
-                                        </v-alert>
+                                        </v-alert> -->
 
                                         <v-text-field
                                             label="Clave"
@@ -38,14 +38,14 @@
                                             v-model="form.password" required autocomplete="current-password">
                                         </v-text-field>
 
-                                        <v-alert v-if="errors.password" 
+                                        <!-- <v-alert v-if="errors.password" 
                                         dense 
                                         dismissible 
                                         elevation="7" 
                                         outlined 
                                         text type="error">
                                         {{ errors.password }}
-                                        </v-alert>
+                                        </v-alert> -->
 
                                         <v-checkbox
                                         name="remember"
