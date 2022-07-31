@@ -40,6 +40,7 @@
             :footer-props="{ itemsPerPageText: 'Filas por página' }">
             <template v-slot:top>
                 <v-toolbar flat>
+                    <!-- Comenario de prueba -->
                     <v-toolbar-title>Proveedores</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="600px">
