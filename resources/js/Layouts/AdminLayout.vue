@@ -112,7 +112,7 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-list-item link style="color:white;">
+                        <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-cash-multiple</v-icon>
                             </v-list-item-icon>
@@ -146,7 +146,7 @@
                                         </v-list-item>
                                     </inertia-link>
 
-                                    <v-list-item link style="color:white;">
+                                    <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-cube-send</v-icon>
@@ -159,7 +159,7 @@
                                         </v-list-item-title>
                                     </v-list-item>
 
-                                    <inertia-link :href="route('categories.index')">
+                                    <inertia-link :href="route('categories.index')" v-if="$page.props.user.role != 'seller'">
                                         <v-list-item link style="color:white;">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
@@ -171,7 +171,7 @@
                                         </v-list-item>
                                     </inertia-link>
 
-                                    <inertia-link :href="route('marks.index')">
+                                    <inertia-link :href="route('marks.index')" v-if="$page.props.user.role != 'seller'">
                                         <v-list-item link style="color:white;">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
@@ -184,7 +184,7 @@
                                     </inertia-link>
 
 
-                                    <v-list-item link style="color:white;">
+                                    <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-currency-usd</v-icon>
@@ -194,7 +194,7 @@
                                         </v-list-item-title>
                                     </v-list-item>
 
-                                    <v-list-item link style="color:white;">
+                                    <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-package-variant-closed</v-icon>
@@ -204,7 +204,7 @@
                                         </v-list-item-title>
                                     </v-list-item>
 
-                                    <v-list-item link style="color:white;">
+                                    <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-package-variant</v-icon>
@@ -228,7 +228,7 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-list-item link style="color:white;">
+                        <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-account-heart-outline</v-icon>
                             </v-list-item-icon>
@@ -237,7 +237,7 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <inertia-link :href="route('providers.index')">
+                        <inertia-link :href="route('providers.index')" v-if="$page.props.user.role != 'seller'">
                             <v-list-item link style="color:white;">
                                 <v-list-item-icon>
                                     <v-icon color="white">mdi-account-hard-hat</v-icon>
@@ -248,7 +248,7 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-item link style="color:white;">
+                        <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-spin mdi-cog</v-icon>
                             </v-list-item-icon>
