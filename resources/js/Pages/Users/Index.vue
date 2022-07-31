@@ -12,6 +12,11 @@
              :key="$page.props.errorBags.default.name[0]">
                 {{ item }}
             </v-alert>
+            <v-alert type="warning" border="left" dismissible 
+             v-for="item in $page.props.errorBags.default.company" 
+             :key="$page.props.errorBags.default.company[0]">
+                {{ item }}
+            </v-alert>
              <v-alert type="warning" border="left" dismissible 
              v-for="item in $page.props.errorBags.default.email" 
              :key="$page.props.errorBags.default.email[0]">
@@ -74,7 +79,18 @@
                                             ></v-text-field>
                                         </v-col>
 
-                                        
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-select
+                                            v-model="editedItem.company"
+                                            hint="Selecciones empresa"
+                                            :items="companies"
+                                            item-text="name"
+                                            item-value="abbr"
+                                            label="Selecciones empresa"
+                                            return-object
+                                            single-line
+                                            ></v-select>
+                                        </v-col>
 
                                         <v-col cols="12" sm="6" md="6" v-if="editedIndex > -1"> 
                                             <v-text-field
@@ -208,6 +224,7 @@
                 dialogDelete: false,
                 headers: [
                     { text: 'NOMBRE', value: 'name' },
+                    { text: 'EMPRESA', value: 'company' },
                     { text: 'CORREO', value: 'email' },
                     { text: 'CREADO', value: 'created_at' },
                     { text: 'ACTUALIZADO', value: 'updated_at' },
@@ -219,6 +236,7 @@
 
                 editedItem: {
                     name: '',
+                    company: '',
                     email: '',
                     password: '',
                     role: '',
@@ -230,6 +248,7 @@
 
                 defaultItem: {
                     name: '',
+                    company: '',
                     email: '',
                     password: '',
                     role: '',

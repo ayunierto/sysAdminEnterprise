@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Company;
 use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
@@ -22,6 +23,7 @@ class UserController extends Controller
             'users' => User::all()->map(function ($user){
                 return [
                     'id' => $user->id,
+                    'company' => Company::find($user->companies_id)->name,
                     'name' => $user->name,
                     'email' => $user->email,
                     'role' => $user->role,
@@ -30,6 +32,7 @@ class UserController extends Controller
                     'updated_at' => substr($user->updated_at, 0, 10),
                 ];
             }),
+            'companies' => Company::all(),
         ]);
     }
 
@@ -52,6 +55,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create([
+            'companies_id' => $request->company['id'],
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
@@ -95,6 +99,7 @@ class UserController extends Controller
 
         if ($request->change_password) {
             $user->update([
+                'companies_id' => $request->company['id'],
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
@@ -102,6 +107,7 @@ class UserController extends Controller
             ]);
         } else {
             $user->update([
+                'companies_id' => $request->company['id'],
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
