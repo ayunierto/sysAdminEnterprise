@@ -7,7 +7,7 @@
             <v-navigation-drawer app v-model="drawer" color="#1465bb">
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
-                <v-list color="#1465bb">
+                <v-list>
                     <v-list-item class="px-2">
                         <v-avatar size="70">
                             <v-img src="../img/empresa1/ecsmac8.png">
@@ -67,7 +67,7 @@
                                 <v-list-item-title>COMPRAS</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-                        <v-list-group>
+                        <v-list-group class="white--text" color="white">
                             <v-icon slot="prependIcon" color="white">mdi-spin mdi-cube</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content style="color:white;">
@@ -75,7 +75,8 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-list-item-group >
+                            <v-card color="#497fca">
+                              <v-list-item-group class="white--text" color="white">
 
                                 <inertia-link :href="route('products.index')">
                                     <v-list-item link style="color:white;">
@@ -161,6 +162,8 @@
                                 </v-list-item>
 
                             </v-list-item-group>
+                            </v-card>
+
                         </v-list-group>
 
                         <v-list-item link style="color:white;">
@@ -201,7 +204,7 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-list-group>
+                        <v-list-group class="white--text" color="white">
                             <v-icon slot="prependIcon" color="white">mdi-account-tie</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content style="color:white;">
@@ -209,8 +212,8 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-list-item-group >
-
+                            <v-card color="#497fca">
+                                <v-list-item-group>
                                 <v-list-item link style="color:white;">
                                     <v-list-item-icon>
                                         <v-spacer></v-spacer>
@@ -243,6 +246,8 @@
                                 </inertia-link>
 
                             </v-list-item-group>
+                            </v-card>
+
 
                         </v-list-group>
 
@@ -294,7 +299,7 @@
         </v-main>
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
-        <v-footer padless v-bind="color" height="60px">
+        <v-footer padless height="60px" color="#1465bb">
             <v-col class="text-center" cols="12" absolute>
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>

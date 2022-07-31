@@ -2752,10 +2752,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       drawer: null,
-      hidden: false,
-      color: {
-        color: "blue"
-      }
+      hidden: false // color: {
+      //     color: "blue",
+      // }
+
     };
   }
 });
@@ -5817,9 +5817,10 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("v-app", [[_c("v-navigation-drawer", _vm._b({
+  return _c("v-app", [[_c("v-navigation-drawer", {
     attrs: {
-      app: ""
+      app: "",
+      color: "#1465bb"
     },
     model: {
       value: _vm.drawer,
@@ -5828,93 +5829,124 @@ var render = function render() {
       },
       expression: "drawer"
     }
-  }, "v-navigation-drawer", _vm.color, false), [_c("v-list", [_c("v-list-item", {
+  }, [_c("v-list", [_c("v-list-item", {
     staticClass: "px-2"
-  }, [_c("v-list-item-avatar", [_c("v-img", {
+  }, [_c("v-avatar", {
     attrs: {
-      src: "https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2"
+      size: "70"
+    }
+  }, [_c("v-img", {
+    attrs: {
+      src: "../img/empresa1/ecsmac8.png"
     }
   })], 1), _vm._v(" "), _c("v-list-item-title", {
-    staticClass: "text-h6"
-  }, [_vm._v("ALPA PERÚ")])], 1), _vm._v(" "), _c("v-list-item", {
-    attrs: {
-      link: ""
+    staticClass: "text-h6",
+    staticStyle: {
+      color: "white"
     }
-  }, [_c("v-list-item-content", [_c("v-list-item-subtitle", [_vm._v("\n                            correo@gmail.com\n                        ")])], 1), _vm._v(" "), _c("v-fab-transition", [_c("v-btn", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: !_vm.hidden,
-      expression: "!hidden"
-    }],
-    attrs: {
-      color: "pink",
-      fab: "",
-      dark: "",
-      small: "",
-      absolute: "",
-      bottom: "",
-      right: ""
+  }, [_vm._v("ECSMAC EIRL")])], 1), _vm._v(" "), _c("v-list-item", [_c("v-list-item-content", [_c("v-list-item-subtitle", {
+    staticStyle: {
+      color: "white"
     }
-  }, [_c("v-icon", [_vm._v("mdi-spin mdi-cog")])], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
+  }, [_vm._v("\n                            CONSTRUYENDO FUTUROS\n                        ")])], 1)], 1)], 1), _vm._v(" "), _c("v-divider"), _vm._v(" "), _c("v-list", {
     attrs: {
       nav: "",
       dense: ""
     }
-  }, [_c("v-list-item-group", {
-    attrs: {
-      color: "primary"
-    }
-  }, [_c("inertia-link", {
+  }, [_c("v-list-item-group", [_c("inertia-link", {
     attrs: {
       href: _vm.route("dashboard")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
+    attrs: {
+      color: "white"
+    }
+  }, [_vm._v("mdi-monitor-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("INICIO")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-cart")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("VENTAS")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
+    attrs: {
+      color: "white"
+    }
+  }, [_vm._v("mdi-cart")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("VENTAS")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("COMPRAS")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
     attrs: {
-      "prepend-icon": "mdi-spin mdi-cube",
-      color: "primary"
+      color: "white"
+    }
+  }, [_vm._v("mdi-cash-multiple")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("COMPRAS")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
+    staticClass: "white--text",
+    attrs: {
+      color: "white"
     },
     scopedSlots: _vm._u([{
       key: "activator",
       fn: function fn() {
-        return [_c("v-list-item-content", [_c("v-list-item-title", [_vm._v("PRODUCTOS")])], 1)];
+        return [_c("v-list-item-content", {
+          staticStyle: {
+            color: "white"
+          }
+        }, [_c("v-list-item-title", [_vm._v("PRODUCTOS")])], 1)];
       },
       proxy: true
     }])
-  }, [_vm._v(" "), _c("v-list-item-group", {
+  }, [_c("v-icon", {
     attrs: {
-      color: "primary"
+      slot: "prependIcon",
+      color: "white"
+    },
+    slot: "prependIcon"
+  }, [_vm._v("mdi-spin mdi-cube")]), _vm._v(" "), _vm._v(" "), _c("v-card", {
+    attrs: {
+      color: "#497fca"
+    }
+  }, [_c("v-list-item-group", {
+    staticClass: "white--text",
+    attrs: {
+      color: "white"
     }
   }, [_c("inertia-link", {
     attrs: {
       href: _vm.route("products.index")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-format-list-bulleted")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                            LISTA PRODUCTOS\n                                        ")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-cube-send")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("\n                                        AGREGAR PRODUCTOS\n                                    ")])])], 1), _vm._v(" "), _c("inertia-link", {
@@ -5922,11 +5954,15 @@ var render = function render() {
       href: _vm.route("categories.index")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-book-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("CATEGORIAS")])])], 1)], 1), _vm._v(" "), _c("inertia-link", {
@@ -5934,87 +5970,149 @@ var render = function render() {
       href: _vm.route("marks.index")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-bookmark-plus")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("MARCAS")])])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-currency-usd")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("PRECIOS DE PRODUCTOS")])])], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-package-variant-closed")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("PRESENTACIÓN DE PRODUCTOS")])])], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
-  }, [_vm._v("mdi-package-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("LOTES DE PRODUCTOS")])])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_vm._v("mdi-package-variant")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("LOTES DE PRODUCTOS")])])], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-group")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("CLIENTES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
+    attrs: {
+      color: "white"
+    }
+  }, [_vm._v("mdi-account-group")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("CLIENTES")])], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-heart-outline")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("EMPLEADOS")])], 1)], 1), _vm._v(" "), _c("inertia-link", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
+    attrs: {
+      color: "white"
+    }
+  }, [_vm._v("mdi-account-heart-outline")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("EMPLEADOS")])], 1)], 1), _vm._v(" "), _c("inertia-link", {
     attrs: {
       href: _vm.route("providers.index")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-account-hard-hat")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("PROVEEDORES")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
+    attrs: {
+      color: "white"
+    }
+  }, [_vm._v("mdi-account-hard-hat")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("PROVEEDORES")])], 1)], 1)], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
-  }, [_c("v-list-item-icon", [_c("v-icon", [_vm._v("mdi-spin mdi-cog")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("AJUSTES")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
+  }, [_c("v-list-item-icon", [_c("v-icon", {
     attrs: {
-      "prepend-icon": "mdi-account-tie",
-      color: "primary"
+      color: "white"
+    }
+  }, [_vm._v("mdi-spin mdi-cog")])], 1), _vm._v(" "), _c("v-list-item-content", [_c("v-list-item-title", [_vm._v("AJUSTES")])], 1)], 1), _vm._v(" "), _c("v-list-group", {
+    staticClass: "white--text",
+    attrs: {
+      color: "white"
     },
     scopedSlots: _vm._u([{
       key: "activator",
       fn: function fn() {
-        return [_c("v-list-item-content", [_c("v-list-item-title", [_vm._v("ADMINISTRACION")])], 1)];
+        return [_c("v-list-item-content", {
+          staticStyle: {
+            color: "white"
+          }
+        }, [_c("v-list-item-title", [_vm._v("ADMINISTRACION")])], 1)];
       },
       proxy: true
     }])
-  }, [_vm._v(" "), _c("v-list-item-group", {
+  }, [_c("v-icon", {
     attrs: {
-      color: "primary"
+      slot: "prependIcon",
+      color: "white"
+    },
+    slot: "prependIcon"
+  }, [_vm._v("mdi-account-tie")]), _vm._v(" "), _vm._v(" "), _c("v-card", {
+    attrs: {
+      color: "#497fca"
     }
-  }, [_c("v-list-item", {
+  }, [_c("v-list-item-group", [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-office-building")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("EMPRESAS")])])], 1), _vm._v(" "), _c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
   }, [_vm._v("mdi-account-key")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("ACCESOS")])])], 1), _vm._v(" "), _c("inertia-link", {
@@ -6022,18 +6120,26 @@ var render = function render() {
       href: _vm.route("measures.index")
     }
   }, [_c("v-list-item", {
+    staticStyle: {
+      color: "white"
+    },
     attrs: {
       link: ""
     }
   }, [_c("v-list-item-icon", [_c("v-spacer"), _vm._v(" "), _c("v-icon", {
     attrs: {
+      color: "white",
       small: ""
     }
-  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("UNIDADES DE MEDIDA")])])], 1)], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", _vm._b({
+  }, [_vm._v("mdi-weight-kilogram")])], 1), _vm._v(" "), _c("v-list-item-title", [_c("h5", [_vm._v("UNIDADES DE MEDIDA")])])], 1)], 1)], 1)], 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-app-bar", {
     attrs: {
-      app: ""
+      app: "",
+      color: "#1465bb"
     }
-  }, "v-app-bar", _vm.color, false), [_c("v-app-bar-nav-icon", {
+  }, [_c("v-app-bar-nav-icon", {
+    attrs: {
+      color: "white"
+    },
     on: {
       click: function click($event) {
         _vm.drawer = !_vm.drawer;
@@ -6055,9 +6161,14 @@ var render = function render() {
             attrs = _ref.attrs;
         return [_c("v-btn", _vm._g(_vm._b({
           attrs: {
-            icon: ""
+            icon: "",
+            color: "white"
           }
-        }, "v-btn", attrs, false), on), [_c("v-icon", [_vm._v("mdi-dots-vertical")])], 1)];
+        }, "v-btn", attrs, false), on), [_c("v-icon", {
+          attrs: {
+            color: "white"
+          }
+        }, [_vm._v("mdi-dots-vertical")])], 1)];
       }
     }])
   }, [_vm._v(" "), _c("v-list", [_c("v-list-item", {
@@ -6068,12 +6179,13 @@ var render = function render() {
     on: {
       click: function click() {}
     }
-  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2), _vm._v(" "), _c("pre", [_vm._v(_vm._s(_vm.$page))])], 1), _vm._v(" "), _c("v-footer", _vm._b({
+  }, [_c("v-list-item-title", [_vm._v("Cerrar Session")])], 1)], 1)], 1)], 1)], _vm._v(" "), _c("v-main", [_c("v-container", [_vm._t("default")], 2), _vm._v(" "), _c("pre", [_vm._v(_vm._s(_vm.$page))])], 1), _vm._v(" "), _c("v-footer", {
     attrs: {
       padless: "",
-      height: "60px"
+      height: "60px",
+      color: "#1465bb"
     }
-  }, "v-footer", _vm.color, false), [_c("v-col", {
+  }, [_c("v-col", {
     staticClass: "text-center",
     attrs: {
       cols: "12",
