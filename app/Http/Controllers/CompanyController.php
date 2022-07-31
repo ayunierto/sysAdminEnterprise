@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
@@ -27,7 +28,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Companies/Create');
+        // return Inertia::render('Companies/Create');
     }
 
     /**
@@ -38,8 +39,19 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        Company::create($request->validate());
-        return Inertia::render('Companies/Index');
+        Company::create([
+            'name' => $request->name,
+            'ruc' => $request->ruc,
+            'description' => $request->description,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'department' => $request->department,
+            'province' => $request->province,
+            'district' => $request->district,
+            'country_code' => $request->country_code,
+            'state' => $request->state,
+        ]);
+        return Redirect::route('companies.index')->with('message', 'Empresa creada');
     }
 
     /**
@@ -50,7 +62,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        return Inertia::render('Companies/Show', compact('company'));
+        // return Inertia::render('Companies/Show', compact('company'));
     }
 
     /**
@@ -61,7 +73,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return Inertia::render('Companies/Edit', compact('company'));
+        // return Inertia::render('Companies/Edit', compact('company'));
     }
 
     /**
@@ -71,10 +83,23 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(UpdateCompanyRequest $request, $id)
     {
-        $company->update($request->validate);
-        return Inertia::render('Companies/Index');
+        $company = Company::find($id);
+        $company->update([
+            'name' => $request->name,
+            'ruc' => $request->ruc,
+            'description' => $request->description,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'department' => $request->department,
+            'province' => $request->province,
+            'district' => $request->district,
+            'country_code' => $request->country_code,
+            'state' => $request->state,
+        ]);
+        return Redirect::route('companies.index')->with('message', 'Empresa actualizada');
+
     }
 
     /**
@@ -83,9 +108,11 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
+        $company = Company::find($id);
         $company->delete();
-        return Inertia::render('Companies/Index');
+        return Redirect::route('companies.index')->with('message', 'Empresa eliminada');
+
     }
 }

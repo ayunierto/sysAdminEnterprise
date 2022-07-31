@@ -8,6 +8,7 @@ use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,13 +24,16 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+Route::get('/', function() {
+    return redirect()->route('login');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -45,4 +49,5 @@ Route::resource('dashboard/presentacion', PresentationController::class)->names(
 Route::resource('dashboard/lotes', BatchController::class)->names('batches');
 Route::resource('dashboard/compañias', CompanyController::class)->names('batches');
 Route::resource('dashboard/productos', ProductController::class)->names('products');
+Route::resource('dashboard/usuarios', UserController::class)->names('users');
  

@@ -1,64 +1,113 @@
 <template>
-    <jet-authentication-card>
-        <template #logo>
-            <jet-authentication-card-logo />
-        </template>
+    <v-app>
+        <v-content>
+            <v-container fluid fill-height>
+                <v-layout align-center justify-center>
+                    <v-flex xs12 sm8 md4>
+                        <v-card class="elevation-12">
+                            <v-toolbar dark color="primary">
+                                <v-toolbar-title>Identificarse</v-toolbar-title>
+                            </v-toolbar>
 
-        <jet-validation-errors class="mb-4" />
+                                <form @submit.prevent="submit">
+                                    <v-card-text>
+                                        <div v-if="status">
+                                            {{ status }}
+                                        </div>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
+                                        <v-text-field
+                                            label="Correo"
+                                            type="email"
+                                            v-model="form.email" 
+                                            required 
+                                            autofocus>
+                                        </v-text-field>
 
-        <form @submit.prevent="submit">
-            <div>
-                <jet-label for="email" value="Email" />
-                <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
-            </div>
+                                        <v-alert v-if="errors.email" 
+                                        dense 
+                                        dismissible 
+                                        elevation="7" 
+                                        outlined 
+                                        text type="error">
+                                        {{ errors.password }}
+                                        </v-alert>
 
-            <div class="mt-4">
-                <jet-label for="password" value="Password" />
-                <jet-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" />
-            </div>
+                                        <v-text-field
+                                            label="Clave"
+                                            type="password"
+                                            v-model="form.password" required autocomplete="current-password">
+                                        </v-text-field>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <jet-checkbox name="remember" v-model="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
+                                        <v-alert v-if="errors.password" 
+                                        dense 
+                                        dismissible 
+                                        elevation="7" 
+                                        outlined 
+                                        text type="error">
+                                        {{ errors.password }}
+                                        </v-alert>
 
-            <div class="flex items-center justify-end mt-4">
-                <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </inertia-link>
+                                        <v-checkbox
+                                        name="remember"
+                                        v-model="form.remember"
+                                        label="Recordame"
+                                        ></v-checkbox>
 
-                <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Login
-                </jet-button>
-            </div>
-        </form>
-    </jet-authentication-card>
+                                    </v-card-text>
+                                    
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+
+                                        <v-btn color="primary" type="submit" :disabled="form.processing">
+                                            Ingresar
+                                        </v-btn>
+                                    </v-card-actions>
+                                </form>
+
+
+                            
+
+                                <!-- <div>
+                                    <jet-input id="email" type="email" class="mt-1 block w-full" 
+                                    v-model="form.email" required autofocus />
+                                </div> -->
+
+                                <!-- <div class="mt-4">
+                                    <jet-label for="password" value="Password" />
+                                    <jet-input id="password" type="password" class="mt-1 block w-full" 
+                                    v-model="form.password" required autocomplete="current-password" />
+                                </div> -->
+
+                                <!-- <div class="block mt-4">
+                                    <label class="flex items-center">
+                                        <jet-checkbox name="remember" v-model="form.remember" />
+                                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                                    </label>
+                                </div> -->
+
+                                <!-- <div class="flex items-center justify-end mt-4">
+                                    <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
+                                        Forgot your password?
+                                    </inertia-link>
+
+                                    <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                                        Ingresar
+                                    </jet-button>
+                                </div> -->
+
+
+                        </v-card>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
-    import JetAuthenticationCard from '@/Jetstream/AuthenticationCard'
-    import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo'
-    import JetButton from '@/Jetstream/Button'
-    import JetInput from '@/Jetstream/Input'
-    import JetCheckbox from '@/Jetstream/Checkbox'
-    import JetLabel from '@/Jetstream/Label'
-    import JetValidationErrors from '@/Jetstream/ValidationErrors'
 
     export default {
         components: {
-            JetAuthenticationCard,
-            JetAuthenticationCardLogo,
-            JetButton,
-            JetInput,
-            JetCheckbox,
-            JetLabel,
-            JetValidationErrors
         },
 
         props: {

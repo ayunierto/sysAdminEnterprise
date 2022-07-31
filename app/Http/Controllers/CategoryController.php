@@ -101,7 +101,6 @@ class CategoryController extends Controller
     /**
      * Remove the specified category from storage.
      *
-     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

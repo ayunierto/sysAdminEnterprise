@@ -9,25 +9,22 @@
         <div v-if="$page.props.errorBags.default">
             <v-alert type="warning" border="left" dismissible 
              v-for="item in $page.props.errorBags.default.company" 
-             :key="$page.props.errorBags.default.company[0]"   
-            >
+             :key="$page.props.errorBags.default.company[0]">
                 {{ item }}
             </v-alert>
              <v-alert type="warning" border="left" dismissible 
              v-for="item in $page.props.errorBags.default.name" 
-             :key="$page.props.errorBags.default.name[0]"   
-            >
+             :key="$page.props.errorBags.default.name[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
              v-for="item in $page.props.errorBags.default.description" 
-             :key="$page.props.errorBags.default.description[0]"   
-            >
+             :key="$page.props.errorBags.default.description[0]">
                 {{ item }}
             </v-alert>
         </div>
         
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" 
+        <v-data-table :headers="headers" :items="desserts" sort-by="name" 
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >

@@ -14,6 +14,18 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        Company::factory(20)->create();
+        Company::create([
+            'name' => 'ALPA PERU',
+            'ruc' => '0000000000',
+            'description' => 'ALPA PERU',
+            'phone' => '999999999',
+            'address' => 'Cajamarca, Cajamarca, Cajamarca',
+            'department' => 'Cajamarca',
+            'province' => 'Cajamarca',
+            'district' => 'Cajamarca',
+            'country_code' => '06001',
+            'state' => 1,
+        ]);
+        Company::factory(50)->create();
     }
 }

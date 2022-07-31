@@ -50,6 +50,57 @@
                             </v-list-item>
                         </inertia-link>
 
+                                                <v-list-group prepend-icon="mdi-account-tie" color="primary">
+
+                            <template v-slot:activator>
+                                <v-list-item-content>
+                                    <v-list-item-title>ADMINISTRACION</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+
+                            <v-list-item-group color="primary">
+
+                                <inertia-link :href="route('companies.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-office-building</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>EMPRESAS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
+
+                                <inertia-link :href="route('users.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-account-key</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>USUARIOS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
+
+
+                                <inertia-link :href="route('measures.index')">
+                                    <v-list-item link>
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon small>mdi-weight-kilogram</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>UNIDADES DE MEDIDA</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
+                                </inertia-link>
+
+                            </v-list-item-group>
+
+                        </v-list-group>
+
                         <v-list-item link>
                             <v-list-item-icon>
                                 <v-icon>mdi-cart</v-icon>
@@ -201,51 +252,6 @@
                             </v-list-item-content>
                         </v-list-item>
 
-                        <v-list-group prepend-icon="mdi-account-tie" color="primary">
-
-                            <template v-slot:activator>
-                                <v-list-item-content>
-                                    <v-list-item-title>ADMINISTRACION</v-list-item-title>
-                                </v-list-item-content>
-                            </template>
-
-                            <v-list-item-group color="primary">
-
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-office-building</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>EMPRESAS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
-
-                                <v-list-item link>
-                                    <v-list-item-icon>
-                                        <v-spacer></v-spacer>
-                                        <v-icon small>mdi-account-key</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title>
-                                        <h5>ACCESOS</h5>
-                                    </v-list-item-title>
-                                </v-list-item>
-                                <inertia-link :href="route('measures.index')">
-                                    <v-list-item link>
-                                        <v-list-item-icon>
-                                            <v-spacer></v-spacer>
-                                            <v-icon small>mdi-weight-kilogram</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-title>
-                                            <h5>UNIDADES DE MEDIDA</h5>
-                                        </v-list-item-title>
-                                    </v-list-item>
-                                </inertia-link>
-
-                            </v-list-item-group>
-
-                        </v-list-group>
-
                     </v-list-item-group>
                 </v-list>
             </v-navigation-drawer>
@@ -276,9 +282,10 @@
                         <v-list-item @click="() => { }">
                             <v-list-item-title>Perfil</v-list-item-title>
                         </v-list-item>
-                        <v-list-item @click="() => { }">
+                        <v-list-item @click="logout">
                             <v-list-item-title>Cerrar Session</v-list-item-title>
                         </v-list-item>
+
                     </v-list>
                 </v-menu>
 
@@ -298,6 +305,7 @@
             </v-col>
         </v-footer>
         <!-- PIE DE PAGINA END -->
+
     </v-app>
 </template>
 
@@ -312,5 +320,19 @@ export default {
             }
         };
     },
+    methods: {
+
+        logout() {
+            this.$inertia.post(route('logout'));
+            // const win = window.open(this.route("logout"), "_blank");
+            // location.reload();
+
+            // setTimeout(function () {
+            //     // win.close();
+            //     this.$inertia.reload();
+            // }, 1000);
+            // location.reload();
+        },
+    }
 };
 </script>
