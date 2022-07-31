@@ -13,11 +13,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-<<<<<<< HEAD
 /public/js/app.js
 /public/css/app.css
-=======
-public/css/app.css
-public/js/app.js
-
->>>>>>> 071a0adacd500d606436e6c7e20182ab01c70301
