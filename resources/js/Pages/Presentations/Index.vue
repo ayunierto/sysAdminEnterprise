@@ -24,7 +24,7 @@
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Presentaciones</v-toolbar-title>
+                    <v-toolbar-title>Lista de Presentaciones</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
@@ -34,7 +34,7 @@
                     
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                            Nueva presentación
+                            Agregar Presentación
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-text-field
