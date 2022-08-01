@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Company;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -19,15 +20,9 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('Categories/Index', [
-            'categories' => Category::all()->map(function ($category){
-                return [
-                    'id' => $category->id,
-                    'company' => Company::find($category->companies_id)->name,
-                    'name' => $category->name,
-                    'description' => $category->description,
-                ];
-            }),
+            'categories' => Category::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
+            'user_company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -38,7 +33,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Categories/Create');
+        // return Inertia::render('Categories/Create');
     }
 
     /**
@@ -49,11 +44,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        Category::create([
-            'companies_id' => $request->company['id'],
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        Category::create($request->all());
         return Redirect::route('categories.index')->with('message', 'Categoría agregada');
     }
 
@@ -88,14 +79,8 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::find($id);
-
-        $category->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-
+        $category->update($request->all());
         return Redirect::route('categories.index')->with('message', 'Categoría actualizada');
-
     }
 
     /**
@@ -105,10 +90,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-
         $category = Category::find($id);
         $category->delete();
         return Redirect::route('categories.index')->with('message', 'Categoría eliminada');
-
     }
 }

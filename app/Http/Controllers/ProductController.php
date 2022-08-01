@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::all(),
+            'products' => Product::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
             'categories' => Category::all(),
             'marks' => Mark::all(),

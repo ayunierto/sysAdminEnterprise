@@ -1,15 +1,14 @@
 <template>
     <admin-layout>
 
-        <v-alert type="success" border="left" dismissible 
-        v-if="$page.props.flash.message">
+        <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
-
+        
         <div v-if="$page.props.errorBags.default">
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.company" 
-             :key="$page.props.errorBags.default.company[0]">
+             v-for="item in $page.props.errorBags.default.companies_id" 
+             :key="$page.props.errorBags.default.companies_id[0]">
                 {{ item }}
             </v-alert>
              <v-alert type="warning" border="left" dismissible 
@@ -23,24 +22,23 @@
                 {{ item }}
             </v-alert>
         </div>
+        <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Categorías
-                        
-                    </v-toolbar-title>
+                    <v-toolbar-title>Categorías</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
                     <v-spacer></v-spacer>
 
-                    <v-dialog v-model="dialog" max-width="600px" >
+                    <v-dialog v-model="dialog" max-width="700px" >
                     
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" >
-                            Nueva Categoría
+                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            Nuevo Categoría
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-text-field
@@ -60,15 +58,14 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
                                         <v-select
-                                        v-model="editedItem.company"
-                                        hint="Selecciones empresa"
+                                        v-model="editedItem.companies_id"
+                                        hint="Seleccione empresa"
                                         :items="companies"
                                         item-text="name"
-                                        item-value="abbr"
-                                        label="Selecciones empresa"
-                                        return-object
+                                        item-value="id"
+                                        label="Seleccione empresa"
                                         single-line
                                         ></v-select>
                                     </v-col>
@@ -80,7 +77,7 @@
                                         required
                                         ></v-text-field>
                                     </v-col>
-                                    
+
                                     <v-col cols="12" sm="12" md="12">
                                         <v-textarea v-model="editedItem.description" class="mx-2"
                                             label="Descripción" rows="2" hint="Descripcion de la categoría">
@@ -145,12 +142,23 @@
     import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['categories', 'companies'],
+        props: [
+            'companies', 
+            'categories', 
+            'user_company',
+        ],
         components: {
             AdminLayout,
         },
         data () {
             return {
+
+                menu: false,
+
+                items_state: [
+                    { name: 'Activo', value: 1 },
+                    { name: 'Inactivo', value: 0 },
+                ],
                 
                 search: '',
                 dialog: false,
@@ -165,15 +173,13 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    company: '',
-                    companies_id: '',
+                    companies_id: this.user_company.id,
                     name: '',
                     description: '',
                 },
 
                 defaultItem: {
-                    company: '',
-                    companies_id: '',
+                    companies_id: this.user_company.id,
                     name: '',
                     description: '',
                 },
@@ -200,6 +206,7 @@
 
         created () {
             this.initialize();
+
         },
 
         
@@ -218,6 +225,7 @@
         },
 
         methods: {
+
             initialize () {
                 this.desserts = this.categories
             },
