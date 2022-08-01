@@ -56,9 +56,12 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        Product::create($request->all());
-        return Redirect::route('products.index')->with('message', 'Producto agregado');
-
+        if (Auth::user()->role == 'seller') {
+            return Redirect::route('products.index')->with('message', 'No tiene permisos para realizar esta acción');
+        } else {
+            Product::create($request->all());
+            return Redirect::route('products.index')->with('message', 'Producto agregado');
+        }
     }
 
     /**
@@ -92,10 +95,13 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        $product = Product::find($id);
-        $product->update($request->all());
-        return Redirect::route('products.index')->with('message', 'Producto actualizado');
-
+        if (Auth::user()->role == 'seller') {
+            return Redirect::route('products.index')->with('message', 'No tiene permisos para realizar esta acción');
+        } else {
+            $product = Product::find($id);
+            $product->update($request->all());
+            return Redirect::route('products.index')->with('message', 'Producto actualizado');
+        }
     }
 
     /**
@@ -106,9 +112,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $product->delete();
-        return Redirect::route('products.index')->with('message', 'Producto eliminado');
-
+        if (Auth::user()->role == 'seller') {
+            return Redirect::route('products.index')->with('message', 'No tiene permisos para realizar esta acción');
+        } else {
+            $product = Product::find($id);
+            $product->delete();
+            return Redirect::route('products.index')->with('message', 'Producto eliminado');
+        }
     }
 }
