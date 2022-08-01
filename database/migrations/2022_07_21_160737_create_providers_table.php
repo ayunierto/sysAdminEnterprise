@@ -21,7 +21,7 @@ class CreateProvidersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('city');
-            $table->string('state');
+            $table->boolean('state');
             $table->string('description');
             $table->timestamps();
         });

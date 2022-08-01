@@ -23,7 +23,7 @@ class ProviderFactory extends Factory
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
             'city' => $this->faker->country(),
-            'state' => $this->faker->country(),
+            'state' => rand(1,0),
             'description' => $this->faker->sentence(5),
         ];
     }

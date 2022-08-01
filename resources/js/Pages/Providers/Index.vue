@@ -24,12 +24,12 @@
             <template v-slot:top>
                 <v-toolbar flat>
                     <!-- Comenario de prueba -->
-                    <v-toolbar-title>Proveedores</v-toolbar-title>
+                    <v-toolbar-title>Lista de Proveedores</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="600px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Nuevo Proveedor
+                                Agregar Proveedor
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
@@ -84,8 +84,15 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                           <v-text-field v-model="editedItem.state" label="Estado*" required>
-                                            </v-text-field>
+                                            <v-select
+                                            v-model="editedItem.state"
+                                            :items="items_state"
+                                            item-text="name"
+                                            item-value="value"
+                                            label="Seleccione estado*"
+                                            persistent-hint
+                                            single-line
+                                            ></v-select>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -151,6 +158,11 @@ export default {
     },
     data() {
         return {
+
+            items_state: [
+                    { name: 'Activo', value: 1 },
+                    { name: 'Inactivo', value: 0 },
+            ],
 
             dialog: false,
             dialogDelete: false,

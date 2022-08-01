@@ -30,7 +30,7 @@ class StoreProviderRequest extends FormRequest
             'description' => 'required|string|max:250',
             'phone' => 'required|string|max:50',
             'city' => 'required|string|max:50',
-            'state' => 'required|string|max:50'
+            'state' => 'required|max:50'
         ];
     }
 }
