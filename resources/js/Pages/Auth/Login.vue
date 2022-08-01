@@ -7,7 +7,7 @@
                         <v-card class="elevation-12">
                             <v-toolbar dark color="primary">
                                 <v-toolbar-title>Identificarse</v-toolbar-title>
-                            </v-toolbar>
+                            </v-toolbar> 
 
                                 <form @submit.prevent="submit">
                                     <v-card-text>
@@ -23,14 +23,14 @@
                                             autofocus>
                                         </v-text-field>
 
-                                        <!-- <v-alert v-if="errors.email" 
+                                        <v-alert v-if="errors.email" 
                                         dense 
                                         dismissible 
                                         elevation="7" 
                                         outlined 
                                         text type="error">
-                                        {{ errors.password }}
-                                        </v-alert> -->
+                                        {{ errors.email }}
+                                        </v-alert>
 
                                         <v-text-field
                                             label="Clave"
@@ -38,14 +38,14 @@
                                             v-model="form.password" required autocomplete="current-password">
                                         </v-text-field>
 
-                                        <!-- <v-alert v-if="errors.password" 
+                                        <v-alert v-if="errors.password" 
                                         dense 
                                         dismissible 
                                         elevation="7" 
                                         outlined 
                                         text type="error">
                                         {{ errors.password }}
-                                        </v-alert> -->
+                                        </v-alert>
 
                                         <v-checkbox
                                         name="remember"
@@ -112,7 +112,8 @@
 
         props: {
             canResetPassword: Boolean,
-            status: String
+            status: String,
+            errors: Object,
         },
 
         data() {
