@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
 use Database\Seeders\ProviderSeeder;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,19 +21,7 @@ class ProviderController extends Controller
     public function index()
     {
         return Inertia::render('Providers/Index', [
-            'providers' => Provider::all()->map(function ($provider) {
-                return [
-                    'id' => $provider->id,
-                    'company' => Company::find($provider->companies_id)->name,
-                    'name' => $provider->name,
-                    'document' => $provider->document,
-                    'address' => $provider->address,
-                    'phone' => $provider->phone,
-                    'city' => $provider->city,
-                    'state' => $provider->state,
-                    'description' => $provider->description,
-                ];
-            }),
+            'providers' => Provider::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
         ]);
     }
@@ -44,7 +33,7 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Providers/Create');
+        // return Inertia::render('Providers/Create');
     }
 
     /**
@@ -55,16 +44,7 @@ class ProviderController extends Controller
      */
     public function store(StoreProviderRequest $request)
     {
-        Provider::create([
-            'companies_id' => $request->company['id'],
-            'name' => $request->name,
-            'document' => $request->document,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'city' => $request->city,
-            'state' => $request->state,
-            'description' => $request->description,
-        ]);
+        Provider::create($request->all());
         return Redirect::route('providers.index')->with('message', 'Proveedor agregado');
     }
 
@@ -100,15 +80,7 @@ class ProviderController extends Controller
     public function update(UpdateProviderRequest $request, $id)
     {
         $provider = Provider::find($id);
-        $provider->update([
-            'name' => $request->name,
-            'document' => $request->document,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'city' => $request->city,
-            'state' => $request->state,
-            'description' => $request->description,
-        ]);
+        $provider->update($request->all());
         return Redirect::route('providers.index')->with('message', 'Proveedor actualizado');
     }
 

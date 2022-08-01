@@ -34,27 +34,33 @@
                             </v-card-title>
                         </template>
                         <v-card>
-                            <!-- Titulo de modal agreagar Marca -->
+                            <!-- Titulo de modal agregar  -->
                             <v-card-title>
                                 <span class="text-h5">{{ formTitle }}</span>
                             </v-card-title>
 
-                            <!-- contenido de modal agreagar Marca -->
+                            <!-- contenido de modal agregar  -->
                             <v-card-text>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="6" md="6">
-                                                <v-select v-model="editedItem.company" hint="Selecciones Empresa"
-                                                :items="companies" item-text="name" item-value="abbr"
-                                                label="Seleccione Empresa" return-object single-line></v-select>
+                                        <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'"> 
+                                            <v-select 
+                                            v-model="editedItem.companies_id" 
+                                            hint="Selecciones Empresa"
+                                            :items="companies" 
+                                            item-text="name" 
+                                            item-value="id"
+                                            label="Seleccione Empresa" 
+                                            single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
-                                                required></v-text-field>
+                                            <v-text-field v-model="editedItem.name" 
+                                            label="Nombre o Razon Social*"
+                                            required>
+                                            </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC"
-                                                required>
+                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC" required>
                                             </v-text-field>
                                         </v-col>
 
@@ -67,16 +73,19 @@
                                             <v-text-field v-model="editedItem.phone" label="Teléfono*" required>
                                             </v-text-field>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.state" label="Pais*" required>
-                                            </v-text-field>
-                                        </v-col>
+                                        
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.city" label="Ciudad*" required>
                                             </v-text-field>
                                         </v-col>
+
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.description" label="Descripción">
+                                           <v-text-field v-model="editedItem.state" label="Estado*" required>
+                                            </v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.description" label="Descripción*">
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
@@ -84,7 +93,7 @@
                                 <small>*Datos
                                     obligatorios</small>
                             </v-card-text>
-                            <!-- Acciones de modal agregar Marca -->
+                            <!-- Acciones de modal agregar  -->
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red darken-1" text @click="close">
@@ -158,8 +167,7 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                company: '',
-                companies_id: '',
+                companies_id: this.$page.props.user.companies_id,
                 name: '',
                 document: '',
                 address: '',
@@ -170,13 +178,12 @@ export default {
             },
 
             defaultItem: {
-                company: '',
-                companies_id: '',
+                companies_id: this.$page.props.user.companies_id,
                 name: '',
                 document: '',
                 address: '',
                 city: '',
-                state: '',
+                state: 1,
                 phone: '',
                 description: '',
             },
