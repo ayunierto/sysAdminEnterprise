@@ -8,6 +8,7 @@ use App\Http\Requests\StoreMarkRequest;
 use App\Http\Requests\UpdateMarkRequest;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
@@ -19,15 +20,9 @@ class MarkController extends Controller
     public function index()
     {
         return Inertia::render('Marks/Index', [
-            'marks' => Mark::all()->map(function ($mark) {
-                return [
-                    'id' => $mark->id,
-                    'company' => Company::find($mark->companies_id)->name,
-                    'name' => $mark->name,
-                    'description' => $mark->description,
-                ];
-            }),
+            'marks' => Mark::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
+            'user_company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -49,11 +44,7 @@ class MarkController extends Controller
      */
     public function store(StoreMarkRequest $request)
     {
-        Mark::create([
-            'companies_id' => $request->company['id'],
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        Mark::create($request->all());
         return Redirect::route('marks.index')->with('message', 'Marca agregada');
     }
 
@@ -89,10 +80,7 @@ class MarkController extends Controller
     public function update(UpdateMarkRequest $request, $id)
     {
         $mark = Mark::find($id);
-        $mark->update([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
+        $mark->update($request->all());
         return Redirect::route('marks.index')->with('message', 'Marca actualizada');
     }
 

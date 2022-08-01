@@ -24,7 +24,7 @@ class StoreMarkRequest extends FormRequest
     public function rules()
     {
         return [
-            'company'=> 'required',
+            'companies_id'=> 'required',
             'name'=> 'required|string|max:50',
             'description'=> 'required|string|max:250',
         ];
