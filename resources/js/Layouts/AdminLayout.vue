@@ -306,8 +306,8 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ $page }}</pre>
         </v-main>
+        
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
         <v-footer padless height="60px" color="#1465bb">
