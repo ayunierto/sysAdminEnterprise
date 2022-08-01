@@ -13,7 +13,7 @@ class UpdatePresentationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
