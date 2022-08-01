@@ -59,7 +59,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
-            'password' => $request->password,
+            'password' =>bcrypt($request->password),
         ]);
         return Redirect::route('users.index')->with('message', 'Usuario agregado');
     }
@@ -130,7 +130,7 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->delete();
-        return Redirect::route('categories.index')->with('message', 'Categoría eliminada');
+        return Redirect::route('users.index')->with('message', 'Usuario eliminado');
 
     }
 }
