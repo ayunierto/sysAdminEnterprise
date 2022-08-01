@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -56,20 +60,18 @@
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field
                                             v-model="editedItem.name"
-                                            :rules="[rules.required]"
                                             label="Nombre"
                                             ></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-select
-                                            v-model="editedItem.company"
+                                            v-model="editedItem.companies_id"
                                             hint="Selecciones empresa"
                                             :items="companies"
                                             item-text="name"
-                                            item-value="abbr"
+                                            item-value="id"
                                             label="Selecciones empresa"
-                                            return-object
                                             single-line
                                             ></v-select>
                                         </v-col>
@@ -100,7 +102,6 @@
                                         <v-col cols="12" sm="6" md="6" >
                                             <v-text-field
                                             v-model="editedItem.email"
-                                            :rules="[rules.required]"
                                             label="Correo"
                                             ></v-text-field>
                                         </v-col>
@@ -109,9 +110,8 @@
                                             <v-select
                                             v-model="editedItem.role"
                                             :items="roles"
-                                            :rules="[rules.required]"
                                             item-text="name"
-                                            item-value="abbr"
+                                            item-value="value"
                                             label="Selecione permisos"
                                             persistent-hint
                                             hint="Selecione permiso" 
@@ -178,7 +178,7 @@
     import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['users', 'companies'],
+        props: ['users', 'companies', 'company'],
         components: {
             AdminLayout,
         },
@@ -187,18 +187,13 @@
 
                 // Para clave
                 show1: false,
-                rules: {
-                    required: value => !!value || 'Requerido.',
-                    min: v => v.length >= 8 || 'Al menos 8 carácteres',
-                    emailMatch: () => (`The email and password you entered don't match`),
-                },
 
                 // Para roles
-                select: { name: 'Vendedor', abbr: 'seller' },
+                select: { name: 'Vendedor', value: 'seller' },
                 roles: [
-                    { name: 'Administrador del sitio', abbr: 'master' },
-                    { name: 'Administrador de empresa', abbr: 'admin' },
-                    { name: 'Vendedor de la empresa', abbr: 'seller' },
+                    { name: 'Administrador del sitio', value: 'master' },
+                    { name: 'Administrador de empresa', value: 'admin' },
+                    { name: 'Vendedor de la empresa', value: 'seller' },
                 ],
 
                 search: '',
@@ -206,10 +201,7 @@
                 dialogDelete: false,
                 headers: [
                     { text: 'NOMBRE', value: 'name' },
-                    { text: 'EMPRESA', value: 'company' },
                     { text: 'CORREO', value: 'email' },
-                    { text: 'CREADO', value: 'created_at' },
-                    { text: 'ACTUALIZADO', value: 'updated_at' },
                     { text: 'ACCIONES', value: 'actions', sortable: false },
                 ],
                 desserts: [],
@@ -218,7 +210,7 @@
 
                 editedItem: {
                     name: '',
-                    company: '',
+                    companies_id: '',
                     email: '',
                     password: '',
                     role: '',
@@ -230,7 +222,7 @@
 
                 defaultItem: {
                     name: '',
-                    company: '',
+                    companies_id: '',
                     email: '',
                     password: '',
                     role: '',

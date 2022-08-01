@@ -25,10 +25,10 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['required','string', 'max:50'],
-            'company' => ['required'],
+            'companies_id' => ['required'],
             'email' => ['required', 'max:50', 'email'],
             'role' => ['required'],
-            'change_password' => ['string'],
+            'change_password' => ['string', 'min:8'],
         ];
     }
 }

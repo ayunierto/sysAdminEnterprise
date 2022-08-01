@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Company;
 use Inertia\Inertia;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 
@@ -20,19 +21,9 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render('Users/Index', [
-            'users' => User::all()->map(function ($user){
-                return [
-                    'id' => $user->id,
-                    'company' => Company::find($user->companies_id)->name,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'role' => $user->role,
-                    'password' => $user->password,
-                    'created_at' => substr($user->created_at, 0, 10),
-                    'updated_at' => substr($user->updated_at, 0, 10),
-                ];
-            }),
+            'users' => User::all(),
             'companies' => Company::all(),
+            'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -55,11 +46,11 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         User::create([
-            'companies_id' => $request->company['id'],
+            'companies_id' => $request->companies_id,
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
         ]);
         return Redirect::route('users.index')->with('message', 'Usuario agregado');
     }
@@ -94,12 +85,11 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, $id)
     {
-
         $user = User::find($id);
 
         if ($request->change_password) {
             $user->update([
-                'companies_id' => $request->company['id'],
+                'companies_id' => $request->companies_id,
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
@@ -107,16 +97,14 @@ class UserController extends Controller
             ]);
         } else {
             $user->update([
-                'companies_id' => $request->company['id'],
+                'companies_id' => $request->companies_id,
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
             ]);
         }
         
-
         return Redirect::route('users.index')->with('message', 'Usuario actualizado');
-
     }
 
     /**
@@ -127,11 +115,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
         $user = User::find($id);
         $user->delete();
-        return Redirect::route('categories.index')->with('message', 'Categoría eliminada');
-
+        return Redirect::route('users.index')->with('message', 'Usuario eliminado');
     }
 }
 
