@@ -13,7 +13,9 @@
                             <v-img src="../img/empresa1/ecsmac8.png">
                             </v-img>
                         </v-avatar>
-                        <v-list-item-title class="text-h6" style="color:white;">ECSMAC EIRL</v-list-item-title>
+                        <v-list-item-title class="text-h6" style="color:white;">
+                             <slot name="company_name"></slot>
+                        </v-list-item-title>
                     </v-list-item>
 
                     <v-list-item>

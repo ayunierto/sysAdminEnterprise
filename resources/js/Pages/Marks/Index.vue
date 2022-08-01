@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -137,7 +141,7 @@
         props: [
             'companies', 
             'marks',
-            'user_company',
+            'company',
         ],
         components: {
             AdminLayout,
@@ -165,14 +169,14 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     marks_id: '',
                     name: '',
                     description: '',
                 },
 
                 defaultItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     marks_id: '',
                     name: '',
                     description: '',

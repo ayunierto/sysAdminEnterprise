@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -141,6 +145,7 @@
         props: [
             'companies', 
             'presentations',
+            'company',
         ],
         components: {
             AdminLayout,

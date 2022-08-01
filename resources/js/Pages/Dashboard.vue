@@ -1,5 +1,10 @@
 <template>
     <admin-layout>
+
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-row>
             <v-col cols="12" sm="6" md="4">
                 <v-card rounded>
@@ -40,6 +45,6 @@
             AdminLayout,
         },
 
-        props: ['products'],
+        props: ['products', 'company'],
     }
 </script>

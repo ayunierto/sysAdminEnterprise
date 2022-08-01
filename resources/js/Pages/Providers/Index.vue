@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
@@ -141,7 +145,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-    props: ['providers', 'companies'],
+    props: ['providers', 'companies', 'company'],
     components: {
         AdminLayout,
     },

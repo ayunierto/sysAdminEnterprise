@@ -9,6 +9,7 @@ use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Company;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -40,8 +41,11 @@ Route::get('/', function() {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
+    $company_id = Auth::user()->companies_id;
+
     return Inertia::render('Dashboard', [
-        'products' => Product::where('companies_id', Auth::user()->companies_id)->count(),
+        'products' => Product::where('companies_id', $company_id)->count(),
+        'company' => Company::find( $company_id ),
     ]);
 })->name('dashboard');
 

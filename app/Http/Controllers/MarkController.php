@@ -22,7 +22,7 @@ class MarkController extends Controller
         return Inertia::render('Marks/Index', [
             'marks' => Mark::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
-            'user_company' => Company::find(Auth::user()->companies_id),
+            'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 

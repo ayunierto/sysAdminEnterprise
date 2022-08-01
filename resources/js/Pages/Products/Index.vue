@@ -1,5 +1,8 @@
 <template>
     <admin-layout>
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
 
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
@@ -315,6 +318,7 @@
             'measures',
             'providers',
             'presentations',
+            'company',
         ],
         components: {
             AdminLayout,
