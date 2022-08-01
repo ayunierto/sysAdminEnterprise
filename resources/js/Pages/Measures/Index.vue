@@ -5,16 +5,15 @@
             {{ $page.props.flash.message }}
         </v-alert>
 
+        <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.code"
-                :key="$page.props.errorBags.default.code[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.name"
-                :key="$page.props.errorBags.default.name[0]">
-                {{ item }}
-            </v-alert>
+            <div v-for="item in Object.keys($page.props.errors)">
+                <v-alert type="warning" border="left" dismissible>
+                    {{ $page.props.errors[item] }}
+                </v-alert>
+            </div>
         </div>
+        <!-- Fin de Alertas -->
 
         <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1" :search="search">
             <template v-slot:top>

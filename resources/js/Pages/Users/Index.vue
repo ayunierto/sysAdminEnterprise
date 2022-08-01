@@ -6,33 +6,15 @@
             {{ $page.props.flash.message }}
         </v-alert>
 
+        <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.name" 
-             :key="$page.props.errorBags.default.name[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.company" 
-             :key="$page.props.errorBags.default.company[0]">
-                {{ item }}
-            </v-alert>
-             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.email" 
-             :key="$page.props.errorBags.default.email[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.password" 
-             :key="$page.props.errorBags.default.password[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.role" 
-             :key="$page.props.errorBags.default.role[0]">
-                {{ item }}
-            </v-alert>
+            <div v-for="item in Object.keys($page.props.errors)">
+                <v-alert type="warning" border="left" dismissible>
+                    {{ $page.props.errors[item] }}
+                </v-alert>
+            </div>
         </div>
+        <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="calories" 
         class="elevation-1" :search="search">

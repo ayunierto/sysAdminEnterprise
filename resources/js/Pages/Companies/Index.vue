@@ -6,58 +6,15 @@
             {{ $page.props.flash.message }}
         </v-alert>
 
+        <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.name" 
-             :key="$page.props.errorBags.default.name[0]">
-                {{ item }}
-            </v-alert>
-             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.ruc" 
-             :key="$page.props.errorBags.default.ruc[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.description" 
-             :key="$page.props.errorBags.default.description[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.phone" 
-             :key="$page.props.errorBags.default.phone[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.address" 
-             :key="$page.props.errorBags.default.address[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.department" 
-             :key="$page.props.errorBags.default.department[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.province" 
-             :key="$page.props.errorBags.default.province[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.district" 
-             :key="$page.props.errorBags.default.district[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.country_code" 
-             :key="$page.props.errorBags.default.country_code[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.state" 
-             :key="$page.props.errorBags.default.state[0]">
-                {{ item }}
-            </v-alert>
+            <div v-for="item in Object.keys($page.props.errors)">
+                <v-alert type="warning" border="left" dismissible>
+                    {{ $page.props.errors[item] }}
+                </v-alert>
+            </div>
         </div>
+        <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
         class="elevation-1" :search="search">

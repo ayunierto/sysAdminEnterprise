@@ -5,36 +5,15 @@
             {{ $page.props.flash.message }}
         </v-alert>
 
+        <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.company"
-                :key="$page.props.errorBags.default.company[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.name"
-                :key="$page.props.errorBags.default.name[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.document"
-                :key="$page.props.errorBags.default.document[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.phone"
-                :key="$page.props.errorBags.default.phone[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.state"
-                :key="$page.props.errorBags.default.state[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.city"
-                :key="$page.props.errorBags.default.city[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.description"
-                :key="$page.props.errorBags.default.description[0]">
-                {{ item }}
-            </v-alert>
+            <div v-for="item in Object.keys($page.props.errors)">
+                <v-alert type="warning" border="left" dismissible>
+                    {{ $page.props.errors[item] }}
+                </v-alert>
+            </div>
         </div>
+        <!-- Fin de Alertas -->
 
         <v-data-table :headers="headers" :items="desserts" class="elevation-1" :search="search"
             :footer-props="{ itemsPerPageText: 'Filas por página' }">

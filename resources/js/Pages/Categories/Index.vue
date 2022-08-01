@@ -5,22 +5,13 @@
             {{ $page.props.flash.message }}
         </v-alert>
         
+        <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.companies_id" 
-             :key="$page.props.errorBags.default.companies_id[0]">
-                {{ item }}
-            </v-alert>
-             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.name" 
-             :key="$page.props.errorBags.default.name[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.description" 
-             :key="$page.props.errorBags.default.description[0]">
-                {{ item }}
-            </v-alert>
+            <div v-for="item in Object.keys($page.props.errors)">
+                <v-alert type="warning" border="left" dismissible>
+                    {{ $page.props.errors[item] }}
+                </v-alert>
+            </div>
         </div>
         <!-- Fin de Alertas -->
         
