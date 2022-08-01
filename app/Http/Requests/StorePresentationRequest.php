@@ -24,7 +24,9 @@ class StorePresentationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'companies_id'=> 'required',
+            'name'=> 'required|string|max:50',
+            'equivalence'=> 'required|string|max:250',
         ];
     }
 }

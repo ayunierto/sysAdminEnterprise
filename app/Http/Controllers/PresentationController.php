@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Product;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,17 +21,9 @@ class PresentationController extends Controller
     public function index()
     {
         return Inertia::render('Presentations/Index', [
-            'presentations' => Presentation::all()->map(function ($presentation) {
-                return [
-                    'id' => $presentation->id,
-                    'company' => Company::find($presentation->companies_id)->name,
-                    'product' => Product::find($presentation->products_id)->name,
-                    'name' => $presentation->name,
-                    'equivalence' => $presentation->equivalence,
-                ];
-            }),
+            'presentations' => Presentation::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
-            'products' => Product::all(),
+            'user_company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -41,7 +34,7 @@ class PresentationController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Presentations/Create');
+        // return Inertia::render('Presentations/Create');
     }
 
     /**
@@ -52,12 +45,7 @@ class PresentationController extends Controller
      */
     public function store(StorePresentationRequest $request)
     {
-        Presentation::create([
-            'companies_id' => $request->company['id'],
-            'products_id' => $request->product['id'],
-            'name' => $request->name,
-            'equivalence' => $request->equivalence,
-        ]);
+        Presentation::create($request->all());
         return Redirect::route('presentations.index')->with('message', 'Presentación agregada');
     }
 
@@ -93,10 +81,7 @@ class PresentationController extends Controller
     public function update(UpdatePresentationRequest $request,  $id)
     {
         $presentation = Presentation::find($id);
-        $presentation->update([
-            'name' => $request->name,
-            'equivalence' => $request->equivalence,
-        ]);
+        $presentation->update($request->all());
         return Redirect::route('presentations.index')->with('message', 'Presentación actualizada');
     }
 
