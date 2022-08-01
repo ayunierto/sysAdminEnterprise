@@ -25,16 +25,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Products/Index', [
-            'products' => Product::where('companies_id', Auth::user()->companies_id)->get(),
-            'companies' => Company::all(),
-            'categories' => Category::all(),
-            'marks' => Mark::all(),
-            'measures' => Measure::all(),
-            'providers' => Provider::all(),
-            'presentations' => Presentation::all(),
-            'user_company' => Company::find(Auth::user()->companies_id),
+        $company_id = Auth::user()->companies_id;
 
+        return Inertia::render('Products/Index', [
+            'products' => Product::where('companies_id', $company_id)->get(),
+            'companies' => Company::all(),
+            'categories' => Category::where('companies_id', $company_id)->get(),
+            'marks' => Mark::where('companies_id', $company_id)->get(),
+            'measures' => Measure::all(),
+            'providers' => Provider::where('companies_id', $company_id)->get(),
+            'presentations' => Presentation::where('companies_id', $company_id)->get(),
         ]);
     }
 

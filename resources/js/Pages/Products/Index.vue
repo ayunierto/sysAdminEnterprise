@@ -315,7 +315,6 @@
             'measures',
             'providers',
             'presentations',
-            'user_company',
         ],
         components: {
             AdminLayout,
@@ -346,7 +345,7 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',
@@ -367,7 +366,7 @@
                 },
 
                 defaultItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',
