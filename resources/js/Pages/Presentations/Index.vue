@@ -10,102 +10,75 @@
                 :key="$page.props.errorBags.default.company[0]">
                 {{ item }}
             </v-alert>
+            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.product"
+                :key="$page.props.errorBags.default.product[0]">
+                {{ item }}
+            </v-alert>
             <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.name"
                 :key="$page.props.errorBags.default.name[0]">
                 {{ item }}
             </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.document"
-                :key="$page.props.errorBags.default.document[0]">
+            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.equivalence"
+                :key="$page.props.errorBags.default.equivalence[0]">
                 {{ item }}
             </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.phone"
-                :key="$page.props.errorBags.default.phone[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.state"
-                :key="$page.props.errorBags.default.state[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.city"
-                :key="$page.props.errorBags.default.city[0]">
-                {{ item }}
-            </v-alert>
-            <v-alert type="warning" border="left" dismissible v-for="item in $page.props.errorBags.default.description"
-                :key="$page.props.errorBags.default.description[0]">
-                {{ item }}
-            </v-alert>
+
         </div>
 
-        <v-data-table :headers="headers" :items="desserts" class="elevation-1" :search="search"
-            :footer-props="{ itemsPerPageText: 'Filas por página' }">
+        <v-data-table :headers="headers" :items="desserts" class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <!-- Comenario de prueba -->
-                    <v-toolbar-title>Proveedores</v-toolbar-title>
+                    <v-toolbar-title>Lista de Presentaciones</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="600px">
+                    <v-dialog v-model="dialog" max-width="500px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Nuevo Proveedor
+                                Nueva Presentacion
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Proveedores"
+                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Presentacion"
                                     single-line hide-details></v-text-field>
                             </v-card-title>
                         </template>
                         <v-card>
-                            <!-- Titulo de modal agreagar Marca -->
+                            <!-- Titulo de modal agreagar Presentacion -->
                             <v-card-title>
                                 <span class="text-h5">{{ formTitle }}</span>
                             </v-card-title>
 
-                            <!-- contenido de modal agreagar Marca -->
+                            <!-- contenido de modal agreagar Presentacion -->
                             <v-card-text>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                                 <v-select v-model="editedItem.company" hint="Selecciones Empresa"
                                                 :items="companies" item-text="name" item-value="abbr"
                                                 label="Seleccione Empresa" return-object single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
+                                            <v-select v-model="editedItem.product" hint="Selecciones Empresa"
+                                                :items="products" item-text="name" item-value="abbr"
+                                                label="Seleccione Producto" return-object single-line></v-select>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.name" label="Presentacion*"
+                                                hint="Presentación de productos: rollo, caja, millar, ciento, tira..."
                                                 required></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC"
-                                                required>
-                                            </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.address" label="Dirección" required>
-                                            </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.phone" label="Teléfono*" required>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.state" label="Pais*" required>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.city" label="Ciudad*" required>
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.description" label="Descripción">
-                                            </v-text-field>
+                                            <v-text-field v-model="editedItem.equivalence" label="Valor(UND)*"
+                                                hint="cuantas unidades equivale dicha presentación"></v-text-field>
                                         </v-col>
                                     </v-row>
                                 </v-container>
-                                <small>*Datos
-                                    obligatorios</small>
+                                <small>*Tipos o cantidades en
+                                    las cuales se pueden
+                                    vender o comprar
+                                    productos: caja, unidad,
+                                    rollo...</small>
                             </v-card-text>
-                            <!-- Acciones de modal agregar Marca -->
+                            <!-- Acciones de modal agregar Presentacion -->
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red darken-1" text @click="close">
@@ -117,11 +90,11 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <!-- Mensaje de confirmacion de borrado de Marca -->
+                    <!-- Mensaje de confirmacion de borrado de Presentacion -->
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                             <v-card-title class="text-h5">
-                                ¿Está seguro de querer borrar el Proveedor?
+                                ¿Está seguro de querer borrar la presentación?
                             </v-card-title>
 
                             <v-card-actions>
@@ -153,7 +126,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-    props: ['providers', 'companies'],
+    props: ['presentations', 'companies', 'products'],
     components: {
         AdminLayout,
     },
@@ -163,15 +136,10 @@ export default {
             dialog: false,
             dialogDelete: false,
             search: '',
-            snackbar: false,
             headers: [
+                { text: 'PRODUCTO', value: 'product' },
                 { text: 'NOMBRE', value: 'name' },
-                { text: 'DOCUMENTO', value: 'document' },
-                { text: 'DIRECCIÓN', value: 'address' },
-                { text: 'CIUDAD', value: 'city' },
-                { text: 'PAIS', value: 'state' },
-                { text: 'TELÉFONO', value: 'phone' },
-                { text: 'DESCRIPCIÓN', value: 'description' },
+                { text: 'EQUIVALENCIA', value: 'equivalence' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -181,25 +149,19 @@ export default {
             editedItem: {
                 company: '',
                 companies_id: '',
+                product: '',
+                products_id: '',
                 name: '',
-                document: '',
-                address: '',
-                city: '',
-                state: '',
-                phone: '',
-                description: '',
+                equivalence: '',
             },
 
             defaultItem: {
                 company: '',
                 companies_id: '',
+                product: '',
+                products_id: '',
                 name: '',
-                document: '',
-                address: '',
-                city: '',
-                state: '',
-                phone: '',
-                description: '',
+                equivalence: '',
             },
 
         }
@@ -207,7 +169,7 @@ export default {
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Nuevo Proveedor' : 'Editar Proveedor'
+            return this.editedIndex === -1 ? 'Nueva Presentacion' : 'Editar Presentacion'
         },
     },
 
@@ -243,7 +205,7 @@ export default {
 
     methods: {
         initialize() {
-            this.desserts = this.providers
+            this.desserts = this.presentations
         },
 
         editItem(item) {
@@ -265,7 +227,7 @@ export default {
 
             // ***************************************
             // enviando formulario de eliminar
-            this.$inertia.delete(this.route('providers.destroy', this.editedItem))
+            this.$inertia.delete(this.route('presentations.destroy', this.editedItem))
         },
 
         close() {
@@ -295,14 +257,14 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de almacenar
-                this.$inertia.patch(route('providers.update', this.editedItem), this.editedItem)
+                this.$inertia.patch(route('presentations.update', this.editedItem), this.editedItem)
 
             } else {
 
                 // Store
                 // ***************************************
                 // enviado formulario de almacenar
-                this.$inertia.post(route('providers.store'), this.editedItem)
+                this.$inertia.post(route('presentations.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
 
