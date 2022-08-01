@@ -52,7 +52,6 @@ class PresentationController extends Controller
      */
     public function store(StorePresentationRequest $request)
     {
-
         Presentation::create([
             'companies_id' => $request->company['id'],
             'products_id' => $request->product['id'],

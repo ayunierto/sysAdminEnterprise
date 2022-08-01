@@ -52,14 +52,14 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.company" :items="companies" hide-no-data
-                                                color="primary" item-text="name" label=" Empresa"
-                                                hint="Seleccione Empresa"></v-autocomplete>
+                                                <v-select v-model="editedItem.company" hint="Selecciones Empresa"
+                                                :items="companies" item-text="name" item-value="abbr"
+                                                label="Seleccione Empresa" return-object single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.product" :items="products" hide-no-data
-                                                color="primary" item-text="name" label=" Productos"
-                                                hint="Seleccione Producto"></v-autocomplete>
+                                            <v-select v-model="editedItem.product" hint="Selecciones Empresa"
+                                                :items="products" item-text="name" item-value="abbr"
+                                                label="Seleccione Producto" return-object single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.name" label="Presentacion*"

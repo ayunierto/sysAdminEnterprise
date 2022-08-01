@@ -65,9 +65,9 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-autocomplete v-model="editedItem.company" :items="companies" hide-no-data
-                                                color="primary" item-text="name" label="Seleccione Empresa"
-                                                hint="Selecciones Empresa"></v-autocomplete>
+                                                <v-select v-model="editedItem.company" hint="Selecciones Empresa"
+                                                :items="companies" item-text="name" item-value="abbr"
+                                                label="Seleccione Empresa" return-object single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
@@ -227,7 +227,7 @@ export default {
     },
 
 
-    // Para que agregue en el data table despues de saber que no hay errores en 
+    // Para que agregue en el data table despues de saber que no hay errores en
     // en el formulario de crear
     updated() {
         if (Object.values(this.$page.props.errors).length == 0) {
@@ -287,21 +287,21 @@ export default {
         save() {
             if (this.editedIndex > -1) {
 
-                // esto agragaba el item a la tabla con solo javascrip 
+                // esto agragaba el item a la tabla con solo javascrip
                 //pero ya no es necesario porque se renderiza el componente desde
                 // el servidor
                 // Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
                 // Update
                 // ***************************************
-                // enviado formulario de almacenar 
+                // enviado formulario de almacenar
                 this.$inertia.patch(route('providers.update', this.editedItem), this.editedItem)
 
             } else {
 
                 // Store
                 // ***************************************
-                // enviado formulario de almacenar 
+                // enviado formulario de almacenar
                 this.$inertia.post(route('providers.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
