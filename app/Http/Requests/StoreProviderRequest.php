@@ -26,11 +26,11 @@ class StoreProviderRequest extends FormRequest
         return [
             'companies_id' => 'required',
             'name' => 'required|string|max:100',
-            'document' => 'required|string|max:50',
-            'description' => 'required|string|max:250',
-            'phone' => 'required|string|max:50',
-            'city' => 'required|string|max:50',
-            'state' => 'required|string|max:50'
+            // 'document' => 'required|string|max:50',
+            // 'description' => 'required|string|max:250',
+            // 'phone' => 'required|string|max:50',
+            // 'city' => 'required|string|max:50',
+            // 'state' => 'required|string|max:50'
         ];
     }
 }

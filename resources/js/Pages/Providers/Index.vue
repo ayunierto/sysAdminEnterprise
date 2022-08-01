@@ -70,7 +70,7 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.phone" label="Teléfono*" required>
+                                            <v-text-field v-model="editedItem.phone" type="number"  label="Teléfono*" required>
                                             </v-text-field>
                                         </v-col>
                                         
@@ -80,7 +80,7 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                           <v-text-field v-model="editedItem.state" label="Estado*" required>
+                                           <v-text-field v-model="editedItem.state" label="Pais*" required>
                                             </v-text-field>
                                         </v-col>
 

@@ -18,7 +18,7 @@ class PresentationFactory extends Factory
         return [
             'companies_id' => rand(1, $amount),
             'name' => $this->faker->word(),
-            'equivalence' => $this->faker->randomElement($array = array ('1k','10k','5k')),
+            'equivalence' => rand(1, 50),
         ];
     }
 }

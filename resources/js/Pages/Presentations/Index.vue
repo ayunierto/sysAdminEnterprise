@@ -74,7 +74,8 @@
                                     <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
                                         v-model="editedItem.equivalence"
-                                        label="Equivalencia"
+                                        label="Equivalencia(UND)"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -122,12 +123,6 @@
                 </v-icon>
             </template>
 
-            <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize" >
-                    Resetear
-                </v-btn>
-            </template>
-
         </v-data-table>
 
     </admin-layout>
@@ -160,7 +155,7 @@
                 dialogDelete: false,
                 headers: [
                     { text: 'NOMBRE', value: 'name' },
-                    { text: 'EQUIVALENCIA', value: 'equivalence' },
+                    { text: 'EQUIVALENCIA(und)', value: 'equivalence' },
                     { text: 'ACCIONES', value: 'actions', sortable: false },
                 ],
                 desserts: [],

@@ -17,7 +17,7 @@ class CreatePresentationsTable extends Migration
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('equivalence');
+            $table->integer('equivalence');
             $table->timestamps();
         });
     }
