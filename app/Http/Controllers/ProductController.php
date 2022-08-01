@@ -13,6 +13,8 @@ use App\Models\Presentation;
 use App\Models\Provider;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
@@ -24,42 +26,14 @@ class ProductController extends Controller
     public function index()
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::paginate(10)->map(function ($product)
-            {
-                return [
-                    'id'=> $product->id,
-
-                    'company' => Company::find($product->companies_id)->name,
-                    'category' => Category::find( $product->categories_id )->name,
-                    'mark' => Mark::find($product->marks_id)->name,
-                    'measure' => Measure::find($product->measures_id)->name,
-                    'provider' => Provider::find($product->providers_id)->name,
-                    'presentation' => Presentation::find($product->presentations_id)->name,
-
-                    'name' => $product->name,
-                    'code' => $product->code,
-                    'bar_code' => $product->bar_code,
-                    'stock' => $product->stock,
-                    'purchase_price' => $product->purchase_price,
-                    'sale_price' => $product->sale_price,
-                    'price_by_unit' => $product->price_by_unit,
-                    'wholesale_price' => $product->wholesale_price,
-                    'special_price' => $product->special_price,
-                    'description' => $product->description,
-                    'state' => $product->state,
-                    'expiration_date' => $product->expiration_date,
-                    'created_at' => $product->created_at,
-                    'updated_at' => $product->updated_at,
-
-                ];
-            }),
-
+            'products' => Product::all(),
             'companies' => Company::all(),
             'categories' => Category::all(),
             'marks' => Mark::all(),
             'measures' => Measure::all(),
             'providers' => Provider::all(),
             'presentations' => Presentation::all(),
+            'user_company' => Company::find(Auth::user()->companies_id),
 
         ]);
     }
@@ -71,14 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Products/Create', [
-            'companies' => Company::all(),
-            'categories' => Category::all(),
-            'marks' => Mark::all(),
-            'measures' => Measure::all(),
-            'providers' => Provider::all(),
-            'presentations' => Presentation::all(),
-        ]);
+        //
     }
 
     /**
@@ -89,28 +56,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        Product::create([
-
-            'companies_id' => $request->company['id'],
-            'categories_id' => $request->category['id'],
-            'marks_id' => $request->mark['id'],
-            'measures_id' => $request->measure['id'],
-            'providers_id' => $request->provider['id'],
-            'presentations_id' => $request->presentation['id'],
-            'name' => $request->name,
-            'code' => $request->code,
-            'bar_code' => $request->bar_code,
-            'stock' => $request->stock,
-            'purchase_price' => $request->purchase_price,
-            'sale_price' => $request->sale_price,
-            'price_by_unit' => $request->price_by_unit,
-            'wholesale_price' => $request->wholesale_price,
-            'special_price' => $request->special_price,
-            'description' => $request->description,
-            'state' => $request->state,
-            'expiration_date' => $request->expiration_date,
-
-        ]);
+        Product::create($request->all());
         return Redirect::route('products.index')->with('message', 'Producto agregado');
 
     }
@@ -146,30 +92,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-
         $product = Product::find($id);
-
-        $product->update([
-            'companies_id' => $request->company['id'],
-            'categories_id' => $request->category['id'],
-            'marks_id' => $request->mark['id'],
-            'measures_id' => $request->measure['id'],
-            'providers_id' => $request->provider['id'],
-            'presentations_id' => $request->presentation['id'],
-            'name' => $request->name,
-            'code' => $request->code,
-            'bar_code' => $request->bar_code,
-            'stock' => $request->stock,
-            'purchase_price' => $request->purchase_price,
-            'sale_price' => $request->sale_price,
-            'price_by_unit' => $request->price_by_unit,
-            'wholesale_price' => $request->wholesale_price,
-            'special_price' => $request->special_price,
-            'description' => $request->description,
-            'state' => $request->state,
-            'expiration_date' => $request->expiration_date,
-        ]);
-
+        $product->update($request->all());
         return Redirect::route('products.index')->with('message', 'Producto actualizado');
 
     }

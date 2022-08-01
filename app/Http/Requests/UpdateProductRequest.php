@@ -30,16 +30,19 @@ class UpdateProductRequest extends FormRequest
             'stock' => 'required|numeric',
             'purchase_price' => 'required|numeric',
             'sale_price' => 'required|numeric',
+            'price_by_unit' => 'numeric',
+            'wholesale_price' => 'numeric',
+            'special_price' => 'numeric',
             'description' => 'required|string|max:250',
             'state' => 'required|boolean',
             'expiration_date' => 'required|date',
 
-            'company' => 'required',
-            'category' => 'required',
-            'mark' => 'required',
-            'measure' => 'required',
-            'provider' => 'required',
-            'presentation' => 'required',
+            'companies_id' => 'required',
+            'categories_id' => 'required',
+            'marks_id' => 'required',
+            'measures_id' => 'required',
+            'providers_id' => 'required',
+            'presentations_id' => 'required',
         ];
     }
 }

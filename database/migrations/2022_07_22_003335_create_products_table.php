@@ -25,11 +25,11 @@ class CreateProductsTable extends Migration
             $table->string('code');
             $table->bigInteger('bar_code');
             $table->bigInteger('stock');
-            $table->decimal('purchase_price', 15,8);
-            $table->decimal('sale_price', 15, 8);
-            $table->decimal('price_by_unit', 15, 8)->nullable();
-            $table->decimal('wholesale_price', 15, 8)->nullable();
-            $table->decimal('special_price', 15, 8)->nullable();
+            $table->decimal('purchase_price', 11,2);
+            $table->decimal('sale_price', 11, 2);
+            $table->decimal('price_by_unit', 11, 2)->nullable();
+            $table->decimal('wholesale_price', 11, 2)->nullable();
+            $table->decimal('special_price', 11, 2)->nullable();
             $table->string('description');
             $table->boolean('state');
             $table->date('expiration_date');

@@ -9,33 +9,33 @@
         <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.company" 
-             :key="$page.props.errorBags.default.company[0]">
+             v-for="item in $page.props.errorBags.default.companies_id" 
+             :key="$page.props.errorBags.default.companies_id[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.category" 
-             :key="$page.props.errorBags.default.category[0]">
+             v-for="item in $page.props.errorBags.default.categories_id" 
+             :key="$page.props.errorBags.default.categories_id[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.mark" 
-             :key="$page.props.errorBags.default.mark[0]">
+             v-for="item in $page.props.errorBags.default.marks_ic" 
+             :key="$page.props.errorBags.default.marks_ic[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.measure" 
-             :key="$page.props.errorBags.default.measure[0]">
+             v-for="item in $page.props.errorBags.default.measures_id" 
+             :key="$page.props.errorBags.default.measures_id[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.provider" 
-             :key="$page.props.errorBags.default.provider[0]">
+             v-for="item in $page.props.errorBags.default.providers_id" 
+             :key="$page.props.errorBags.default.providers_id[0]">
                 {{ item }}
             </v-alert>
             <v-alert type="warning" border="left" dismissible 
-             v-for="item in $page.props.errorBags.default.presentation" 
-             :key="$page.props.errorBags.default.presentation[0]">
+             v-for="item in $page.props.errorBags.default.presentations_id" 
+             :key="$page.props.errorBags.default.presentations_id[0]">
                 {{ item }}
             </v-alert>
              <v-alert type="warning" border="left" dismissible 
@@ -50,7 +50,6 @@
             </v-alert>
         </div>
         <!-- Fin de Alertas -->
-
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
         class="elevation-1" :search="search">
@@ -65,7 +64,7 @@
                     <v-dialog v-model="dialog" max-width="700px" >
                     
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" >
+                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                             Nuevo Producto
                         </v-btn>
                         <v-spacer></v-spacer>
@@ -86,80 +85,74 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
                                         <v-select
-                                        v-model="editedItem.company"
+                                        v-model="editedItem.companies_id"
                                         hint="Seleccione empresa"
                                         :items="companies"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione empresa"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-select
-                                        v-model="editedItem.category"
+                                        v-model="editedItem.categories_id"
                                         hint="Seleccione categoría"
                                         :items="categories"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione categoría"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-select
-                                        v-model="editedItem.mark"
+                                        v-model="editedItem.marks_id"
                                         hint="Seleccione marca"
                                         :items="marks"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione marca"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-select
-                                        v-model="editedItem.measure"
+                                        v-model="editedItem.measures_id"
                                         hint="Seleccione medida"
                                         :items="measures"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione medida"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-select
-                                        v-model="editedItem.provider"
+                                        v-model="editedItem.providers_id"
                                         hint="Seleccione proveedor"
                                         :items="providers"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione proveedor"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
                                         <v-select
-                                        v-model="editedItem.presentation"
+                                        v-model="editedItem.presentations_id"
                                         hint="Seleccione presentación"
                                         :items="presentations"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="id"
                                         label="Seleccione presentación"
-                                        return-object
                                         single-line
                                         ></v-select>
                                     </v-col>
@@ -241,22 +234,50 @@
                                         v-model="editedItem.state"
                                         :items="items_state"
                                         item-text="name"
-                                        item-value="abbr"
+                                        item-value="value"
                                         label="Seleccione estado"
                                         persistent-hint
                                         single-line
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.expiration_date"
-                                        label="Fecha de vencimiento"
-                                        required
-                                        hint="Formato: 01-06-2022"
-                                        ></v-text-field>
+                                    <v-col cols="12" sm="6" md="4">
+                                        <v-menu
+                                            ref="menu"
+                                            v-model="menu"
+                                            :close-on-content-click="false"
+                                            :return-value.sync="editedItem.expiration_date"
+                                            transition="scale-transition"
+                                            offset-y
+                                            min-width="auto" >
+                                            
+                                            <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field
+                                                v-model="editedItem.expiration_date"
+                                                label="Selecione fecha de vecimiento"
+                                                prepend-icon="mdi-calendar"
+                                                readonly
+                                                v-bind="attrs"
+                                                v-on="on"
+                                            ></v-text-field>
+                                            </template>
+                                            <v-date-picker v-model="editedItem.expiration_date" 
+                                            no-title scrollable >
+                                            <v-spacer></v-spacer>
+                                            <v-btn text color="primary" @click="menu = false" >
+                                                Cancel
+                                            </v-btn>
+                                            <v-btn
+                                                text
+                                                color="primary"
+                                                @click="$refs.menu.save(editedItem.expiration_date)"
+                                            >
+                                                OK
+                                            </v-btn>
+                                            </v-date-picker>
+                                        </v-menu>
                                     </v-col>
-                                    
+
                                     <v-col cols="12" sm="12" md="12">
                                         <v-textarea v-model="editedItem.description" class="mx-2"
                                             label="Descripción" rows="2" hint="Descripcion del producto">
@@ -329,6 +350,7 @@
             'measures',
             'providers',
             'presentations',
+            'user_company',
         ],
         components: {
             AdminLayout,
@@ -336,19 +358,17 @@
         data () {
             return {
 
+                menu: false,
+
                 items_state: [
-                    { name: 'Activo', abbr: 1 },
-                    { name: 'Inactivo', abbr: 0 },
+                    { name: 'Activo', value: 1 },
+                    { name: 'Inactivo', value: 0 },
                 ],
                 
                 search: '',
                 dialog: false,
                 dialogDelete: false,
                 headers: [
-                    { text: 'EMPRESA', value: 'company' },
-                    { text: 'CATEGORIA', value: 'category' },
-                    { text: 'MEDIDA', value: 'measure' },
-                    { text: 'PRESENTACION', value: 'presentation' },
                     { text: 'NOMBRE', value: 'name' },
                     { text: 'STOCK', value: 'stock' },
                     { text: 'PRECIO COMPRA', value: 'purchase_price' },
@@ -361,12 +381,12 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    company: '',
-                    category: '',
-                    mark: '',
-                    measure: '',
-                    provider: '',
-                    presentation: '',
+                    companies_id: this.user_company.id,
+                    categories_id: '',
+                    marks_id: '',
+                    measures_id: '',
+                    providers_id: '',
+                    presentations_id: '',
                     name: '',
                     code: '',
                     bar_code: '',
@@ -382,12 +402,12 @@
                 },
 
                 defaultItem: {
-                    company: '',
-                    category: '',
-                    mark: '',
-                    measure: '',
-                    provider: '',
-                    presentation: '',
+                    companies_id: this.user_company.id,
+                    categories_id: '',
+                    marks_id: '',
+                    measures_id: '',
+                    providers_id: '',
+                    presentations_id: '',
                     name: '',
                     code: '',
                     bar_code: '',
@@ -398,7 +418,7 @@
                     wholesale_price: '',
                     special_price: '',
                     description: '',
-                    state: 1,
+                    state: '',
                     expiration_date: '',
                 },
                 
@@ -424,6 +444,7 @@
 
         created () {
             this.initialize();
+
         },
 
         
@@ -442,6 +463,7 @@
         },
 
         methods: {
+
             initialize () {
                 this.desserts = this.products
             },

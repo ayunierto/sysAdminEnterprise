@@ -146,7 +146,7 @@
                                         </v-list-item>
                                     </inertia-link>
 
-                                    <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
+                                    <!-- <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-cube-send</v-icon>
@@ -157,7 +157,7 @@
                                                 AGREGAR PRODUCTOS
                                             </h5>
                                         </v-list-item-title>
-                                    </v-list-item>
+                                    </v-list-item> -->
 
                                     <inertia-link :href="route('categories.index')" v-if="$page.props.user.role != 'seller'">
                                         <v-list-item link style="color:white;">
