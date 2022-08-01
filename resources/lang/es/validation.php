@@ -149,10 +149,14 @@ return [
     'attributes' => [
         'company' => 'empresa',
         'category' => 'categoría',
+        'categories_id' => "categoría",
         'mark' => 'marca',
         'measure' => 'medida',
+        'measures_id' => "medida",
         'provider' => 'proveedor',
+        'providers_id' => 'proveedor',
         'presentation' => 'presentación',
+        'presentations_id' => 'presentación',
         'batch' => 'lote',
         'code' => 'código',
         'name' => 'nombre',
@@ -167,6 +171,7 @@ return [
         'district' => 'distrito',
         'country_code' => 'código de área',
         'state' => 'estado',
+        'equivalence' => 'equivalencia',
     ],
 
 ];
