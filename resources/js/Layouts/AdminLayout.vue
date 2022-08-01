@@ -184,7 +184,7 @@
                                     </inertia-link>
 
 
-                                    <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
+                                    <!-- <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-currency-usd</v-icon>
@@ -192,7 +192,7 @@
                                         <v-list-item-title>
                                             <h5>PRECIOS DE PRODUCTOS</h5>
                                         </v-list-item-title>
-                                    </v-list-item>
+                                    </v-list-item> -->
 
                                     <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
@@ -204,7 +204,7 @@
                                         </v-list-item-title>
                                     </v-list-item>
 
-                                    <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
+                                    <!-- <v-list-item link style="color:white;"  v-if="$page.props.user.role != 'seller'">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
                                             <v-icon color="white" small>mdi-package-variant</v-icon>
@@ -212,7 +212,7 @@
                                         <v-list-item-title>
                                             <h5>LOTES DE PRODUCTOS</h5>
                                         </v-list-item-title>
-                                    </v-list-item>
+                                    </v-list-item> -->
 
                                 </v-list-item-group>
                             </v-card>
