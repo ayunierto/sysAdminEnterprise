@@ -9,7 +9,9 @@ use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\Product;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -37,7 +39,10 @@ Route::get('/', function() {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+
+    return Inertia::render('Dashboard', [
+        'products' => Product::where('companies_id', Auth::user()->companies_id)->count(),
+    ]);
 })->name('dashboard');
 
 Route::resource('dashboard/categorias', CategoryController::class)->names('categories')

@@ -39,14 +39,16 @@
                 <v-list nav dense>
                     <v-list-item-group>
 
-                        <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
-                            <v-list-item-icon>
-                                <v-icon color="white">mdi-monitor-multiple</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>INICIO</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                        <inertia-link :href="route('dashboard')">
+                            <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
+                                <v-list-item-icon>
+                                    <v-icon color="white">mdi-monitor-multiple</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>INICIO</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </inertia-link>
 
                         <v-list-group class="white--text" color="white" v-if="$page.props.user.role == 'master'">
                             <v-icon slot="prependIcon" color="white">mdi-account-tie</v-icon>
