@@ -32,7 +32,7 @@
 
                     </v-list-item>
                 </v-list>
-                <!-- linea divisoria -->
+                <!-- linea divisora -->
                 <v-divider></v-divider>
 
                 <!-- CONTENIDO MENU VERTICAL -->
