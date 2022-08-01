@@ -14,11 +14,12 @@ class PresentationFactory extends Factory
      */
     public function definition()
     {
-        $amount = Company::count();
+        $companies = Company::count();
+        
         return [
-            'companies_id' => rand(1, $amount),
-            'name' => $this->faker->word(),
-            'equivalence' => $this->faker->randomElement($array = array ('1k','10k','5k')),
+            'companies_id' => rand(1, $companies),
+            'name' => $this->faker->word(1),
+            'equivalence' => $this->faker->randomElement($array = array ('1k','2k','10k','5k')),
         ];
     }
 }

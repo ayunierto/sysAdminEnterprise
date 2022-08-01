@@ -33,7 +33,7 @@ class ProductFactory extends Factory
             'measures_id' => rand(1, $measures),
             'providers_id' => rand(1, $providers),
             'presentations_id' => rand(1, $presentations),
-            'name' =>$this->faker->sentence(2),
+            'name' =>$this->faker->word(1),
             'code' =>$this->faker->isbn10(),
             'bar_code' =>$this->faker->isbn13(),
             'stock' => rand(1, 999),
@@ -42,7 +42,7 @@ class ProductFactory extends Factory
             'price_by_unit' => rand(1,100),
             'wholesale_price' => rand(1,100),
             'special_price' => rand(1,100),
-            'description' =>$this->faker->sentence(6),
+            'description' => $this->faker->sentence(6),
             'state' => rand(0,1),
             'expiration_date' => now(),
         ];

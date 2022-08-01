@@ -14,7 +14,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(50)->create();
+        User::factory(30)->create();
+        
         User::create([
             'name' => 'Alcides Yunier Turruellas Osorio',
             'companies_id' => 1,
