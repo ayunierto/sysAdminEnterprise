@@ -17,7 +17,7 @@ class PresentationFactory extends Factory
         $companies = Company::count();
         
         return [
-            'companies_id' => rand(1, $amount),
+            'companies_id' => rand(1, $companies),
             'name' => $this->faker->word(),
             'equivalence' => rand(1, 50),
         ];
