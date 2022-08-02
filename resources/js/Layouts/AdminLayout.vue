@@ -277,11 +277,11 @@
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
-                <v-list-item-avatar>
+                <!-- <v-list-item-avatar>
                     <v-img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwr_zZjgvmu4BccwDNIHic8K5dyehw7cSYA&usqp=CAU">
                     </v-img>
-                </v-list-item-avatar>
+                </v-list-item-avatar> -->
                 <v-menu left bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on" color="white">
