@@ -148,6 +148,7 @@ return [
 
     'attributes' => [
         'company' => 'empresa',
+        'companies_id' => 'empresa',
         'category' => 'categoría',
         'categories_id' => "categoría",
         'mark' => 'marca',
