@@ -2,14 +2,23 @@
     <v-app>
         <v-content>
             <v-container fluid fill-height>
-                <v-layout align-center justify-center>
-                    <v-flex xs12 sm8 md4>
-                        <v-card class="elevation-12">
-                            <v-toolbar dark color="primary">
-                                <v-toolbar-title>Identificarse</v-toolbar-title>
-                            </v-toolbar> 
+                <v-layout align-center justify-center row fill-height style="height: 100vh">
 
-                                <form @submit.prevent="submit">
+                    <v-flex xs10 sm5 md3 xl3>
+                        <v-card elevation="24">
+                            <v-img
+                                style="height: 250px"
+                                src="https://picsum.photos/510/300?random"
+                                aspect-ratio="1.7"
+                            ></v-img>
+                        </v-card>
+                    </v-flex>
+
+                    <v-flex xs10 sm5 md4 xl3 ma-1>
+                        <v-card style="height: 250px" elevation="24" color="#ECEFF1" >
+                            <form @submit.prevent="submit">
+                                <v-container>
+
                                     <v-card-text>
                                         <div v-if="status">
                                             {{ status }}
@@ -23,79 +32,43 @@
                                             autofocus>
                                         </v-text-field>
 
-                                        <v-alert v-if="errors.email" 
-                                        dense 
-                                        dismissible 
-                                        elevation="7" 
-                                        outlined 
-                                        text type="error">
-                                        {{ errors.email }}
-                                        </v-alert>
+                                        <small v-if="errors.email" >
+                                            {{ errors.email }}
+                                        </small>
 
                                         <v-text-field
-                                            label="Clave"
-                                            type="password"
-                                            v-model="form.password" required autocomplete="current-password">
+                                            counter
+                                            @click:append="show1 = !show1"
+                                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                            :type="show1 ? 'text' : 'password'"
+                                            label="Contraseña"
+                                            v-model="form.password" 
+                                            required 
+                                            autocomplete="current-password">
                                         </v-text-field>
 
-                                        <v-alert v-if="errors.password" 
-                                        dense 
-                                        dismissible 
-                                        elevation="7" 
-                                        outlined 
-                                        text type="error">
-                                        {{ errors.password }}
-                                        </v-alert>
+                                        <small v-if="errors.password" >
+                                            {{ errors.password }}
+                                        </small>
 
-                                        <v-checkbox
+                                        <!-- <v-checkbox
                                         name="remember"
                                         v-model="form.remember"
                                         label="Recordame"
-                                        ></v-checkbox>
+                                        ></v-checkbox> -->
 
                                     </v-card-text>
                                     
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-
-                                        <v-btn color="primary" type="submit" :disabled="form.processing">
-                                            Ingresar
-                                        </v-btn>
-                                    </v-card-actions>
-                                </form>
-
-
-                            
-
-                                <!-- <div>
-                                    <jet-input id="email" type="email" class="mt-1 block w-full" 
-                                    v-model="form.email" required autofocus />
-                                </div> -->
-
-                                <!-- <div class="mt-4">
-                                    <jet-label for="password" value="Password" />
-                                    <jet-input id="password" type="password" class="mt-1 block w-full" 
-                                    v-model="form.password" required autocomplete="current-password" />
-                                </div> -->
-
-                                <!-- <div class="block mt-4">
-                                    <label class="flex items-center">
-                                        <jet-checkbox name="remember" v-model="form.remember" />
-                                        <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                                    </label>
-                                </div> -->
-
-                                <!-- <div class="flex items-center justify-end mt-4">
-                                    <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                                        Forgot your password?
-                                    </inertia-link>
-
-                                    <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                                        Ingresar
-                                    </jet-button>
-                                </div> -->
-
-
+                                    <div class="text-center">
+                                        <v-hover>
+                                            <v-btn color="primary" type="submit" :disabled="form.processing">
+                                                Ingresar
+                                            </v-btn>
+                                        </v-hover>
+                                    </div>
+                                        
+                                </v-container>
+                            </form>
                         </v-card>
                     </v-flex>
                 </v-layout>
@@ -118,6 +91,8 @@
 
         data() {
             return {
+                show1: false,
+
                 form: this.$inertia.form({
                     email: '',
                     password: '',
