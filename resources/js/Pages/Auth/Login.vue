@@ -3,22 +3,19 @@
         <v-content>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center row fill-height style="height: 100vh">
-
-                    <v-flex xs10 sm5 md3 xl3>
+                    <v-flex xs10 sm4 md2 xl2>
                         <v-card elevation="24">
                             <v-img
-                                style="height: 250px"
+                                style="height: 250px;"
                                 src="https://picsum.photos/510/300?random"
-                                aspect-ratio="1.7"
+                                aspect-ratio="1"
                             ></v-img>
                         </v-card>
                     </v-flex>
-
-                    <v-flex xs10 sm5 md4 xl3 ma-1>
+                    <v-flex xs10 sm4 md3 xl3 ma-1>
                         <v-card style="height: 250px" elevation="24" color="#ECEFF1" >
                             <form @submit.prevent="submit">
                                 <v-container>
-
                                     <v-card-text>
                                         <div v-if="status">
                                             {{ status }}

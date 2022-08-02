@@ -4,7 +4,7 @@
         <template>
             <!-- Menú vertical -->
             <!-- <v-navigation-drawer app v-model="drawer" v-bind="color"> -->
-            <v-navigation-drawer app v-model="drawer" color="#19479A">
+            <v-navigation-drawer app v-model="drawer" color="#1F3A72">
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list>
@@ -283,7 +283,7 @@
 
             <!-- Menú horizontal -->
             <!-- <v-app-bar app v-bind="color"> -->
-            <v-app-bar app color="#19479A">
+            <v-app-bar app color="#1F3A72">
                 <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>
@@ -324,11 +324,20 @@
 
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
-        <v-footer padless height="60px" color="#19479A">
+        <v-footer padless height="60px" color="#1F3A72" app>
             <v-col class="text-center" cols="12" absolute style="color:white ;">
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>
         </v-footer>
+        <!-- 
+            colores posibles(Quitar letra minuscula)
+            #22325d8
+            #1F3A7d2
+            #1E1A2sD
+            #11194w3
+            #1C48Av0
+            
+        -->
         <!-- PIE DE PAGINA END -->
 
     </v-app>
