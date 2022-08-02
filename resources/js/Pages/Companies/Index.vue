@@ -184,12 +184,6 @@
                 </v-icon>
             </template>
 
-            <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize" >
-                    Resetear
-                </v-btn>
-            </template>
-
         </v-data-table>
 
     </admin-layout>

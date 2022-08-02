@@ -74,7 +74,7 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.phone" label="Teléfono*" required>
+                                            <v-text-field v-model="editedItem.phone" type="number"  label="Teléfono*" required>
                                             </v-text-field>
                                         </v-col>
                                         
@@ -84,15 +84,8 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-select
-                                            v-model="editedItem.state"
-                                            :items="items_state"
-                                            item-text="name"
-                                            item-value="value"
-                                            label="Seleccione estado*"
-                                            persistent-hint
-                                            single-line
-                                            ></v-select>
+                                           <v-text-field v-model="editedItem.state" label="País*" required>
+                                            </v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -158,12 +151,6 @@ export default {
     },
     data() {
         return {
-
-            items_state: [
-                    { name: 'Activo', value: 1 },
-                    { name: 'Inactivo', value: 0 },
-            ],
-
             dialog: false,
             dialogDelete: false,
             search: '',

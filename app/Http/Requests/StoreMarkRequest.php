@@ -26,7 +26,7 @@ class StoreMarkRequest extends FormRequest
         return [
             'companies_id'=> 'required',
             'name'=> 'required|string|max:50',
-            'description'=> 'required|string|max:250',
+            // 'description'=> 'string|max:250',
         ];
     }
 }

@@ -153,6 +153,7 @@
                                         <v-text-field
                                         v-model="editedItem.stock"
                                         label="Stock"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -161,6 +162,7 @@
                                         <v-text-field
                                         v-model="editedItem.purchase_price"
                                         label="Precio de compra"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -169,6 +171,7 @@
                                         <v-text-field
                                         v-model="editedItem.sale_price"
                                         label="Precio de venta"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -177,6 +180,7 @@
                                         <v-text-field
                                         v-model="editedItem.price_by_unit"
                                         label="Precio por unidad"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -185,6 +189,7 @@
                                         <v-text-field
                                         v-model="editedItem.wholesale_price"
                                         label="Precio por mayor"
+                                        type="number"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -192,6 +197,7 @@
                                     <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
                                         v-model="editedItem.special_price"
+                                        type="number"
                                         label="Precio especial"
                                         required
                                         ></v-text-field>
@@ -293,13 +299,6 @@
                     mdi-delete
                 </v-icon>
             </template>
-
-            <template v-slot:no-data>
-                <v-btn color="primary" @click="initialize" >
-                    Resetear
-                </v-btn>
-            </template>
-
         </v-data-table>
 
     </admin-layout>

@@ -26,7 +26,7 @@ class UpdatePresentationRequest extends FormRequest
         return [
             'companies_id'=> 'required',
             'name'=> 'required|string|max:50',
-            'equivalence'=> 'required|string|max:250',
+            'equivalence'=> 'required|numeric',
         ];
     }
 }

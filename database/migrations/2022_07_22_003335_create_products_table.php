@@ -22,17 +22,17 @@ class CreateProductsTable extends Migration
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('code');
-            $table->bigInteger('bar_code');
-            $table->bigInteger('stock');
-            $table->decimal('purchase_price', 11,2);
-            $table->decimal('sale_price', 11, 2);
+            $table->string('code')->nullable();
+            $table->bigInteger('bar_code')->nullable();
+            $table->bigInteger('stock')->nullable();
+            $table->decimal('purchase_price', 11,2)->nullable();
+            $table->decimal('sale_price', 11, 2)->nullable();
             $table->decimal('price_by_unit', 11, 2)->nullable();
             $table->decimal('wholesale_price', 11, 2)->nullable();
             $table->decimal('special_price', 11, 2)->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->boolean('state');
-            $table->date('expiration_date');
+            $table->date('expiration_date')->nullable();
             
             $table->timestamps();
         });
