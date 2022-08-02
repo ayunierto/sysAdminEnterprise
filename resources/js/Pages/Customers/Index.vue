@@ -24,16 +24,16 @@
             <template v-slot:top>
                 <v-toolbar flat>
                     <!-- Comenario de prueba -->
-                    <v-toolbar-title>Lista de Proveedores</v-toolbar-title>
+                    <v-toolbar-title>Lista de Clientes</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="600px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Agregar Proveedor
+                                Agregar Cliente
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Proveedores"
+                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Cliente"
                                     single-line hide-details></v-text-field>
                             </v-card-title>
                         </template>
