@@ -61,12 +61,16 @@
                                     
                                     <div class="text-center">
                                         <v-hover>
-                                            <v-btn color="primary" type="submit" :disabled="form.processing">
+                                            <v-btn 
+                                            color="primary" 
+                                            type="submit" 
+                                            :loading="form.processing" 
+                                            :disabled="form.processing"
+                                            >
                                                 Ingresar
                                             </v-btn>
                                         </v-hover>
                                     </div>
-                                        
                                 </v-container>
                             </form>
                         </v-card>
