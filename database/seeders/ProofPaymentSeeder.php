@@ -27,7 +27,7 @@ class ProofPaymentSeeder extends Seeder
 
         ProofPayment::create([
             'code' => '03',
-            'name' => 'Boleta',
+            'name' => 'Boleta de Venta',
             'serie' => 'BEA1', //adjuntar BEA1-correlativo de 8 digitos
         ]);
     }

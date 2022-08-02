@@ -31,11 +31,14 @@
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar Cliente
                             </v-btn>
-                            <v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Cliente"
-                                    single-line hide-details></v-text-field>
-                            </v-card-title>
+                            <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        ></v-text-field>
                         </template>
                         <v-card>
                             <!-- Titulo de modal agregar  -->

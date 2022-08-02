@@ -19,7 +19,7 @@
         </div>
         <!-- Fin de Alertas -->
 
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1" :search="search">
+        <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Lista de Comprobantes</v-toolbar-title>
@@ -30,11 +30,9 @@
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar Comprobante
                             </v-btn>
-                            <v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Comprobante"
-                                    single-line hide-details></v-text-field>
-                            </v-card-title>
+                            <v-spacer></v-spacer>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                                hide-details></v-text-field>
                         </template>
                         <v-card>
                             <!-- Titulo de modal agreagar Unidad Medida -->
@@ -175,7 +173,7 @@ export default {
 
             this.initialize();
 
-        } 
+        }
 
     },
 

@@ -31,11 +31,9 @@
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar Proveedor
                             </v-btn>
-                            <v-card-title>
-                                <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar Proveedores"
-                                    single-line hide-details></v-text-field>
-                            </v-card-title>
+                            <v-spacer></v-spacer>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                                hide-details></v-text-field>
                         </template>
                         <v-card>
                             <!-- Titulo de modal agregar  -->
@@ -47,24 +45,19 @@
                             <v-card-text>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'"> 
-                                            <v-select 
-                                            v-model="editedItem.companies_id" 
-                                            hint="Selecciones Empresa"
-                                            :items="companies" 
-                                            item-text="name" 
-                                            item-value="id"
-                                            label="Seleccione Empresa" 
-                                            single-line></v-select>
+                                        <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
+                                            <v-select v-model="editedItem.companies_id" hint="Selecciones Empresa"
+                                                :items="companies" item-text="name" item-value="id"
+                                                label="Seleccione Empresa" single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" 
-                                            label="Nombre o Razon Social*"
-                                            required>
+                                            <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
+                                                required>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC" required>
+                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC"
+                                                required>
                                             </v-text-field>
                                         </v-col>
 
@@ -74,17 +67,18 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.phone" type="number"  label="Teléfono*" required>
+                                            <v-text-field v-model="editedItem.phone" type="number" label="Teléfono*"
+                                                required>
                                             </v-text-field>
                                         </v-col>
-                                        
+
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.city" label="Ciudad*" required>
                                             </v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                           <v-text-field v-model="editedItem.state" label="País*" required>
+                                            <v-text-field v-model="editedItem.state" label="País*" required>
                                             </v-text-field>
                                         </v-col>
 
