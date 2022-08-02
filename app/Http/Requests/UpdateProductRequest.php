@@ -24,25 +24,26 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            // 'code' => 'string|max:25',
-            // 'bar_code' => 'string|max:25',
-            // 'stock' => 'numeric',
-            // 'purchase_price' => 'numeric',
-            // 'sale_price' => 'numeric',
-            // 'price_by_unit' => 'numeric',
-            // 'wholesale_price' => 'numeric',
-            // 'special_price' => 'numeric',
-            // 'description' => 'string|max:250',
-            'state' => 'required|boolean',
-            // 'expiration_date' => 'date',
+            'companies_id' => 'required|integer',
+            'categories_id' => 'required|integer',
+            'marks_id' => 'required|integer',
+            'measures_id' => 'required|integer',
+            'providers_id' => 'required|integer',
+            'presentations_id' => 'required|integer',
 
-            'companies_id' => 'required',
-            'categories_id' => 'required',
-            'marks_id' => 'required',
-            'measures_id' => 'required',
-            'providers_id' => 'required',
-            'presentations_id' => 'required',
+            'name' => 'required|string',
+            'code' => 'nullable|string|max:25',
+            'bar_code' => 'nullable|string|max:25',
+            'stock' => 'nullable|numeric',
+            'purchase_price' => 'nullable|numeric',
+            'sale_price' => 'nullable|numeric',
+            'price_by_unit' => 'nullable|numeric',
+            'wholesale_price' => 'nullable|numeric',
+            'special_price' => 'nullable|numeric',
+            'description' => 'nullable|string|max:250',
+            'state' => 'required|boolean',
+            'expiration_date' => 'nullable|date',
+
         ];
     }
 }

@@ -24,9 +24,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'companies_id' => 'required',
+            'companies_id' => 'required|integer',
             'name' => 'required|string|max:25',
-            // 'description' => 'string|max:250'
+            'description' => 'nullable|max:250'
         ];
     }
 

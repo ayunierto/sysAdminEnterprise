@@ -26,7 +26,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             'companies_id' => 'required',
             'name' => 'required|string|max:25',
-            // 'description' => 'string|max:250'
+            'description' => 'nullable|string|max:250'
         ];
     }
 }
