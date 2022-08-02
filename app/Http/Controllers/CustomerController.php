@@ -20,7 +20,7 @@ class CustomerController extends Controller
     public function index()
     {
         $company = Auth::user()->companies_id;
-        return Inertia::render('Providers/Index', [
+        return Inertia::render('Customers/Index', [
             'customers' => Customer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
