@@ -17,7 +17,7 @@ class CreateProvidersTable extends Migration
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('document');
+            $table->string('document')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('city')->nullable();
