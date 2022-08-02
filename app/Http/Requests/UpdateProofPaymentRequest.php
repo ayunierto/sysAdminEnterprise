@@ -13,7 +13,7 @@ class UpdateProofPaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateProofPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'code' => 'required',
+            'name' => 'required|string|max:25',
+            'serie' => 'required|string|max:4',
         ];
     }
 }

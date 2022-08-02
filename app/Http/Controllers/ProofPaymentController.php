@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\ProofPayment;
 use App\Http\Requests\StoreProofPaymentRequest;
 use App\Http\Requests\UpdateProofPaymentRequest;
+use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class ProofPaymentController extends Controller
 {
@@ -15,7 +19,10 @@ class ProofPaymentController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('ProofPayments/Index', [
+            'proofPayments' => ProofPayment::all(),
+            'company' => Company::find(Auth::user()->companies_id),
+        ]);
     }
 
     /**
@@ -36,7 +43,8 @@ class ProofPaymentController extends Controller
      */
     public function store(StoreProofPaymentRequest $request)
     {
-        //
+        ProofPayment::create($request->all());
+        return Redirect::route('proofPayments.index')->with('message', 'Comprobante agregado');
     }
 
     /**
@@ -68,9 +76,11 @@ class ProofPaymentController extends Controller
      * @param  \App\Models\ProofPayment  $proofPayment
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProofPaymentRequest $request, ProofPayment $proofPayment)
+    public function update(UpdateProofPaymentRequest $request, $id)
     {
-        //
+        $proofPayment = ProofPayment::find($id);
+        $proofPayment->update($request->all());
+        return Redirect::route('proofPayments.index')->with('message', 'Comprobante actualizado');
     }
 
     /**
@@ -79,8 +89,10 @@ class ProofPaymentController extends Controller
      * @param  \App\Models\ProofPayment  $proofPayment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProofPayment $proofPayment)
+    public function destroy($id)
     {
-        //
+        $proofPayment = ProofPayment::find($id);
+        $proofPayment->delete();
+        return Redirect::route('proofPayments.index')->with('message', 'Comprobante eliminada');
     }
 }

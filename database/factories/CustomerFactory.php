@@ -22,7 +22,7 @@ class CustomerFactory extends Factory
             'document' => rand(74269128,10768557390),            
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'email' => $this->faker->safeEmail(),
+            'email' => $this->faker->unique()->safeEmail,
         ];
     }
 }

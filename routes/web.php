@@ -9,10 +9,12 @@ use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\UserController;
 use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\ProofPayment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -76,6 +78,9 @@ Route::resource('dashboard/lotes', BatchController::class)->names('batches')
     ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/productos', ProductController::class)->names('products')
+    ->middleware(['auth:sanctum', 'verified']);
+
+Route::resource('dashboard/comprobantes_pago', ProofPaymentController::class)->names('proofPayments')
     ->middleware(['auth:sanctum', 'verified']);
     
 Route::resource('dashboard/usuarios', UserController::class)->names('users')
