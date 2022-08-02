@@ -30,20 +30,5 @@ class ProofPaymentSeeder extends Seeder
             'name' => 'Boleta',
             'serie' => 'BEA1', //adjuntar BEA1-correlativo de 8 digitos
         ]);
-        $proof =
-        [ 
-            ["code" => "0A1", "name" => "Comprobante", "serie" => "CVA1"],
-            ["code" => "ZZ", "name" => "Factura", "serie" => "FEA1"],
-            ["code" => "GLL", "name" => "Boleta", "serie" => "BEA1"],
-        ];
-
-        foreach ($proof as $pp) {
-
-            ProofPayment::create([
-                'code' => $pp['code'],
-                'name' =>$pp['name'],
-                'name' =>$pp['serie'],
-            ]);
-        }
     }
 }
