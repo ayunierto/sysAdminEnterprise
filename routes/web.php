@@ -7,9 +7,11 @@ use App\Http\Controllers\MarkController;
 use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Company;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +64,9 @@ Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->name
     ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
 
 Route::resource('dashboard/proveedores', ProviderController::class)->names('providers')
+    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
+
+Route::resource('dashboard/clientes', CustomerController::class)->names('customers')
     ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
 
 Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations')
