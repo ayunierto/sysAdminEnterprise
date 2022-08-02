@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible 
         v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
@@ -20,9 +24,7 @@
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Empresas
-                        
-                    </v-toolbar-title>
+                    <v-toolbar-title>Lista de Empresas</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
@@ -192,7 +194,7 @@
     import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['companies'],
+        props: ['companies', 'company'],
         components: {
             AdminLayout,
         },

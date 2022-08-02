@@ -35,6 +35,7 @@ class ProductController extends Controller
             'measures' => Measure::all(),
             'providers' => Provider::where('companies_id', $company_id)->get(),
             'presentations' => Presentation::where('companies_id', $company_id)->get(),
+            'company' => Company::where('id', $company_id)->first(),
         ]);
     }
 

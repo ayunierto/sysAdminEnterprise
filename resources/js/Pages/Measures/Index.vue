@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
@@ -24,7 +28,7 @@
                     <v-dialog v-model="dialog" max-width="500px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Medidas
+                                Agregar Medida
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
@@ -102,7 +106,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-    props: ['measures'],
+    props: ['measures', 'company'],
     components: {
         AdminLayout,
     },

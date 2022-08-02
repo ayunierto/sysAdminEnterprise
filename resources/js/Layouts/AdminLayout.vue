@@ -13,7 +13,9 @@
                             <v-img src="../img/empresa1/ecsmac8.png">
                             </v-img>
                         </v-avatar>
-                        <v-list-item-title class="text-h6" style="color:white;">ECSMAC EIRL</v-list-item-title>
+                        <v-list-item-title class="text-h6" style="color:white;">
+                             <slot name="company_name"></slot>
+                        </v-list-item-title>
                     </v-list-item>
 
                     <v-list-item>
@@ -304,8 +306,8 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ $page }}</pre>
         </v-main>
+        
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
         <v-footer padless height="60px" color="#1465bb">

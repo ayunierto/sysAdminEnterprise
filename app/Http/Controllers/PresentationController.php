@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Presentation;
 use App\Models\Company;
-use App\Models\Product;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -20,10 +19,12 @@ class PresentationController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
+
         return Inertia::render('Presentations/Index', [
-            'presentations' => Presentation::where('companies_id', Auth::user()->companies_id)->get(),
+            'presentations' => Presentation::where('companies_id', $company)->get(),
             'companies' => Company::all(),
-            'user_company' => Company::find(Auth::user()->companies_id),
+            'company' => Company::find($company),
         ]);
     }
 

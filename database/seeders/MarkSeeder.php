@@ -14,6 +14,6 @@ class MarkSeeder extends Seeder
      */
     public function run()
     {
-        Mark::factory(20)->create();
+        Mark::factory(50)->create();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -18,7 +19,11 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return Inertia::render('Companies/Index', compact('companies'));
+
+        return Inertia::render('Companies/Index', [
+            'companies' => $companies,
+            'company' => Company::find(Auth::user()->companies_id),
+        ]);
     }
 
     /**
@@ -39,19 +44,8 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        Company::create([
-            'name' => $request->name,
-            'ruc' => $request->ruc,
-            'description' => $request->description,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'department' => $request->department,
-            'province' => $request->province,
-            'district' => $request->district,
-            'country_code' => $request->country_code,
-            'state' => $request->state,
-        ]);
-        return Redirect::route('companies.index')->with('message', 'Empresa creada');
+        Company::create($request->all());
+        return Redirect::route('companies.index')->with('message', 'Empresa agregada');
     }
 
     /**
@@ -86,18 +80,7 @@ class CompanyController extends Controller
     public function update(UpdateCompanyRequest $request, $id)
     {
         $company = Company::find($id);
-        $company->update([
-            'name' => $request->name,
-            'ruc' => $request->ruc,
-            'description' => $request->description,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'department' => $request->department,
-            'province' => $request->province,
-            'district' => $request->district,
-            'country_code' => $request->country_code,
-            'state' => $request->state,
-        ]);
+        $company->update($request->all());
         return Redirect::route('companies.index')->with('message', 'Empresa actualizada');
 
     }

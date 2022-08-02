@@ -16,6 +16,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $companies = Company::count();
+        
         return [
             'companies_id' => rand(1, $companies),
             'name' => $this->faker->name(),

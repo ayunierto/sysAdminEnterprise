@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
@@ -19,7 +23,7 @@
         class="elevation-1" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Categorías</v-toolbar-title>
+                    <v-toolbar-title>Listado de Categorías</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
@@ -29,7 +33,7 @@
                     
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                            Nuevo Categoría
+                            Agregar Categoría
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-text-field
@@ -130,7 +134,7 @@
         props: [
             'companies', 
             'categories', 
-            'user_company',
+            'company'
         ],
         components: {
             AdminLayout,
@@ -158,13 +162,13 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     name: '',
                     description: '',
                 },
 
                 defaultItem: {
-                    companies_id: this.user_company.id,
+                    companies_id: this.$page.props.user.companies_id,
                     name: '',
                     description: '',
                 },

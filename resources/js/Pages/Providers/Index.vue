@@ -1,6 +1,10 @@
 <template>
     <admin-layout>
 
+        <template v-slot:company_name>
+            <div>{{ company.name }}</div>
+        </template>
+
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
@@ -20,12 +24,12 @@
             <template v-slot:top>
                 <v-toolbar flat>
                     <!-- Comenario de prueba -->
-                    <v-toolbar-title>Proveedores</v-toolbar-title>
+                    <v-toolbar-title>Lista de Proveedores</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="600px">
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Nuevo Proveedor
+                                Agregar Proveedor
                             </v-btn>
                             <v-card-title>
                                 <v-spacer></v-spacer>
@@ -80,7 +84,7 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                           <v-text-field v-model="editedItem.state" label="Pais*" required>
+                                           <v-text-field v-model="editedItem.state" label="País*" required>
                                             </v-text-field>
                                         </v-col>
 
@@ -141,13 +145,12 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-    props: ['providers', 'companies'],
+    props: ['providers', 'companies', 'company'],
     components: {
         AdminLayout,
     },
     data() {
         return {
-
             dialog: false,
             dialogDelete: false,
             search: '',

@@ -20,9 +20,11 @@ class ProviderController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Providers/Index', [
-            'providers' => Provider::where('companies_id', Auth::user()->companies_id)->get(),
+            'providers' => Provider::where('companies_id', $company)->get(),
             'companies' => Company::all(),
+            'company' => Company::find($company),
         ]);
     }
 

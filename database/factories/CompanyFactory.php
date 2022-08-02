@@ -16,7 +16,7 @@ class CompanyFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence(2),
-            'ruc' => $this->faker->phoneNumber(),
+            'ruc' => 153698532456,
             'description' => $this->faker->sentence(5),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->streetAddress(),

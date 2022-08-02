@@ -172,6 +172,8 @@ return [
         'country_code' => 'código de área',
         'state' => 'estado',
         'equivalence' => 'equivalencia',
+        'city' => 'ciudad',
+        'document' => 'documento', 
     ],
 
 ];

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Measure;
 use App\Http\Requests\StoreMeasureRequest;
 use App\Http\Requests\UpdateMeasureRequest;
+use App\Models\Company;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,13 +20,8 @@ class MeasureController extends Controller
     public function index()
     {
         return Inertia::render('Measures/Index', [
-            'measures' => Measure::all()->map(function ($measure) {
-                return [
-                    'id' => $measure->id,
-                    'code' => $measure->code,
-                    'name' => $measure->name,
-                ];
-            }),
+            'measures' => Measure::all(),
+            'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -35,7 +32,7 @@ class MeasureController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Measures/Create');
+        // return Inertia::render('Measures/Create');
     }
 
     /**
@@ -46,10 +43,7 @@ class MeasureController extends Controller
      */
     public function store(StoreMeasureRequest $request)
     {
-        Measure::create([
-            'code' => $request->code,
-            'name' => $request->name,
-        ]);
+        Measure::create($request->all());
         return Redirect::route('measures.index')->with('message', 'Unidad de Medida agregada');
     }
 
@@ -85,10 +79,7 @@ class MeasureController extends Controller
     public function update(UpdateMeasureRequest $request, $id)
     {
         $measure = Measure::find($id);
-        $measure->update([
-            'code' => $request->code,
-            'name' => $request->name,
-        ]);
+        $measure->update($request->all());
         return Redirect::route('measures.index')->with('message', 'Unidad de Medida actualizada');
     }
 

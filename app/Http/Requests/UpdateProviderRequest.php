@@ -31,6 +31,7 @@ class UpdateProviderRequest extends FormRequest
             // 'phone' => 'required|string|max:50',
             // 'city' => 'required|string|max:50',
             // 'state' => 'required|string|max:50'
+
         ];
     }
 }

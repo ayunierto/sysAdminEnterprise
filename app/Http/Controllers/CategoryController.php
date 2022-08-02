@@ -19,10 +19,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Categories/Index', [
-            'categories' => Category::where('companies_id', Auth::user()->companies_id)->get(),
+            'categories' => Category::where('companies_id', $company)->get(),
             'companies' => Company::all(),
-            'user_company' => Company::find(Auth::user()->companies_id),
+            'company' => Company::find($company),
         ]);
     }
 

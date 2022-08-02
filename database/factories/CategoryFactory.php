@@ -14,10 +14,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $amount = Company::count();
+        $companies = Company::count();
+        
         return [
-            'companies_id' => rand(1, $amount),
-            'name' => $this->faker->sentence(1),
+            'companies_id' => rand(1, $companies),
+            'name' => $this->faker->word(1),
             'description' => $this->faker->sentence(4)
         ];
     }
