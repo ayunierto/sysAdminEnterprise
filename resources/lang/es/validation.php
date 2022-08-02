@@ -175,7 +175,6 @@ return [
         'equivalence' => 'equivalencia',
         'city' => 'ciudad',
         'document' => 'documento', 
-        // estoy es un comentario de prueba para probar el merge con rama3
     ],
 
 ];
