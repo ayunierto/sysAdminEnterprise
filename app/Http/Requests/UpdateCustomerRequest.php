@@ -24,7 +24,12 @@ class UpdateCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'companies_id' => 'required|integer',
+            'name' => 'required|string|max:100',
+            'document' => 'required|string|max:50',
+            'phone' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'email' => 'nullable|string|max:100'
         ];
     }
 }
