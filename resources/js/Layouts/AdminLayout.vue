@@ -222,8 +222,8 @@
                             </v-card>
 
                         </v-list-group>
-
-                        <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
+                        <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'">
+                        <v-list-item link style="color:white;" >
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-account-group</v-icon>
                             </v-list-item-icon>
@@ -231,7 +231,8 @@
                                 <v-list-item-title>CLIENTES</v-list-item-title>
                             </v-list-item-content>
                         </v-list-item>
-
+                        </inertia-link>
+                        
                         <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon color="white">mdi-account-heart-outline</v-icon>
