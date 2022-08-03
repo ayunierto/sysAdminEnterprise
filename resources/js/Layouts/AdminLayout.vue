@@ -5,9 +5,14 @@
             <!-- Menú vertical -->
             <!-- <v-navigation-drawer app v-model="drawer" v-bind="color"> -->
             <v-navigation-drawer app v-model="drawer" color="#19479A">
+            <!-- style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(25,71,154,1) 35%);" -->
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
-                <v-list>
+                <v-list class="ma-2">
+                    <!-- <v-card color="#3463B3" >
+                            <v-img height="150" src="../img/empresa1/ecsmac9.png">
+                            </v-img>
+                    </v-card> -->
                     <v-list-item class="px-2">
                         <v-avatar size="70">
                             <v-img src="../img/empresa1/ecsmac8.png">
@@ -17,7 +22,6 @@
                             <slot name="company_name"></slot>
                         </v-list-item-title>
                     </v-list-item>
-
                     <v-list-item>
                         <v-list-item-content>
                             <v-list-item-subtitle style="color:white;">
@@ -329,15 +333,6 @@
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>
         </v-footer>
-        <!-- 
-            colores posibles(Quitar letra minuscula)
-            #22325d8
-            #1F3A7d2
-            #1E1A2sD
-            #11194w3
-            #1C48Av0
-            
-        -->
         <!-- PIE DE PAGINA END -->
 
     </v-app>
