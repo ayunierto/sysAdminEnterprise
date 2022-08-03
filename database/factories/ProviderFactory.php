@@ -18,7 +18,7 @@ class ProviderFactory extends Factory
 
         return [
             'companies_id' => rand(1, $companies),
-            'name' => $this->faker->word(2),
+            'name' => $this->faker->name(),
             'document' => 53256985,
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
