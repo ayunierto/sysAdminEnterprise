@@ -16,21 +16,25 @@ new Vue({
         desserts: [
             {
                 producto: "Frozen Yogurt",
+                presentacion: "cja 12 und",
                 cantidad: 159,
                 precio: 50,
             },
             {
                 producto: "Ice cream sandwich",
+                presentacion: "sobre 5 und",
                 cantidad: 237,
                 precio: 12,
             },
             {
                 producto: "Eclair",
+                presentacion: "saco 50kg",
                 cantidad: 262,
                 precio: 30,
             },
             {
                 producto: "Cupcake",
+                presentacion: "molde 5 kg",
                 cantidad: 305,
                 precio: 15,
             },

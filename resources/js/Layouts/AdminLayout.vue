@@ -4,10 +4,15 @@
         <template>
             <!-- Menú vertical -->
             <!-- <v-navigation-drawer app v-model="drawer" v-bind="color"> -->
-            <v-navigation-drawer app v-model="drawer" color="#223258">
+            <v-navigation-drawer app v-model="drawer" color="#19479A">
+            <!-- style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(25,71,154,1) 35%);" -->
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
-                <v-list>
+                <v-list class="ma-2">
+                    <!-- <v-card color="#3463B3" >
+                            <v-img height="150" src="../img/empresa1/ecsmac9.png">
+                            </v-img>
+                    </v-card> -->
                     <v-list-item class="px-2">
                         <v-avatar size="70">
                             <v-img src="../img/empresa1/ecsmac8.png">
@@ -17,7 +22,6 @@
                             <slot name="company_name"></slot>
                         </v-list-item-title>
                     </v-list-item>
-
                     <v-list-item>
                         <v-list-item-content>
                             <v-list-item-subtitle style="color:white;">
@@ -59,7 +63,7 @@
                                     <v-list-item-title>ADMINISTRACION</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card color="#3569B4">
+                            <v-card color="#3F2C20">
                                 <v-list-item-group class="white--text" color="white">
 
                                     <inertia-link :href="route('companies.index')">
@@ -154,7 +158,7 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-card color="#3569B4">
+                            <v-card color="#3F2C20">
                                 <v-list-item-group class="white--text" color="white">
 
                                     <inertia-link :href="route('products.index')">
@@ -296,7 +300,7 @@
 
             <!-- Menú horizontal -->
             <!-- <v-app-bar app v-bind="color"> -->
-            <v-app-bar app color="#223258">
+            <v-app-bar app color="#19479A">
                 <v-app-bar-nav-icon @click="drawer = !drawer" color="white"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>
@@ -337,20 +341,11 @@
 
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
-        <v-footer padless height="60px" color="#223258" app>
+        <v-footer padless height="60px" color="#19479A" app>
             <v-col class="text-center" cols="12" absolute style="color:white ;">
                 {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
             </v-col>
         </v-footer>
-        <!-- 
-            colores posibles(Quitar letra minuscula)
-            #22325d8
-            #1F3A7d2
-            #1E1A2sD
-            #11194w3
-            #1C48Av0
-            
-        -->
         <!-- PIE DE PAGINA END -->
 
     </v-app>
