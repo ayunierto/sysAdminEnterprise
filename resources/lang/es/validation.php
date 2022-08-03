@@ -175,6 +175,7 @@ return [
         'equivalence' => 'equivalencia',
         'city' => 'ciudad',
         'document' => 'documento', 
+        'coin' => 'moneda', 
     ],
 
 ];
