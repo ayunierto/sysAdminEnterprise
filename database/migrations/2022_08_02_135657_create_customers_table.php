@@ -17,10 +17,11 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
-            $table->string('document');
+            $table->string('document')->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->nullable();
+            $table->integer('points')->nullable();
             $table->timestamps();
         });
     }
