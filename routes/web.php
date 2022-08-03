@@ -53,36 +53,29 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     ]);
 })->name('dashboard');
 
-Route::resource('dashboard/categorias', CategoryController::class)->names('categories')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
+// Rutas de administrador de la pagina
+Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function ()
+{
+    Route::resource('dashboard/companies', CompanyController::class);
+    Route::resource('dashboard/measures', MeasureController::class);
+    Route::resource('dashboard/users', UserController::class);
+    Route::resource('dashboard/coins', CoinController::class);
+});
 
-Route::resource('dashboard/empresas', CompanyController::class)->names('companies')
-    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
+// Rutas de administrador de empresa
+Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
+{
+    Route::resource('dashboard/categories', CategoryController::class);
+    Route::resource('dashboard/marks', MarkController::class);
+    Route::resource('dashboard/providers', ProviderController::class);
+    Route::resource('dashboard/customers', CustomerController::class);
+    Route::resource('dashboard/presentations', PresentationController::class);
+    Route::resource('dashboard/batches', BatchController::class);
+});
 
-Route::resource('dashboard/marcas', MarkController::class)->names('marks')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
-
-Route::resource('dashboard/unidades_de_medidas', MeasureController::class)->names('measures')
-    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
-
-Route::resource('dashboard/proveedores', ProviderController::class)->names('providers')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
-
-Route::resource('dashboard/clientes', CustomerController::class)->names('customers')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
-
-Route::resource('dashboard/presentacion', PresentationController::class)->names('presentations')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
-
-Route::resource('dashboard/lotes', BatchController::class)->names('batches')
-    ->middleware(['auth:sanctum', 'verified', 'CheckAdmin']);
-
-Route::resource('dashboard/productos', ProductController::class)->names('products')
-    ->middleware(['auth:sanctum', 'verified']);
-
-Route::resource('dashboard/comprobantes_pago', ProofPaymentController::class)->names('proofPayments')
-    ->middleware(['auth:sanctum', 'verified']);
-    
-Route::resource('dashboard/usuarios', UserController::class)->names('users')
-    ->middleware(['auth:sanctum', 'verified', 'CheckMaster']);
- 
+// Rutas de vendedores
+Route::middleware(['auth:sanctum', 'verified'])->group(function ()
+{
+    Route::resource('dashboard/products', ProductController::class);
+    Route::resource('dashboard/proofPayments', ProofPaymentController::class);
+});
