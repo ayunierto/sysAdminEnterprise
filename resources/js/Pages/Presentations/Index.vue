@@ -173,10 +173,10 @@
                 dialog: false,
                 dialogDelete: false,
                 headers: [
-                    { text: 'NOMBRE', value: 'name' },
+                    { text: 'PRESENTACION', value: 'name' },
                     { text: 'EQUIVALENCIA(und)', value: 'equivalence' },
-                    { text: 'ACCIONES', value: 'actions', sortable: false },
                     { text: 'PRODUCTO', value: 'product' },
+                    { text: 'ACCIONES', value: 'actions', sortable: false },
                 ],
                 desserts: [],
 
