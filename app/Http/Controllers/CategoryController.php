@@ -28,16 +28,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new category.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Inertia::render('Categories/Create');
-    }
-
-    /**
      * Store a newly created category in storage.
      *
      * @param  \App\Http\Requests\StoreCategoryRequest  $request
@@ -47,28 +37,6 @@ class CategoryController extends Controller
     {
         Category::create($request->all());
         return Redirect::route('categories.index')->with('message', 'Categoría agregada');
-    }
-
-    /**
-     * Display the specified category.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        // return Inertia::render('Categories/Show', compact('category'));
-    }
-
-    /**
-     * Show the form for editing the specified category.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        // return Inertia::render('Categories/Edit', compact('category'));
     }
 
     /**

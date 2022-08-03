@@ -26,16 +26,6 @@ class MeasureController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Inertia::render('Measures/Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreMeasureRequest  $request
@@ -45,28 +35,6 @@ class MeasureController extends Controller
     {
         Measure::create($request->all());
         return Redirect::route('measures.index')->with('message', 'Unidad de Medida agregada');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Measure  $measure
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Measure $measure)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Measure  $measure
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Measure $measure)
-    {
-        //
     }
 
     /**

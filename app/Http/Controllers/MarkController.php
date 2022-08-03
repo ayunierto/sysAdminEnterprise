@@ -27,16 +27,6 @@ class MarkController extends Controller
     }
 
     /**
-     * Show the form for creating a new mark.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return Inertia::render('Marks/Create');
-    }
-
-    /**
      * Store a newly created mark in storage.
      *
      * @param  \App\Http\Requests\StoreMarkRequest  $request
@@ -46,28 +36,6 @@ class MarkController extends Controller
     {
         Mark::create($request->all());
         return Redirect::route('marks.index')->with('message', 'Marca agregada');
-    }
-
-    /**
-     * Display the specified mark.
-     *
-     * @param  \App\Models\Mark  $mark
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Mark $mark)
-    {
-        // return Inertia::render('Marks/Show', compact('mark'));
-    }
-
-    /**
-     * Show the form for editing the specified mark.
-     *
-     * @param  \App\Models\Mark  $mark
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Mark $mark)
-    {
-        // return Inertia::render('Marks/Edit', compact('mark'));
     }
 
     /**
