@@ -29,7 +29,6 @@ class StoreProductRequest extends FormRequest
             'marks_id' => 'required|integer',
             'measures_id' => 'required|integer',
             'providers_id' => 'required|integer',
-            'presentations_id' => 'required|integer',
             
             'name' => 'required|string',
             'code' => 'nullable|string|max:25',

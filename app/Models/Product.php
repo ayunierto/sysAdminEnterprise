@@ -17,7 +17,6 @@ class Product extends Model
         'marks_id',
         'measures_id',
         'providers_id',
-        'presentations_id',
         'batches_id',
         'name',
         'code',

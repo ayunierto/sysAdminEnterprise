@@ -24,7 +24,6 @@ class ProductFactory extends Factory
         $marks = Mark::count();
         $measures = Measure::count();
         $providers = Provider::count();
-        $presentations = Presentation::count();
 
         return [
             'companies_id' => rand(1, $companies),
@@ -32,7 +31,6 @@ class ProductFactory extends Factory
             'marks_id' => rand(1, $marks),
             'measures_id' => rand(1, $measures),
             'providers_id' => rand(1, $providers),
-            'presentations_id' => rand(1, $presentations),
             'name' =>$this->faker->word(1),
             'code' =>$this->faker->isbn10(),
             'bar_code' =>$this->faker->isbn13(),

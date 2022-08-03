@@ -25,6 +25,7 @@ class UpdatePresentationRequest extends FormRequest
     {
         return [
             'companies_id'=> 'required|integer',
+            'products_id'=> 'required|integer',
             'name'=> 'required|string|max:50',
             'equivalence'=> 'required|numeric',
         ];

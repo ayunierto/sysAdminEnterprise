@@ -66,10 +66,23 @@
                                         ></v-select>
                                     </v-col>
 
+                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
+                                        <v-select
+                                        v-model="editedItem.products_id"
+                                        hint="Seleccione el producto"
+                                        :items="products"
+                                        item-text="name"
+                                        item-value="id"
+                                        label="Seleccione producto"
+                                        persistent-hint
+                                        single-line
+                                        ></v-select>
+                                    </v-col>
+
                                     <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
                                         v-model="editedItem.name"
-                                        label="Nombre"
+                                        label="Nombre de la presentación"
                                         required
                                         ></v-text-field>
                                     </v-col>
@@ -139,6 +152,7 @@
     export default {
         props: [
             'companies', 
+            'products',
             'presentations',
             'company',
         ],
@@ -162,6 +176,7 @@
                     { text: 'NOMBRE', value: 'name' },
                     { text: 'EQUIVALENCIA(und)', value: 'equivalence' },
                     { text: 'ACCIONES', value: 'actions', sortable: false },
+                    { text: 'PRODUCTO', value: 'product' },
                 ],
                 desserts: [],
 
@@ -169,16 +184,18 @@
 
                 editedItem: {
                     companies_id: this.$page.props.user.companies_id,
-                    presentations_id: '',
+                    products_id: '',
                     name: '',
                     equivalence: '',
+                    product: '',
                 },
 
                 defaultItem: {
                     companies_id: this.$page.props.user.companies_id,
-                    presentations_id: '',
+                    products_id: '',
                     name: '',
                     equivalence: '',
+                    product: '',
                 },
                 
             }

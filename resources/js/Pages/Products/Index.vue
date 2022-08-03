@@ -113,18 +113,6 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-select
-                                        v-model="editedItem.presentations_id"
-                                        hint="Seleccione presentación"
-                                        :items="presentations"
-                                        item-text="name"
-                                        item-value="id"
-                                        label="Seleccione presentación"
-                                        single-line
-                                        ></v-select>
-                                    </v-col>
-
                                     <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
                                         v-model="editedItem.name"
@@ -145,7 +133,6 @@
                                         <v-text-field
                                         v-model="editedItem.bar_code"
                                         label="Código de barra"
-                                        required
                                         ></v-text-field>
                                     </v-col>
 
@@ -316,7 +303,6 @@
             'marks',
             'measures',
             'providers',
-            'presentations',
             'company',
         ],
         components: {
@@ -353,7 +339,6 @@
                     marks_id: '',
                     measures_id: '',
                     providers_id: '',
-                    presentations_id: '',
                     name: '',
                     code: '',
                     bar_code: '',
@@ -374,7 +359,6 @@
                     marks_id: '',
                     measures_id: '',
                     providers_id: '',
-                    presentations_id: '',
                     name: '',
                     code: '',
                     bar_code: '',

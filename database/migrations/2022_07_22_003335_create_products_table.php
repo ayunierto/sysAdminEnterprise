@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->foreignId('marks_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('code')->nullable();
             $table->bigInteger('bar_code')->nullable();

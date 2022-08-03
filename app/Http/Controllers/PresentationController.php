@@ -6,6 +6,7 @@ use App\Models\Presentation;
 use App\Models\Company;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -22,7 +23,19 @@ class PresentationController extends Controller
         $company = Auth::user()->companies_id;
 
         return Inertia::render('Presentations/Index', [
-            'presentations' => Presentation::where('companies_id', $company)->get(),
+            'presentations' => Presentation::where('companies_id', $company)->get()->map(function ($presentation)
+            {
+                return [
+                    'id' => $presentation->id,
+                    'companies_id' => $presentation->companies_id,
+                    'products_id' => $presentation->products_id,
+                    'name' => $presentation->name,
+                    'equivalence' => $presentation->equivalence,
+                    'product' => Product::find($presentation->products_id)->name,
+                ];
+
+            }),
+            'products' => Product::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
         ]);

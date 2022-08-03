@@ -29,11 +29,10 @@ class UpdateProductRequest extends FormRequest
             'marks_id' => 'required|integer',
             'measures_id' => 'required|integer',
             'providers_id' => 'required|integer',
-            'presentations_id' => 'required|integer',
 
             'name' => 'required|string',
             'code' => 'nullable|string|max:25',
-            'bar_code' => 'nullable|string|max:25',
+            'bar_code' => 'max:25',
             'stock' => 'nullable|numeric',
             'purchase_price' => 'nullable|numeric',
             'sale_price' => 'nullable|numeric',

@@ -16,6 +16,7 @@ class CreatePresentationsTable extends Migration
         Schema::create('presentations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('products_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->integer('equivalence');
             $table->timestamps();
