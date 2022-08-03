@@ -60,6 +60,6 @@ class PaymentMethodController extends Controller
     {
         $paymentMethod = PaymentMethod::find($id);
         $paymentMethod->delete();
-        return Redirect::route('paymentMethods.index')->with('message', 'Moneda eliminada');
+        return Redirect::route('paymentMethods.index')->with('message', 'Metodo de Pago eliminada');
     }
 }
