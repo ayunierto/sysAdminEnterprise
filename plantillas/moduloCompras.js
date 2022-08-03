@@ -2,9 +2,9 @@ new Vue({
     el: "#app",
     vuetify: new Vuetify(),
     data: () => ({
-        hasSaved: false,
         isEditing: null,
         dialog: false,
+        dialog2:false,
         dialogDelete: false,
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu2: false,
@@ -51,7 +51,6 @@ new Vue({
     methods: {
         save() {
             this.isEditing = !this.isEditing;
-            this.hasSaved = true;
             if (this.editedIndex > -1) {
                 Object.assign(this.desserts[this.editedIndex], this.editedItem);
             } else {
