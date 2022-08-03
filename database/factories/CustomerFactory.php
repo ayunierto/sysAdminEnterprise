@@ -17,7 +17,7 @@ class CustomerFactory extends Factory
         $companies = Company::count();
 
         return [
-            'companies_id' => rand(1,$companies),
+            'companies_id' => rand(1, $companies),
             'name' => $this->faker->word(2),
             'document' => rand(74269128,10768557390),            
             'phone' => $this->faker->phoneNumber(),

@@ -19,7 +19,7 @@
         </div>
         <!-- Fin de Alertas -->
 
-        <v-data-table :headers="headers" :items="desserts" class="elevation-1" :search="search"
+        <v-data-table :headers="headers" :items="desserts" class="elevation-24" :search="search"
             :footer-props="{ itemsPerPageText: 'Filas por página' }">
             <template v-slot:top>
                 <v-toolbar flat>

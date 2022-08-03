@@ -17,13 +17,13 @@ class ProviderFactory extends Factory
         $companies = Company::count();
 
         return [
-            'companies_id' => rand(1,$companies),
+            'companies_id' => rand(1, $companies),
             'name' => $this->faker->word(2),
             'document' => 53256985,
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
             'city' => $this->faker->country(),
-            'state' => rand(1,0),
+            'state' => $this->faker->word(1),
             'description' => $this->faker->sentence(5),
         ];
     }

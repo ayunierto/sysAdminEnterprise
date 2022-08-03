@@ -21,7 +21,7 @@
         <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
-        class="elevation-1" :search="search">
+        class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
                     <v-toolbar-title>Lista de Presentaciones</v-toolbar-title>

@@ -12,7 +12,7 @@
         
         <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <div v-for="item in Object.keys($page.props.errors)">
+            <div v-for="item in Object.keys($page.props.errors)" :key="item">
                 <v-alert type="warning" border="left" dismissible>
                     {{ $page.props.errors[item] }}
                 </v-alert>
@@ -21,7 +21,7 @@
         <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
-        class="elevation-1" :search="search">
+        class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
                     <v-toolbar-title>Lista de Marcas</v-toolbar-title>
