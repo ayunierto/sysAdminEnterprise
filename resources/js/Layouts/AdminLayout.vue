@@ -127,6 +127,18 @@
                                         </v-list-item>
                                     </inertia-link>
 
+                                    <inertia-link :href="route('paymentMethods.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-account-cash</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>MÉTODOS DE PAGO</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                 </v-list-item-group>
                             </v-card>
 

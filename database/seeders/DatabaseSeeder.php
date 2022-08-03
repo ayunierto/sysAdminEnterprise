@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\PaymentMethod;
 use App\Models\ProofPayment;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\MeasureSeeder;
 use Database\Seeders\PresentationSeeder;
 use Database\Seeders\ProviderSeeder;
+use Faker\Provider\ar_EG\Payment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,6 +35,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             ProofPaymentSeeder::class,
             CoinSeeder::class,
+            PaymentMethodSeeder::class,
         ]);
     }
 }
