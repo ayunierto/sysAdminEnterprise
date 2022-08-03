@@ -8,6 +8,7 @@ use App\Http\Controllers\MeasureController;
 use App\Http\Controllers\PresentationController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\UserController;
@@ -31,27 +32,14 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-Route::get('/', function() {
-    return redirect()->route('login');
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-
-    $company_id = Auth::user()->companies_id;
-
-    return Inertia::render('Dashboard', [
-        'products' => Product::where('companies_id', $company_id)->count(),
-        'company' => Company::find( $company_id ),
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
     ]);
-})->name('dashboard');
+});
 
 // Rutas de administrador de la pagina
 Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function ()
@@ -76,6 +64,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
 // Rutas de vendedores
 Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('dashboard/products', ProductController::class);
     Route::resource('dashboard/proofPayments', ProofPaymentController::class);
 });
