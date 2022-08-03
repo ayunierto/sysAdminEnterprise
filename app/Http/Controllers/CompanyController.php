@@ -27,16 +27,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Inertia::render('Companies/Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreCompanyRequest  $request
@@ -46,28 +36,6 @@ class CompanyController extends Controller
     {
         Company::create($request->all());
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Company $company)
-    {
-        // return Inertia::render('Companies/Show', compact('company'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Company  $company
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Company $company)
-    {
-        // return Inertia::render('Companies/Edit', compact('company'));
     }
 
     /**

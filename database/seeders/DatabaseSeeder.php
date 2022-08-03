@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             CustomerSeeder::class,
             ProofPaymentSeeder::class,
+            CoinSeeder::class,
         ]);
     }
 }

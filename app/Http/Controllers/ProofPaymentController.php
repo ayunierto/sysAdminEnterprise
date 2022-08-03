@@ -26,16 +26,6 @@ class ProofPaymentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreProofPaymentRequest  $request
@@ -45,28 +35,6 @@ class ProofPaymentController extends Controller
     {
         ProofPayment::create($request->all());
         return Redirect::route('proofPayments.index')->with('message', 'Comprobante agregado');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProofPayment  $proofPayment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProofPayment $proofPayment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ProofPayment  $proofPayment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ProofPayment $proofPayment)
-    {
-        //
     }
 
     /**

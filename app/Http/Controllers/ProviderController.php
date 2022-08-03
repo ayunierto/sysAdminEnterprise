@@ -6,7 +6,6 @@ use App\Models\Provider;
 use App\Models\Company;
 use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
-use Database\Seeders\ProviderSeeder;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -29,16 +28,6 @@ class ProviderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Inertia::render('Providers/Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreProviderRequest  $request
@@ -48,28 +37,6 @@ class ProviderController extends Controller
     {
         Provider::create($request->all());
         return Redirect::route('providers.index')->with('message', 'Proveedor agregado');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Provider  $provider
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Provider $provider)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Provider  $provider
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Provider $provider)
-    {
-        //
     }
 
     /**

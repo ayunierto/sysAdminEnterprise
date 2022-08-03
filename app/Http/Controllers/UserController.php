@@ -9,7 +9,6 @@ use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
 
 class UserController extends Controller
 {
@@ -28,16 +27,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new User.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Inertia::render('Categories/Create');
-    }
-
-    /**
      * Store a newly created User in storage.
      *
      * @param  \App\Http\Requests\StoreUserRequest  $request
@@ -53,28 +42,6 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
         return Redirect::route('users.index')->with('message', 'Usuario agregado');
-    }
-
-    /**
-     * Display the specified User.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        // return Inertia::render('Categories/Show', compact('User'));
-    }
-
-    /**
-     * Show the form for editing the specified User.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        // return Inertia::render('Categories/Edit', compact('user'));
     }
 
     /**

@@ -23,7 +23,7 @@
         class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat >
-                    <v-toolbar-title>Listado de Categorías</v-toolbar-title>
+                    <v-toolbar-title>Listado de Monedas</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical ></v-divider>
 
@@ -33,7 +33,7 @@
                     
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                            Agregar Categoría
+                            Agregar Moneda
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-text-field
@@ -53,29 +53,17 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
-                                        <v-select
-                                        v-model="editedItem.companies_id"
-                                        hint="Seleccione empresa"
-                                        :items="companies"
-                                        item-text="name"
-                                        item-value="id"
-                                        label="Seleccione empresa"
-                                        single-line
-                                        ></v-select>
-                                    </v-col>
-
                                     <v-col cols="12" sm="6" md="6" >
                                         <v-text-field
-                                        v-model="editedItem.name"
-                                        label="Nombre"
+                                        v-model="editedItem.code"
+                                        label="Moneda"
                                         required
                                         ></v-text-field>
                                     </v-col>
 
                                     <v-col cols="12" sm="12" md="12">
                                         <v-textarea v-model="editedItem.description" class="mx-2"
-                                            label="Descripción" rows="2" hint="Descripcion de la categoría">
+                                            label="Descripción" rows="2" hint="Descripcion de la moneda">
                                         </v-textarea>
                                     </v-col>
                                 </v-row>
@@ -132,8 +120,7 @@
 
     export default {
         props: [
-            'companies', 
-            'categories', 
+            'coins', 
             'company'
         ],
         components: {
@@ -142,18 +129,11 @@
         data () {
             return {
 
-                menu: false,
-
-                items_state: [
-                    { name: 'Activo', value: 1 },
-                    { name: 'Inactivo', value: 0 },
-                ],
-                
                 search: '',
                 dialog: false,
                 dialogDelete: false,
                 headers: [
-                    { text: 'NOMBRE', value: 'name' },
+                    { text: 'MONEDA', value: 'code' },
                     { text: 'DESCRIPCION', value: 'description' },
                     { text: 'ACCIONES', value: 'actions', sortable: false },
                 ],
@@ -162,14 +142,12 @@
                 editedIndex: -1,
 
                 editedItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    name: '',
+                    code: '',
                     description: '',
                 },
 
                 defaultItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    name: '',
+                    code: '',
                     description: '',
                 },
                 
@@ -216,7 +194,7 @@
         methods: {
 
             initialize () {
-                this.desserts = this.categories
+                this.desserts = this.coins
             },
 
             editItem (item) {
@@ -237,7 +215,7 @@
                 
                 // ***************************************
                 // enviando formulario para eliminar
-                this.$inertia.delete(this.route('categories.destroy', this.editedItem))
+                this.$inertia.delete(this.route('coins.destroy', this.editedItem))
                 // ***************************************
             },
 
@@ -268,7 +246,7 @@
                     // Update
                     // ***************************************
                     // enviado formulario de almacenar 
-                    this.$inertia.patch(route('categories.update', this.editedItem ), this.editedItem)
+                    this.$inertia.patch(route('coins.update', this.editedItem ), this.editedItem)
                     // ***************************************
 
                 } else {
@@ -276,7 +254,7 @@
                     // Store
                     // ***************************************
                     // enviado formulario de almacenar 
-                    this.$inertia.post(route('categories.store'), this.editedItem)
+                    this.$inertia.post(route('coins.store'), this.editedItem)
 
                     // this.desserts.push(this.editedItem)
 

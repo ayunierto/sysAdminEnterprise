@@ -102,6 +102,7 @@
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
+
                                     <inertia-link :href="route('proofPayments.index')">
                                         <v-list-item link style="color:white;">
                                             <v-list-item-icon>
@@ -110,6 +111,18 @@
                                             </v-list-item-icon>
                                             <v-list-item-title>
                                                 <h5>COMPROBANTES DE PAGO</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link :href="route('coins.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-currency-usd</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>MONEDAS</h5>
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
