@@ -63,7 +63,7 @@
                                     <v-list-item-title>ADMINISTRACION</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card color="#3F2C20">
+                            <v-card v-bind:style="{ background: colorFooter}">
                                 <v-list-item-group class="white--text" v-bind:style="{ color: colorText}">
 
                                     <inertia-link :href="route('companies.index')">
@@ -175,7 +175,7 @@
                                     <v-list-item-title>VENTAS</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card color="#3F2C20">
+                            <v-card v-bind:style="{ background: colorFooter}">
                                 <v-list-item-group class="white--text" v-bind:style="{ color: colorText}">
 
                                     <inertia-link>
@@ -213,7 +213,7 @@
                                     <v-list-item-title>COMPRAS</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card color="#3F2C20">
+                            <v-card v-bind:style="{ background: colorFooter}">
                                 <v-list-item-group class="white--text" v-bind:style="{ color: colorText}">
 
                                     <inertia-link >
@@ -252,7 +252,7 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-card color="#3F2C20">
+                            <v-card v-bind:style="{ background: colorFooter}">
                                 <v-list-item-group class="white--text" v-bind:style="{ color: colorText}">
 
                                     <inertia-link :href="route('products.index')">
@@ -455,6 +455,7 @@ export default {
             colorHeader:this.$page.props.perzonalizer.color_header,
             colorFooter:this.$page.props.perzonalizer.color_footer,
             colorText:this.$page.props.perzonalizer.colot_text,
+            
             // color: {
             //     color: "blue",
             // }
