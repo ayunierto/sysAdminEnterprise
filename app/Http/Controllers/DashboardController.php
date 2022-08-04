@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\Customizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find( $company_id ),
         ]);
     }

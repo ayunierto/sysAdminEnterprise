@@ -121,7 +121,7 @@
     export default {
         props: [
             'coins', 
-            'company'
+            'company','perzonalizer'
         ],
         components: {
             AdminLayout,

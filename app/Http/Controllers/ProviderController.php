@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProviderRequest;
 use App\Http\Requests\UpdateProviderRequest;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Redirect;
 
 class ProviderController extends Controller
@@ -24,6 +25,7 @@ class ProviderController extends Controller
             'providers' => Provider::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
         ]);
     }
 

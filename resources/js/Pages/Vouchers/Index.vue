@@ -156,7 +156,8 @@
     export default {
         props: [
             'vouchers', 
-            'company'
+            'company','perzonalizer'
+            
         ],
         components: {
             AdminLayout,

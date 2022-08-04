@@ -41,6 +41,7 @@
     import AdminLayout from '@/Layouts/AdminLayout'
 
     export default {
+        props: ['perzonalizer'],
         components: {
             AdminLayout,
         },

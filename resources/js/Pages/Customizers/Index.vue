@@ -19,7 +19,7 @@
         </div>
         <!-- Fin de Alertas -->
 
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-24" :search="search">
+        <v-data-table :headers="headers" :items="desserts" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Colores de Empresa</v-toolbar-title>
@@ -31,7 +31,7 @@
                     <v-dialog v-model="dialog" max-width="600px">
 
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            <v-btn dark class="mb-2" color="primary" v-bind="attrs" v-on="on">
                                 Asignar Colores
                             </v-btn>
 
@@ -56,15 +56,19 @@
                                                 label="Selecciones empresa" single-line></v-select>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.primary_color" label="Color Primario">
+                                            <v-text-field v-model="editedItem.color_menu" label="Color Menú">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.secondary_color" label="Color Secundario">
+                                            <v-text-field v-model="editedItem.color_header" label="Color Encabezado">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.tertiary_color" label="Color Terciario">
+                                            <v-text-field v-model="editedItem.color_footer" label="Color Pir de Página">
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.colot_text" label="Color de Texto">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
@@ -73,22 +77,7 @@
                                             <v-file-input v-model="editedItem.logo" accept="image/*" label="Logo"
                                                 show-size></v-file-input>
 
-                                        </v-col>
-                                        <v-dialog
-                                            v-model="colores"
-                                            scrollable fullscreen 
-                                            persistent :overlay="false"
-                                            max-width="500px"
-                                            transition="dialog-transition"
-                                        >
-                                            <v-card v-model="colores">
-                                                <v-color-picker 
-                                            mode="hexa"
-                                            >
-                                            </v-color-picker>
-                                            </v-card>
-                                        </v-dialog>
-                                            
+                                        </v-col>                                            
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -142,7 +131,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
-    props: ['customizers', 'companies', 'company'],
+    props: ['customizers', 'companies', 'company','perzonalizer'],
     components: {
         AdminLayout,
     },
@@ -153,10 +142,10 @@ export default {
             dialogDelete: false,
             colores:false,
             headers: [
-                { text: 'EMPRESA', value: 'name' },
-                { text: 'COLOR PRINCIPAL', value: 'primary_color' },
-                { text: 'COLOR SECUNDARIO', value: 'secondary_color' },
-                { text: 'COLOR TERCIARIO', value: 'tertiary_color' },
+                { text: 'COLOR MENU', value: 'color_menu' },
+                { text: 'COLOR ENCABEZADO', value: 'color_header' },
+                { text: 'COLOR PIE', value: 'color_footer' },
+                { text: 'COLOR TEXTO', value: 'colot_text' },
                 { text: 'LOGO', value: 'logo' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
@@ -166,18 +155,22 @@ export default {
 
             editedItem: {
                 companies_id: '',
-                primary_color: '',
-                secondary_color: '',
-                tertiary_color: '',
+                empresa: '',
+                color_menu: '',
+                color_header: '',
+                color_footer: '',
+                colot_text: '',
                 logo: '',
 
             },
 
             defaultItem: {
                 companies_id: '',
-                primary_color: '',
-                secondary_color: '',
-                tertiary_color: '',
+                empresa: '',
+                color_menu: '',
+                color_header: '',
+                color_footer: '',
+                colot_text: '',
                 logo: '',
 
             },

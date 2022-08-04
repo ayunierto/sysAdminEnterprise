@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProofPaymentRequest;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Redirect;
 
 class ProofPaymentController extends Controller
@@ -22,6 +23,7 @@ class ProofPaymentController extends Controller
         return Inertia::render('ProofPayments/Index', [
             'proofPayments' => ProofPayment::all(),
             'company' => Company::find(Auth::user()->companies_id),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
         ]);
     }
 

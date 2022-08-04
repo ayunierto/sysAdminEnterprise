@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mark;
 use App\Models\Company;
+use App\Models\Customizer;
 use App\Http\Requests\StoreMarkRequest;
 use App\Http\Requests\UpdateMarkRequest;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class MarkController extends Controller
         return Inertia::render('Marks/Index', [
             'marks' => Mark::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
