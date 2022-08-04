@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\Customizer;
 use App\Models\PaymentMethod;
 use App\Models\ProofPayment;
 use Database\Seeders\CategorySeeder;
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
             CoinSeeder::class,
             PaymentMethodSeeder::class,
             VoucherSeeder::class,
+            CustomizerSeeder::class,
         ]);
     }
 }
