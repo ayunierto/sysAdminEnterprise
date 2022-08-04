@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Http\Requests\StorePresentationRequest;
 use App\Http\Requests\UpdatePresentationRequest;
 use App\Models\Product;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -29,6 +30,7 @@ class PresentationController extends Controller
                     'id' => $presentation->id,
                     'companies_id' => $presentation->companies_id,
                     'products_id' => $presentation->products_id,
+                    'perzonalizer' => Customizer::find(Auth::user()->companies_id),
                     'name' => $presentation->name,
                     'equivalence' => $presentation->equivalence,
                     'product' => Product::find($presentation->products_id)->name,
@@ -37,6 +39,7 @@ class PresentationController extends Controller
             }),
             'products' => Product::where('companies_id', $company)->get(),
             'companies' => Company::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find($company),
         ]);
     }

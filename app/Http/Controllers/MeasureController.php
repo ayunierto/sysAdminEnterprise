@@ -6,6 +6,7 @@ use App\Models\Measure;
 use App\Http\Requests\StoreMeasureRequest;
 use App\Http\Requests\UpdateMeasureRequest;
 use App\Models\Company;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -21,6 +22,7 @@ class MeasureController extends Controller
     {
         return Inertia::render('Measures/Index', [
             'measures' => Measure::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

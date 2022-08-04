@@ -10,9 +10,10 @@ class Customizer extends Model
     use HasFactory;
     protected $fillable = [
         'companies_id',
-        'primary_color',
-        'secondary_color',
-        'tertiary_color',
+        'color_menu',
+        'color_header',
+        'color_footer',
+        'colot_text',
         'logo',
     ];
 }

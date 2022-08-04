@@ -135,7 +135,7 @@
         props: [
             'companies', 
             'marks',
-            'company',
+            'company','perzonalizer'
         ],
         components: {
             AdminLayout,

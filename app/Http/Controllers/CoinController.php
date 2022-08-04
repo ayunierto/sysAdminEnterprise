@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coin;
+use App\Models\Customizer;
 use App\Http\Requests\StoreCoinRequest;
 use App\Http\Requests\UpdateCoinRequest;
 use App\Models\Company;
@@ -21,6 +22,7 @@ class CoinController extends Controller
     {
         return Inertia::render('Coins/Index', [
             'coins' => Coin::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

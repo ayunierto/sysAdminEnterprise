@@ -6,6 +6,7 @@ use App\Models\Voucher;
 use App\Http\Requests\StoreVoucherRequest;
 use App\Http\Requests\UpdateVoucherRequest;
 use App\Models\Company;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class VoucherController extends Controller
         return Inertia::render('Vouchers/Index', [
             'vouchers' => Voucher::all(),
             'company' => Company::find(Auth::user()->companies_id),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
         ]);
     }
 
