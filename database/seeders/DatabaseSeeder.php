@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ProofPaymentSeeder::class,
             CoinSeeder::class,
             PaymentMethodSeeder::class,
+            VoucherSeeder::class,
         ]);
     }
 }
