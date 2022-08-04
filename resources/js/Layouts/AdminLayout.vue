@@ -25,7 +25,7 @@
                     <v-list-item>
                         <v-list-item-content>
                             <v-list-item-subtitle v-bind:style="{ color: colorText}">
-                                CONSTRUYENDO FUTUROS
+                                {{this.$page.props.company.description}}
                             </v-list-item-subtitle>
                         </v-list-item-content>
 
@@ -436,8 +436,8 @@
         <!-- PIE DE PAGINA -->
         <!-- <v-footer padless v-bind="color" height="60px"> -->
         <v-footer padless height="60px" v-bind:style="{ background: colorFooter}" app>
-            <v-col class="text-center" cols="12" absolute style="color:white ;">
-                {{ new Date().getFullYear() }} — <strong>ALPA PERÚ</strong>
+            <v-col class="text-center" cols="12" absolute v-bind:style="{ color: colorText}">
+                {{ new Date().getFullYear() }} — <strong >{{this.$page.props.company.name}}</strong>
             </v-col>
         </v-footer>
         <!-- PIE DE PAGINA END -->
