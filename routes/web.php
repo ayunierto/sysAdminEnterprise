@@ -14,6 +14,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,6 +47,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function (
     Route::resource('dashboard/users', UserController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/coins', CoinController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/paymentMethods', PaymentMethodController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/vouchers', VoucherController::class)->except('create', 'edit', 'show');
 });
 
 // Rutas de administrador de empresa

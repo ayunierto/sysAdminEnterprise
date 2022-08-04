@@ -139,6 +139,18 @@
                                         </v-list-item>
                                     </inertia-link>
 
+                                    <inertia-link :href="route('vouchers.index')">
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-file-document</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>COMPROBANTES</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                 </v-list-item-group>
                             </v-card>
 
