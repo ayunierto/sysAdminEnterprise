@@ -157,23 +157,82 @@
 
                         </v-list-group>
 
-                        <v-list-item link style="color:white;">
-                            <v-list-item-icon>
-                                <v-icon color="white">mdi-cart</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>VENTAS</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                        <v-list-group class="white--text" color="white" v-if="$page.props.user.role != 'seller'">
+                            <v-icon slot="prependIcon" color="white">mdi-cart</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content style="color:white;">
+                                    <v-list-item-title>VENTAS</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-card color="#3F2C20">
+                                <v-list-item-group class="white--text" color="white">
 
-                        <v-list-item link style="color:white;" v-if="$page.props.user.role != 'seller'">
-                            <v-list-item-icon>
-                                <v-icon color="white">mdi-cash-multiple</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>COMPRAS</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                                    <inertia-link>
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-cart-plus</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>NUEVA VENTA</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link>
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-cards-variant</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>LISTA DE VENTAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                </v-list-item-group>
+                            </v-card>
+                        </v-list-group>
+
+                        <v-list-group class="white--text" color="white" v-if="$page.props.user.role != 'seller'">
+                            <v-icon slot="prependIcon" color="white">mdi-cash-multiple</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content style="color:white;">
+                                    <v-list-item-title>COMPRAS</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-card color="#3F2C20">
+                                <v-list-item-group class="white--text" color="white">
+
+                                    <inertia-link >
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-cart-plus</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>NUEVA COMPRA</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link>
+                                        <v-list-item link style="color:white;">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon color="white" small>mdi-cards-variant</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>LISTA DE COMPRAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                </v-list-item-group>
+                            </v-card>
+                        </v-list-group>
+
                         <v-list-group class="white--text" color="white">
                             <v-icon slot="prependIcon" color="white">mdi-spin mdi-cube</v-icon>
                             <template v-slot:activator>
