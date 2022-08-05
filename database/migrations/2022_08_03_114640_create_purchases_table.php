@@ -18,10 +18,11 @@ class CreatePurchasesTable extends Migration
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('payment_methods_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('vouchers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('proof_payments_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('total', 8, 2);
+            $table->date('date');
             $table->boolean('state');
-            $table->string('description')->nullable();
+            $table->string('description', 250)->nullable();
             $table->timestamps();
         });
     }

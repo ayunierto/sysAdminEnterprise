@@ -29,7 +29,7 @@ class PurchaseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 
      *
      * @param  \App\Http\Requests\StorePurchaseRequest  $request
      * @return \Illuminate\Http\Response
