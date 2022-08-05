@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CompanyController;
@@ -16,7 +15,6 @@ use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
-use App\Models\Customizer;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

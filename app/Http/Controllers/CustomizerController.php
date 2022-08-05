@@ -20,11 +20,12 @@ class CustomizerController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Customizers/Index', [
             'customizers' => Customizer::all(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
-            'company' => Company::find(Auth::user()->companies_id),
+            'company' => Company::find($company),
         ]);
     }
 
@@ -37,7 +38,7 @@ class CustomizerController extends Controller
     public function store(StoreCustomizerRequest $request)
     {
         Customizer::create($request->all());
-        return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
+        return Redirect::route('customizers.index')->with('message', 'Personalización creada');
     }
 
     /**
@@ -51,7 +52,7 @@ class CustomizerController extends Controller
     {
         $customizer = Customizer::find($id);
         $customizer->update($request->all());
-        return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
+        return Redirect::route('customizers.index')->with('message', 'Personalización actualizada');
     }
 
     /**
@@ -64,6 +65,6 @@ class CustomizerController extends Controller
     {
         $customizer = Customizer::find($id);
         $customizer->delete();
-        return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
+        return Redirect::route('customizers.index')->with('message', 'Personalización eliminada');
     }
 }

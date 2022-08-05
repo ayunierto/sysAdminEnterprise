@@ -23,7 +23,7 @@ class ProofPaymentController extends Controller
         return Inertia::render('ProofPayments/Index', [
             'proofPayments' => ProofPayment::all(),
             'company' => Company::find(Auth::user()->companies_id),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
         ]);
     }
 

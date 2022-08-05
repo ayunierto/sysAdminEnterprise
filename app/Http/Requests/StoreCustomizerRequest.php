@@ -26,10 +26,11 @@ class StoreCustomizerRequest extends FormRequest
         return [
             'companies_id'=> 'required|integer',
             'color_menu'=> 'nullable|string|max:50',
+            'color_sub_menu'=> 'nullable|string|max:50',
             'color_header'=> 'nullable|string|max:50',
             'color_footer'=> 'nullable|string|max:50',
-            'colot_text'=> 'nullable|string|max:50',
-            'logo'=> 'nullable|image',
+            'color_text'=> 'nullable|string|max:50',
+            // 'logo'=> 'nullable|file|size:512|dimensions:min_width=200,min_height=200|image',
         ];
     }
 }

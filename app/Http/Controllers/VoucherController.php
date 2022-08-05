@@ -23,7 +23,7 @@ class VoucherController extends Controller
         return Inertia::render('Vouchers/Index', [
             'vouchers' => Voucher::all(),
             'company' => Company::find(Auth::user()->companies_id),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
         ]);
     }
 

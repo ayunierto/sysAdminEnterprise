@@ -23,7 +23,7 @@ class CompanyController extends Controller
 
         return Inertia::render('Companies/Index', [
             'companies' => $companies,
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

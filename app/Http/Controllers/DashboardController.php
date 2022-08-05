@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'perzonalizer' => Customizer::where('companies_id', $company_id )->get(),
             'company' => Company::find( $company_id ),
         ]);
     }

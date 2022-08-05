@@ -11,9 +11,10 @@ class Customizer extends Model
     protected $fillable = [
         'companies_id',
         'color_menu',
+        'color_sub_menu',
         'color_header',
         'color_footer',
-        'colot_text',
+        'color_text',
         'logo',
     ];
 }

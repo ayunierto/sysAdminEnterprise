@@ -25,10 +25,12 @@ class UpdateCustomizerRequest extends FormRequest
     {
         return [
             'companies_id'=> 'required|integer',
-            'primary_color'=> 'nullable|string|max:50',
-            'secondary_color'=> 'nullable|string|max:50',
-            'tertiary_color'=> 'nullable|integer',
-            'logo'=> 'nullable|string|max:250',
+            'color_menu'=> 'nullable|string|max:50',
+            'color_sub_menu'=> 'nullable|string|max:50',
+            'color_header'=> 'nullable|string|max:50',
+            'color_footer'=> 'nullable|string|max:50',
+            'color_text'=> 'nullable|string|max:50',
+            // 'logo'=> 'nullable|image',
         ];
     }
 }

@@ -22,7 +22,7 @@ class MeasureController extends Controller
     {
         return Inertia::render('Measures/Index', [
             'measures' => Measure::all(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

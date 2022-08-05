@@ -36,7 +36,7 @@ class ProductController extends Controller
             'measures' => Measure::all(),
             'providers' => Provider::where('companies_id', $company_id)->get(),
             'company' => Company::where('id', $company_id)->first(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
         ]);
     }
 

@@ -41,11 +41,10 @@
     import AdminLayout from '@/Layouts/AdminLayout'
 
     export default {
-        props: ['perzonalizer'],
         components: {
             AdminLayout,
         },
 
-        props: ['products', 'company'],
+        props: ['products', 'company', 'perzonalizer'],
     }
 </script>

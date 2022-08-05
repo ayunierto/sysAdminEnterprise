@@ -25,7 +25,7 @@ class ProviderController extends Controller
             'providers' => Provider::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
         ]);
     }
 

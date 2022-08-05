@@ -22,7 +22,7 @@ class PaymentMethodController extends Controller
     {
         return Inertia::render('PaymentMethods/Index', [
             'paymentMethods' => PaymentMethod::all(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

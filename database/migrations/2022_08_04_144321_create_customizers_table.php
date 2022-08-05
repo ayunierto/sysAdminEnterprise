@@ -15,14 +15,12 @@ class CreateCustomizersTable extends Migration
     {
         Schema::create('customizers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('companies_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->string('color_menu')->nullable();
-            $table->string('color_header')->nullable();
-            $table->string('color_footer')->nullable();
-            $table->string('colot_text')->nullable();
+            $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('color_menu');
+            $table->string('color_sub_menu');
+            $table->string('color_header');
+            $table->string('color_footer');
+            $table->string('color_text');
             $table->string('logo')->nullable();
             $table->timestamps();
         });

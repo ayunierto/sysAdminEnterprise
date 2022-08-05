@@ -23,7 +23,7 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'users' => User::all(),
             'companies' => Company::all(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

@@ -23,7 +23,7 @@ class MarkController extends Controller
         return Inertia::render('Marks/Index', [
             'marks' => Mark::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

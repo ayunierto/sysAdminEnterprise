@@ -23,7 +23,7 @@ class CategoryController extends Controller
         $company = Auth::user()->companies_id;
         return Inertia::render('Categories/Index', [
             'categories' => Category::where('companies_id', $company)->get(),
-            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
         ]);

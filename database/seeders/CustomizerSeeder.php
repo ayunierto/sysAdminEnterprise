@@ -14,6 +14,6 @@ class CustomizerSeeder extends Seeder
      */
     public function run()
     {
-        Customizer::factory(16)->create();
+        // Customizer::factory(16)->create();
     }
 }
