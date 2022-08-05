@@ -59,12 +59,12 @@
                         <v-list-group v-if="$page.props.user.role == 'master'">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-account-tie</v-icon>
                             <template v-slot:activator>
-                                <v-list-item-content v-bind:style="{ color: colorText}">
+                                <v-list-item-content :style="item_style()">
                                     <v-list-item-title>ADMINISTRACION</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card :color="colorFooter">
-                                <v-list-item-group v-bind:style="{ color: colorText}">
+                            <v-card :color="colorSubMenu">
+                                <v-list-item-group>
 
                                     <inertia-link :href="route('companies.index')">
                                         <v-list-item :style="item_style()">
@@ -164,8 +164,6 @@
 
                                 </v-list-item-group>
                             </v-card>
-
-
                         </v-list-group>
 
                         <v-list-group :style="item_style()" v-if="$page.props.user.role != 'seller'">
@@ -175,7 +173,7 @@
                                     <v-list-item-title>VENTAS</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card :color="colorFooter">
+                            <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
                                     <v-list-item link :style="item_style()">
@@ -188,15 +186,15 @@
                                         </v-list-item-title>
                                     </v-list-item>
 
-                                        <v-list-item link :style="item_style()">
-                                            <v-list-item-icon>
-                                                <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
-                                            </v-list-item-icon>
-                                            <v-list-item-title>
-                                                <h5>LISTA DE VENTAS</h5>
-                                            </v-list-item-title>
-                                        </v-list-item>
+                                    <v-list-item link :style="item_style()">
+                                        <v-list-item-icon>
+                                            <v-spacer></v-spacer>
+                                            <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>
+                                            <h5>LISTA DE VENTAS</h5>
+                                        </v-list-item-title>
+                                    </v-list-item>
 
                                 </v-list-item-group>
                             </v-card>
@@ -209,7 +207,7 @@
                                     <v-list-item-title>COMPRAS</v-list-item-title>
                                 </v-list-item-content>
                             </template>
-                            <v-card :color="colorFooter">
+                            <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
                                         <v-list-item link :style="item_style()">
@@ -244,7 +242,7 @@
                                 </v-list-item-content>
                             </template>
 
-                            <v-card :color="colorFooter">
+                            <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
                                     <inertia-link :href="route('products.index')">
@@ -253,7 +251,6 @@
                                                 <v-spacer></v-spacer>
                                                 <v-icon :style="item_style()" small>mdi-format-list-bulleted</v-icon>
                                             </v-list-item-icon>
-
                                             <v-list-item-title>
                                                 <h5>
                                                     LISTA PRODUCTOS
@@ -261,19 +258,6 @@
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
-
-                                    <!-- <v-list-item link :style="item_style()" v-if="$page.props.user.role != 'seller'">
-                                        <v-list-item-icon>
-                                            <v-spacer></v-spacer>
-                                            <v-icon :style="item_style()" small>mdi-cube-send</v-icon>
-                                        </v-list-item-icon>
-
-                                        <v-list-item-title>
-                                            <h5>
-                                                AGREGAR PRODUCTOS
-                                            </h5>
-                                        </v-list-item-title>
-                                    </v-list-item> -->
 
                                     <inertia-link :href="route('categories.index')"
                                         v-if="$page.props.user.role != 'seller'">
@@ -300,17 +284,6 @@
                                         </v-list-item>
                                     </inertia-link>
 
-
-                                    <!-- <v-list-item link :style="item_style()"  v-if="$page.props.user.role != 'seller'">
-                                        <v-list-item-icon>
-                                            <v-spacer></v-spacer>
-                                            <v-icon :style="item_style()" small>mdi-currency-usd</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-title>
-                                            <h5>PRECIOS DE PRODUCTOS</h5>
-                                        </v-list-item-title>
-                                    </v-list-item> -->
-
                                     <inertia-link :href="route('presentations.index')"
                                         v-if="$page.props.user.role != 'seller'">
                                         <v-list-item link :style="item_style()">
@@ -323,21 +296,11 @@
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
-
-                                    <!-- <v-list-item link :style="item_style()"  v-if="$page.props.user.role != 'seller'">
-                                        <v-list-item-icon>
-                                            <v-spacer></v-spacer>
-                                            <v-icon :style="item_style()" small>mdi-package-variant</v-icon>
-                                        </v-list-item-icon>
-                                        <v-list-item-title>
-                                            <h5>LOTES DE PRODUCTOS</h5>
-                                        </v-list-item-title>
-                                    </v-list-item> -->
-
                                 </v-list-item-group>
                             </v-card>
 
                         </v-list-group>
+                        
                         <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'">
                             <v-list-item link :style="item_style()">
                                 <v-list-item-icon>
@@ -385,7 +348,6 @@
 
 
             <!-- Menú horizontal -->
-            <!-- <v-app-bar app v-bind="color="> -->
             <v-app-bar app :color="colorHeader">
                 <v-app-bar-nav-icon @click="drawer = !drawer" :style="item_style()"></v-app-bar-nav-icon>
 
@@ -412,7 +374,6 @@
                         <v-list-item @click="logout">
                             <v-list-item-title>Cerrar Session</v-list-item-title>
                         </v-list-item>
-
                     </v-list>
                 </v-menu>
 
@@ -423,8 +384,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ item_style() }}</pre>
-            <pre>{{ $page }}</pre>
+            <!-- <pre>{{ $page }}</pre> -->
         </v-main>
 
         <!-- PIE DE PAGINA -->
