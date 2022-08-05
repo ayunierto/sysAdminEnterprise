@@ -52,7 +52,6 @@
 
                         <v-card-text>
                             <v-container>
-                                {{ editedItem }}
                                 <v-row>
                                     <v-col cols="12" sm="12" md="12">
                                         <v-select
@@ -67,7 +66,8 @@
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
-                                        <v-text-field v-model="editedItem.color_menu" hide-details class="ma-0 pa-0" solo hint="asdasd">
+                                        Color del Menú
+                                        <v-text-field v-model="editedItem.color_menu" hide-details class="ma-0 pa-0" solo hint="asdasd" persistent-hint>
                                             <template v-slot:append>
                                                 <v-menu v-model="menu_color_menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
                                                     <template v-slot:activator="{ on }">
@@ -88,6 +88,7 @@
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
+                                        Color de los submenus
                                         <v-text-field v-model="editedItem.color_sub_menu" hide-details class="ma-0 pa-0" solo>
                                             <template v-slot:append>
                                                 <v-menu v-model="menu_color_sub_menu" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
@@ -108,6 +109,7 @@
                                     </v-col>
                                     
                                     <v-col cols="12" sm="6" md="6">
+                                        Color de la cabecera
                                         <v-text-field v-model="editedItem.color_header" hide-details class="ma-0 pa-0" solo>
                                             <template v-slot:append>
                                                 <v-menu v-model="menu_color_header" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
@@ -128,6 +130,7 @@
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
+                                        Color del pie de página
                                         <v-text-field v-model="editedItem.color_footer" hide-details class="ma-0 pa-0" solo>
                                             <template v-slot:append>
                                                 <v-menu v-model="menu_color_footer" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
@@ -148,6 +151,7 @@
                                     </v-col>
 
                                     <v-col cols="12" sm="6" md="6">
+                                        Color de los textos
                                         <v-text-field v-model="editedItem.color_text" hide-details class="ma-0 pa-0" solo>
                                             <template v-slot:append>
                                                 <v-menu v-model="menu_color_text" top nudge-bottom="105" nudge-left="16" :close-on-content-click="false">
