@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Customizer;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ class CompanyController extends Controller
 
         return Inertia::render('Companies/Index', [
             'companies' => $companies,
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

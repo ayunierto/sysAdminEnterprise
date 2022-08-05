@@ -134,7 +134,7 @@
         props: [
             'companies', 
             'categories', 
-            'company'
+            'company','perzonalizer'
         ],
         components: {
             AdminLayout,

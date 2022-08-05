@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Company;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -22,6 +23,7 @@ class UserController extends Controller
         return Inertia::render('Users/Index', [
             'users' => User::all(),
             'companies' => Company::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }

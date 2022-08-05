@@ -19,9 +19,10 @@ class CreateCustomizersTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('primary_color')->nullable();
-            $table->string('secondary_color')->nullable();
-            $table->string('tertiary_color')->nullable();
+            $table->string('color_menu')->nullable();
+            $table->string('color_header')->nullable();
+            $table->string('color_footer')->nullable();
+            $table->string('colot_text')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
         });

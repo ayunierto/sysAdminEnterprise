@@ -22,6 +22,7 @@ class CustomizerController extends Controller
     {
         return Inertia::render('Customizers/Index', [
             'customizers' => Customizer::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'companies' => Company::all(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);

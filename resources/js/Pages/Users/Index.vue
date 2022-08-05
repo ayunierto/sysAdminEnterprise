@@ -172,7 +172,7 @@
     import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['users', 'companies', 'company'],
+        props: ['users', 'companies', 'company','perzonalizer'],
         components: {
             AdminLayout,
         },

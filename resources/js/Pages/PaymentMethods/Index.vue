@@ -112,7 +112,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 export default {
     props: [
         'paymentMethods',
-        'company'
+        'company','perzonalizer'
     ],
     components: {
         AdminLayout,

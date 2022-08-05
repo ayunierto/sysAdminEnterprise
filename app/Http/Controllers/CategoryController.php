@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use Inertia\Inertia;
 use App\Models\Category;
 use App\Models\Company;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,7 @@ class CategoryController extends Controller
         $company = Auth::user()->companies_id;
         return Inertia::render('Categories/Index', [
             'categories' => Category::where('companies_id', $company)->get(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'companies' => Company::all(),
             'company' => Company::find($company),
         ]);

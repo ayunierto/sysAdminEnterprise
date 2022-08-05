@@ -16,9 +16,10 @@ class CustomizerFactory extends Factory
     {
         return [
             'companies_id'=>$this->faker-> unique()->randomElement(['1', '2', '3','4', '5', '6','7', '8', '9','10', '11', '12', '13','14', '15', '16']),
-            'primary_color' => $this->faker->colorName(),
-            'secondary_color' => $this->faker->colorName(),
-            'tertiary_color' => $this->faker->colorName(),
+            'color_menu' => $this->faker->hexColor(),
+            'color_header' => $this->faker->hexColor(),
+            'color_footer' => $this->faker->hexColor(),
+            'colot_text' => $this->faker->hexColor(),
             'logo' => $this->faker->imageUrl(),
         ];
     }

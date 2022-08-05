@@ -6,6 +6,7 @@ use App\Models\PaymentMethod;
 use App\Http\Requests\StorePaymentMethodRequest;
 use App\Http\Requests\UpdatePaymentMethodRequest;
 use App\Models\Company;
+use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -21,6 +22,7 @@ class PaymentMethodController extends Controller
     {
         return Inertia::render('PaymentMethods/Index', [
             'paymentMethods' => PaymentMethod::all(),
+            'perzonalizer' => Customizer::find(Auth::user()->companies_id),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
