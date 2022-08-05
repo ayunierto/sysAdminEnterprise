@@ -21,16 +21,18 @@ class PresentationController extends Controller
      */
     public function index()
     {
+        
         $company = Auth::user()->companies_id;
-
         return Inertia::render('Presentations/Index', [
             'presentations' => Presentation::where('companies_id', $company)->get()->map(function ($presentation)
             {
+                global $company;
+                $company = Auth::user()->companies_id;
                 return [
                     'id' => $presentation->id,
                     'companies_id' => $presentation->companies_id,
                     'products_id' => $presentation->products_id,
-                    'colors' => Customizer::where('companies_id', $company)->get(),
+                    'colors' => Customizer::where('companies_id',$company)->get(),
                     'name' => $presentation->name,
                     'equivalence' => $presentation->equivalence,
                     'product' => Product::find($presentation->products_id)->name,

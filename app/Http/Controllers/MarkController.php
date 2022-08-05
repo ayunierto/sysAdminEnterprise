@@ -20,6 +20,7 @@ class MarkController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Marks/Index', [
             'marks' => Mark::where('companies_id', Auth::user()->companies_id)->get(),
             'companies' => Company::all(),

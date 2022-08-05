@@ -26,6 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         $company_id = Auth::user()->companies_id;
 
         return Inertia::render('Products/Index', [

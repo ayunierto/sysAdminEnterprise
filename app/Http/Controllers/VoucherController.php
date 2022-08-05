@@ -20,6 +20,7 @@ class VoucherController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Vouchers/Index', [
             'vouchers' => Voucher::all(),
             'company' => Company::find(Auth::user()->companies_id),

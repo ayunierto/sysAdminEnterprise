@@ -20,6 +20,7 @@ class ProofPaymentController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('ProofPayments/Index', [
             'proofPayments' => ProofPayment::all(),
             'company' => Company::find(Auth::user()->companies_id),

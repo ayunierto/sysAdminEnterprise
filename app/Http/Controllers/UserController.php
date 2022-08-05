@@ -20,6 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Users/Index', [
             'users' => User::all(),
             'companies' => Company::all(),

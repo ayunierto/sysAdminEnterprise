@@ -19,8 +19,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         $companies = Company::all();
-
         return Inertia::render('Companies/Index', [
             'companies' => $companies,
             'colors' => Customizer::where('companies_id', $company)->get(),

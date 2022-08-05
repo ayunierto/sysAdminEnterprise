@@ -20,6 +20,7 @@ class CoinController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Coins/Index', [
             'coins' => Coin::all(),
             'colors' => Customizer::where('companies_id', $company)->get(),

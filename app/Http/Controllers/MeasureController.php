@@ -20,6 +20,7 @@ class MeasureController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('Measures/Index', [
             'measures' => Measure::all(),
             'colors' => Customizer::where('companies_id', $company)->get(),

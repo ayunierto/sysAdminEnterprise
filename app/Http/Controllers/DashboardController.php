@@ -19,11 +19,11 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $company = Auth::user()->companies_id;
         $company_id = Auth::user()->companies_id;
-
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
-            'perzonalizer' => Customizer::where('companies_id', $company_id )->get(),
+            'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find( $company_id ),
         ]);
     }

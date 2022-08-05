@@ -20,6 +20,7 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
+        $company = Auth::user()->companies_id;
         return Inertia::render('PaymentMethods/Index', [
             'paymentMethods' => PaymentMethod::all(),
             'colors' => Customizer::where('companies_id', $company)->get(),
