@@ -45,6 +45,6 @@
             AdminLayout,
         },
 
-        props: ['products', 'company', 'perzonalizer'],
+        props: ['products', 'company'],
     }
 </script>

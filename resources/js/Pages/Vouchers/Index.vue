@@ -156,7 +156,7 @@
     export default {
         props: [
             'vouchers', 
-            'company','perzonalizer'
+            'company'
             
         ],
         components: {

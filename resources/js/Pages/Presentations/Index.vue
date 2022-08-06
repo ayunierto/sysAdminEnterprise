@@ -155,7 +155,6 @@
             'products',
             'presentations',
             'company',
-            'perzonalizer'
         ],
         components: {
             AdminLayout,

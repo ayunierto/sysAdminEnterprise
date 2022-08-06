@@ -303,7 +303,7 @@
             'marks',
             'measures',
             'providers',
-            'company','perzonalizer'
+            'company',
         ],
         components: {
             AdminLayout,
