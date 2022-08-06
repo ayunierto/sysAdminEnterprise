@@ -39,6 +39,20 @@ class CustomizerController extends Controller
     {
         Customizer::create($request->all());
         return Redirect::route('customizers.index')->with('message', 'Personalización creada');
+
+        // $nombre=time().'.'.$request->logo->getClientOriginalExtension();;
+        // $destino=public_path('/img/empresas/logo');
+
+        // Customizer::create([
+        //     'companies_id' => $request->companies_id,
+        //     'color_menu' => $request->color_menu,
+        //     'color_sub_menu' => $request->color_sub_menu,
+        //     'color_header' => $request->color_header,
+        //     'color_footer' => $request->color_footer,
+        //     'color_text' =>$request->color_text,
+        //     'logo' => $request->logo->move($destino,$nombre),
+        // ]);
+        // return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
     }
 
     /**
