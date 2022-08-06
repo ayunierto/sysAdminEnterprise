@@ -19,7 +19,7 @@
                         </v-list-item-content>
                         <v-list-item-avatar tile size="80">
                             <v-img
-                                src="https://www.zarla.com/images/zarla-al-pan-pan-1x1-2400x2400-20220119-47tq9t6cx4cyjdyhyrgt.png?crop=1:1,smart&width=250&dpr=2"
+                                src="https://st.depositphotos.com/1378583/4449/v/600/depositphotos_44495673-stock-illustration-home-repair-logo.jpg"
                             ></v-img>
                         </v-list-item-avatar>
                     </v-list-item>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Affectation_igv;
 use App\Models\Customer;
 use App\Models\Customizer;
 use App\Models\PaymentMethod;
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
             PaymentMethodSeeder::class,
             VoucherSeeder::class,
             CustomizerSeeder::class,
+            AffectationIgvSeeder::class,
         ]);
     }
 }
