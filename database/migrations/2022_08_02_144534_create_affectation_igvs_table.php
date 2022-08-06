@@ -15,6 +15,8 @@ class CreateAffectationIgvsTable extends Migration
     {
         Schema::create('affectation_igvs', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
+            $table->string('description');
             $table->timestamps();
         });
     }
