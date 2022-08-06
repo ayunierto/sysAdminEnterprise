@@ -41,7 +41,7 @@ class CustomizerController extends Controller
         return Redirect::route('customizers.index')->with('message', 'Personalización creada');
 
         // $nombre=time().'.'.$request->logo->getClientOriginalExtension();;
-        // $destino=public_path('/img/empresas/logo');
+        // $destino=public_path('/img/empresas/logos');
 
         // Customizer::create([
         //     'companies_id' => $request->companies_id,
