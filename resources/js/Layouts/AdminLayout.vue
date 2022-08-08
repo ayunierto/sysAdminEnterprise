@@ -161,6 +161,17 @@
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
+                                    <inertia-link :href="route('documents.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-smart-card</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>DOCUMENTOS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
 
                                 </v-list-item-group>
                             </v-card>

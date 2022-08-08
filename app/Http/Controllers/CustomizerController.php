@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateCustomizerRequest;
 
 use App\Models\Customizer;
 use App\Models\Company;
+use Illuminate\Database\Eloquent\Model;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -22,10 +23,11 @@ class CustomizerController extends Controller
     {
         $company = Auth::user()->companies_id;
         return Inertia::render('Customizers/Index', [
-            'customizers' => Customizer::all(),
+            'customizers' => Customizer::select('customizers.*', 'companies.*')->join('companies', 'customizers.companies_id', '=', 'companies.id')->get(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
+            Company::where('id', 2)->get(),
         ]);
     }
 

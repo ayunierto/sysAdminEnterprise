@@ -244,6 +244,7 @@ export default {
             dialog: false,
             dialogDelete: false,
             headers: [
+                { text: 'EMPRESA', value: 'name' },
                 { text: 'MENU', value: 'color_menu' },
                 { text: 'SUB MENU', value: 'color_sub_menu' },
                 { text: 'ENCABEZADO', value: 'color_header' },
