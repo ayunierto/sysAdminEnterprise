@@ -25,7 +25,7 @@ class DocumentSeeder extends Seeder
         Document::create([
             'code' => '06',
             'name' => 'RUC',
-            'description' => 'Régimen Único de ]Contribuyentes',
+            'description' => 'Régimen Único de Contribuyentes',
             'state' => 1
         ]);
     }

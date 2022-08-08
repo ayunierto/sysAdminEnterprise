@@ -35,12 +35,12 @@
                                 hide-details></v-text-field>
                         </template>
                         <v-card>
-                            <!-- Titulo de modal agreagar Unidad Medida -->
+                            <!-- Titulo de modal agreagar Documentos -->
                             <v-card-title>
                                 <span class="text-h5">{{ formTitle }}</span>
                             </v-card-title>
 
-                            <!-- contenido de modal agregar Unidad Medida -->
+                            <!-- contenido de modal agregar Documentos -->
                             <v-card-text>
                                 <v-container>
                                     <v-row>
@@ -51,16 +51,26 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field label="Nombre*" v-model="editedItem.name"
-                                                hint="Nombre de la unidad de medida por ejemplo: bolsa, caja, botella...">
+                                            <v-text-field label="Nombre*" v-model="editedItem.name" hint="Nombre"
+                                                required>
                                             </v-text-field>
                                         </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field label="Descripcion" v-model="editedItem.description" hint="Descripción">
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-select v-model="editedItem.state" :items="items_state" item-text="name"
+                                                item-value="value" label="Seleccione estado" persistent-hint
+                                                single-line></v-select>
+                                        </v-col>
+
                                     </v-row>
                                 </v-container>
                                 <small>*Se recomienda verificar codigos validos por sunat
                                     en su Página Web</small>
                             </v-card-text>
-                            <!-- Acciones de modal agregar Unidad Medida -->
+                            <!-- Acciones de modal agregar Documentos -->
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="red darken-1" text @click="close">
@@ -72,7 +82,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
-                    <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
+                    <!-- Mensaje de confirmacion de borrado de Documentos -->
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                             <v-card-title class="text-h5">¿Está seguro de querer borrar el
@@ -114,10 +124,16 @@ export default {
             dialog: false,
             dialogDelete: false,
             search: '',
+            items_state: [
+                { name: 'Activo', value: 1 },
+                { name: 'Inactivo', value: 0 },
+            ],
+
             headers: [
-                { text: 'CÓDIGO', value: 'code' },
-                { text: 'DESCRIPCIÓN', value: 'name' },
-                { text: 'DESCRIPCIÓN', value: 'state' },
+                { text: 'CÓDIGO', value: 'code'},
+                { text: 'NOMBRE', value: 'name'},
+                { text: 'DESCRIPCIÓN', value: 'description'},
+                { text: 'ESTADO', value: 'state'},
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -127,12 +143,14 @@ export default {
             editedItem: {
                 code: '',
                 name: '',
+                description: '',
                 state: '',
             },
 
             defaultItem: {
                 code: '',
                 name: '',
+                description: '',
                 state: '',
             },
 

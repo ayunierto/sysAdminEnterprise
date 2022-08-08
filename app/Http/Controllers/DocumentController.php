@@ -38,7 +38,6 @@ class DocumentController extends Controller
         Document::create($request->all());
         return Redirect::route('documents.index')->with('message', 'Documento agregado');
     }
-
     /**
      * Update the specified resource in storage.
      *
