@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             VoucherSeeder::class,
             CustomizerSeeder::class,
             AffectationIgvSeeder::class,
+            DocumentSeeder::class,
         ]);
     }
 }
