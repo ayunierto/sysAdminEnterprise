@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('payment_methods_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('proof_payments_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('coins_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('documents_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('exchange_rate', 5, 3)->nullable();
             $table->decimal('total', 8, 2);
             $table->date('date');
