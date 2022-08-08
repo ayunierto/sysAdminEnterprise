@@ -23,7 +23,7 @@ class CustomizerController extends Controller
     {
         $company = Auth::user()->companies_id;
         return Inertia::render('Customizers/Index', [
-            'customizers' => Customizer::select('customizers.*', 'companies.*')->join('companies', 'customizers.companies_id', '=', 'companies.id')->get(),
+            'customizers' => Customizer::select('customizers.*', 'companies.name')->join('companies', 'customizers.companies_id', '=', 'companies.id')->get(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
