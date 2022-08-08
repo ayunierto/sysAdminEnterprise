@@ -5,9 +5,11 @@ new Vue({
         isEditing: null,
         dialog: false,
         dialog2:false,
+        dialog3:false,
         dialogDelete: false,
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu2: false,
+    items: ['DNI', 'RUC','CARNET EXT.','PASAPORTE'],
         tipoComprobante: [
             { name: "Ticket", abbr: "YT", id: 1 },
             { name: "Boleta", abbr: "GA", id: 2 },
