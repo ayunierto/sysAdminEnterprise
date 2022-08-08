@@ -15,6 +15,11 @@ class CreatePurchaseDetailsTable extends Migration
     {
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('purchases_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('products_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('amount');
+            $table->decimal('price', 8, 2);
             $table->timestamps();
         });
     }
