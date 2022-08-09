@@ -27,7 +27,6 @@ class CustomizerController extends Controller
             'colors' => Customizer::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'company' => Company::find($company),
-            Company::where('id', 2)->get(),
         ]);
     }
 
