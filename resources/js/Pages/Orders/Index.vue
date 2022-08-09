@@ -53,7 +53,8 @@
                                     <v-col cols="12" sm="3" md="3">
                                         <v-autocomplete :items="customers" color="primary" hide-no-data hide-selected
                                             item-text="document" item-value="id" label="Cliente"
-                                            placeholder="Buscar por Documento" return-object auto-select-first></v-autocomplete>
+                                            placeholder="Buscar por Documento" return-object auto-select-first>
+                                        </v-autocomplete>
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
                                         <v-text-field label="Nombre/Razon Social"></v-text-field>
@@ -74,7 +75,7 @@
                                             item-value="code" :value="coins[0]"></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
-                                        <v-text-field label="Tipo Cambio" type="number" value="3.910" outlined>
+                                        <v-text-field label="Tipo Cambio" type="number" value="3.910" min="0" outlined>
                                         </v-text-field>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -98,11 +99,12 @@
                                                     <v-card-text>
                                                         <v-container>
                                                             <v-row>
-                                                                <v-col cols="12" sm="3" md="3">
-                                                                    <v-autocomplete :items="items" color="white"
-                                                                        hide-no-data hide-selected item-text=""
-                                                                        item-value="" label="Producto"
-                                                                        placeholder="Buscar Producto" return-object auto-select-first>
+                                                                <v-col cols="12" sm="6" md="4">
+                                                                    <v-autocomplete :items="products" color="white"
+                                                                        hide-no-data hide-selected item-text="name"
+                                                                        item-value="id" label="Producto"
+                                                                        placeholder="Buscar Producto" return-object
+                                                                        auto-select-first>
                                                                     </v-autocomplete>
                                                                 </v-col>
 
@@ -112,25 +114,27 @@
                                                                         :value="presentations[0]">
                                                                     </v-select>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="4" md="4">
-                                                                    <v-text-field label="Cantidad" required>
+                                                                <v-col cols="12" sm="6" md="3">
+                                                                    <v-text-field label="Cantidad" type="number" min="0"
+                                                                        required>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="4" md="4">
-                                                                    <v-text-field label="Precio Venta" required>
+                                                                <v-col cols="12" sm="6" md="3">
+                                                                    <v-text-field label="Precio Venta" type="number"
+                                                                        min="0" required>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="4" md="4">
+                                                                <v-col cols="12" sm="4" md="3">
+                                                                    <v-text-field label="Descuento" min="0"
+                                                                        type="number" value="0" required>
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                                <v-col cols="12" sm="6" md="6">
                                                                     <v-select :items="affectationIgvs"
                                                                         :value="affectationIgvs[0]"
                                                                         item-text="description" item-value="code"
                                                                         label="Afectación IGV">
                                                                     </v-select>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="4" md="4">
-                                                                    <v-text-field label="Descuento" type="number"
-                                                                        value="0" required>
-                                                                    </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="12" sm="4" md="4">
                                                                     <v-btn color="primary" class="ma-2 white--text" fab>
@@ -147,7 +151,7 @@
 
                                                     <v-card-actions>
                                                         <v-spacer></v-spacer>
-                                                        <v-btn color="primary" text @click="">
+                                                        <v-btn color="primary" text @click="this.close">
                                                             Cerrar
                                                         </v-btn>
                                                     </v-card-actions>
@@ -155,139 +159,43 @@
                                             </v-dialog>
                                         </div>
                                         <v-col cols="12">
-                                            <v-col cols="12">
-                                                <h3>
-                                                    CARRITO DE
-                                                    VENTA
-                                                </h3>
-                                            </v-col>
-                                            <v-simple-table fixed-header height="200px">
-                                                <template v-slot:default>
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-left">
-                                                                Producto
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Presentación
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Equivalecia
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Cantidad
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Precio
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Total
-                                                            </th>
-                                                            <th class="text-left">
-                                                                Acciones
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="item in desserts" :key="item.name">
-                                                            <td>
-                                                                {{
-                                                                        item.producto
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                {{
-                                                                        item.presentacion
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                {{
-                                                                        item.equivalencia
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                {{
-                                                                        item.cantidad
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                {{
-                                                                        item.precio
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                {{
-                                                                        item.cantidad * item.precio
-                                                                }}
-                                                            </td>
-                                                            <td>
-                                                                <template>
-                                                                    <v-icon small class="mr-2" @click="editItem(item)">
-                                                                        mdi-pencil
-                                                                    </v-icon>
-                                                                    <v-icon small @click="deleteItem(item)">
-                                                                        mdi-delete
-                                                                    </v-icon>
-                                                                </template>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <!-- Modal Editar productos carrito -->
-                                                    <v-dialog v-model="dialog" max-width="500px">
-                                                        <v-card>
-                                                            <v-card-title>
-                                                                <span class="text-h5">Editar
-                                                                    Producto</span>
-                                                            </v-card-title>
-
-                                                            <v-card-text>
-                                                                <v-container>
-                                                                    <v-row>
-                                                                        <v-col cols="12" sm="6" md="4">
-                                                                            <v-text-field label="Producto">
-                                                                            </v-text-field>
-                                                                        </v-col>
-                                                                        <v-col cols="12" sm="6" md="4">
-                                                                            <v-text-field label="Cantidad">
-                                                                            </v-text-field>
-                                                                        </v-col>
-                                                                        <v-col cols="12" sm="6" md="4">
-                                                                            <v-text-field label="Precio"></v-text-field>
-                                                                        </v-col>
-                                                                    </v-row>
-                                                                </v-container>
-                                                            </v-card-text>
-
-                                                            <v-card-actions>
-                                                                <v-spacer></v-spacer>
-                                                                <v-btn color="red darken-1" text @click="close">
-                                                                    Cancelar
-                                                                </v-btn>
-                                                                <v-btn color="blue darken-1" text @click="save">
-                                                                    Confirmar
-                                                                </v-btn>
-                                                            </v-card-actions>
-                                                        </v-card>
-                                                    </v-dialog>
-                                                    <!-- modal mensaje eliminar producto de carrito -->
-                                                    <v-dialog v-model="dialogDelete" max-width="500px">
-                                                        <v-card>
-                                                            <v-card-title class="text-h5">¿Quiere
-                                                                quitar
-                                                                del
-                                                                Carrito?</v-card-title>
-                                                            <v-card-actions>
-                                                                <v-spacer></v-spacer>
-                                                                <v-btn color="red darken-1" text @click="closeDelete">
-                                                                    Cancelar</v-btn>
-                                                                <v-btn color="blue darken-1" text
-                                                                    @click="deleteItemConfirm">Confrimar</v-btn>
-                                                                <v-spacer></v-spacer>
-                                                            </v-card-actions>
-                                                        </v-card>
-                                                    </v-dialog>
+                                            <v-data-table :headers="headers" :items="desserts" sort-by="name"
+                                                class="elevation-2" :search="search" fixed-header height="200px" items-per-page="5">
+                                                <template v-slot:top>
+                                                    <v-toolbar flat>
+                                                        <v-toolbar-title>Carrito de Ventas</v-toolbar-title>
+                                                        <v-divider class="mx-4" inset vertical></v-divider>
+                                                        <v-spacer></v-spacer>
+                                                        <v-spacer></v-spacer>
+                                                        <v-text-field v-model="search" append-icon="mdi-magnify"
+                                                            label="Buscar" single-line hide-details>
+                                                        </v-text-field>
+                                                        <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
+                                                        <v-dialog v-model="dialogDelete" max-width="500px">
+                                                            <v-card>
+                                                                <v-card-title class="text-h5">¿Está seguro de querer
+                                                                    borrar el
+                                                                    producto?</v-card-title>
+                                                                <v-card-actions>
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-btn color="red darken-1" text
+                                                                        @click="closeDelete">Cancelar</v-btn>
+                                                                    <v-btn color="blue darken-1" text
+                                                                        @click="deleteItemConfirm">Aceptar</v-btn>
+                                                                    <v-spacer></v-spacer>
+                                                                </v-card-actions>
+                                                            </v-card>
+                                                        </v-dialog>
+                                                    </v-toolbar>
                                                 </template>
-                                            </v-simple-table>
+                                                <!-- Acciones de la tabla -->
+                                                <template v-slot:item.actions="{ item }">
+                                                    <v-icon small class="mr-2" @click="editItem(item)">
+                                                        mdi-pencil
+                                                    </v-icon>
+                                                    <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+                                                </template>
+                                            </v-data-table>
                                         </v-col>
                                         <v-container>
                                             <v-row>
@@ -372,6 +280,7 @@ export default {
         'orders',
         'presentations',
         'affectationIgvs',
+        'products',
     ],
     components: {
         AdminLayout,
@@ -384,35 +293,39 @@ export default {
         dialogDelete: false,
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu2: false,
+        search: '',
+        headers: [
+            { text: 'PRODUCTO', value: 'producto' },
+            { text: 'PRESENTACIÓN', value: 'presentacion' },
+            { text: 'CANTIDAD', value: 'cantidad' },
+            { text: 'PRECIO', value: 'precio' },
+            { text: 'ACCIONES', value: 'actions', sortable: false },
+        ],
         desserts: [
             {
                 producto: "Frozen Yogurt",
                 presentacion: "cja 12 und",
-                equivalencia: "12",
                 cantidad: 159,
                 precio: 50,
             },
             {
                 producto: "Ice cream sandwich",
                 presentacion: "sobre 5 und",
-                equivalencia: "5",
                 cantidad: 237,
                 precio: 12,
             },
             {
                 producto: "Eclair",
                 presentacion: "saco 50kg",
-                equivalencia: "50",
                 cantidad: 262,
                 precio: 30,
             },
             {
                 producto: "Cupcake",
                 presentacion: "molde 5 kg",
-                equivalencia: "5",
                 cantidad: 305,
                 precio: 15,
-            },
+            },            
         ],
     }),
     watch: {

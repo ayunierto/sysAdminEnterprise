@@ -14,6 +14,7 @@ use App\Models\AffectationIgv;
 use App\Models\Coin;
 use App\Models\PaymentMethod;
 use App\Models\Presentation;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -37,6 +38,7 @@ class OrderController extends Controller
             'coins' => Coin::all(),
             'presentations' => Presentation::all(),
             'affectationIgvs' => AffectationIgv::all(),
+            'products' => Product::all(),
             'orders' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
         ]);
     }
