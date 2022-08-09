@@ -20,7 +20,7 @@ class SettingController extends Controller
         $company = Auth::user()->companies_id;
         return Inertia::render('Settings/Index', [
             'colors' => Customizer::where('companies_id', $company)->get(),
-            'customizers' => Customizer::join('companies', 'customizers.companies_id', '=', 'companies.id')->where('companies_id', 1)->get(),
+            'customizers' => Customizer::join('companies', 'customizers.companies_id', '=', 'companies.id')->where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
