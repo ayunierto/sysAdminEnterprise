@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use Illuminate\Database\Seeder;
 
-class PurchaseSeeder extends Seeder
+class PurchaseDetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class PurchaseSeeder extends Seeder
      */
     public function run()
     {
-        Purchase::factory(15)->create();
+        PurchaseDetail::factory(50)->create();
     }
 }

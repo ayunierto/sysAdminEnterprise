@@ -220,15 +220,17 @@
                                             </v-list-item-title>
                                         </v-list-item>
 
-                                        <v-list-item link :style="item_style()">
-                                            <v-list-item-icon>
-                                                <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
-                                            </v-list-item-icon>
-                                            <v-list-item-title>
-                                                <h5>LISTA DE COMPRAS</h5>
-                                            </v-list-item-title>
-                                        </v-list-item>
+                                        <inertia-link :href="route('purchases.index')">
+                                            <v-list-item link :style="item_style()">
+                                                <v-list-item-icon>
+                                                    <v-spacer></v-spacer>
+                                                    <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
+                                                </v-list-item-icon>
+                                                <v-list-item-title>
+                                                    <h5>LISTA DE COMPRAS</h5>
+                                                </v-list-item-title>
+                                            </v-list-item>
+                                        </inertia-link>
 
                                 </v-list-item-group>
                             </v-card>
@@ -348,7 +350,7 @@
 
 
             <!-- Menú horizontal -->
-            <v-app-bar app :color="colorHeader">
+            <v-app-bar app :color="colorHeader" dense elevation="24">
                 <v-app-bar-nav-icon @click="drawer = !drawer" :style="item_style()"></v-app-bar-nav-icon>
 
                 <v-toolbar-title>
@@ -384,7 +386,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <!-- <pre>{{ $page }}</pre> -->
+            <pre>{{ $page }}</pre>
         </v-main>
 
         <!-- PIE DE PAGINA -->
@@ -412,9 +414,6 @@ export default {
             colorFooter: this.$page.props.colors[0].color_footer != '' ? this.$page.props.colors[0].color_footer : 'indigo darken-2',
             colorText: this.$page.props.colors[0].color_text != '' ? this.$page.props.colors[0].color_text : '#FFFFFFFF',
             
-            // color: {
-            //     color: "blue",
-            // }
         };
     },
     methods: {

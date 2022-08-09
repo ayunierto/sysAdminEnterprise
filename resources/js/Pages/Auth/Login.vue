@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-content>
+        <v-main>
             <v-container fluid fill-height>
                 <v-layout align-center justify-center row fill-height style="height: 100vh">
                     <v-flex xs10 sm4 md2 xl2>
@@ -28,10 +28,10 @@
                                             required 
                                             autofocus>
                                         </v-text-field>
-
-                                        <small v-if="errors.email" >
+                                            
+                                        <v-alert v-if="errors.email">
                                             {{ errors.email }}
-                                        </small>
+                                        </v-alert>
 
                                         <v-text-field
                                             counter
@@ -74,7 +74,7 @@
                     </v-flex>
                 </v-layout>
             </v-container>
-        </v-content>
+        </v-main>
     </v-app>
 </template>
 
