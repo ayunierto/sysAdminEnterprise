@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,4 +70,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('dashboard/products', ProductController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/proofPayments', ProofPaymentController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/orders', OrderController::class)->except('create', 'edit', 'show');
 });

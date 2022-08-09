@@ -3,8 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Customizer;
+use App\Models\Company;
+use App\Models\ProofPayment;
+use App\Models\Document;
+use App\Models\Customer;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\AffectationIgv;
+use App\Models\Coin;
+use App\Models\PaymentMethod;
+use App\Models\Presentation;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class OrderController extends Controller
 {
@@ -15,7 +26,19 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $company = Auth::user()->companies_id;
+        return Inertia::render('Orders/Index', [
+            'colors' => Customizer::where('companies_id', $company)->get(),
+            'company' => Company::find(Auth::user()->companies_id),
+            'proofPayments' => ProofPayment::all(),
+            'documents' => Document::all(),
+            'customers' => Customer::all(),
+            'paymentMethods' => PaymentMethod::all(),
+            'coins' => Coin::all(),
+            'presentations' => Presentation::all(),
+            'affectationIgvs' => AffectationIgv::all(),
+            'orders' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
+        ]);
     }
 
     /**
