@@ -158,9 +158,9 @@
                                                 </v-card>
                                             </v-dialog>
                                         </div>
-                                        <v-col cols="12">
+                                        <v-col>
                                             <v-data-table :headers="headers" :items="desserts" sort-by="name"
-                                                class="elevation-2" :search="search" fixed-header height="200px" :items-per-page="5">
+                                                class="elevation-2" :search="search" fixed-header :items-per-page="5">
                                                 <template v-slot:top>
                                                     <v-toolbar flat>
                                                         <v-toolbar-title>Carrito de Ventas</v-toolbar-title>
@@ -297,8 +297,12 @@ export default {
         headers: [
             { text: 'PRODUCTO', value: 'producto' },
             { text: 'PRESENTACIÓN', value: 'presentacion' },
+            { text: 'EQUIVALENCIA', value: '' },
             { text: 'CANTIDAD', value: 'cantidad' },
             { text: 'PRECIO', value: 'precio' },
+            { text: 'DESCUENTO', value: '' },
+            { text: 'AFECTACIÓN IGV', value: '' },
+            { text: 'SUB TOTAL', value: '' },
             { text: 'ACCIONES', value: 'actions', sortable: false },
         ],
         desserts: [
