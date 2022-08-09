@@ -343,7 +343,7 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-item link :style="item_style()" v-if="$page.props.user.role != 'seller'">
+                        <v-list-item :href="route('settings.index')" link :style="item_style()" v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon :style="item_style()">mdi-spin mdi-cog</v-icon>
                             </v-list-item-icon>

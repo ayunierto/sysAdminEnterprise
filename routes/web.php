@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -62,6 +63,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/providers', ProviderController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customers', CustomerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/presentations', PresentationController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/settings', SettingController::class)->except('create', 'edit', 'show');
 });
 
 // Rutas de vendedores
