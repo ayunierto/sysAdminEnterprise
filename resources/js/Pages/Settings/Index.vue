@@ -30,36 +30,45 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Nombre/Razon Social">
+                                            <v-text-field :disabled="!isEditing" label="Nombre/Razon Social"
+                                                :value="customizers[0].name">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Ruc" type="number">
+                                            <v-text-field :disabled="!isEditing" label="Ruc" type="number"
+                                                :value="customizers[0].ruc">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Teléfono"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Teléfono"
+                                                :value="customizers[0].phone"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Dirección"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Dirección"
+                                                :value="customizers[0].address"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Departamento"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Departamento"
+                                                :value="customizers[0].department"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Provincia"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Provincia"
+                                                :value="customizers[0].province"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Distrito"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Distrito"
+                                                :value="customizers[0].district"></v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Código Pais" type="number">
+                                            <v-text-field :disabled="!isEditing" label="Código Pais" type="number"
+                                                :value="customizers[0].country_code">
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Descripción"></v-text-field>
+                                            <v-text-field :disabled="!isEditing" label="Descripción"
+                                                :value="customizers[0].description"></v-text-field>
                                         </v-col>
-                                        <v-col cols="12" sm="4" md="4">
+                                        <!-- <v-col cols="12" sm="4" md="4">
                                             <v-file-input :disabled="!isEditing" :rules="rules"
                                                 accept="image/png, image/jpeg, image/bmp" placeholder="Cargar logo"
                                                 prepend-icon="mdi-image" label="Logo"></v-file-input>
@@ -70,7 +79,7 @@
                                                     src="https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2"
                                                     alt="Logo"></v-img>
                                             </v-card>
-                                        </v-col>
+                                        </v-col> -->
                                     </v-row>
                                 </v-container>
                             </v-card-text>
