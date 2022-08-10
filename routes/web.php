@@ -54,6 +54,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function (
     Route::resource('dashboard/vouchers', VoucherController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customizers', CustomizerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/documents', DocumentController::class)->except('create', 'edit', 'show');
+
 });
 
 // Rutas de administrador de empresa
@@ -64,6 +65,8 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/providers', ProviderController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customers', CustomerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/presentations', PresentationController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/purchases', PurchaseController::class)->except('create', 'show');
+    Route::resource('dashboard/settings', SettingController::class)->except('edit');
 });
 
 // Rutas de vendedores
