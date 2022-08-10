@@ -187,6 +187,7 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
+                                    <inertia-link :href="route('orders.index')">
                                     <v-list-item link :style="item_style()">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
@@ -196,6 +197,7 @@
                                             <h5>NUEVA VENTA</h5>
                                         </v-list-item-title>
                                     </v-list-item>
+                                    </inertia-link>
 
                                     <v-list-item link :style="item_style()">
                                         <v-list-item-icon>
