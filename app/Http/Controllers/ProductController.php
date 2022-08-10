@@ -26,7 +26,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $company = Auth::user()->companies_id;
         $company_id = Auth::user()->companies_id;
 
         return Inertia::render('Products/Index', [
@@ -37,7 +36,7 @@ class ProductController extends Controller
             'measures' => Measure::all(),
             'providers' => Provider::where('companies_id', $company_id)->get(),
             'company' => Company::where('id', $company_id)->first(),
-            'colors' => Customizer::where('companies_id', $company)->get(),
+            'colors' => Customizer::where('companies_id', $company_id)->get(),
         ]);
     }
 

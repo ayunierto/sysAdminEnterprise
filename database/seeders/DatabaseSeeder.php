@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Customizer;
 use App\Models\PaymentMethod;
 use App\Models\ProofPayment;
+use App\Models\PurchaseDetail;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\MeasureSeeder;
 use Database\Seeders\PresentationSeeder;
@@ -41,7 +42,6 @@ class DatabaseSeeder extends Seeder
             VoucherSeeder::class,
             CustomizerSeeder::class,
             AffectationIgvSeeder::class,
-            DocumentSeeder::class,
         ]);
     }
 }

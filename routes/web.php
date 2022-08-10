@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DocumentController;
@@ -63,7 +64,6 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/providers', ProviderController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customers', CustomerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/presentations', PresentationController::class)->except('create', 'edit', 'show');
-    Route::resource('dashboard/settings', SettingController::class)->except('create', 'edit', 'show');
 });
 
 // Rutas de vendedores
