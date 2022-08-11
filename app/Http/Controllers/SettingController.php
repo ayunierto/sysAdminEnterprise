@@ -23,7 +23,6 @@ class SettingController extends Controller
             'colors' => Customizer::where('companies_id', $company)->get(),
             'settings' => Customizer::join('companies', 'customizers.companies_id', '=', 'companies.id')->where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
-            'personalizer' => Customizer::find(Auth::user()->companies_id),
         ]);
     }
 
@@ -36,6 +35,7 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Revisar para correcto funcionamiento
         $company = Company::find($id);
         $company->update($request->all());
         $personalizer=Customizer::find($id);

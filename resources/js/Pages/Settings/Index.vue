@@ -223,7 +223,7 @@ export default {
             menu_color_text: false,
 
             editedItem: {
-                id: this.$page.props.company.id,
+                id: this.$page.props.settings[0].companies_id,
                 name: this.$page.props.settings[0].name,
                 ruc: this.$page.props.settings[0].ruc,
                 description: this.$page.props.settings[0].description,
