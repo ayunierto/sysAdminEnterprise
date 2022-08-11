@@ -67,7 +67,7 @@
                                                 <v-text-field label="Descripción" v-model="editedItem.description">
                                                 </v-text-field>
                                             </v-col>
-                                            <v-col cols="12" sm="6" md="6">
+                                            <v-col cols="12" sm="4" md="4">
                                                 Color del Menú
                                                 <v-text-field v-model="editedItem.color_menu" hide-details
                                                     class="ma-0 pa-0" solo hint="asdasd" persistent-hint>
@@ -89,7 +89,7 @@
                                                 </v-text-field>
                                             </v-col>
 
-                                            <v-col cols="12" sm="6" md="6">
+                                            <v-col cols="12" sm="4" md="4">
                                                 Color de los submenus
                                                 <v-text-field v-model="editedItem.color_sub_menu" hide-details
                                                     class="ma-0 pa-0" solo>
@@ -111,7 +111,7 @@
                                                 </v-text-field>
                                             </v-col>
 
-                                            <v-col cols="12" sm="6" md="6">
+                                            <v-col cols="12" sm="4" md="4">
                                                 Color de la cabecera
                                                 <v-text-field v-model="editedItem.color_header" hide-details
                                                     class="ma-0 pa-0" solo>
@@ -133,7 +133,7 @@
                                                 </v-text-field>
                                             </v-col>
 
-                                            <v-col cols="12" sm="6" md="6">
+                                            <v-col cols="12" sm="4" md="4">
                                                 Color del pie de página
                                                 <v-text-field v-model="editedItem.color_footer" hide-details
                                                     class="ma-0 pa-0" solo>
@@ -155,7 +155,7 @@
                                                 </v-text-field>
                                             </v-col>
 
-                                            <v-col cols="12" sm="6" md="6">
+                                            <v-col cols="12" sm="4" md="4">
                                                 Color de los textos
                                                 <v-text-field v-model="editedItem.color_text" hide-details
                                                     class="ma-0 pa-0" solo>
