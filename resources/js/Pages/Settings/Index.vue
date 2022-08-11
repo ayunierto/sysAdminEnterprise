@@ -27,66 +27,59 @@
                                 </v-btn>
                             </v-toolbar>
                             <v-card-text>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Nombre/Razon Social"
-                                                :value="customizers[0].name">
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Ruc" type="number"
-                                                :value="customizers[0].ruc">
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Teléfono"
-                                                :value="customizers[0].phone"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Dirección"
-                                                :value="customizers[0].address"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Departamento"
-                                                :value="customizers[0].department"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Provincia"
-                                                :value="customizers[0].province"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Distrito"
-                                                :value="customizers[0].district"></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Código Pais" type="number"
-                                                :value="customizers[0].country_code">
-                                            </v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-text-field :disabled="!isEditing" label="Descripción"
-                                                :value="customizers[0].description"></v-text-field>
-                                        </v-col>
-                                        <!-- <v-col cols="12" sm="4" md="4">
-                                            <v-file-input :disabled="!isEditing" :rules="rules"
-                                                accept="image/png, image/jpeg, image/bmp" placeholder="Cargar logo"
-                                                prepend-icon="mdi-image" label="Logo"></v-file-input>
-                                        </v-col>
-                                        <v-col cols="12" sm="4" md="4">
-                                            <v-card max-width="50" max-height="50" elevation-11>
-                                                <v-img
-                                                    src="https://www.zarla.com/images/zarla-soluciona-1x1-2400x2400-20210603-xv6xrmkbpk3ggkjb6869.png?crop=1:1,smart&width=250&dpr=2"
-                                                    alt="Logo"></v-img>
-                                            </v-card>
-                                        </v-col> -->
-                                    </v-row>
-                                </v-container>
+                                <template>
+                                    <form @submit.prevent="submit">
+                                        <v-container>
+                                            <v-row>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Nombre/Razon Social"
+                                                        v-model="form.name">
+                                                    </v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Ruc" type="number"
+                                                        v-model="form.ruc">
+                                                    </v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Teléfono"
+                                                        v-model="form.phone"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Dirección"
+                                                        v-model="form.address"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Departamento"
+                                                        v-model="form.department"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Provincia"
+                                                        v-model="form.province"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Distrito"
+                                                        v-model="form.district"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Código Pais"
+                                                        type="number" v-model="form.country_code">
+                                                    </v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" sm="4" md="4">
+                                                    <v-text-field :disabled="!isEditing" label="Descripción"
+                                                        v-model="form.description"></v-text-field>
+                                                </v-col>
+                                                
+                                            </v-row>
+                                        </v-container>
+                                    </form>
+                                </template>
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn :disabled="!isEditing" color="primary" @click="save">
+                                <v-btn type="submit" :disabled="!isEditing" color="primary" @click="save">
                                     Guardar
                                 </v-btn>
                             </v-card-actions>
@@ -105,26 +98,38 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
-        'customizers',
+        'settings',
     ],
     components: {
         AdminLayout,
     },
 
-    data: () => ({
-        hasSaved: false,
-        isEditing: null,
-        rules: [
-            (value) =>
-                !value ||
-                value.size < 2000000 ||
-                "El logo no puede exeder los 2 MB!",
-        ],
-    }),
+    data() {
+        return {
+            hasSaved: false,
+            isEditing: null,
+
+            form: this.$inertia.form({
+                name: this.$page.props.settings[0].name,
+                ruc: this.$page.props.settings[0].ruc,
+                description: this.$page.props.settings[0].description,
+                phone: this.$page.props.settings[0].phone,
+                address: this.$page.props.settings[0].address,
+                department: this.$page.props.settings[0].department,
+                province: this.$page.props.settings[0].province,
+                district: this.$page.props.settings[0].district,
+                country_code: this.$page.props.settings[0].country_code,
+            }),
+        }
+    },
     methods: {
+        submit() {
+            this.form.post(this.route('settings.update'));
+        },
         save() {
             this.isEditing = !this.isEditing;
             this.hasSaved = true;

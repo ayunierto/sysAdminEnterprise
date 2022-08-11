@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Customizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class SettingController extends Controller
@@ -20,7 +21,7 @@ class SettingController extends Controller
         $company = Auth::user()->companies_id;
         return Inertia::render('Settings/Index', [
             'colors' => Customizer::where('companies_id', $company)->get(),
-            'customizers' => Customizer::join('companies', 'customizers.companies_id', '=', 'companies.id')->where('companies_id', $company)->get(),
+            'settings' => Customizer::join('companies', 'customizers.companies_id', '=', 'companies.id')->where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
         ]);
     }
@@ -75,9 +76,11 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $company = Auth::user()->companies_id;
+        $company->update($request->all());
+        return Redirect::route('settings.index');
     }
 
     /**
