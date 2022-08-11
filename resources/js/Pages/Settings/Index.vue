@@ -27,54 +27,49 @@
                                 </v-btn>
                             </v-toolbar>
                             <v-card-text>
-                                <template>
-                                    <form @submit.prevent="submit">
                                         <v-container>
                                             <v-row>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Nombre/Razon Social"
-                                                        v-model="form.name">
+                                                        v-model="editedItem.name">
                                                     </v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Ruc" type="number"
-                                                        v-model="form.ruc">
+                                                        v-model="editedItem.ruc">
                                                     </v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Teléfono"
-                                                        v-model="form.phone"></v-text-field>
+                                                        v-model="editedItem.phone"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Dirección"
-                                                        v-model="form.address"></v-text-field>
+                                                        v-model="editedItem.address"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Departamento"
-                                                        v-model="form.department"></v-text-field>
+                                                        v-model="editedItem.department"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Provincia"
-                                                        v-model="form.province"></v-text-field>
+                                                        v-model="editedItem.province"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Distrito"
-                                                        v-model="form.district"></v-text-field>
+                                                        v-model="editedItem.district"></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Código Pais"
-                                                        type="number" v-model="form.country_code">
+                                                        type="number" v-model="editedItem.country_code">
                                                     </v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="4" md="4">
                                                     <v-text-field :disabled="!isEditing" label="Descripción"
-                                                        v-model="form.description"></v-text-field>
+                                                        v-model="editedItem.description"></v-text-field>
                                                 </v-col>
-                                                
                                             </v-row>
                                         </v-container>
-                                    </form>
-                                </template>
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-card-actions>
@@ -98,11 +93,11 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
         'settings',
+        'company',
     ],
     components: {
         AdminLayout,
@@ -113,7 +108,8 @@ export default {
             hasSaved: false,
             isEditing: null,
 
-            form: this.$inertia.form({
+            editedItem: {
+                id: this.$page.props.company.id,
                 name: this.$page.props.settings[0].name,
                 ruc: this.$page.props.settings[0].ruc,
                 description: this.$page.props.settings[0].description,
@@ -123,15 +119,13 @@ export default {
                 province: this.$page.props.settings[0].province,
                 district: this.$page.props.settings[0].district,
                 country_code: this.$page.props.settings[0].country_code,
-            }),
+            },
         }
     },
     methods: {
-        submit() {
-            this.form.post(this.route('settings.update'));
-        },
         save() {
             this.isEditing = !this.isEditing;
+            this.$inertia.put(this.route('settings.update',this.editedItem.id), this.editedItem);
             this.hasSaved = true;
         },
     },
