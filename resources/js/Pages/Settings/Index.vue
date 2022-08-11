@@ -10,7 +10,7 @@
                 <v-flex>
                     <template>
                         <v-card class="overflow-hidden">
-                            <v-toolbar flat color="white">
+                            <v-toolbar flat color="blue-grey lighten-4">
                                 <v-icon>mdi-office-building</v-icon>
                                 <v-toolbar-title class="font-weight-light">
                                     Información General
@@ -187,10 +187,11 @@
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
-                            <v-snackbar v-model="hasSaved" color="light-green darken-1" :timeout="2000" absolute bottom left>
-                                    Perfil Actualizado
-                                    correctamente
-                                </v-snackbar>
+                            <v-snackbar v-model="hasSaved" color="light-green darken-1" :timeout="2000" absolute bottom
+                                left>
+                                Perfil Actualizado
+                                correctamente
+                            </v-snackbar>
                         </v-card>
                     </template>
                 </v-flex>
@@ -214,8 +215,10 @@ export default {
 
     data() {
         return {
+
             hasSaved: false,
             isEditing: null,
+
             menu_color_menu: false,
             menu_color_sub_menu: false,
             menu_color_header: false,
