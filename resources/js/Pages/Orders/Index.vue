@@ -8,24 +8,32 @@
         <v-container>
             <v-layout>
                 <v-flex>
-                    <v-card class="overflow-hidden" color="white" elevation-10 loading>
-                        <v-toolbar flat color="#ECEFF1">
+                    <v-card class="overflow-hidden" elevation-10 loading>
+                        <v-toolbar flat color="blue-grey lighten-4">
+                            <v-icon>mdi-cart</v-icon>
                             <v-toolbar-title class="font-weight-light">
                                 Nueva Venta
                             </v-toolbar-title>
+                            <v-spacer></v-spacer>
+                            <inertia-link :href="route('orderslist.index')">
+                                <v-btn fab small>
+                                    <v-icon color="primary">
+                                        mdi-cards-variant
+                                    </v-icon>
+                                </v-btn>
+                            </inertia-link>
                         </v-toolbar>
                         <v-card-text>
                             <v-container>
                                 <v-row>
                                     <v-col cols="12" sm="6" md="3">
-                                        <v-select hint="Seleccione tipo Comprobante" :items="proofPayments"
-                                            label="Tipo Documento" item-text="name" item-value="code"
-                                            :value="proofPayments[0]">
+                                        <v-select hint="Seleccione Comprobante" :items="proofPayments"
+                                            label="Comprobante" item-text="name" item-value="code" v-model="tipoComprobate">
                                         </v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="2">
-                                        <v-select hint="Seleccione tipo Serie" :items="proofPayments" label="Serie"
-                                            item-text="serie" item-value="serie" :value="proofPayments[0]">
+                                    <v-col cols="12" sm="6" md="2" v-if="tipoComprobate.name=='Comprobante'">
+                                        <v-select hint="Serie" :value="proofPayments[0]" :items="proofPayments[0]" label="Serie" item-text="serie"
+                                            item-value="serie">
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="4" md="3">
@@ -75,7 +83,8 @@
                                             item-value="code" :value="coins[0]"></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
-                                        <v-text-field label="Tipo Cambio" type="number" value="3.910" min="0" outlined>
+                                        <v-text-field label="Tipo Cambio" type="number" :value="exchange_rate" min="0"
+                                            outlined>
                                         </v-text-field>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -281,11 +290,13 @@ export default {
         'presentations',
         'affectationIgvs',
         'products',
+        'exchange_rate'
     ],
     components: {
         AdminLayout,
     },
-    data: () => ({
+    data(){
+        return{
         isEditing: null,
         dialog: false,
         dialog2: false,
@@ -294,6 +305,7 @@ export default {
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu2: false,
         search: '',
+        tipoComprobate:this.proofPayments[0],
         headers: [
             { text: 'PRODUCTO', value: 'producto' },
             { text: 'PRESENTACIÓN', value: 'presentacion' },
@@ -329,9 +341,10 @@ export default {
                 presentacion: "molde 5 kg",
                 cantidad: 305,
                 precio: 15,
-            },            
+            },
         ],
-    }),
+        }
+    },
     watch: {
         dialog(val) {
             val || this.close();

@@ -27,6 +27,8 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $query = new SunatController;
+        $exchange_rate = $query->exchange_rate()['venta'];
         $company = Auth::user()->companies_id;
         return Inertia::render('Orders/Index', [
             'colors' => Customizer::where('companies_id', $company)->get(),
@@ -39,6 +41,7 @@ class OrderController extends Controller
             'presentations' => Presentation::all(),
             'affectationIgvs' => AffectationIgv::all(),
             'products' => Product::all(),
+            'exchange_rate' => $exchange_rate,
             'orders' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
         ]);
     }

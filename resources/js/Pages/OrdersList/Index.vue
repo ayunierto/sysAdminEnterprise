@@ -59,19 +59,14 @@
 
         <template>
             <v-row justify="center">
-                <v-dialog v-model="dialog_view" persistent max-width="600">
+                <v-dialog v-model="dialog_view" persistent max-width="650">
 
                     <v-card>
                         <v-card-title class="text-h5">
-                            Vista General de la compra
+                            Detalle de Venta
                         </v-card-title>
                         <v-card-text>
                             <v-list-item two-line>
-                                <!-- <v-list-item-content>
-                                <v-list-item-title>EMPRESA</v-list-item-title>
-                                <v-list-item-subtitle>{{ editedItem.company_name }}</v-list-item-subtitle>
-                            </v-list-item-content> -->
-
                                 <v-list-item-content>
                                     <v-list-item-title>CLIENTE</v-list-item-title>
                                     <v-list-item-subtitle>{{ editedItem.customers_name }}</v-list-item-subtitle>
@@ -140,14 +135,18 @@
                                                         <th class="text-left"> Producto </th>
                                                         <th class="text-left"> Cantidad </th>
                                                         <th class="text-left"> Precio </th>
+                                                        <th class="text-left"> Descuento </th>
+                                                        <th class="text-left"> Sub Total </th>
                                                     </tr>
                                                 </thead>
 
                                                 <tbody>
                                                     <tr v-for="item in editedItem.details" :key="item.products_id">
                                                         <td>{{ item.product_name }}</td>
-                                                        <td>{{ item.amount }}</td>
+                                                        <td>{{ item.quantity }}</td>
                                                         <td>{{ item.price }}</td>
+                                                        <td>{{ item.discount }}</td>
+                                                        <td>{{ (item.quantity*item.price)-item.discount }}</td>
                                                     </tr>
                                                 </tbody>
                                             </template>
