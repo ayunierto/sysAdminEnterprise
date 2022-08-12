@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Affectation_igv;
 use App\Models\Customer;
 use App\Models\Customizer;
+use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\ProofPayment;
 use App\Models\PurchaseDetail;
@@ -45,6 +46,8 @@ class DatabaseSeeder extends Seeder
             PurchaseSeeder::class,
             PurchaseDetailSeeder::class,
             DocumentSeeder::class,
+            OrderSeeder::class,
+            OrderDetailSeeder::class,
         ]);
     }
 }

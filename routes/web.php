@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderListController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -76,4 +77,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::resource('dashboard/products', ProductController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/proofPayments', ProofPaymentController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/orders', OrderController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/orderslist', OrderListController::class)->except('create', 'edit', 'show');
 });

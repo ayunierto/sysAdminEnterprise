@@ -9,11 +9,16 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'products_id',
-        'orders_id',
-        'affectation_igvs_id',
-        'quantity',
-        'precio',
-        'descuento',
+        'companies_id',
+        'customers_id',
+        'payment_methods_id',
+        'proof_payments_id',
+        'coins_id',
+        'documents_id',
+        'exchange_rate',
+        'total',
+        'date',
+        'state',
+        'description',
     ];
 }

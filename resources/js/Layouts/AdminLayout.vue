@@ -199,6 +199,7 @@
                                     </v-list-item>
                                     </inertia-link>
 
+                                    <inertia-link :href="route('orderslist.index')">
                                     <v-list-item link :style="item_style()">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
@@ -208,6 +209,7 @@
                                             <h5>LISTA DE VENTAS</h5>
                                         </v-list-item-title>
                                     </v-list-item>
+                                    </inertia-link>
 
                                 </v-list-item-group>
                             </v-card>
