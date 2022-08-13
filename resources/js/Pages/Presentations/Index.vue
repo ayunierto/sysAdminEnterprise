@@ -66,7 +66,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
+                                    <v-col cols="12" sm="6" md="6">
                                         <v-select
                                         v-model="editedItem.products_id"
                                         hint="Seleccione el producto"
