@@ -30,7 +30,7 @@ class CreateProductsTable extends Migration
             $table->decimal('wholesale_price', 11, 2)->nullable();
             $table->decimal('special_price', 11, 2)->nullable();
             $table->string('description')->nullable();
-            $table->boolean('state');
+            $table->boolean('state')->default(1);
             $table->date('expiration_date')->nullable();
             
             $table->timestamps();

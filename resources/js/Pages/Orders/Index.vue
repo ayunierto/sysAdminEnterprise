@@ -31,8 +31,8 @@
                                             label="Comprobante" item-text="name" item-value="code" v-model="tipoComprobate">
                                         </v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="2" v-if="tipoComprobate.name=='Comprobante'">
-                                        <v-select hint="Serie" :value="proofPayments[0]" :items="proofPayments[0]" label="Serie" item-text="serie"
+                                    <v-col cols="12" sm="6" md="2">
+                                        <v-select hint="Serie" :items="proofPayments" label="Serie" item-text="serie"
                                             item-value="serie">
                                         </v-select>
                                     </v-col>
@@ -60,7 +60,7 @@
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
                                         <v-autocomplete :items="customers" color="primary" hide-no-data hide-selected
-                                            item-text="document" item-value="id" label="Cliente"
+                                            item-text="name" item-value="id" label="Cliente"
                                             placeholder="Buscar por Documento" return-object auto-select-first>
                                         </v-autocomplete>
                                     </v-col>
@@ -86,6 +86,10 @@
                                         <v-text-field label="Tipo Cambio" type="number" :value="exchange_rate" min="0"
                                             outlined>
                                         </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="3" md="3">
+                                        <v-textarea label="Comentario" type="text" rows="1"  class="mx-2">
+                                        </v-textarea>
                                     </v-col>
                                     <v-spacer></v-spacer>
                                     <template>

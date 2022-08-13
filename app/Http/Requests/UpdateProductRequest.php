@@ -40,7 +40,7 @@ class UpdateProductRequest extends FormRequest
             'wholesale_price' => 'nullable|numeric',
             'special_price' => 'nullable|numeric',
             'description' => 'nullable|string|max:250',
-            'state' => 'required|boolean',
+            'state' => 'nullable|boolean',
             'expiration_date' => 'nullable|date',
 
         ];
