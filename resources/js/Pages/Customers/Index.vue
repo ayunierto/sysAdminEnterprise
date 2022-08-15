@@ -57,16 +57,16 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
-                                                required>
+                                                :rules="requiredField" required>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC"
-                                                required>
+                                            <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC*" min="0"
+                                                :rules="requiredDocument" required>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.phone" type="number" label="Teléfono*"
+                                            <v-text-field v-model="editedItem.phone" type="number" label="Teléfono" min="0"
                                                 required>
                                             </v-text-field>
                                         </v-col>
@@ -76,7 +76,7 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.email" type="email"
-                                                label="Correo Electrónico*" required>
+                                                label="Correo Electrónico" :rules="requiredEmail" required>
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
@@ -138,6 +138,18 @@ export default {
     },
     data() {
         return {
+            // Validaciones
+            requiredField: [
+                v => !!v || '*Campo Ogligatorio',
+            ],
+            requiredDocument: [
+                v => !!v || '*Campo Ogligatorio',
+                v => (v && v.length == 11 || v.length == 8) || 'El documento debe tener 8 u 11 caracteres',
+            ],
+            requiredEmail: [
+                v => /.+@.+\..+/.test(v) || 'Correo no válido',
+            ],
+
             dialog: false,
             dialogDelete: false,
             search: '',
