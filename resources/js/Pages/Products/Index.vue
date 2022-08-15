@@ -47,33 +47,47 @@
                                 <v-container>
                                     <v-row>
                                         <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
-                                            <v-select v-model="editedItem.companies_id" hint="Seleccione empresa"
-                                                :items="companies" item-text="name" item-value="id"
-                                                label="Seleccione empresa" single-line></v-select>
+                                            <v-autocomplete v-model="editedItem.companies_id" color="primary"
+                                                :items="companies" item-text="name" item-value="id" label="Empresa"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Empresa" persistent-hint>
+                                            </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-select v-model="editedItem.categories_id" hint="Seleccione categoría"
-                                                :items="categories" item-text="name" item-value="id"
-                                                label="Seleccione categoría" single-line :rules="requiredField" required></v-select>
+                                            <v-autocomplete v-model="editedItem.categories_id" color="primary"
+                                                :items="categories" item-text="name" item-value="id" label="Categoría"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Categoría" persistent-hint
+                                                :rules="requiredField" required>
+                                            </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-select v-model="editedItem.marks_id" hint="Seleccione marca"
-                                                :items="marks" item-text="name" item-value="id" label="Seleccione marca"
-                                                single-line :rules="requiredField" required></v-select>
+                                            <v-autocomplete v-model="editedItem.marks_id" color="primary"
+                                                :items="marks" item-text="name" item-value="id" label="Marca"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Marca" persistent-hint
+                                                :rules="requiredField" required>
+                                            </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-select v-model="editedItem.measures_id" hint="Seleccione medida"
-                                                :items="measures" item-text="name" item-value="id"
-                                                label="Seleccione medida" single-line :rules="requiredField" required></v-select>
+                                            <v-autocomplete v-model="editedItem.measures_id" color="primary"
+                                                :items="marks" item-text="name" item-value="id" label="Medida"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Medida" persistent-hint
+                                                :rules="requiredField" required>
+                                            </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-select v-model="editedItem.providers_id" hint="Seleccione proveedor"
-                                                :items="providers" item-text="name" item-value="id"
-                                                label="Seleccione proveedor" single-line :rules="requiredField" required></v-select>
+                                            <v-autocomplete v-model="editedItem.providers_id" color="primary"
+                                                :items="providers" item-text="name" item-value="id" label="Proveedor"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Proveedor" persistent-hint
+                                                :rules="requiredField" required>
+                                            </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">

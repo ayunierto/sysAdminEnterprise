@@ -28,13 +28,21 @@
                                 <v-row>
                                     <v-col cols="12" sm="6" md="3">
                                         <v-select hint="Seleccione Comprobante" :items="proofPayments"
-                                            label="Comprobante" item-text="name" item-value="code" v-model="tipoComprobate">
+                                            label="Comprobante" item-text="name" item-value="code"
+                                            v-model="tipoComprobate" return-object>
                                         </v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="6" md="2">
-                                        <v-select hint="Serie" :items="proofPayments" label="Serie" item-text="serie"
-                                            item-value="serie">
-                                        </v-select>
+                                    <v-col cols="12" sm="6" md="2" v-if="tipoComprobate.code =='0A1'">
+                                        <v-text-field label="Serie" type="text" :value="tipoComprobate.serie" disabled>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="2" v-if="tipoComprobate.code =='01'">
+                                        <v-text-field label="Serie" type="text" :value="tipoComprobate.serie" disabled>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="6" md="2" v-if="tipoComprobate.code =='03'">
+                                        <v-text-field label="Serie" type="text" :value="tipoComprobate.serie" disabled>
+                                        </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="4" md="3">
                                         <v-text-field label="Correlativo" :value="orders" disabled></v-text-field>
@@ -88,7 +96,7 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-textarea label="Comentario" type="text" rows="1"  class="mx-2">
+                                        <v-textarea label="Comentario" type="text" rows="1" class="mx-2">
                                         </v-textarea>
                                     </v-col>
                                     <v-spacer></v-spacer>
@@ -299,54 +307,54 @@ export default {
     components: {
         AdminLayout,
     },
-    data(){
-        return{
-        isEditing: null,
-        dialog: false,
-        dialog2: false,
-        dialog3: false,
-        dialogDelete: false,
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        menu2: false,
-        search: '',
-        tipoComprobate:this.proofPayments[0],
-        headers: [
-            { text: 'PRODUCTO', value: 'producto' },
-            { text: 'PRESENTACIÓN', value: 'presentacion' },
-            { text: 'EQUIVALENCIA', value: '' },
-            { text: 'CANTIDAD', value: 'cantidad' },
-            { text: 'PRECIO', value: 'precio' },
-            { text: 'DESCUENTO', value: '' },
-            { text: 'AFECTACIÓN IGV', value: '' },
-            { text: 'SUB TOTAL', value: '' },
-            { text: 'ACCIONES', value: 'actions', sortable: false },
-        ],
-        desserts: [
-            {
-                producto: "Frozen Yogurt",
-                presentacion: "cja 12 und",
-                cantidad: 159,
-                precio: 50,
-            },
-            {
-                producto: "Ice cream sandwich",
-                presentacion: "sobre 5 und",
-                cantidad: 237,
-                precio: 12,
-            },
-            {
-                producto: "Eclair",
-                presentacion: "saco 50kg",
-                cantidad: 262,
-                precio: 30,
-            },
-            {
-                producto: "Cupcake",
-                presentacion: "molde 5 kg",
-                cantidad: 305,
-                precio: 15,
-            },
-        ],
+    data() {
+        return {
+            isEditing: null,
+            dialog: false,
+            dialog2: false,
+            dialog3: false,
+            dialogDelete: false,
+            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+            menu2: false,
+            search: '',
+            tipoComprobate: this.proofPayments[0],
+            headers: [
+                { text: 'PRODUCTO', value: 'producto' },
+                { text: 'PRESENTACIÓN', value: 'presentacion' },
+                { text: 'EQUIVALENCIA', value: '' },
+                { text: 'CANTIDAD', value: 'cantidad' },
+                { text: 'PRECIO', value: 'precio' },
+                { text: 'DESCUENTO', value: '' },
+                { text: 'AFECTACIÓN IGV', value: '' },
+                { text: 'SUB TOTAL', value: '' },
+                { text: 'ACCIONES', value: 'actions', sortable: false },
+            ],
+            desserts: [
+                {
+                    producto: "Frozen Yogurt",
+                    presentacion: "cja 12 und",
+                    cantidad: 159,
+                    precio: 50,
+                },
+                {
+                    producto: "Ice cream sandwich",
+                    presentacion: "sobre 5 und",
+                    cantidad: 237,
+                    precio: 12,
+                },
+                {
+                    producto: "Eclair",
+                    presentacion: "saco 50kg",
+                    cantidad: 262,
+                    precio: 30,
+                },
+                {
+                    producto: "Cupcake",
+                    presentacion: "molde 5 kg",
+                    cantidad: 305,
+                    precio: 15,
+                },
+            ],
         }
     },
     watch: {
