@@ -60,16 +60,16 @@
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-autocomplete color="primary" :items="customers" item-text="document"
+                                        <v-autocomplete color="primary" :items="customers" item-text="document" v-model="datosCliente"
                                             item-value="id" label="Cliente" auto-select-first hide-no-data hide-selected
-                                            placeholder="Buscar por Documento" persistent-hint required>
+                                            placeholder="Buscar por Documento" persistent-hint return-object required>
                                         </v-autocomplete>
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
-                                        <v-text-field label="Nombre/Razon Social"></v-text-field>
+                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name"></v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-text-field label="Dirección"></v-text-field>
+                                        <v-text-field label="Dirección" :value="datosCliente.address"></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <h3>DETALLE DE VENTA</h3>
@@ -115,7 +115,7 @@
                                                             <v-row>
                                                                 <v-col cols="12" sm="6" md="6">
                                                                     <v-autocomplete color="primary" :items="products"
-                                                                        v-model="nombreProducto" item-text="name"
+                                                                        v-model="datosProducto" item-text="name"
                                                                         item-value="id" label="Producto"
                                                                         auto-select-first hide-no-data hide-selected
                                                                         placeholder="Seleccione Producto"
@@ -123,14 +123,13 @@
                                                                     </v-autocomplete>
                                                                 </v-col>
 
-                                                                <v-col cols="12" sm="6" md="6">
+                                                                <v-col cols="12" sm="6" md="6" >
                                                                     <v-autocomplete color="primary"
                                                                         :items="presentations" item-text="name"
-                                                                        item-value="equivalence"
-                                                                        :value="presentations[0]" label="Presentación"
+                                                                        label="Presentación"
                                                                         auto-select-first hide-no-data hide-selected
                                                                         placeholder="Seleccione Presentación"
-                                                                        persistent-hint required>
+                                                                        persistent-hint required return-object>
                                                                     </v-autocomplete>
                                                                 </v-col>
                                                                 <v-col cols="12" sm="6" md="3">
@@ -140,7 +139,7 @@
                                                                 </v-col>
                                                                 <v-col cols="12" sm="6" md="3">
                                                                     <v-text-field label="Precio Venta" type="number"
-                                                                        min="0" :value="nombreProducto.sale_price"
+                                                                        min="0" :value="datosProducto.sale_price"
                                                                         required>
                                                                     </v-text-field>
                                                                 </v-col>
@@ -173,7 +172,7 @@
                                                                                                         Menor</label>
                                                                                                     <v-text-field
                                                                                                         type="number"
-                                                                                                        :value="nombreProducto.price_by_unit"
+                                                                                                        :value="datosProducto.price_by_unit"
                                                                                                         disabled dense>
                                                                                                     </v-text-field>
                                                                                                 </v-col>
@@ -198,7 +197,7 @@
                                                                                                         Mayor</label>
                                                                                                     <v-text-field
                                                                                                         type="number"
-                                                                                                        :value="nombreProducto.wholesale_price"
+                                                                                                        :value="datosProducto.wholesale_price"
                                                                                                         disabled dense>
                                                                                                     </v-text-field>
                                                                                                 </v-col>
@@ -224,7 +223,7 @@
                                                                                                         Especial</label>
                                                                                                     <v-text-field
                                                                                                         type="number"
-                                                                                                        :value="nombreProducto.special_price"
+                                                                                                        :value="datosProducto.special_price"
                                                                                                         disabled dense>
                                                                                                     </v-text-field>
                                                                                                 </v-col>
@@ -440,7 +439,8 @@ export default {
             menu2: false,
             search: '',
             tipoComprobate: this.proofPayments[0],
-            nombreProducto: '',
+            datosProducto: '',
+            datosCliente:'',
             headers: [
                 { text: 'PRODUCTO', value: 'producto' },
                 { text: 'PRESENTACIÓN', value: 'presentacion' },
