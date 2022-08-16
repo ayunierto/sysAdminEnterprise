@@ -64,20 +64,19 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-autocomplete v-model="editedItem.marks_id" color="primary"
-                                                :items="marks" item-text="name" item-value="id" label="Marca"
-                                                auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Marca" persistent-hint
-                                                :rules="requiredField" required>
+                                            <v-autocomplete v-model="editedItem.marks_id" color="primary" :items="marks"
+                                                item-text="name" item-value="id" label="Marca" auto-select-first
+                                                hide-no-data hide-selected placeholder="Seleccione Marca"
+                                                persistent-hint :rules="requiredField" required>
                                             </v-autocomplete>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-autocomplete v-model="editedItem.measures_id" color="primary"
-                                                :items="marks" item-text="name" item-value="id" label="Medida"
+                                                :items="measures" item-text="name" item-value="id" label="Medida"
                                                 auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Medida" persistent-hint
-                                                :rules="requiredField" required>
+                                                placeholder="Seleccione Medida" persistent-hint :rules="requiredField"
+                                                required>
                                             </v-autocomplete>
                                         </v-col>
 
@@ -134,18 +133,6 @@
                                             <v-text-field v-model="editedItem.special_price" type="number"
                                                 label="Precio especial" min="0"></v-text-field>
                                         </v-col>
-
-                                        <!-- <v-col cols="12" sm="6" md="6" >
-                                        <v-select
-                                        v-model="editedItem.state"
-                                        :items="items_state"
-                                        item-text="name"
-                                        item-value="value"
-                                        label="Seleccione estado"
-                                        persistent-hint
-                                        single-line
-                                        ></v-select>
-                                    </v-col> -->
 
                                         <v-col cols="12" sm="6" md="4">
                                             <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
@@ -284,7 +271,6 @@ export default {
                 wholesale_price: '',
                 special_price: '',
                 description: '',
-                // state: '',
                 expiration_date: '',
             },
 
@@ -304,7 +290,6 @@ export default {
                 wholesale_price: '',
                 special_price: '',
                 description: '',
-                // state: '',
                 expiration_date: '',
             },
 
