@@ -52,12 +52,12 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.name" label="Nombre o Razon Social*"
-                                                required>
+                                                :rules="requiredName" required>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.document" type="number" label="DNI/RUC"
-                                                required>
+                                                :rules="requiredDocument" required>
                                             </v-text-field>
                                         </v-col>
 
@@ -148,6 +148,13 @@ export default {
     },
     data() {
         return {
+            // Validaciones
+            requiredName: [
+                v => !!v || '*Nombre Ogligatorio',
+            ],
+            requiredDocument: [
+                v => (v.length == 11 || v.length == 8) || 'El documento debe tener 8 u 11 caracteres',
+            ],
             dialog: false,
             dialogDelete: false,
             search: '',
