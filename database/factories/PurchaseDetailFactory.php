@@ -26,6 +26,7 @@ class PurchaseDetailFactory extends Factory
             'products_id' => rand(1, $products),
             'amount' => rand(1, 4),
             'price' => rand(1, 999),
+            'total' => rand(1, 999),
         ];
     }
 }

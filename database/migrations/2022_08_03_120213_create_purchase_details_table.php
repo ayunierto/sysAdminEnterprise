@@ -20,6 +20,7 @@ class CreatePurchaseDetailsTable extends Migration
             $table->foreignId('products_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('amount');
             $table->decimal('price', 8, 2);
+            $table->decimal('total', 8, 2);
             $table->timestamps();
         });
     }

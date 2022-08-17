@@ -225,15 +225,17 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
-                                        <v-list-item link :style="item_style()">
-                                            <v-list-item-icon>
-                                                <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-cart-plus</v-icon>
-                                            </v-list-item-icon>
-                                            <v-list-item-title>
-                                                <h5>NUEVA COMPRA</h5>
-                                            </v-list-item-title>
-                                        </v-list-item>
+                                        <inertia-link :href="route('purchases.create')">
+                                            <v-list-item link :style="item_style()">
+                                                <v-list-item-icon>
+                                                    <v-spacer></v-spacer>
+                                                    <v-icon :style="item_style()" small>mdi-cart-plus</v-icon>
+                                                </v-list-item-icon>
+                                                <v-list-item-title>
+                                                    <h5>NUEVA COMPRA</h5>
+                                                </v-list-item-title>
+                                            </v-list-item>
+                                        </inertia-link>
 
                                         <inertia-link :href="route('purchases.index')">
                                             <v-list-item link :style="item_style()">

@@ -30,6 +30,7 @@ class PurchaseFactory extends Factory
             'payment_methods_id' => rand(1, $payment_methods),
             'proof_payments_id' => rand(1, $proof_payments),
             'coins_id' => rand(1, $coins),
+            'voucher_number' => 'C032-007852',
             'exchange_rate' => 3.9,
             'total' => rand(1, 999),
             'date'=> $this->faker->date(),

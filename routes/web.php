@@ -66,7 +66,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/providers', ProviderController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customers', CustomerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/presentations', PresentationController::class)->except('create', 'edit', 'show');
-    Route::resource('dashboard/purchases', PurchaseController::class)->except('create', 'show');
+    Route::resource('dashboard/purchases', PurchaseController::class)->except('show');
     Route::resource('dashboard/settings', SettingController::class)->except('edit');
 });
 

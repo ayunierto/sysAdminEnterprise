@@ -176,6 +176,12 @@ return [
         'city' => 'ciudad',
         'document' => 'documento', 
         'coin' => 'moneda', 
+        'coins_id' => 'moneda',
+        'products' => 'productos',
+        'date' => 'fecha',
+        'voucher_number' => 'número de comprobante',
+        'proof_payments_id' => 'comprobante de pago',
+        'payment_methods_id' => 'método de pago',
     ],
 
 ];
