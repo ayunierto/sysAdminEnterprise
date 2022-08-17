@@ -187,7 +187,7 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
-                                    <inertia-link :href="route('orders.index')">
+                                    <inertia-link :href="route('orders.create')">
                                     <v-list-item link :style="item_style()">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
@@ -199,7 +199,7 @@
                                     </v-list-item>
                                     </inertia-link>
 
-                                    <inertia-link :href="route('orderslist.index')">
+                                    <inertia-link :href="route('orders.index')">
                                     <v-list-item link :style="item_style()">
                                         <v-list-item-icon>
                                             <v-spacer></v-spacer>
