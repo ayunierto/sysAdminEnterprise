@@ -7,12 +7,6 @@
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
-
-        <!-- Alertas -->
-        
-        <alerts />
-        <!-- Fin de Alertas -->
-
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
