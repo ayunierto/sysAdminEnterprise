@@ -9,7 +9,7 @@
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                        <v-img aspect-ratio="2" contain  src="../img/empresa1/ecsmac9.png">
+                        <v-img aspect-ratio="2.5" contain  src="../img/empresa1/ecsmac9.png">
                         </v-img>
                     <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
