@@ -1,10 +1,5 @@
 <template>
     <admin-layout>
-
-        <template v-slot:company_name>
-            <div>{{ company.name }}</div>
-        </template>
-        <!-- Fin de Alertas -->
         <v-container>
             <v-layout>
                 <v-flex>

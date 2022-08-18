@@ -10,13 +10,8 @@
         </v-alert>
         
         <!-- Alertas -->
-        <div v-if="$page.props.errorBags.default">
-            <div v-for="item in Object.keys($page.props.errors)" :key="item">
-                <v-alert type="warning" border="left" dismissible>
-                    {{ $page.props.errors[item] }}
-                </v-alert>
-            </div>
-        </div>
+        
+        <alerts />
         <!-- Fin de Alertas -->
         
         <v-data-table :headers="headers" :items="desserts" sort-by="name" 
@@ -29,7 +24,7 @@
 
                     <v-spacer></v-spacer>
 
-                    <v-dialog v-model="dialog" max-width="700px" >
+                    <v-dialog v-model="dialog" max-width="900px" >
                     
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
@@ -53,7 +48,7 @@
                         <v-card-text>
                             <v-container>
                                 <v-row>
-                                    <v-col cols="12" sm="6" md="6" v-if="$page.props.user.role == 'master'">
+                                    <v-col cols="12" sm="6" md="4" v-if="$page.props.user.role == 'master'">
                                         <v-select
                                         v-model="editedItem.companies_id"
                                         hint="Seleccione empresa"
@@ -65,7 +60,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="4">
                                         <v-select
                                         v-model="editedItem.categories_id"
                                         hint="Seleccione categoría"
@@ -77,7 +72,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="4">
                                         <v-select
                                         v-model="editedItem.marks_id"
                                         hint="Seleccione marca"
@@ -89,7 +84,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="4">
                                         <v-select
                                         v-model="editedItem.measures_id"
                                         hint="Seleccione medida"
@@ -101,7 +96,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6">
+                                    <v-col cols="12" sm="6" md="4">
                                         <v-select
                                         v-model="editedItem.providers_id"
                                         hint="Seleccione proveedor"
@@ -113,7 +108,7 @@
                                         ></v-select>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.name"
                                         label="Nombre"
@@ -121,7 +116,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.code"
                                         label="Código"
@@ -129,14 +124,14 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.bar_code"
                                         label="Código de barra"
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.stock"
                                         label="Stock"
@@ -145,7 +140,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.purchase_price"
                                         label="Precio de compra"
@@ -154,7 +149,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.sale_price"
                                         label="Precio de venta"
@@ -163,7 +158,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.price_by_unit"
                                         label="Precio por unidad"
@@ -172,7 +167,7 @@
                                         ></v-text-field>
                                     </v-col>
                                     
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.wholesale_price"
                                         label="Precio por mayor"
@@ -181,7 +176,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-text-field
                                         v-model="editedItem.special_price"
                                         type="number"
@@ -190,7 +185,7 @@
                                         ></v-text-field>
                                     </v-col>
 
-                                    <!-- <v-col cols="12" sm="6" md="6" >
+                                    <v-col cols="12" sm="6" md="4" >
                                         <v-select
                                         v-model="editedItem.state"
                                         :items="items_state"
@@ -200,7 +195,7 @@
                                         persistent-hint
                                         single-line
                                         ></v-select>
-                                    </v-col> -->
+                                    </v-col>
 
                                     <v-col cols="12" sm="6" md="4">
                                         <v-menu
@@ -225,14 +220,10 @@
                                             <v-date-picker v-model="editedItem.expiration_date" 
                                             no-title scrollable >
                                             <v-spacer></v-spacer>
-                                            <v-btn text color="primary" @click="menu = false" >
+                                            <v-btn  color="secondary" @click="menu = false" >
                                                 Cancel
                                             </v-btn>
-                                            <v-btn
-                                                text
-                                                color="primary"
-                                                @click="$refs.menu.save(editedItem.expiration_date)"
-                                            >
+                                            <v-btn color="primary" @click="$refs.menu.save(editedItem.expiration_date)" >
                                                 OK
                                             </v-btn>
                                             </v-date-picker>
@@ -251,11 +242,11 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="blue darken-1" text @click="close" >
+                            <v-btn color="secondary"  @click="close" >
                                 Cancelar
                             </v-btn>
 
-                            <v-btn color="blue darken-1" type="submit" text @click="save" >
+                            <v-btn color="primary" type="submit"  @click="save" >
                                 Guardar
                             </v-btn>
                         </v-card-actions>
@@ -268,8 +259,8 @@
                         <v-card-actions>
                         <v-spacer></v-spacer>
 
-                        <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                        <v-btn color="secondary"  @click="closeDelete">Cancelar</v-btn>
+                        <v-btn color="primary"  @click="deleteItemConfirm">OK</v-btn>
                         <v-spacer></v-spacer>
                         </v-card-actions>
                     </v-card>
@@ -294,6 +285,7 @@
 <script>
     import AdminLayout from '@/Layouts/AdminLayout'
     import route from '../../../../vendor/tightenco/ziggy/src/js'
+    import Alerts from '../../Components/Alerts'
 
     export default {
         props: [
@@ -307,6 +299,7 @@
         ],
         components: {
             AdminLayout,
+            Alerts
         },
         data () {
             return {
@@ -349,7 +342,7 @@
                     wholesale_price: '',
                     special_price: '',
                     description: '',
-                    // state: '',
+                    state: '',
                     expiration_date: '',
                 },
 
@@ -369,7 +362,7 @@
                     wholesale_price: '',
                     special_price: '',
                     description: '',
-                    // state: '',
+                    state: '',
                     expiration_date: '',
                 },
                 
