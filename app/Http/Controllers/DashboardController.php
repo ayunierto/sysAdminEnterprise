@@ -21,10 +21,26 @@ class DashboardController extends Controller
     {
         $company = Auth::user()->companies_id;
         $company_id = Auth::user()->companies_id;
+
+        $data = [];
+        for ( $i = 1; $i < 5; $i++ ) {
+                $data += [ $i ];
+        } 
+
+        $products = Product::where('companies_id', $company)->get();
+        $stock_min = [];
+        foreach ($products as $key => $p) {
+            if ( $p->stock <= $p->stock_min){
+                array_push($stock_min, $p);
+            } 
+        }   
+
+
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find( $company_id ),
+            'stock_min' => $stock_min,
         ]);
     }
 }

@@ -33,6 +33,45 @@
                     </v-card-actions>
                 </v-card>
             </v-col>
+
+            <v-col cols="12">
+                <v-card>
+                    <v-card-title>
+                        Productos con stock bajo
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-card-title>
+                    
+                    <v-data-table
+                    :headers="[
+                        {text: 'Producto', value: 'name'},
+                        {text: 'Stock', value: 'stock', align: 'center',},
+                        {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
+                        {text: 'Descripción', value: 'description'}
+                    ]"
+                    :items="stock_min"
+                    :items-per-page="5"
+                    class="elevation-10"
+                    dense
+                    :search="search"
+                >
+                    <template v-slot:item.stock_min="{ item }">
+                    <v-chip
+                        color="warning"
+                        dark
+                    >
+                        {{ item.stock_min }}
+                    </v-chip>
+                    </template>
+                </v-data-table>
+            </v-card>
+            </v-col>
         </v-row>
     </admin-layout>
 </template>
@@ -45,6 +84,12 @@
             AdminLayout,
         },
 
-        props: ['products', 'company'],
+        props: ['products', 'company', 'stock_min'],
+
+        data (){
+            return {
+                search: '',
+            }
+        },
     }
 </script>

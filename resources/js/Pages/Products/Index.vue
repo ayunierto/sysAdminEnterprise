@@ -22,7 +22,7 @@
 
                     <v-spacer></v-spacer>
 
-                    <v-dialog v-model="dialog" max-width="700px" >
+                    <v-dialog v-model="dialog" max-width="700px" persistent>
                     
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
@@ -132,6 +132,11 @@
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.special_price" type="number"
                                                 label="Precio especial" min="0"></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.stock_min" type="number"
+                                                label="Stock mínimo" min="1"></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -266,13 +271,14 @@ export default {
                     code: '',
                     bar_code: '',
                     stock: '',
-                    purchase_price: '',
-                    sale_price: '',
-                    price_by_unit: '',
-                    wholesale_price: '',
-                    special_price: '',
+                    purchase_price: 0,
+                    sale_price: 0,
+                    price_by_unit: 0,
+                    wholesale_price: 0,
+                    special_price: 0,
+                    stock_min: 1,
                     description: '',
-                    // state: '',
+                    state: 1,
                     expiration_date: '',
                 },
 
@@ -287,12 +293,13 @@ export default {
                     bar_code: '',
                     stock: '',
                     purchase_price: '',
-                    sale_price: '',
-                    price_by_unit: '',
-                    wholesale_price: '',
-                    special_price: '',
+                    sale_price: 0,
+                    price_by_unit: 0,
+                    wholesale_price: 0,
+                    special_price: 0,
+                    stock_min: 1,
                     description: '',
-                    state: '',
+                    state: 1,
                     expiration_date: '',
                 },
                 
