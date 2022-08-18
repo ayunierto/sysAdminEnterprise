@@ -51,7 +51,16 @@ class ProductController extends Controller
         if (Auth::user()->role == 'seller') {
             return Redirect::route('products.index')->with('message', 'No tiene permisos para realizar esta acción');
         } else {
-            Product::create($request->all());
+            $product = Product::create($request->all());
+
+
+            $presenation = new Presentation();
+            $presenation->companies_id = Auth::user()->companies_id;
+            $presenation->products_id = $product->id;
+            $presenation->name = "Unidad";
+            $presenation->equivalence = 1;
+            $presenation->save();
+
             return Redirect::route('products.index')->with('message', 'Producto agregado');
         }
     }
