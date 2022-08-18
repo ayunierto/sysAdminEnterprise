@@ -95,14 +95,37 @@ class OrderController extends Controller
             'company' => Company::find(Auth::user()->companies_id),
             'proofPayments' => ProofPayment::all(),
             'documents' => Document::all(),
-            'customers' => Customer::all(),
+            'customers' => Customer::where('companies_id', $company)->get(),
             'paymentMethods' => PaymentMethod::all(),
             'coins' => Coin::all(),
             'presentations' => Presentation::all(),
             'affectationIgvs' => AffectationIgv::all(),
-            'products' => Product::all(),
             'exchange_rate' => $exchange_rate,
-            'orders' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
+            'nroComprobante' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
+            // 'nroComprobante' => sprintf("%08d", Order::where('companies_id', $company)
+            //                                         ->where()->count() + 1),
+            'products' => Product::where('companies_id', $company)->get()->map(function ($p)
+            {
+                return [
+                    'id' => $p->id,
+                    'categories_id' => $p->categories_id,
+                    'marks_id' => $p->marks_id,
+                    'measures_id' => $p->measures_id,
+                    'providers_id' => $p->providers_id,
+                    'name' => $p->name,
+                    'code' => $p->code,
+                    'bar_code' => $p->bar_code,
+                    'stock' => $p->stock,
+                    'purchase_price' => $p->purchase_price,
+                    'sale_price' => $p->sale_price,
+                    'price_by_unit' => $p->price_by_unit,
+                    'wholesale_price' => $p->wholesale_price,
+                    'special_price' => $p->special_price,
+                    'description' => $p->description,
+                    'state' => $p->state,
+                    'presentation' => Presentation::where('products_id', $p->id)->first(),
+                ];
+            }),
         ]);
     }
 

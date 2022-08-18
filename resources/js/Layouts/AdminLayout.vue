@@ -9,34 +9,32 @@
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                    <!-- <v-card color="#3463B3" >
-                            <v-img height="150" src="../img/empresa1/ecsmac9.png">
-                            </v-img>
-                    </v-card> -->
-                    <v-list-item class="px-2">
+                        <v-img aspect-ratio="2.5" contain  src="../img/empresa1/ecsmac9.png">
+                        </v-img>
+                    <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
-                            <v-img src="../img/empresa1/ecsmac8.png">
+                            <v-img src="../img/empresa1/empresa01.png">
                             </v-img>
                         </v-avatar>
                         <v-list-item-title class="text-h6" color="#FFFFFFFF">
-                            <span :style="item_style()">{{ $page.props.company.name }}</span>
+                            <span :style="item_style()"></span>
                         </v-list-item-title>
                     </v-list-item>
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-subtitle>
-                                <span :style="item_style()">{{this.$page.props.company.description}}</span>
-                            </v-list-item-subtitle>
-                        </v-list-item-content>
+                    <v-list-item> -->
+                    <v-list-item-content>
+                        <v-list-item-subtitle style="text-align:center ;">
+                            <span :style="item_style()">{{ this.$page.props.company.description }}</span>
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
 
-                        <!-- Personalizar colores -->
-                        <!-- <v-fab-transition>
+                    <!-- Personalizar colores -->
+                    <!-- <v-fab-transition>
                             <v-btn v-show="!hidden" color="pink" fab dark small absolute bottom right>
                                 <v-icon :style="item_style()">mdi-spin mdi-cog</v-icon>
                             </v-btn>
                         </v-fab-transition> -->
 
-                    </v-list-item>
+                    <!-- </v-list-item> -->
                 </v-list>
                 <!-- linea divisora -->
                 <v-divider></v-divider>
@@ -146,18 +144,6 @@
                                             </v-list-item-icon>
                                             <v-list-item-title>
                                                 <h5>MÉTODOS DE PAGO</h5>
-                                            </v-list-item-title>
-                                        </v-list-item>
-                                    </inertia-link>
-
-                                    <inertia-link :href="route('vouchers.index')">
-                                        <v-list-item link :style="item_style()">
-                                            <v-list-item-icon>
-                                                <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-file-document</v-icon>
-                                            </v-list-item-icon>
-                                            <v-list-item-title>
-                                                <h5>COMPROBANTES</h5>
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>

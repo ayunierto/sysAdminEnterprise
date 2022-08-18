@@ -28,4 +28,14 @@ class SunatController extends Controller
         // var_dump($response);
         return $response;
     }
+
+    public function dni($dni)
+    {
+        
+    }
+
+    public function ruc($ruc)
+    {
+        
+    }
 }
