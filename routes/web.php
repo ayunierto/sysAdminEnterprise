@@ -51,7 +51,6 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function (
     Route::resource('dashboard/users', UserController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/coins', CoinController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/paymentMethods', PaymentMethodController::class)->except('create', 'edit', 'show');
-    Route::resource('dashboard/vouchers', VoucherController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/customizers', CustomizerController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/documents', DocumentController::class)->except('create', 'edit', 'show');
 
