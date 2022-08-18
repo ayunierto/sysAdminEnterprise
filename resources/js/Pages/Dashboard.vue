@@ -60,14 +60,16 @@
                     class="elevation-10"
                     dense
                     :search="search"
+                    locale="es"
                 >
                     <template v-slot:item.stock_min="{ item }">
-                    <v-chip
-                        color="warning"
-                        dark
-                    >
+                    <v-chip color="warning" dark >
                         {{ item.stock_min }}
                     </v-chip>
+                    </template>
+
+                    <template v-slot:no-data>
+                        No hay productos con stock mínimo
                     </template>
                 </v-data-table>
             </v-card>
