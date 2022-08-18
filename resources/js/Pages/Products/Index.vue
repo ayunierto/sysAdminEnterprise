@@ -232,6 +232,7 @@ export default {
     ],
     components: {
         AdminLayout,
+        Alerts
     },
     data() {
         return {
