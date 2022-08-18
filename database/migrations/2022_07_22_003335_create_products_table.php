@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
             $table->string('code')->nullable();
-            $table->bigInteger('bar_code')->nullable();
+            $table->string('bar_code')->nullable();
             $table->bigInteger('stock')->nullable();
             $table->decimal('purchase_price', 11,2)->nullable();
             $table->decimal('sale_price', 11, 2)->nullable();
