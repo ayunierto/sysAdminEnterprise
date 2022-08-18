@@ -9,13 +9,8 @@
         </v-alert>
 
         <!-- Alertas -->
-        <div v-if="$page.props.errorBags.default">
-            <div v-for="item in Object.keys($page.props.errors)" :key="item">
-                <v-alert type="warning" border="left" dismissible>
-                    {{ $page.props.errors[item] }}
-                </v-alert>
-            </div>
-        </div>
+        
+        <alerts />
         <!-- Fin de Alertas -->
 
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
@@ -27,21 +22,26 @@
 
                     <v-spacer></v-spacer>
 
-                    <v-dialog v-model="dialog" max-width="700px">
+                    <v-dialog v-model="dialog" max-width="700px" persistent>
+                    
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            Agregar Producto
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </template>
 
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Agregar Producto
-                            </v-btn>
-                            <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
-                                hide-details></v-text-field>
-                        </template>
-
-                        <v-card>
-                            <v-card-title>
-                                <span class="text-h5">{{ formTitle }}</span>
-                            </v-card-title>
+                    <v-card>
+                        <v-card-title>
+                            <span class="text-h5">{{ formTitle }}</span>
+                        </v-card-title>
 
                             <v-card-text>
                                 <v-container>
@@ -54,7 +54,7 @@
                                             </v-autocomplete>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-autocomplete v-model="editedItem.categories_id" color="primary"
                                                 :items="categories" item-text="name" item-value="id" label="Categoría"
                                                 auto-select-first hide-no-data hide-selected
@@ -63,7 +63,7 @@
                                             </v-autocomplete>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-autocomplete v-model="editedItem.marks_id" color="primary" :items="marks"
                                                 item-text="name" item-value="id" label="Marca" auto-select-first
                                                 hide-no-data hide-selected placeholder="Seleccione Marca"
@@ -71,7 +71,7 @@
                                             </v-autocomplete>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-autocomplete v-model="editedItem.measures_id" color="primary"
                                                 :items="measures" item-text="name" item-value="id" label="Medida"
                                                 auto-select-first hide-no-data hide-selected
@@ -80,7 +80,7 @@
                                             </v-autocomplete>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-autocomplete v-model="editedItem.providers_id" color="primary"
                                                 :items="providers" item-text="name" item-value="id" label="Proveedor"
                                                 auto-select-first hide-no-data hide-selected
@@ -89,49 +89,54 @@
                                             </v-autocomplete>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.name" label="Nombre Producto"
                                                 :rules="requiredField" required></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.code" label="Código" required>
                                             </v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.bar_code" label="Código de barra">
                                             </v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.stock" label="Stock" type="number"
                                                 min="0"></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.purchase_price" label="Precio de compra"
                                                 type="number" min="0"></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.sale_price" label="Precio de venta"
                                                 type="number" min="0"></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.price_by_unit" label="Precio por unidad"
                                                 type="number" min="0"></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.wholesale_price" label="Precio por mayor"
                                                 type="number" min="0"></v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.special_price" type="number"
                                                 label="Precio especial" min="0"></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-text-field v-model="editedItem.stock_min" type="number"
+                                                label="Stock mínimo" min="1"></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -211,8 +216,9 @@
 </template>
 
 <script>
-import AdminLayout from '@/Layouts/AdminLayout'
-import route from '../../../../vendor/tightenco/ziggy/src/js'
+    import AdminLayout from '@/Layouts/AdminLayout'
+    import route from '../../../../vendor/tightenco/ziggy/src/js'
+    import Alerts from '../../Components/Alerts'
 
 export default {
     props: [
@@ -255,58 +261,62 @@ export default {
 
             editedIndex: -1,
 
-            editedItem: {
-                companies_id: this.$page.props.user.companies_id,
-                categories_id: '',
-                marks_id: '',
-                measures_id: '',
-                providers_id: '',
-                name: '',
-                code: '',
-                bar_code: '',
-                stock: '',
-                purchase_price: '',
-                sale_price: '',
-                price_by_unit: '',
-                wholesale_price: '',
-                special_price: '',
-                description: '',
-                expiration_date: '',
-            },
+                editedItem: {
+                    companies_id: this.$page.props.user.companies_id,
+                    categories_id: '',
+                    marks_id: '',
+                    measures_id: '',
+                    providers_id: '',
+                    name: '',
+                    code: '',
+                    bar_code: '',
+                    stock: '',
+                    purchase_price: 0,
+                    sale_price: 0,
+                    price_by_unit: 0,
+                    wholesale_price: 0,
+                    special_price: 0,
+                    stock_min: 1,
+                    description: '',
+                    state: 1,
+                    expiration_date: '',
+                },
 
-            defaultItem: {
-                companies_id: this.$page.props.user.companies_id,
-                categories_id: '',
-                marks_id: '',
-                measures_id: '',
-                providers_id: '',
-                name: '',
-                code: '',
-                bar_code: '',
-                stock: '',
-                purchase_price: '',
-                sale_price: '',
-                price_by_unit: '',
-                wholesale_price: '',
-                special_price: '',
-                description: '',
-                expiration_date: '',
-            },
-
-        }
-    },
-
-    computed: {
-        formTitle() {
-            return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
+                defaultItem: {
+                    companies_id: this.$page.props.user.companies_id,
+                    categories_id: '',
+                    marks_id: '',
+                    measures_id: '',
+                    providers_id: '',
+                    name: '',
+                    code: '',
+                    bar_code: '',
+                    stock: '',
+                    purchase_price: '',
+                    sale_price: 0,
+                    price_by_unit: 0,
+                    wholesale_price: 0,
+                    special_price: 0,
+                    stock_min: 1,
+                    description: '',
+                    state: 1,
+                    expiration_date: '',
+                },
+                
+            }
         },
-    },
 
-    watch: {
-
-        dialog(val) {
-            val || this.close()
+        computed: {
+            formTitle () {
+                return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
+            },
         },
+
+        watch: {
+
+            dialog (val) {
+                val || this.close()
+            },
 
         dialogDelete(val) {
             val || this.closeDelete()

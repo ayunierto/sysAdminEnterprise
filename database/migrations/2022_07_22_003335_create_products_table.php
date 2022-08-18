@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price_by_unit', 11, 2)->nullable();
             $table->decimal('wholesale_price', 11, 2)->nullable();
             $table->decimal('special_price', 11, 2)->nullable();
+            $table->integer('stock_min');
             $table->string('description')->nullable();
             $table->boolean('state')->default(1);
             $table->date('expiration_date')->nullable();

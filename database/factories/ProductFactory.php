@@ -40,6 +40,7 @@ class ProductFactory extends Factory
             'price_by_unit' => rand(1,100),
             'wholesale_price' => rand(1,100),
             'special_price' => rand(1,100),
+            'stock_min' => rand(1,20),
             'description' => $this->faker->sentence(6),
             'state' => rand(0,1),
             'expiration_date' => now(),

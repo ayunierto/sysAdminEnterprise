@@ -27,6 +27,7 @@ class Product extends Model
         'price_by_unit',
         'wholesale_price',
         'special_price',
+        'stock_min',
         'description',
         'state',
         'expiration_date',
