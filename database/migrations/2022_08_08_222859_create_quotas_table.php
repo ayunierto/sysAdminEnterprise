@@ -16,7 +16,7 @@ class CreateQuotasTable extends Migration
         Schema::create('quotas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('orders_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->date('date');
+            $table->date('payment_date');
             $table->decimal('amount', 8, 2);
             $table->string('description')->nullable();
             $table->timestamps();

@@ -10,7 +10,7 @@ class Quota extends Model
     use HasFactory;
     protected $fillable = [
         'orders_id',
-        'date',
+        'payment_date',
         'amount',
         'description',
     ];

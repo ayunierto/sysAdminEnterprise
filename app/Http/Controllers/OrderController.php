@@ -101,9 +101,9 @@ class OrderController extends Controller
             'presentations' => Presentation::all(),
             'affectationIgvs' => AffectationIgv::all(),
             'exchange_rate' => $exchange_rate,
-            'nroComprobante' => sprintf("%08d", Order::where('companies_id', $company)->count() + 1),
-            // 'nroComprobante' => sprintf("%08d", Order::where('companies_id', $company)
-            //                                         ->where()->count() + 1),
+            'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',1)->count() + 1),
+            'nroFacturas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',2)->count() + 1),
+            'nroBoletas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',3)->count() + 1),
             'products' => Product::where('companies_id', $company)->get()->map(function ($p)
             {
                 return [

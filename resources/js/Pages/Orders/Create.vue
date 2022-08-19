@@ -40,65 +40,118 @@
                                             label="Comprobante" item-text="name" item-value="code"
                                             v-model="tipoComprobate" return-object>
                                         </v-select>
-                                        {{ tipoComprobate }}
+                                        <!-- {{ tipoComprobate }} -->
                                     </v-col>
                                     <v-col cols="12" sm="6" md="2">
-                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" disabled>
+                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" readonly>
                                         </v-text-field>
                                     </v-col>
-                                    <!-- Controlar correlativo de acuerdo al tipo de comprobante -->
+                                    <!-- Correlativo de acuerdo al tipo de comprobante -->
                                     <v-col cols="12" sm="4" md="3">
-                                        <v-text-field label="Correlativo" :value="nroComprobante" disabled>
+                                        <v-text-field label="Correlativo" v-if="tipoComprobate.name == 'Comprobante'"
+                                            v-model="nroComprobantes" readonly>
+                                        </v-text-field>
+                                        <v-text-field label="Correlativo" v-if="tipoComprobate.name == 'Factura'"
+                                            v-model="nroFacturas" readonly>
+                                        </v-text-field>
+                                        <v-text-field label="Correlativo"
+                                            v-if="tipoComprobate.name == 'Boleta de Venta'" v-model="nroBoletas"
+                                            readonly>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="3">
-                                        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
-                                            transition="scale-transition" offset-y min-width="auto">
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-text-field v-model="date" label="Fecha" readonly v-bind="attrs"
-                                                    v-on="on" disabled>
-                                                </v-text-field>
-                                            </template>
-                                            <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
-                                        </v-menu>
+                                        <v-text-field label="Fecha" v-model="date" readonly>
+                                        </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <h3>DATOS CLIENTE</h3>
                                     </v-col>
                                     <v-col class="d-flex" cols="12" sm="2" md="2">
                                         <v-select :items="documents" label="Tipo Documento" item-text="name"
-                                            item-value="code" :value="documents[0]">
+                                            item-value="code" v-model="tipoDoc" return-object>
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-autocomplete color="primary" :items="customers" item-text="document"
-                                            v-model="datosCliente" item-value="id" label="Cliente" auto-select-first
-                                            hide-no-data hide-selected placeholder="Buscar por Documento"
+                                        <v-autocomplete v-if="tipoDoc.name == 'DNI'" color="primary" :items="customers"
+                                            item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
+                                            auto-select-first hide-no-data hide-selected
+                                            placeholder="Buscar por Documento" persistent-hint return-object required>
+                                        </v-autocomplete>
+                                        <v-autocomplete v-if="tipoDoc.name == 'RUC'" color="primary" :items="customers"
+                                            item-text="name" v-model="datosCliente" item-value="id" label="Cliente"
+                                            auto-select-first hide-no-data hide-selected placeholder="Buscar por Nombre"
                                             persistent-hint return-object required>
                                         </v-autocomplete>
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
-                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name">
+                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-text-field label="Dirección" :value="datosCliente.address"></v-text-field>
+                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <h3>DETALLE DE VENTA</h3>
                                     </v-col>
-                                    <v-col cols="12" sm="3" md="3">
+                                    <v-col cols="12" sm="2" md="2">
                                         <v-select :items="paymentMethods" label="Contado/crédito"
-                                            item-text="description" item-value="description" :value="paymentMethods[0]">
+                                            item-text="description" item-value="description" v-model="metodoPago"
+                                            return-object>
                                         </v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="3" md="3">
-                                        <v-select :items="coins" label="Tipo de Moneda" item-text="code"
+                                    <v-col cols="12" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
+                                        <v-container v-if="metodoPago.description == 'Credito'">
+                                            <v-layout row justify-center>
+                                                <v-dialog v-model="quotasAdd" persistent max-width="400">
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn color="#FFB74D" small class="ma-2 white--text" fab
+                                                            v-bind="attrs" v-on="on">
+                                                            <v-icon dark>
+                                                                mdi-book-plus
+                                                            </v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    <v-card>
+                                                        <v-card-title class="headline">Quotas</v-card-title>
+                                                        <v-container>
+                                                            <v-row>
+                                                                <v-col cols="12" sm="6" md="6">
+                                                                    <v-text-field label="Monto" type="number" outlined>
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                                <v-col cols="12" sm="6" md="6">
+                                                                    <v-text-field label="fecha" type="date" outlined>
+                                                                    </v-text-field>
+                                                                </v-col>
+                                                                <v-col cols="12" sm="6" md="6"><a>+ add quota</a>
+                                                                </v-col>
+
+                                                            </v-row>
+                                                        </v-container>
+
+                                                        <v-card-actions>
+                                                            <v-spacer></v-spacer>
+                                                            <v-btn color="primary" @click.native="quotasAdd = false">
+                                                                Disagree</v-btn>
+                                                            <v-btn color="primary" @click.native="quotasAdd = false">
+                                                                Agree</v-btn>
+                                                        </v-card-actions>
+                                                    </v-card>
+                                                </v-dialog>
+                                            </v-layout>
+                                        </v-container>
+                                    </v-col>
+                                    <v-col cols="12" sm="2" md="2">
+                                        <v-select :items="coins" label="Moneda" item-text="code"
                                             item-value="code" :value="coins[0]"></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Tipo Cambio" type="number" :value="exchange_rate" min="0"
                                             outlined>
+                                        </v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" sm="2" md="2">
+                                        <v-text-field label="Total" type="number" v-model="totalventas" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
@@ -127,9 +180,9 @@
                                                             <v-row>
                                                                 <v-col cols="12" sm="6" md="6">
                                                                     <v-autocomplete color="primary" :items="products"
-                                                                        v-model="datosProducto" item-text="name" label="Producto"
-                                                                        auto-select-first hide-no-data hide-selected
-                                                                        placeholder="Seleccione Producto"
+                                                                        v-model="datosProducto" item-text="name"
+                                                                        label="Producto" auto-select-first hide-no-data
+                                                                        hide-selected placeholder="Seleccione Producto"
                                                                         persistent-hint return-object required>
                                                                     </v-autocomplete>
                                                                 </v-col>
@@ -281,13 +334,12 @@
                                                                 </v-col>
                                                                 <v-col cols="12" sm="6" md="6">
                                                                     <v-autocomplete color="primary"
-                                                                        v-model="editedItem.affectation_igvs"
+                                                                        v-model="affectation_igvs"
                                                                         :items="affectationIgvs" item-text="description"
-                                                                        item-value="description" label=" Afectación IGV" 
-                                                                        auto-select-first hide-no-data
-                                                                        hide-selected
+                                                                        item-value="description" label=" Afectación IGV"
+                                                                        auto-select-first hide-no-data hide-selected
                                                                         placeholder="Seleccione Afectación IGV"
-                                                                        persistent-hint required>
+                                                                        persistent-hint required return-object>
                                                                     </v-autocomplete>
                                                                 </v-col>
                                                                 <v-col cols="12" sm="4" md="4">
@@ -352,17 +404,6 @@
                                                 </template>
                                             </v-data-table>
                                         </v-col>
-                                        <v-container>
-                                            <v-row>
-                                                <v-spacer></v-spacer>
-                                                <v-col cols="12" sm="3" md="3">
-                                                    <v-text-field label="Sub Total" v-model="form.total" disabled>
-                                                    </v-text-field>
-                                                    <v-text-field label="IGV" disabled></v-text-field>
-                                                    <v-text-field label="Total S/." disabled></v-text-field>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
                                     </template>
                                 </v-row>
                             </v-container>
@@ -433,7 +474,9 @@ export default {
         'customers',
         'paymentMethods',
         'coins',
-        'nroComprobante',
+        'nroComprobantes',
+        'nroBoletas',
+        'nroFacturas',
         'presentations',
         'affectationIgvs',
         'products',
@@ -448,14 +491,18 @@ export default {
             dialog: false,
             dialog1: false,
             dialog2: false,
+            quotasAdd: false,
             dialogDelete: false,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-            menu2: false,
             search: '',
             tipoComprobate: this.proofPayments[0],
             datosProducto: '',
             datosCliente: '',
             datosProducto: '',
+            tipoDoc: this.documents[0],
+            metodoPago: this.paymentMethods[0],
+            affectation_igvs: this.affectationIgvs[0],
+            totalventas:'',
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
