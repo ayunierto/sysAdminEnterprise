@@ -88,19 +88,21 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly></v-text-field>
+                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly>
+                                        </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <h3>DETALLE DE VENTA</h3>
                                     </v-col>
-                                    <v-col cols="12" sm="2" md="2">
+                                    <v-col cols="9" sm="3" md="3">
                                         <v-select :items="paymentMethods" label="Contado/crédito"
                                             item-text="description" item-value="description" v-model="metodoPago"
                                             return-object>
                                         </v-select>
                                     </v-col>
-                                    <v-col cols="12" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
-                                        <v-container v-if="metodoPago.description == 'Credito'">
+                                    <!-- Dialog Quotas -->
+                                    <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
+                                        <v-container>
                                             <v-layout row justify-center>
                                                 <v-dialog v-model="quotasAdd" persistent max-width="400">
                                                     <template v-slot:activator="{ on, attrs }">
@@ -141,9 +143,10 @@
                                             </v-layout>
                                         </v-container>
                                     </v-col>
-                                    <v-col cols="12" sm="2" md="2">
-                                        <v-select :items="coins" label="Moneda" item-text="code"
-                                            item-value="code" :value="coins[0]"></v-select>
+                                    <!-- Fin Dialog Quotas -->
+                                    <v-col cols="12" sm="3" md="3">
+                                        <v-select :items="coins" label="Moneda" item-text="code" item-value="code"
+                                            v-model="tipoMoneda" return-object></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Tipo Cambio" type="number" :value="exchange_rate" min="0"
@@ -151,260 +154,281 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
-                                        <v-text-field label="Total" type="number" v-model="totalventas" readonly>
+                                        <v-text-field v-if="tipoMoneda.code == 'PEN'" label="Total" type="number"
+                                            v-model="totalventas" outlined prefix="S/" readonly>
+                                        </v-text-field>
+                                        <v-text-field v-if="tipoMoneda.code == 'USD'" label="Total" type="number"
+                                            v-model="totalventas" outlined prefix="$" readonly>
                                         </v-text-field>
                                     </v-col>
-                                    <v-col cols="12" sm="3" md="3">
-                                        <v-textarea label="Comentario" type="text" rows="1" class="mx-2">
+                                    <!-- Dialog add Productos a carrito -->
+                                    <v-col cols="12" sm="1" md="1">
+                                        <template>
+                                            <div class="text-center">
+                                                <v-dialog v-model="dialogAddProducts" width="600" persistent>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn color="primary" class="white--text" fab v-bind="attrs"
+                                                            v-on="on">
+                                                            <v-icon dark>
+                                                                mdi-cart
+                                                            </v-icon>
+                                                        </v-btn>
+                                                    </template>
+
+                                                    <v-card>
+                                                        <v-card-title class="text-h5 grey lighten-2">
+                                                            {{ formTitle }}
+                                                        </v-card-title>
+                                                        <v-card-text>
+                                                            <v-container>
+                                                                <div class="text-center">
+                                                                    <v-row>
+                                                                        <v-col cols="12" sm="6" md="6">
+                                                                            <v-autocomplete color="primary"
+                                                                                :items="products"
+                                                                                v-model="datosProducto" item-text="name"
+                                                                                label="Producto" auto-select-first
+                                                                                hide-no-data hide-selected
+                                                                                placeholder="Seleccione Producto"
+                                                                                persistent-hint return-object required>
+                                                                            </v-autocomplete>
+                                                                        </v-col>
+
+                                                                        <v-col cols="12" sm="6" md="6">
+                                                                            <v-autocomplete color="primary"
+                                                                                v-model="editedItem.presentation"
+                                                                                :items="presentations" item-text="name"
+                                                                                label="Presentación" auto-select-first
+                                                                                hide-no-data hide-selected
+                                                                                placeholder="Seleccione Presentación"
+                                                                                persistent-hint return-object required>
+                                                                            </v-autocomplete>
+                                                                        </v-col>
+                                                                        <v-col cols="12" sm="6" md="3">
+                                                                            <v-text-field v-model="editedItem.quantity"
+                                                                                label="Cantidad" type="number" min="0"
+                                                                                required>
+                                                                            </v-text-field>
+                                                                        </v-col>
+                                                                        <v-col cols="9" sm="6" md="3">
+                                                                            <v-text-field
+                                                                                v-model="datosProducto.sale_price"
+                                                                                label="Precio Venta" type="number"
+                                                                                min="0" required>
+                                                                            </v-text-field>
+                                                                        </v-col>
+                                                                        <v-col cols="2" sm="2" md="2">
+                                                                            <!--Dialog Lista de Precios -->
+                                                                            <template>
+                                                                                <div class="text-center">
+                                                                                    <v-dialog v-model="dialogPrecios"
+                                                                                        width="300">
+                                                                                        <template
+                                                                                            v-slot:activator="{ on, attrs }">
+                                                                                            <v-btn color="#FFB74D" small
+                                                                                                class="ma-2 white--text"
+                                                                                                fab v-bind="attrs"
+                                                                                                v-on="on">
+                                                                                                <v-icon dark>
+                                                                                                    mdi-book-plus
+                                                                                                </v-icon>
+                                                                                            </v-btn>
+                                                                                        </template>
+                                                                                        <v-card>
+                                                                                            <v-card-title
+                                                                                                class="text-h5 grey lighten-2">
+                                                                                                LISTA DE PRECIOS
+                                                                                            </v-card-title>
+                                                                                            <v-card-text>
+                                                                                                <v-container>
+                                                                                                    <v-row>
+                                                                                                        <v-col cols="12"
+                                                                                                            md="6">
+                                                                                                            <label
+                                                                                                                for="Precio Menor">Precio
+                                                                                                                Menor</label>
+                                                                                                            <v-text-field
+                                                                                                                type="number"
+                                                                                                                :value="datosProducto.price_by_unit"
+                                                                                                                disabled
+                                                                                                                dense>
+                                                                                                            </v-text-field>
+                                                                                                        </v-col>
+
+                                                                                                        <v-col cols="12"
+                                                                                                            md="2">
+                                                                                                            <template>
+                                                                                                                <v-btn
+                                                                                                                    color="#43A047"
+                                                                                                                    small
+                                                                                                                    class="ma-2 white--text"
+                                                                                                                    fab>
+                                                                                                                    <v-icon
+                                                                                                                        dark>
+                                                                                                                        mdi-cash-plus
+                                                                                                                    </v-icon>
+                                                                                                                </v-btn>
+                                                                                                            </template>
+                                                                                                        </v-col>
+                                                                                                        <v-col cols="12"
+                                                                                                            md="6">
+                                                                                                            <label
+                                                                                                                for="Precio Mayor">Precio
+                                                                                                                Mayor</label>
+                                                                                                            <v-text-field
+                                                                                                                type="number"
+                                                                                                                :value="datosProducto.wholesale_price"
+                                                                                                                disabled
+                                                                                                                dense>
+                                                                                                            </v-text-field>
+                                                                                                        </v-col>
+
+                                                                                                        <v-col cols="12"
+                                                                                                            md="2">
+                                                                                                            <template>
+                                                                                                                <v-btn
+                                                                                                                    color="#43A047"
+                                                                                                                    small
+                                                                                                                    class="ma-2 white--text"
+                                                                                                                    fab>
+                                                                                                                    <v-icon
+                                                                                                                        dark>
+                                                                                                                        mdi-cash-plus
+                                                                                                                    </v-icon>
+                                                                                                                </v-btn>
+                                                                                                            </template>
+
+                                                                                                        </v-col>
+                                                                                                        <v-col cols="12"
+                                                                                                            md="6">
+                                                                                                            <label
+                                                                                                                for="Precio Especial">Precio
+                                                                                                                Especial</label>
+                                                                                                            <v-text-field
+                                                                                                                type="number"
+                                                                                                                :value="datosProducto.special_price"
+                                                                                                                disabled
+                                                                                                                dense>
+                                                                                                            </v-text-field>
+                                                                                                        </v-col>
+
+                                                                                                        <v-col cols="12"
+                                                                                                            md="2">
+                                                                                                            <template>
+                                                                                                                <v-btn
+                                                                                                                    color="#43A047"
+                                                                                                                    small
+                                                                                                                    class="ma-2 white--text"
+                                                                                                                    fab>
+                                                                                                                    <v-icon
+                                                                                                                        dark>
+                                                                                                                        mdi-cash-plus
+                                                                                                                    </v-icon>
+                                                                                                                </v-btn>
+                                                                                                            </template>
+
+                                                                                                        </v-col>
+                                                                                                    </v-row>
+                                                                                                </v-container>
+                                                                                            </v-card-text>
+                                                                                        </v-card>
+                                                                                    </v-dialog>
+                                                                                </div>
+                                                                            </template>
+                                                                            <!--Dialog Lista de Precios end-->
+                                                                        </v-col>
+                                                                        <v-col cols="12" sm="4" md="3">
+                                                                            <v-text-field v-model="editedItem.discount"
+                                                                                label="Descuento" min="0" type="number"
+                                                                                required>
+                                                                            </v-text-field>
+                                                                        </v-col>
+                                                                        <v-col cols="12" sm="6" md="6">
+                                                                            <v-autocomplete color="primary"
+                                                                                v-model="affectation_igvs"
+                                                                                :items="affectationIgvs"
+                                                                                item-text="description"
+                                                                                item-value="description"
+                                                                                label=" Afectación IGV"
+                                                                                auto-select-first hide-no-data
+                                                                                hide-selected
+                                                                                placeholder="Seleccione Afectación IGV"
+                                                                                persistent-hint required return-object>
+                                                                            </v-autocomplete>
+                                                                        </v-col>
+                                                                        <v-col cols="12" sm="4" md="4">
+                                                                            <v-btn color="primary" class="white--text"
+                                                                                fab small @click="save">
+                                                                                <v-icon dark>
+                                                                                    mdi-checkbox-multiple-marked-circle
+                                                                                </v-icon>
+                                                                            </v-btn>
+                                                                        </v-col>
+                                                                    </v-row>
+                                                                </div>
+                                                            </v-container>
+
+                                                        </v-card-text>
+
+                                                        <v-divider></v-divider>
+
+                                                        <v-card-actions>
+                                                            <v-spacer></v-spacer>
+                                                            <v-btn color="primary" text @click="this.close">
+                                                                Cerrar
+                                                            </v-btn>
+                                                        </v-card-actions>
+                                                    </v-card>
+                                                </v-dialog>
+                                            </div>
+                                        </template>
+                                    </v-col>
+                                    <!-- Fin Dialog add Productos a carrito -->
+                                    <v-col cols="12" sm="5">
+                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2">
                                         </v-textarea>
                                     </v-col>
-                                    <v-spacer></v-spacer>
-                                    <template>
-                                        <div class="text-center">
-                                            <v-dialog v-model="dialog" width="600">
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-btn color="primary" class="ma-2 white--text" fab v-bind="attrs"
-                                                        v-on="on">
-                                                        <v-icon dark>
-                                                            mdi-cart
-                                                        </v-icon>
-                                                    </v-btn>
-                                                </template>
-
-                                                <v-card>
-                                                    <v-card-title class="text-h5 grey lighten-2">
-                                                        {{ formTitle }}
-                                                    </v-card-title>
-                                                    <v-card-text>
-                                                        <v-container>
-                                                            <v-row>
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-autocomplete color="primary" :items="products"
-                                                                        v-model="datosProducto" item-text="name"
-                                                                        label="Producto" auto-select-first hide-no-data
-                                                                        hide-selected placeholder="Seleccione Producto"
-                                                                        persistent-hint return-object required>
-                                                                    </v-autocomplete>
-                                                                </v-col>
-
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-autocomplete color="primary"
-                                                                        v-model="editedItem.presentation"
-                                                                        :items="presentations" item-text="name"
-                                                                        label="Presentación" auto-select-first
-                                                                        hide-no-data hide-selected
-                                                                        placeholder="Seleccione Presentación"
-                                                                        persistent-hint return-object required>
-                                                                    </v-autocomplete>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="6" md="3">
-                                                                    <v-text-field v-model="editedItem.quantity"
-                                                                        label="Cantidad" type="number" min="0" required>
-                                                                    </v-text-field>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="6" md="3">
-                                                                    <v-text-field v-model="datosProducto.sale_price"
-                                                                        label="Precio Venta" type="number" min="0"
-                                                                        required>
-                                                                    </v-text-field>
-                                                                </v-col>
-                                                                <v-col cols="4" sm="2" md="2">
-
-                                                                    <template>
-                                                                        <div class="text-center">
-                                                                            <v-dialog v-model="dialog2" width="300">
-                                                                                <template
-                                                                                    v-slot:activator="{ on, attrs }">
-                                                                                    <v-btn color="#FFB74D" small
-                                                                                        class="ma-2 white--text" fab
-                                                                                        v-bind="attrs" v-on="on">
-                                                                                        <v-icon dark>
-                                                                                            mdi-book-plus
-                                                                                        </v-icon>
-                                                                                    </v-btn>
-                                                                                </template>
-                                                                                <v-card>
-                                                                                    <v-card-title
-                                                                                        class="text-h5 grey lighten-2">
-                                                                                        LISTA DE PRECIOS
-                                                                                    </v-card-title>
-                                                                                    <v-card-text>
-                                                                                        <v-container>
-                                                                                            <v-row>
-                                                                                                <v-col cols="12" md="6">
-                                                                                                    <label
-                                                                                                        for="Precio Menor">Precio
-                                                                                                        Menor</label>
-                                                                                                    <v-text-field
-                                                                                                        type="number"
-                                                                                                        :value="datosProducto.price_by_unit"
-                                                                                                        disabled dense>
-                                                                                                    </v-text-field>
-                                                                                                </v-col>
-
-                                                                                                <v-col cols="12" md="2">
-                                                                                                    <template>
-                                                                                                        <v-btn
-                                                                                                            color="#43A047"
-                                                                                                            small
-                                                                                                            class="ma-2 white--text"
-                                                                                                            fab>
-                                                                                                            <v-icon
-                                                                                                                dark>
-                                                                                                                mdi-cash-plus
-                                                                                                            </v-icon>
-                                                                                                        </v-btn>
-                                                                                                    </template>
-                                                                                                </v-col>
-                                                                                                <v-col cols="12" md="6">
-                                                                                                    <label
-                                                                                                        for="Precio Mayor">Precio
-                                                                                                        Mayor</label>
-                                                                                                    <v-text-field
-                                                                                                        type="number"
-                                                                                                        :value="datosProducto.wholesale_price"
-                                                                                                        disabled dense>
-                                                                                                    </v-text-field>
-                                                                                                </v-col>
-
-                                                                                                <v-col cols="12" md="2">
-                                                                                                    <template>
-                                                                                                        <v-btn
-                                                                                                            color="#43A047"
-                                                                                                            small
-                                                                                                            class="ma-2 white--text"
-                                                                                                            fab>
-                                                                                                            <v-icon
-                                                                                                                dark>
-                                                                                                                mdi-cash-plus
-                                                                                                            </v-icon>
-                                                                                                        </v-btn>
-                                                                                                    </template>
-
-                                                                                                </v-col>
-                                                                                                <v-col cols="12" md="6">
-                                                                                                    <label
-                                                                                                        for="Precio Especial">Precio
-                                                                                                        Especial</label>
-                                                                                                    <v-text-field
-                                                                                                        type="number"
-                                                                                                        :value="datosProducto.special_price"
-                                                                                                        disabled dense>
-                                                                                                    </v-text-field>
-                                                                                                </v-col>
-
-                                                                                                <v-col cols="12" md="2">
-                                                                                                    <template>
-                                                                                                        <v-btn
-                                                                                                            color="#43A047"
-                                                                                                            small
-                                                                                                            class="ma-2 white--text"
-                                                                                                            fab>
-                                                                                                            <v-icon
-                                                                                                                dark>
-                                                                                                                mdi-cash-plus
-                                                                                                            </v-icon>
-                                                                                                        </v-btn>
-                                                                                                    </template>
-
-                                                                                                </v-col>
-                                                                                            </v-row>
-                                                                                        </v-container>
-                                                                                    </v-card-text>
-
-                                                                                    <v-divider></v-divider>
-
-                                                                                    <v-card-actions>
-                                                                                        <v-spacer></v-spacer>
-                                                                                        <v-btn color="red" text
-                                                                                            @click="">
-                                                                                            Cerrar
-                                                                                        </v-btn>
-                                                                                    </v-card-actions>
-                                                                                </v-card>
-                                                                            </v-dialog>
-                                                                        </div>
-                                                                    </template>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="4" md="3">
-                                                                    <v-text-field v-model="editedItem.discount"
-                                                                        label="Descuento" min="0" type="number"
-                                                                        required>
-                                                                    </v-text-field>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-autocomplete color="primary"
-                                                                        v-model="affectation_igvs"
-                                                                        :items="affectationIgvs" item-text="description"
-                                                                        item-value="description" label=" Afectación IGV"
-                                                                        auto-select-first hide-no-data hide-selected
-                                                                        placeholder="Seleccione Afectación IGV"
-                                                                        persistent-hint required return-object>
-                                                                    </v-autocomplete>
-                                                                </v-col>
-                                                                <v-col cols="12" sm="4" md="4">
-                                                                    <v-btn color="primary" class="ma-2 white--text" fab
-                                                                        small @click="save">
-                                                                        <v-icon dark>
-                                                                            mdi-checkbox-multiple-marked-circle
-                                                                        </v-icon>
-                                                                    </v-btn>
-                                                                </v-col>
-                                                            </v-row>
-                                                        </v-container>
-                                                    </v-card-text>
-
-                                                    <v-divider></v-divider>
-
-                                                    <v-card-actions>
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn color="primary" text @click="this.close">
-                                                            Cerrar
-                                                        </v-btn>
-                                                    </v-card-actions>
-                                                </v-card>
-                                            </v-dialog>
-                                        </div>
-                                        <v-col>
-                                            <v-data-table :headers="headers" :items="desserts" sort-by="name"
-                                                class="elevation-2" :search="search" fixed-header :items-per-page="5">
-                                                <template v-slot:top>
-                                                    <v-toolbar flat>
-                                                        <v-toolbar-title>Carrito de Ventas</v-toolbar-title>
-                                                        <v-divider class="mx-4" inset vertical></v-divider>
-                                                        <v-spacer></v-spacer>
-                                                        <v-spacer></v-spacer>
-                                                        <v-text-field v-model="search" append-icon="mdi-magnify"
-                                                            label="Buscar" single-line hide-details>
-                                                        </v-text-field>
-                                                        <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
-                                                        <v-dialog v-model="dialogDelete" max-width="500px">
-                                                            <v-card>
-                                                                <v-card-title class="text-h5">¿Está seguro de querer
-                                                                    borrar el
-                                                                    producto?</v-card-title>
-                                                                <v-card-actions>
-                                                                    <v-spacer></v-spacer>
-                                                                    <v-btn color="red darken-1" text
-                                                                        @click="closeDelete">Cancelar</v-btn>
-                                                                    <v-btn color="blue darken-1" text
-                                                                        @click="deleteItemConfirm">Aceptar</v-btn>
-                                                                    <v-spacer></v-spacer>
-                                                                </v-card-actions>
-                                                            </v-card>
-                                                        </v-dialog>
-                                                    </v-toolbar>
-                                                </template>
-                                                <!-- Acciones de la tabla -->
-                                                <template v-slot:item.actions="{ item }">
-                                                    <v-icon small class="mr-2" @click="editItem(item)">
-                                                        mdi-pencil
-                                                    </v-icon>
-                                                    <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-                                                </template>
-                                            </v-data-table>
-                                        </v-col>
-                                    </template>
+                                    <!-- Tabla Carrito -->
+                                    <v-col cols="12">
+                                        <v-data-table :headers="headers" :items="desserts" sort-by="name"
+                                            class="elevation-2" :search="search" fixed-header :items-per-page="5">
+                                            <template v-slot:top>
+                                                <v-toolbar flat>
+                                                    <v-toolbar-title>Carrito de Ventas</v-toolbar-title>
+                                                    <v-divider class="mx-4" inset vertical></v-divider>
+                                                    <v-spacer></v-spacer>
+                                                    <v-spacer></v-spacer>
+                                                    <v-text-field v-model="search" append-icon="mdi-magnify"
+                                                        label="Buscar" single-line hide-details>
+                                                    </v-text-field>
+                                                    <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
+                                                    <v-dialog v-model="dialogDelete" max-width="500px">
+                                                        <v-card>
+                                                            <v-card-title class="text-h5">¿Está seguro de querer
+                                                                borrar el
+                                                                producto?</v-card-title>
+                                                            <v-card-actions>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn color="red darken-1" text @click="closeDelete">
+                                                                    Cancelar</v-btn>
+                                                                <v-btn color="blue darken-1" text
+                                                                    @click="deleteItemConfirm">Aceptar</v-btn>
+                                                                <v-spacer></v-spacer>
+                                                            </v-card-actions>
+                                                        </v-card>
+                                                    </v-dialog>
+                                                </v-toolbar>
+                                            </template>
+                                            <!-- Acciones de la tabla -->
+                                            <template v-slot:item.actions="{ item }">
+                                                <v-icon small class="mr-2" @click="editItem(item)">
+                                                    mdi-pencil
+                                                </v-icon>
+                                                <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+                                            </template>
+                                        </v-data-table>
+                                    </v-col>
+                                    <!-- Fin Tabla Carrito -->
                                 </v-row>
                             </v-container>
                         </v-card-text>
@@ -416,7 +440,7 @@
                             </v-btn>
                             <template>
                                 <div class="text-center">
-                                    <v-dialog v-model="dialog1" width="450">
+                                    <v-dialog v-model="dialogPago" width="450">
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-btn color="primary" dark v-bind="attrs" v-on="on">
                                                 Confirmar
@@ -446,7 +470,7 @@
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn color="primary" text @click="">
+                                                <v-btn color="primary" text @click="close">
                                                     Pagar
                                                 </v-btn>
                                             </v-card-actions>
@@ -488,9 +512,9 @@ export default {
     data() {
         return {
             isEditing: null,
-            dialog: false,
-            dialog1: false,
-            dialog2: false,
+            dialogAddProducts: false,
+            dialogPago: false,
+            dialogPrecios: false,
             quotasAdd: false,
             dialogDelete: false,
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -502,7 +526,8 @@ export default {
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
             affectation_igvs: this.affectationIgvs[0],
-            totalventas:'',
+            totalventas: '',
+            tipoMoneda: this.coins[0],
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
@@ -578,7 +603,7 @@ export default {
         editItem(item) {
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
-            this.dialog = true;
+            this.dialogAddProducts = true;
         },
 
         deleteItem(item) {
@@ -594,7 +619,8 @@ export default {
             this.form.total -= this.editedItem.total
         },
         close() {
-            this.dialog = false;
+            this.dialogAddProducts = false;
+            this.dialogPago = false;
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
