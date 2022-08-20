@@ -599,10 +599,6 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -613,26 +609,24 @@ export default {
         },
         save() {
             if (this.editedIndex > -1) {
-
-
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
                 this.editedItem.total = this.editedItem.sale_price * this.editedItem.quantity // calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
-                this.datosProducto = null; // reseteando variable 
+                // this.datosProducto = null; // reseteando variable 
 
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
             } else {
 
                 // agregar producto a editedItem
-                if (this.datosProducto == null) { // Comprobando se dejo campo vacio
-                    this.snackbar_text = 'Complete los campos';
-                    this.snackbar_color = 'red';
-                    this.snackbar = true;
+                // if (this.datosProducto == null) { // Comprobando se dejo campo vacio
+                //     this.snackbar_text = 'Complete los campos';
+                //     this.snackbar_color = 'red';
+                //     this.snackbar = true;
 
-                    return;
-                }
+                //     return;
+                // }
 
                 this.editedItem.id = this.datosProducto.id
                 this.form.tipoComprobate = this.tipoComprobate.serie
@@ -643,12 +637,15 @@ export default {
                 this.editedItem.sale_price=this.datosProducto.sale_price
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total
-                this.datosProducto = null;
+                // this.datosProducto = null;
+                this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem);
+                this.editedIndex = -1;
+            });
                 // fin agregar producto a editedItem
 
                 this.desserts.push(this.editedItem)
             }
-            this.close()
         },
     },
 }
