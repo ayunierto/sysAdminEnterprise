@@ -98,7 +98,7 @@ class OrderController extends Controller
             'customers' => Customer::where('companies_id', $company)->get(),
             'paymentMethods' => PaymentMethod::all(),
             'coins' => Coin::all(),
-            'presentations' => Presentation::all(),
+            'presentations' => Presentation::where('companies_id', $company)->get(),
             'affectationIgvs' => AffectationIgv::all(),
             'exchange_rate' => $exchange_rate,
             'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',1)->count() + 1),

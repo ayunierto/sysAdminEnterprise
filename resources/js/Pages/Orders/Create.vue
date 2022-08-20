@@ -106,10 +106,10 @@
                                             <v-layout row justify-center>
                                                 <v-dialog v-model="quotasAdd" persistent max-width="400">
                                                     <template v-slot:activator="{ on, attrs }">
-                                                        <v-btn color="#FFB74D" small class="ma-2 white--text" fab
+                                                        <v-btn color="lime darken-2" small class="ma-2 white--text" fab
                                                             v-bind="attrs" v-on="on">
                                                             <v-icon dark>
-                                                                mdi-book-plus
+                                                                mdi-bank-plus
                                                             </v-icon>
                                                         </v-btn>
                                                     </template>
@@ -155,10 +155,10 @@
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field v-if="tipoMoneda.code == 'PEN'" label="Total" type="number"
-                                            v-model="totalventas" outlined prefix="S/" readonly>
+                                            v-model="form.total" outlined prefix="S/" readonly>
                                         </v-text-field>
                                         <v-text-field v-if="tipoMoneda.code == 'USD'" label="Total" type="number"
-                                            v-model="totalventas" outlined prefix="$" readonly>
+                                            v-model="form.total" outlined prefix="$" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Dialog add Productos a carrito -->
@@ -196,7 +196,7 @@
 
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
-                                                                                v-model="editedItem.presentation"
+                                                                                v-model="presentationsProducts"
                                                                                 :items="presentations" item-text="name"
                                                                                 label="Presentación" auto-select-first
                                                                                 hide-no-data hide-selected
@@ -222,15 +222,15 @@
                                                                             <template>
                                                                                 <div class="text-center">
                                                                                     <v-dialog v-model="dialogPrecios"
-                                                                                        width="300">
+                                                                                        max-width="250">
                                                                                         <template
                                                                                             v-slot:activator="{ on, attrs }">
-                                                                                            <v-btn color="#FFB74D" small
+                                                                                            <v-btn color="#546E7A" small
                                                                                                 class="ma-2 white--text"
                                                                                                 fab v-bind="attrs"
                                                                                                 v-on="on">
                                                                                                 <v-icon dark>
-                                                                                                    mdi-book-plus
+                                                                                                    mdi-filter-variant
                                                                                                 </v-icon>
                                                                                             </v-btn>
                                                                                         </template>
@@ -242,91 +242,68 @@
                                                                                             <v-card-text>
                                                                                                 <v-container>
                                                                                                     <v-row>
-                                                                                                        <v-col cols="12"
-                                                                                                            md="6">
-                                                                                                            <label
-                                                                                                                for="Precio Menor">Precio
-                                                                                                                Menor</label>
+                                                                                                        <v-col cols="9">
                                                                                                             <v-text-field
+                                                                                                                label="Precio Menor"
                                                                                                                 type="number"
                                                                                                                 :value="datosProducto.price_by_unit"
-                                                                                                                disabled
-                                                                                                                dense>
+                                                                                                                readonly
+                                                                                                                solo>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
-
-                                                                                                        <v-col cols="12"
-                                                                                                            md="2">
-                                                                                                            <template>
-                                                                                                                <v-btn
-                                                                                                                    color="#43A047"
-                                                                                                                    small
-                                                                                                                    class="ma-2 white--text"
-                                                                                                                    fab>
-                                                                                                                    <v-icon
-                                                                                                                        dark>
-                                                                                                                        mdi-cash-plus
-                                                                                                                    </v-icon>
-                                                                                                                </v-btn>
-                                                                                                            </template>
+                                                                                                        <v-col cols="2">
+                                                                                                            <v-btn
+                                                                                                                color="amber accent-3"
+                                                                                                                small
+                                                                                                                class="ma-2 white--text"
+                                                                                                                fab>
+                                                                                                                <v-icon
+                                                                                                                    dark>
+                                                                                                                    mdi-bookmark-check
+                                                                                                                </v-icon>
+                                                                                                            </v-btn>
                                                                                                         </v-col>
-                                                                                                        <v-col cols="12"
-                                                                                                            md="6">
-                                                                                                            <label
-                                                                                                                for="Precio Mayor">Precio
-                                                                                                                Mayor</label>
+                                                                                                        <v-col cols="9">
                                                                                                             <v-text-field
+                                                                                                                label="Precio Mayor"
                                                                                                                 type="number"
                                                                                                                 :value="datosProducto.wholesale_price"
-                                                                                                                disabled
-                                                                                                                dense>
+                                                                                                                readonly
+                                                                                                                solo>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
-
-                                                                                                        <v-col cols="12"
-                                                                                                            md="2">
-                                                                                                            <template>
-                                                                                                                <v-btn
-                                                                                                                    color="#43A047"
-                                                                                                                    small
-                                                                                                                    class="ma-2 white--text"
-                                                                                                                    fab>
-                                                                                                                    <v-icon
-                                                                                                                        dark>
-                                                                                                                        mdi-cash-plus
-                                                                                                                    </v-icon>
-                                                                                                                </v-btn>
-                                                                                                            </template>
-
+                                                                                                        <v-col cols="2">
+                                                                                                            <v-btn
+                                                                                                                color="amber accent-3"
+                                                                                                                small
+                                                                                                                class="ma-2 white--text"
+                                                                                                                fab>
+                                                                                                                <v-icon
+                                                                                                                    dark>
+                                                                                                                    mdi-bookmark-check
+                                                                                                                </v-icon>
+                                                                                                            </v-btn>
                                                                                                         </v-col>
-                                                                                                        <v-col cols="12"
-                                                                                                            md="6">
-                                                                                                            <label
-                                                                                                                for="Precio Especial">Precio
-                                                                                                                Especial</label>
+                                                                                                        <v-col cols="9">
                                                                                                             <v-text-field
+                                                                                                                label="Precio Especial"
                                                                                                                 type="number"
                                                                                                                 :value="datosProducto.special_price"
-                                                                                                                disabled
-                                                                                                                dense>
+                                                                                                                readonly
+                                                                                                                solo>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
-
-                                                                                                        <v-col cols="12"
-                                                                                                            md="2">
-                                                                                                            <template>
-                                                                                                                <v-btn
-                                                                                                                    color="#43A047"
-                                                                                                                    small
-                                                                                                                    class="ma-2 white--text"
-                                                                                                                    fab>
-                                                                                                                    <v-icon
-                                                                                                                        dark>
-                                                                                                                        mdi-cash-plus
-                                                                                                                    </v-icon>
-                                                                                                                </v-btn>
-                                                                                                            </template>
-
+                                                                                                        <v-col cols="2">
+                                                                                                            <v-btn
+                                                                                                                color="amber accent-3"
+                                                                                                                small
+                                                                                                                class="ma-2 white--text"
+                                                                                                                fab>
+                                                                                                                <v-icon
+                                                                                                                    dark>
+                                                                                                                    mdi-bookmark-check
+                                                                                                                </v-icon>
+                                                                                                            </v-btn>
                                                                                                         </v-col>
                                                                                                     </v-row>
                                                                                                 </v-container>
@@ -345,7 +322,7 @@
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
-                                                                                v-model="affectation_igvs"
+                                                                                v-model="igvAffectation"
                                                                                 :items="affectationIgvs"
                                                                                 item-text="description"
                                                                                 item-value="description"
@@ -454,12 +431,12 @@
                                                 <v-container>
                                                     <v-row>
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Total" type="number" required>
+                                                            <v-text-field label="Total" v-model="form.total" type="number" readonly>
                                                             </v-text-field>
                                                         </v-col>
 
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Monto a pagar" type="number" required>
+                                                            <v-text-field label="Monto a pagar" :value="form.total" type="number" required>
                                                             </v-text-field>
                                                         </v-col>
                                                     </v-row>
@@ -525,9 +502,10 @@ export default {
             datosProducto: '',
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
-            affectation_igvs: this.affectationIgvs[0],
+            igvAffectation: this.affectationIgvs[0],
             totalventas: '',
             tipoMoneda: this.coins[0],
+            presentationsProducts: this.presentations[0],
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
@@ -561,22 +539,22 @@ export default {
                 name: '',
                 presentation: '',
                 equivalence: '',
-                quantity: '',
+                quantity:1,
                 sale_price: '',
-                discount: '',
+                discount: 0,
                 affectation_igvs: '',
-                total: '',
+                total: 0,
             },
             defaultItem: {
                 id: '',
                 name: '',
                 presentation: '',
-                cantidad: '',
-                amount: '',
+                equivalence: '',
+                quantity:1,
                 sale_price: '',
-                discount: '',
+                discount: 0,
                 affectation_igvs: '',
-                total: '',
+                total: 0,
             },
         }
     },
@@ -639,7 +617,7 @@ export default {
 
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
-                this.editedItem.total = this.editedItem.purchase_price * this.editedItem.amount // calculando nuevo precio
+                this.editedItem.total = this.editedItem.sale_price * this.editedItem.quantity // calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
                 this.datosProducto = null; // reseteando variable 
 
@@ -659,6 +637,10 @@ export default {
                 this.editedItem.id = this.datosProducto.id
                 this.form.tipoComprobate = this.tipoComprobate.serie
                 this.editedItem.name = this.datosProducto.name
+                this.editedItem.presentation=this.presentationsProducts.name
+                this.editedItem.equivalence=this.presentationsProducts.equivalence
+                this.editedItem.affectation_igvs=this.igvAffectation.description
+                this.editedItem.sale_price=this.datosProducto.sale_price
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total
                 this.datosProducto = null;
