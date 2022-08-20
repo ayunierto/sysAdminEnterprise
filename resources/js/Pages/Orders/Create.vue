@@ -599,6 +599,8 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
+            this.editedIndex = -1;
+            
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -624,7 +626,6 @@ export default {
                 //     this.snackbar_text = 'Complete los campos';
                 //     this.snackbar_color = 'red';
                 //     this.snackbar = true;
-
                 //     return;
                 // }
 
@@ -639,8 +640,7 @@ export default {
                 this.form.total += this.editedItem.total
                 // this.datosProducto = null;
                 this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
+                this.editedItem = Object.assign({}, this.defaultItem);                
             });
                 // fin agregar producto a editedItem
 
