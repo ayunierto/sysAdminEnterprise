@@ -194,6 +194,7 @@
                                                                                 persistent-hint return-object required>
                                                                             </v-autocomplete>
                                                                             <input type="text" :value="datosProducto.name" id="valorA">
+                                                                            <input type="text" v-model="editedItem.name">
                                                                         </v-col>
 
                                                                         <v-col cols="12" sm="6" md="6">
@@ -636,8 +637,7 @@ export default {
                 this.editedItem.id = this.datosProducto.id
                 this.form.tipoComprobate = this.tipoComprobate.serie
                 // this.editedItem.name = this.datosProducto.name
-                const hola=document.getElementById('valorA').value
-                this.editedItem.name=hola
+                this.editedItem.name=document.getElementById('valorA').value  
                 this.editedItem.presentation = this.presentationsProducts.name
                 this.editedItem.equivalence = this.presentationsProducts.equivalence
                 this.editedItem.affectation_igvs = this.igvAffectation.description
