@@ -351,7 +351,7 @@
 
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn color="primary" text @click="this.close">
+                                                            <v-btn color="primary" text @click="close">
                                                                 Cerrar
                                                             </v-btn>
                                                         </v-card-actions>
@@ -431,12 +431,14 @@
                                                 <v-container>
                                                     <v-row>
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Total" v-model="form.total" type="number" readonly>
+                                                            <v-text-field label="Total" v-model="form.total"
+                                                                type="number" readonly>
                                                             </v-text-field>
                                                         </v-col>
 
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Monto a pagar" :value="form.total" type="number" required>
+                                                            <v-text-field label="Monto a pagar" :value="form.total"
+                                                                type="number" required>
                                                             </v-text-field>
                                                         </v-col>
                                                     </v-row>
@@ -539,7 +541,7 @@ export default {
                 name: '',
                 presentation: '',
                 equivalence: '',
-                quantity:1,
+                quantity: 1,
                 sale_price: '',
                 discount: 0,
                 affectation_igvs: '',
@@ -550,7 +552,7 @@ export default {
                 name: '',
                 presentation: '',
                 equivalence: '',
-                quantity:1,
+                quantity: 1,
                 sale_price: '',
                 discount: 0,
                 affectation_igvs: '',
@@ -599,8 +601,7 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
-            this.editedIndex = -1;
-            
+            this.editedIndex = -1
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -613,9 +614,10 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
-                this.editedItem.total = this.editedItem.sale_price * this.editedItem.quantity // calculando nuevo precio
+                this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
                 // this.datosProducto = null; // reseteando variable 
+                // this.datosProducto = Object.assign({}, this.defaultItem);
 
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
@@ -632,20 +634,23 @@ export default {
                 this.editedItem.id = this.datosProducto.id
                 this.form.tipoComprobate = this.tipoComprobate.serie
                 this.editedItem.name = this.datosProducto.name
-                this.editedItem.presentation=this.presentationsProducts.name
-                this.editedItem.equivalence=this.presentationsProducts.equivalence
-                this.editedItem.affectation_igvs=this.igvAffectation.description
-                this.editedItem.sale_price=this.datosProducto.sale_price
+                this.editedItem.presentation = this.presentationsProducts.name
+                this.editedItem.equivalence = this.presentationsProducts.equivalence
+                this.editedItem.affectation_igvs = this.igvAffectation.description
+                this.editedItem.sale_price = this.datosProducto.sale_price
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total
                 // this.datosProducto = null;
-                this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);                
-            });
+                // this.datosProducto = Object.assign({}, this.defaultItem);
+                    this.$nextTick(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem)
+                    this.datosProducto = Object.assign({}, this.defaultItem)
+                })
                 // fin agregar producto a editedItem
 
                 this.desserts.push(this.editedItem)
             }
+            // this.close()
         },
     },
 }
