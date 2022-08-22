@@ -214,7 +214,7 @@
                                                                             <v-text-field
                                                                                 v-model="datosProducto.sale_price"
                                                                                 label="Precio Venta" type="number"
-                                                                                min="0" required>
+                                                                                min="0" readonly>
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="2" sm="2" md="2">
@@ -601,7 +601,6 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
-            this.editedIndex = -1
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -616,7 +615,6 @@ export default {
                 this.form.total -= this.editedItem.total //quitando precio del producto
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
-                // this.datosProducto = null; // reseteando variable 
                 // this.datosProducto = Object.assign({}, this.defaultItem);
 
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -640,12 +638,14 @@ export default {
                 this.editedItem.sale_price = this.datosProducto.sale_price
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total
-                // this.datosProducto = null;
-                // this.datosProducto = Object.assign({}, this.defaultItem);
-                    this.$nextTick(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.datosProducto = Object.assign({}, this.defaultItem)
-                })
+                // this.datosProducto = Object.assign({}, this.defaultItem);   
+                this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                this.datosProducto =''
+                this.presentationsProducts=this.presentations[0]
+                this.igvAffectation=this.affectationIgvs[0]
+                this.editedIndex=-1
+            })                 
                 // fin agregar producto a editedItem
 
                 this.desserts.push(this.editedItem)
