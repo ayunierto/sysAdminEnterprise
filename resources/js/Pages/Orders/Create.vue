@@ -184,14 +184,16 @@
                                                                 <div class="text-center">
                                                                     <v-row>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary"
+                                                                            <v-autocomplete color="primary" 
                                                                                 :items="products"
                                                                                 v-model="datosProducto" item-text="name"
+                                                                                item-value="id"
                                                                                 label="Producto" auto-select-first
                                                                                 hide-no-data hide-selected
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object required>
                                                                             </v-autocomplete>
+                                                                            <input type="text" :value="datosProducto.name" id="valorA">
                                                                         </v-col>
 
                                                                         <v-col cols="12" sm="6" md="6">
@@ -508,6 +510,7 @@ export default {
             totalventas: '',
             tipoMoneda: this.coins[0],
             presentationsProducts: this.presentations[0],
+            valorP:'',
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
@@ -601,6 +604,7 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
+            this.editedIndex=-1
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -631,25 +635,26 @@ export default {
 
                 this.editedItem.id = this.datosProducto.id
                 this.form.tipoComprobate = this.tipoComprobate.serie
-                this.editedItem.name = this.datosProducto.name
+                // this.editedItem.name = this.datosProducto.name
+                const hola=document.getElementById('valorA').value
+                this.editedItem.name=hola
                 this.editedItem.presentation = this.presentationsProducts.name
                 this.editedItem.equivalence = this.presentationsProducts.equivalence
                 this.editedItem.affectation_igvs = this.igvAffectation.description
                 this.editedItem.sale_price = this.datosProducto.sale_price
                 this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total
-                // this.datosProducto = Object.assign({}, this.defaultItem);   
-                this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.datosProducto =''
-                this.presentationsProducts=this.presentations[0]
-                this.igvAffectation=this.affectationIgvs[0]
-                this.editedIndex=-1
-            })                 
+                // this.datosProducto = Object.assign({}, this.defaultItem);               
                 // fin agregar producto a editedItem
 
                 this.desserts.push(this.editedItem)
             }
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+                // this.datosProducto =''
+                this.presentationsProducts=this.presentations[0]
+                this.igvAffectation=this.affectationIgvs[0]
+            })   
             // this.close()
         },
     },
