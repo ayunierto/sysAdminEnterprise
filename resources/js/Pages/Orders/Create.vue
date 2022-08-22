@@ -652,8 +652,8 @@ export default {
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 // this.datosProducto =''
-                this.presentationsProducts=this.presentations[0]
-                this.igvAffectation=this.affectationIgvs[0]
+                // this.presentationsProducts=this.presentations[0]
+                // this.igvAffectation=this.affectationIgvs[0]
             })   
             // this.close()
         },
