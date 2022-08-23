@@ -60,7 +60,7 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="3">
-                                        <v-text-field label="Fecha" v-model="date" readonly>
+                                        <v-text-field label="Fecha" v-model="form.date" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
@@ -497,7 +497,6 @@ export default {
             dialogPrecios: false,
             quotasAdd: false,
             dialogDelete: false,
-            date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             search: '',
             tipoComprobate: this.proofPayments[0],
             datosCliente: '',
@@ -507,6 +506,10 @@ export default {
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
+                proof_payments_id:'',
+                voucher_number: '',
+                date:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+                documents_id:'',
                 total: 0,
             },
             headers: [
@@ -632,8 +635,7 @@ export default {
                 //     return;
                 // }
 
-                // this.editedItem.id = this.datosProducto.id
-                // this.form.tipoComprobate = this.tipoComprobate.serie
+                // Datos tabla
                 this.editedItem.productName=this.editedItem.datosProducto.name 
                 this.editedItem.productId=this.editedItem.datosProducto.id 
                 this.editedItem.sale_price=this.editedItem.datosProducto.sale_price
@@ -644,6 +646,17 @@ export default {
                 this.editedItem.equivalence=this.editedItem.datosPresentation.equivalence 
                 this.editedItem.igvAffectationDescription=this.editedItem.datosAffectationIgv.description
                 this.editedItem.igvAffectationId=this.editedItem.datosAffectationIgv.id
+
+                // Datos Formulario
+                this.form.proof_payments_id=this.tipoComprobate.id
+                if (this.tipoComprobate.name=='Comprobante') {
+                    this.form.voucher_number=this.nroComprobantes
+                } if(this.tipoComprobate.name=='Factura'){
+                    this.form.voucher_number=this.nroFacturas
+                }if(this.tipoComprobate.name=='Boleta de Venta'){
+                    this.form.voucher_number=this.nroBoletas
+                }
+                this.form.documents_id=this.tipoDoc.id
                 this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 this.form.total += this.editedItem.total                  
                 // fin agregar producto a editedItem
