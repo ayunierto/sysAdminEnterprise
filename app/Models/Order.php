@@ -15,6 +15,7 @@ class Order extends Model
         'proof_payments_id',
         'coins_id',
         'documents_id',
+        'voucher_number',
         'exchange_rate',
         'total',
         'date',

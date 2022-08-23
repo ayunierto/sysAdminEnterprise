@@ -184,23 +184,21 @@
                                                                 <div class="text-center">
                                                                     <v-row>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary" 
+                                                                            <v-autocomplete color="primary"
                                                                                 :items="products"
-                                                                                v-model="datosProducto" item-text="name"
-                                                                                item-value="id"
+                                                                                v-model="editedItem.datosProducto" item-text="name"
+                                                                                item-value.id="id"
                                                                                 label="Producto" auto-select-first
                                                                                 hide-no-data hide-selected
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object required>
                                                                             </v-autocomplete>
-                                                                            <input type="text" :value="datosProducto.name" id="valorA">
-                                                                            <input type="text" v-model="editedItem.name">
                                                                         </v-col>
-
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
-                                                                                v-model="presentationsProducts"
+                                                                                v-model="editedItem.datosPresentation"
                                                                                 :items="presentations" item-text="name"
+                                                                                item-value="id"
                                                                                 label="Presentación" auto-select-first
                                                                                 hide-no-data hide-selected
                                                                                 placeholder="Seleccione Presentación"
@@ -215,7 +213,7 @@
                                                                         </v-col>
                                                                         <v-col cols="9" sm="6" md="3">
                                                                             <v-text-field
-                                                                                v-model="datosProducto.sale_price"
+                                                                                v-model="editedItem.datosProducto.sale_price" id="precioVenta"
                                                                                 label="Precio Venta" type="number"
                                                                                 min="0" readonly>
                                                                             </v-text-field>
@@ -249,7 +247,7 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
-                                                                                                                :value="datosProducto.price_by_unit"
+                                                                                                                v-model="editedItem.datosProducto.price_by_unit"
                                                                                                                 readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
@@ -270,7 +268,7 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Mayor"
                                                                                                                 type="number"
-                                                                                                                :value="datosProducto.wholesale_price"
+                                                                                                                v-model="editedItem.datosProducto.wholesale_price"
                                                                                                                 readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
@@ -291,7 +289,7 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Especial"
                                                                                                                 type="number"
-                                                                                                                :value="datosProducto.special_price"
+                                                                                                                v-model="editedItem.datosProducto.special_price"
                                                                                                                 readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
@@ -325,15 +323,15 @@
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
-                                                                                v-model="igvAffectation"
+                                                                                v-model="editedItem.datosAffectationIgv"
                                                                                 :items="affectationIgvs"
                                                                                 item-text="description"
-                                                                                item-value="description"
+                                                                                item-value="code"
                                                                                 label=" Afectación IGV"
                                                                                 auto-select-first hide-no-data
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Afectación IGV"
-                                                                                persistent-hint required return-object>
+                                                                                persistent-hint return-object required>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="4" md="4">
@@ -502,64 +500,64 @@ export default {
             date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
             search: '',
             tipoComprobate: this.proofPayments[0],
-            datosProducto: '',
             datosCliente: '',
-            datosProducto: '',
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
-            igvAffectation: this.affectationIgvs[0],
-            totalventas: '',
             tipoMoneda: this.coins[0],
-            presentationsProducts: this.presentations[0],
-            valorP:'',
 
             form: {
                 companies_id: this.$page.props.user.companies_id,
-                providers_id: '',
-                payment_methods_id: '',
-                proof_payments_id: '',
-                voucher_number: '',
-                exchange_rate: this.exchange_rate,
-                date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                coins_id: '',
-                state: '',
-                products: null,
                 total: 0,
-                tipoComprobate: "",
             },
             headers: [
-                { text: 'PRODUCTO', value: 'name' },
-                { text: 'PRESENTACIÓN', value: 'presentation' },
+                { text: 'PRODUCTO', value: 'productName' },
+                { text: 'PRESENTACIÓN', value: 'presentationName' },
                 { text: 'EQUIVALENCIA', value: 'equivalence' },
                 { text: 'CANTIDAD', value: 'quantity' },
                 { text: 'PRECIO', value: 'sale_price' },
                 { text: 'DESCUENTO', value: 'discount' },
-                { text: 'AFECTACIÓN IGV', value: 'affectation_igvs' },
+                { text: 'AFECTACIÓN IGV', value: 'igvAffectationDescription' },
                 { text: 'SUB TOTAL', value: 'total' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             editedIndex: -1,
             desserts: [],
             editedItem: {
-                id: '',
-                name: '',
-                presentation: '',
-                equivalence: '',
-                quantity: 1,
+                datosProducto:'',
+                productId: '',
+                productName: '',
                 sale_price: '',
+                price_by_unit:'',
+                wholesale_price:'',
+                special_price:'',
+                datosPresentation:this.presentations[0],
+                presentationId:'',
+                presentationName:'',
+                equivalence: '',
+                quantity: 1,                
                 discount: 0,
-                affectation_igvs: '',
+                datosAffectationIgv:this.affectationIgvs[0],
+                igvAffectationId:'', 
+                igvAffectationDescription: '',
                 total: 0,
             },
             defaultItem: {
-                id: '',
-                name: '',
-                presentation: '',
-                equivalence: '',
-                quantity: 1,
+                datosProducto:'',
+                productId: '',
+                productName: '',
                 sale_price: '',
+                price_by_unit:'',
+                wholesale_price:'',
+                special_price:'',
+                datosPresentation:this.presentations[0],
+                presentationId:'',
+                presentationName:'',
+                equivalence: '',
+                quantity: 1,                
                 discount: 0,
-                affectation_igvs: '',
+                datosAffectationIgv:this.affectationIgvs[0],
+                igvAffectationId:'', 
+                igvAffectationDescription: '',
                 total: 0,
             },
         }
@@ -605,7 +603,8 @@ export default {
         close() {
             this.dialogAddProducts = false;
             this.dialogPago = false;
-            this.editedIndex=-1
+            this.editedItem = Object.assign({}, this.defaultItem)
+            this.editedIndex=-1       
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -618,9 +617,8 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
-                this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
+                this.editedItem.total = (this.editedItem.id.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
-                // this.datosProducto = Object.assign({}, this.defaultItem);
 
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
@@ -634,28 +632,27 @@ export default {
                 //     return;
                 // }
 
-                this.editedItem.id = this.datosProducto.id
-                this.form.tipoComprobate = this.tipoComprobate.serie
-                // this.editedItem.name = this.datosProducto.name
-                this.editedItem.name=document.getElementById('valorA').value  
-                this.editedItem.presentation = this.presentationsProducts.name
-                this.editedItem.equivalence = this.presentationsProducts.equivalence
-                this.editedItem.affectation_igvs = this.igvAffectation.description
-                this.editedItem.sale_price = this.datosProducto.sale_price
-                this.editedItem.total = (this.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
-                this.form.total += this.editedItem.total
-                // this.datosProducto = Object.assign({}, this.defaultItem);               
+                // this.editedItem.id = this.datosProducto.id
+                // this.form.tipoComprobate = this.tipoComprobate.serie
+                this.editedItem.productName=this.editedItem.datosProducto.name 
+                this.editedItem.productId=this.editedItem.datosProducto.id 
+                this.editedItem.sale_price=this.editedItem.datosProducto.sale_price
+                this.editedItem.price_by_unit=this.editedItem.datosProducto.price_by_unit
+                this.editedItem.wholesale_price=this.editedItem.datosProducto.wholesale_price
+                this.editedItem.special_price=this.editedItem.datosProducto.special_price
+                this.editedItem.presentationName=this.editedItem.datosPresentation.name 
+                this.editedItem.equivalence=this.editedItem.datosPresentation.equivalence 
+                this.editedItem.igvAffectationDescription=this.editedItem.datosAffectationIgv.description
+                this.editedItem.igvAffectationId=this.editedItem.datosAffectationIgv.id
+                this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                this.form.total += this.editedItem.total                  
                 // fin agregar producto a editedItem
 
                 this.desserts.push(this.editedItem)
-            }
+            }              
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
-                // this.datosProducto =''
-                // this.presentationsProducts=this.presentations[0]
-                // this.igvAffectation=this.affectationIgvs[0]
-            })   
-            // this.close()
+            })    
         },
     },
 }
