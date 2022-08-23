@@ -623,7 +623,7 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
-                this.editedItem.total = (this.editedItem.id.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
+                this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
 
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
