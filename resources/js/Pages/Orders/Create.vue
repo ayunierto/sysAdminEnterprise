@@ -185,9 +185,9 @@
                                                                     <v-row>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
-                                                                                :items="products"
+                                                                                :items="products" id="inputProducts"
                                                                                 v-model="editedItem.datosProducto"
-                                                                                item-text="name" item-value.id="id"
+                                                                                item-text="name" item-value="id"
                                                                                 label="Producto" auto-select-first
                                                                                 hide-no-data hide-selected
                                                                                 placeholder="Seleccione Producto"
@@ -195,7 +195,7 @@
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary"
+                                                                            <v-autocomplete color="primary" id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
                                                                                 :items="presentations" item-text="name"
                                                                                 item-value="id" label="Presentación"
@@ -322,7 +322,7 @@
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary"
+                                                                            <v-autocomplete color="primary" id="inputAffectationIgv"
                                                                                 v-model="editedItem.datosAffectationIgv"
                                                                                 :items="affectationIgvs"
                                                                                 item-text="description"
@@ -588,10 +588,17 @@ export default {
         initialize() {
             this.desserts = []
         },
-        editItem(item) {
+        editItem(item) {              
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
+            // bloquear inputs
+            const inpPro=document.getElementById('inputProducts')
+            inpPro.disabled=true  
+            const inpPre=document.getElementById('inputPresentations')
+            inpPre.disabled=true  
+            const inpAff=document.getElementById('inputAffectationIgv')
+            inpAff.disabled=true  
         },
 
         deleteItem(item) {
@@ -611,6 +618,13 @@ export default {
             this.dialogPago = false;
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
+            // Desbloquear inputs
+            const inpPro=document.getElementById('inputProducts')
+            inpPro.disabled=false  
+            const inpPre=document.getElementById('inputPresentations')
+            inpPre.disabled=false  
+            const inpAff=document.getElementById('inputAffectationIgv')
+            inpAff.disabled=false  
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -625,7 +639,6 @@ export default {
                 this.form.total -= this.editedItem.total //quitando precio del producto
                 this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
                 this.form.total += this.editedItem.total // agregando el nuevo precio
-
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
             } else {
