@@ -25,7 +25,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('exchange_rate', 5, 3)->nullable();
             $table->decimal('total', 8, 2);
             $table->date('date');
-            $table->boolean('state');
+            $table->boolean('state')->default(1);
             $table->string('description', 250)->nullable();
             $table->timestamps();
         });

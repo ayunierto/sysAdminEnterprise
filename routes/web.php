@@ -15,7 +15,6 @@ use App\Http\Controllers\ProofPaymentController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SettingController;

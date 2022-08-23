@@ -450,7 +450,7 @@
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn color="primary" text @click="close">
+                                                <v-btn color="primary" text @click="send_form">
                                                     Pagar
                                                 </v-btn>
                                             </v-card-actions>
@@ -510,10 +510,12 @@ export default {
                 voucher_number: '',
                 date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 documents_id: '',
+                customers_id:'',
                 payment_methods_id: '',
                 coins_id: '',
                 exchange_rate: this.exchange_rate,
                 description:'',
+                products:'',
                 total: 0,
             },
             headers: [
@@ -675,6 +677,7 @@ export default {
                     this.form.voucher_number = this.nroBoletas
                 }
                 this.form.documents_id = this.tipoDoc.id
+                this.form.customers_id=this.datosCliente.id
                 this.form.payment_methods_id = this.metodoPago.id
                 this.form.coins_id = this.tipoMoneda.id
                 this.form.total += this.editedItem.total
@@ -686,6 +689,10 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
             })
         },
+        send_form () {
+                this.form.products = this.desserts
+                this.$inertia.post(route('orders.store'), this.form)
+            },
     },
 }
 </script>
