@@ -363,7 +363,7 @@
                                     </v-col>
                                     <!-- Fin Dialog add Productos a carrito -->
                                     <v-col cols="12" sm="5">
-                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2">
+                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2" v-model="form.description">
                                         </v-textarea>
                                     </v-col>
                                     <!-- Tabla Carrito -->
@@ -513,6 +513,7 @@ export default {
                 payment_methods_id: '',
                 coins_id: '',
                 exchange_rate: this.exchange_rate,
+                description:'',
                 total: 0,
             },
             headers: [
