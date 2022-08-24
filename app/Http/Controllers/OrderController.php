@@ -34,7 +34,7 @@ class OrderController extends Controller
             'companies' => Company::all(),
             'customers' => Customer::all(),
             'payment_methods' => PaymentMethod::all(),
-            'proof_payments' =>ProofPayment::all(),
+            'proof_payments' => ProofPayment::all(),
             'coins' => Coin::all(),
             'documents' => Document::all(),
             'presentations' => Presentation::all(),
@@ -62,8 +62,7 @@ class OrderController extends Controller
                     'state' => $p->state,
                     'state_name' => $p->state == 1 ? 'Registrado' : 'Pendiente',
                     'description' => $p->description,
-                    'details' => OrderDetail::where('orders_id', $p->id)->get()->map( function ($d)
-                    {
+                    'details' => OrderDetail::where('orders_id', $p->id)->get()->map(function ($d) {
                         return [
                             'id' => $d->id,
                             'orders_id' => $d->orders_id,
@@ -78,7 +77,7 @@ class OrderController extends Controller
             }),
             'company' => Company::find($company),
             'colors' => Customizer::where('companies_id', $company)->get(),
-            
+
         ]);
     }
 
@@ -103,11 +102,10 @@ class OrderController extends Controller
             'presentations' => Presentation::where('companies_id', $company)->get(),
             'affectationIgvs' => AffectationIgv::all(),
             'exchange_rate' => $exchange_rate,
-            'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',1)->count() + 1),
-            'nroFacturas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',2)->count() + 1),
-            'nroBoletas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id',3)->count() + 1),
-            'products' => Product::where('companies_id', $company)->get()->map(function ($p)
-            {
+            'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 1)->count() + 1),
+            'nroFacturas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 2)->count() + 1),
+            'nroBoletas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 3)->count() + 1),
+            'products' => Product::where('companies_id', $company)->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
                     'categories_id' => $p->categories_id,
@@ -141,32 +139,32 @@ class OrderController extends Controller
     {
         $order = new Order();
 
-        $order->companies_id = $request->companies_id;   
-        $order->customers_id = $request->providers_id;   
-        $order->payment_methods_id = $request->payment_methods_id;   
+        $order->companies_id = $request->companies_id;
+        $order->customers_id = $request->customers_id;
+        $order->payment_methods_id = $request->payment_methods_id;
         $order->proof_payments_id = $request->proof_payments_id;
-        $order->coins_id = $request->coins_id;   
-        $order->documents_id = $request->proof_payments_id;
-        $order->voucher_number = $request->voucher_number;   
-        $order->exchange_rate = $request->exchange_rate; 
-        $order->total = $request->total; 
+        $order->coins_id = $request->coins_id;
+        $order->documents_id = $request->documents_id;
+        $order->voucher_number = $request->voucher_number;
+        $order->exchange_rate = $request->exchange_rate;
+        $order->total = $request->total;
         $order->date = $request->date;
         $order->description = $request->description;
-        $order->save();   
+        $order->save();
 
-        $products = $request->products;  
+        $products = $request->products;
         foreach ($products as $key => $value) {
             $order_details = new orderDetail();
-            $order_details->orders_id= $order->id; 
+            $order_details->orders_id = $order->id;
             $order_details->products_id = $value['productId'];
-            $order_details->affectation_igvs_id= $value['igvAffectationId'];
-            $order_details->quantity= $value['quantity'];
-            $order_details->price= $value['sale_price'];
-            $order_details->discount= $value['discount'];
+            $order_details->affectation_igvs_id = $value['igvAffectationId'];
+            $order_details->quantity = $value['quantity'];
+            $order_details->price = $value['sale_price'];
+            $order_details->discount = $value['discount'];
 
             $order_details->save();
         }
-        
+
 
         return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }

@@ -26,7 +26,7 @@ class SunatController extends Controller
         $res = $client->request('GET', '/v1/tipo-cambio-sunat', $parameters);
         $response = json_decode($res->getBody()->getContents(), true);
         // var_dump($response);
-        return $response;
+        return $response;    
     }
 
     public function dni($dni)
