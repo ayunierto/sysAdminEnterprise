@@ -193,6 +193,7 @@
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object required>
                                                                             </v-autocomplete>
+                                                                            <h4>Stock Actual: {{editedItem.datosProducto.stock}}</h4>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
@@ -677,6 +678,12 @@ export default {
                     this.snackbar = true;
                     return;
                 }
+                if (this.editedItem.datosProducto.stock < this.editedItem.quantity ) {
+                    this.snackbar_text = 'Sin Stock';
+                    this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
                 // Datos tabla
                 this.editedItem.productName = this.editedItem.datosProducto.name
                 this.editedItem.productId = this.editedItem.datosProducto.id
@@ -694,10 +701,9 @@ export default {
                 } else {
                     this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
                 }
-
                 this.form.total += this.editedItem.subTotal
                 // fin agregar producto a editedItem
-
+                
                 this.desserts.push(this.editedItem)
             }
             this.$nextTick(() => {
