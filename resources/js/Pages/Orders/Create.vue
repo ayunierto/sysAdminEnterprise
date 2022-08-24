@@ -670,11 +670,11 @@ export default {
                 // Datos Formulario
                 this.form.proof_payments_id = this.tipoComprobate.id
                 if (this.tipoComprobate.name == 'Comprobante') {
-                    this.form.voucher_number = this.nroComprobantes
+                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroComprobantes
                 } if (this.tipoComprobate.name == 'Factura') {
-                    this.form.voucher_number = this.nroFacturas
+                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroFacturas
                 } if (this.tipoComprobate.name == 'Boleta de Venta') {
-                    this.form.voucher_number = this.nroBoletas
+                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroBoletas
                 }
                 this.form.documents_id = this.tipoDoc.id
                 this.form.customers_id=this.datosCliente.id
