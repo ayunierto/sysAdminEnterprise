@@ -43,6 +43,7 @@ class OrderController extends Controller
 
             'orders' => Order::where('companies_id', $company)->get()->map(function ($p) {
                 return [
+                    'id' => $p->id,
                     'companies_id' => $p->companies_id,
                     'company_name' => Company::find($p->companies_id)->name,
                     'customers_id' => $p->customers_id,
@@ -214,8 +215,10 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
-        //
+        $orders = Order::find($id);
+        $orders->delete();
+        return Redirect::route('orders.index')->with('message', 'Venta eliminada');
     }
 }

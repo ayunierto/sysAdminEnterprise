@@ -30,171 +30,7 @@
                             Nueva Venta
                         </v-btn>
                     </inertia-link>
-                    <v-dialog v-model="dialog" max-width="700px" fullscreen persistent>
-                        <v-card>
-                            <v-card-title>
-                                <span class="text-h5">{{ formTitle }}</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="4" md="3" v-if="$page.props.user.role == 'master'">
-                                            <v-select v-model="editedItem.companies_id" hint="Seleccione empresa"
-                                                :items="companies" item-text="name" item-value="id"
-                                                label="Seleccione empresa" single-line readonly></v-select>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-select v-model="editedItem.proof_payments_id"
-                                                hint="Seleccione comprobante" :items="proof_payments" item-text="name"
-                                                item-value="id" label="Seleccione comprobante" single-line readonly>
-                                            </v-select>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-text-field label="Nro Comprobante" v-model="editedItem.voucher_number"
-                                                hint="Nro Comprobante" readonly></v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
-                                                :return-value.sync="editedItem.date" transition="scale-transition"
-                                                offset-y min-width="auto">
-
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-text-field v-model="editedItem.date" label="Selecione fecha"
-                                                        readonly v-bind="attrs" v-on="on"></v-text-field>
-                                                </template>
-
-                                                <v-date-picker v-model="editedItem.date" no-title scrollable>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn text color="primary" @click="menu = false">
-                                                        Cancel
-                                                    </v-btn>
-                                                    <v-btn text color="primary"
-                                                        @click="$refs.menu.save(editedItem.date)">
-                                                        OK
-                                                    </v-btn>
-                                                </v-date-picker>
-                                            </v-menu>
-                                        </v-col>
-
-                                        <v-col cols="12">
-                                            <h3>DATOS PROVEEDOR</h3>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-select v-model="editedItem.providers_id" hint="Seleccione proveedor"
-                                                :items="providers" item-text="name" item-value="id"
-                                                label="Seleccione proveedor" single-line readonly></v-select>
-                                        </v-col>
-
-                                        <v-col cols="12">
-                                            <h3>DETALLE DE COMPRA</h3>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-select v-model="editedItem.payment_methods_id"
-                                                hint="Seleccione método de pago" :items="payment_methods"
-                                                item-text="description" item-value="id"
-                                                label="Seleccione método de pago" single-line readonly></v-select>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-select v-model="editedItem.coins_id" hint="Seleccione moneda"
-                                                :items="coins" item-text="code" item-value="id"
-                                                label="Seleccione moneda" single-line readonly></v-select>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-text-field v-model="editedItem.exchange_rate" label="Tipo de cambio"
-                                                required readonly></v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-text-field v-model="editedItem.total" label="Total" required readonly>
-                                            </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="4" md="3">
-                                            <v-select v-model="editedItem.state" :items="items_state" item-text="name"
-                                                item-value="value" label="Seleccione estado" persistent-hint
-                                                single-line></v-select>
-                                        </v-col>
-
-                                        <v-col cols="12">
-                                            <v-card>
-                                                <v-card-text>
-                                                    <v-simple-table>
-                                                        <template v-slot:default>
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="text-left"> PRODUCTO </th>
-                                                                    <th class="text-left"> CANTIDAD </th>
-                                                                    <th class="text-left"> PRECIO </th>
-                                                                    <th class="text-left"> TOTAL </th>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-                                                                <tr v-for="item in editedItem.details"
-                                                                    :key="item.products_id">
-                                                                    <td>{{ item.product_name }}</td>
-                                                                    <td>{{ item.amount }}</td>
-                                                                    <td>{{ item.price }}</td>
-                                                                    <td>{{ item.total }}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </template>
-                                                    </v-simple-table>
-                                                </v-card-text>
-                                            </v-card>
-
-                                            <!-- <v-data-table 
-                                             :headers="[{ text: 'PRODUCTO', value: 'product_name' },
-                                                        { text: 'CANTIDAD', value: 'amount' },
-                                                        { text: 'PRECIO', value: 'price' },
-                                                        { text: 'TOTAL', value: 'total' },
-                                            ]" :items="editedItem.details" 
-                                            class="elevation-1">
-                                                <template v-slot:top>
-                                                <v-toolbar flat >
-                                                    <v-toolbar-title>CARRITO</v-toolbar-title>
-                                                    <v-divider
-                                                    class="mx-4"
-                                                    inset
-                                                    vertical
-                                                    ></v-divider>
-                                                </v-toolbar>
-                                                </template>
-                                            </v-data-table> -->
-                                        </v-col>
-
-                                        <v-col cols="12" sm="12" md="12">
-                                            <v-textarea v-model="editedItem.description" class="mx-2"
-                                                label="Descripción" rows="2" hint="Descripción">
-                                            </v-textarea>
-                                        </v-col>
-
-                                    </v-row>
-                                </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-
-                                <v-btn color="secondary" @click="close" elevation="9">
-                                    Cancelar
-                                </v-btn>
-
-                                <v-btn type="submit" color="primary" @click="save" elevation="9">
-                                    Guardar
-                                </v-btn>
-
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
+                    <!-- Memsaje al presionar boton borrar -->
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
                             <v-card-title class="text-h5">Está seguro que desea eliminar?</v-card-title>
@@ -213,9 +49,6 @@
             <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="viewItem(item)">
                     mdi-eye
-                </v-icon>
-                <v-icon small class="mr-2" @click="editItem(item)">
-                    mdi-pencil
                 </v-icon>
                 <v-icon small @click="deleteItem(item)">
                     mdi-delete
@@ -306,6 +139,7 @@
                 </v-dialog>
             </v-row>
         </template>
+        <!-- Fin Ver detalles Ventas -->
     </admin-layout>
 </template>
 
@@ -328,14 +162,7 @@ export default {
         return {
 
             dialog_view: false,
-
             menu: false,
-
-            items_state: [
-                { name: 'Activo', value: 1 },
-                { name: 'Inactivo', value: 0 },
-            ],
-
             search: '',
             dialog: false,
             dialogDelete: false,
@@ -351,6 +178,7 @@ export default {
             editedIndex: -1,
 
             editedItem: {
+                id:'',
                 companies_id: '',
                 company_name: '',
                 customers_id: '',
@@ -373,6 +201,7 @@ export default {
             },
 
             defaultItem: {
+                id:'',
                 companies_id: '',
                 company_name: '',
                 customers_id: '',
@@ -396,13 +225,6 @@ export default {
 
         }
     },
-    computed: {
-        formTitle() {
-            return this.editedIndex === -1 ? 'Nueva compra' : 'Editar compra'
-        },
-
-    },
-
     watch: {
         dialog(val) {
             val || this.close()
@@ -435,11 +257,6 @@ export default {
             this.editedItem = Object.assign({}, item)
             this.dialog_view = true
         },
-        editItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
-            this.editedItem = Object.assign({}, item)
-            this.dialog = true
-        },
         deleteItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
@@ -452,47 +269,15 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('orders.destroy', this.editedItem))
+            this.$inertia.delete(this.route('orders.destroy', this.editedItem.id))
             // ***************************************
         },
-        close() {
-            this.dialog = false
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-                this.editedIndex = -1
-            })
-        },
-
         closeDelete() {
             this.dialogDelete = false
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
             })
-        },
-        save() {
-            if (this.editedIndex > -1) {
-
-                // esto agregaba el item a la tabla con solo javascrip 
-                //pero ya no es necesario porque se renderiza el componente desde
-                // el servidor
-                // Object.assign(this.desserts[this.editedIndex], this.editedItem)
-
-                // Update
-                // ***************************************
-                // enviado formulario de almacenar 
-                this.$inertia.put(route('orders.update', this.editedItem.id), this.editedItem)
-                // ***************************************
-            } else {
-                // Store
-                // ***************************************
-                // enviado formulario de almacenar 
-                // this.$inertia.post(route('purchases.store'), this.editedItem)
-
-                // this.desserts.push(this.editedItem)
-            }
-
-            this.close()
         },
     },
 }
