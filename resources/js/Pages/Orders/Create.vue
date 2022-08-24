@@ -466,7 +466,9 @@
                 </v-flex>
             </v-layout>
         </v-container>
-
+        <v-snackbar v-model="snackbar" :color="snackbar_color" right top>
+            {{ snackbar_text }}
+        </v-snackbar>
     </admin-layout>
 </template>
 
@@ -506,7 +508,9 @@ export default {
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
             tipoMoneda: this.coins[0],
-
+            snackbar: false,
+            snackbar_text: '',
+            snackbar_color: '',
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -644,7 +648,7 @@ export default {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
                 // calculando nuevo precio
-                var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
@@ -654,14 +658,25 @@ export default {
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
             } else {
-
-                // agregar producto a editedItem
-                // if (this.datosProducto == null) { // Comprobando se dejo campo vacio
-                //     this.snackbar_text = 'Complete los campos';
-                //     this.snackbar_color = 'red';
-                //     this.snackbar = true;
-                //     return;
-                // }
+                // Comprobando si dejo campos vacios
+                if (this.editedItem.datosProducto == '') {
+                    this.snackbar_text = 'Complete los campos';
+                    this.snackbar_color = 'red';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.quantity < 1) {
+                    this.snackbar_text = 'Cantidad incorrecta';
+                    this.snackbar_color = 'light-blue darken-2';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.discount < 0 ) {
+                    this.snackbar_text = 'Descuento incorrecto ';
+                    this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
                 // Datos tabla
                 this.editedItem.productName = this.editedItem.datosProducto.name
                 this.editedItem.productId = this.editedItem.datosProducto.id
@@ -673,7 +688,7 @@ export default {
                 this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
                 this.editedItem.igvAffectationDescription = this.editedItem.datosAffectationIgv.description
                 this.editedItem.igvAffectationId = this.editedItem.datosAffectationIgv.id
-                var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
@@ -691,20 +706,31 @@ export default {
         },
         send_form() {
             // Datos Formulario
-                this.form.proof_payments_id = this.tipoComprobate.id
-                if (this.tipoComprobate.name == 'Comprobante') {
-                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroComprobantes
-                } if (this.tipoComprobate.name == 'Factura') {
-                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroFacturas
-                } if (this.tipoComprobate.name == 'Boleta de Venta') {
-                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroBoletas
-                }
-                this.form.documents_id = this.tipoDoc.id
-                this.form.customers_id = this.datosCliente.id
-                this.form.payment_methods_id = this.metodoPago.id
-                this.form.coins_id = this.tipoMoneda.id
-                
+            this.form.proof_payments_id = this.tipoComprobate.id
+            if (this.tipoComprobate.name == 'Comprobante') {
+                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroComprobantes
+            } if (this.tipoComprobate.name == 'Factura') {
+                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroFacturas
+            } if (this.tipoComprobate.name == 'Boleta de Venta') {
+                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroBoletas
+            }
+            this.form.documents_id = this.tipoDoc.id
+            this.form.customers_id = this.datosCliente.id
+            this.form.payment_methods_id = this.metodoPago.id
+            this.form.coins_id = this.tipoMoneda.id
             this.form.products = this.desserts
+            if (this.form.products == '') {
+                    this.snackbar_text = 'Carrito Vacio';
+                    this.snackbar_color = 'amber lighten-1';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.datosCliente=='') {
+                    this.snackbar_text = 'Datos de Cliente Vacio';
+                    this.snackbar_color = 'green darken-1';
+                    this.snackbar = true;
+                    return;
+                }
             this.$inertia.post(route('orders.store'), this.form)
         },
     },
