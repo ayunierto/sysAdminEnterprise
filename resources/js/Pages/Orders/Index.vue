@@ -120,7 +120,7 @@
                                                     <td>{{ item.quantity }}</td>
                                                     <td>{{ item.price }}</td>
                                                     <td>{{ item.discount }}</td>
-                                                    <td>{{ (item.quantity * item.price) - item.discount }}</td>
+                                                    <td>{{ item.subTotal }}</td>
                                                 </tr>
                                             </tbody>
                                         </template>

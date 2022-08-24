@@ -72,6 +72,7 @@ class OrderController extends Controller
                             'quantity' => $d->quantity,
                             'price' => $d->price,
                             'discount' => $d->discount,
+                            'subTotal' => $d->subTotal,
                         ];
                     }),
                 ];
@@ -167,6 +168,7 @@ class OrderController extends Controller
             $order_details->quantity = $value['quantity'];
             $order_details->price = $value['sale_price'];
             $order_details->discount = $value['discount'];
+            $order_details->subTotal = $value['subTotal'];
 
             $order_details->save();
         }

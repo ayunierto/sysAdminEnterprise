@@ -529,7 +529,7 @@ export default {
                 { text: 'PRECIO', value: 'sale_price' },
                 { text: 'DESCUENTO', value: 'discount' },
                 { text: 'AFECTACIÓN IGV', value: 'igvAffectationDescription' },
-                { text: 'SUB TOTAL', value: 'total' },
+                { text: 'SUB TOTAL', value: 'subTotal' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             editedIndex: -1,
@@ -551,7 +551,7 @@ export default {
                 datosAffectationIgv: this.affectationIgvs[0],
                 igvAffectationId: '',
                 igvAffectationDescription: '',
-                total: 0,
+                subTotal: 0,
             },
             defaultItem: {
                 datosProducto: '',
@@ -570,7 +570,7 @@ export default {
                 datosAffectationIgv: this.affectationIgvs[0],
                 igvAffectationId: '',
                 igvAffectationDescription: '',
-                total: 0,
+                subTotal: 0,
             },
         }
     },
@@ -602,7 +602,7 @@ export default {
             const inpPro = document.getElementById('inputProducts')
             inpPro.disabled = true
             const inpPre = document.getElementById('inputPresentations')
-            inpPre.disabled = true
+            inpPre.disabled = trueinputProductstipo
             const inpAff = document.getElementById('inputAffectationIgv')
             inpAff.disabled = true
         },
@@ -617,7 +617,7 @@ export default {
             this.closeDelete();
 
             // reducir el monto total de la venta
-            this.form.total -= this.editedItem.total
+            this.form.total -= this.editedItem.subTotal
         },
         close() {
             this.dialogAddProducts = false;
@@ -642,15 +642,15 @@ export default {
         save() {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
-                this.form.total -= this.editedItem.total //quitando precio del producto
+                this.form.total -= this.editedItem.subTotal //quitando precio del producto
                 // calculando nuevo precio
                 var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
-                    this.editedItem.total = subTotal
+                    this.editedItem.subTotal = subTotal
                 } else {
-                    this.editedItem.total = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                    this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
                 }
-                this.form.total += this.editedItem.total
+                this.form.total += this.editedItem.subTotal
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
             } else {
@@ -662,7 +662,6 @@ export default {
                 //     this.snackbar = true;
                 //     return;
                 // }
-
                 // Datos tabla
                 this.editedItem.productName = this.editedItem.datosProducto.name
                 this.editedItem.productId = this.editedItem.datosProducto.id
@@ -676,12 +675,22 @@ export default {
                 this.editedItem.igvAffectationId = this.editedItem.datosAffectationIgv.id
                 var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
-                    this.editedItem.total = subTotal
+                    this.editedItem.subTotal = subTotal
                 } else {
-                    this.editedItem.total = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                    this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
                 }
 
-                // Datos Formulario
+                this.form.total += this.editedItem.subTotal
+                // fin agregar producto a editedItem
+
+                this.desserts.push(this.editedItem)
+            }
+            this.$nextTick(() => {
+                this.editedItem = Object.assign({}, this.defaultItem)
+            })
+        },
+        send_form() {
+            // Datos Formulario
                 this.form.proof_payments_id = this.tipoComprobate.id
                 if (this.tipoComprobate.name == 'Comprobante') {
                     this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroComprobantes
@@ -694,16 +703,7 @@ export default {
                 this.form.customers_id = this.datosCliente.id
                 this.form.payment_methods_id = this.metodoPago.id
                 this.form.coins_id = this.tipoMoneda.id
-                this.form.total += this.editedItem.total
-                // fin agregar producto a editedItem
-
-                this.desserts.push(this.editedItem)
-            }
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem)
-            })
-        },
-        send_form() {
+                
             this.form.products = this.desserts
             this.$inertia.post(route('orders.store'), this.form)
         },

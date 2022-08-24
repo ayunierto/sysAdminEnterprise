@@ -21,6 +21,7 @@ class CreateOrderDetailsTable extends Migration
             $table->bigInteger('quantity');
             $table->decimal('price', 11, 2);
             $table->decimal('discount', 11, 2);
+            $table->decimal('subTotal', 11, 2);
             $table->timestamps();
         });
     }

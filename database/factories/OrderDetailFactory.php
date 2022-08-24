@@ -28,6 +28,7 @@ class OrderDetailFactory extends Factory
             'quantity' => rand(1, 4),
             'price' => rand(10, 999),
             'discount' => rand(1, 7),
+            'subTotal' => rand(1, 999),
         ];
     }
 }
