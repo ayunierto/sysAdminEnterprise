@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-
+use Psy\Readline\Hoa\Console;
 
 class SunatController extends Controller
 {
     public function exchange_rate()
     {
-        $token = 'apis-token-2620.RyZsqk8rl5-8dLPyr94nieCqhu35uNkv';
+        try{
+            $token = 'apis-token-2620.RyZsqk8rl5-8dLPyr94nieCqhu35uNkv';
         $client = new Client(['base_uri' => 'https://api.apis.net.pe', 'verify' => false]);
         $parameters = [
             'http_errors' => false,
@@ -26,7 +28,10 @@ class SunatController extends Controller
         $res = $client->request('GET', '/v1/tipo-cambio-sunat', $parameters);
         $response = json_decode($res->getBody()->getContents(), true);
         // var_dump($response);
-        return $response;    
+        return $response; 
+        }catch (Exception $e){
+            return 'error';
+        }   
     }
 
     public function dni($dni)

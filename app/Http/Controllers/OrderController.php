@@ -89,7 +89,12 @@ class OrderController extends Controller
     public function create()
     {
         $query = new SunatController;
-        $exchange_rate = $query->exchange_rate()['venta'];
+        if($query->exchange_rate()=='error'){
+            $exchange_rate=0;
+        }else{
+            $exchange_rate = $query->exchange_rate()['venta'];
+        }
+        
         $company = Auth::user()->companies_id;
         return Inertia::render('Orders/Create', [
             'colors' => Customizer::where('companies_id', $company)->get(),
