@@ -195,7 +195,8 @@
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary" id="inputPresentations"
+                                                                            <v-autocomplete color="primary"
+                                                                                id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
                                                                                 :items="presentations" item-text="name"
                                                                                 item-value="id" label="Presentación"
@@ -322,7 +323,8 @@
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
-                                                                            <v-autocomplete color="primary" id="inputAffectationIgv"
+                                                                            <v-autocomplete color="primary"
+                                                                                id="inputAffectationIgv"
                                                                                 v-model="editedItem.datosAffectationIgv"
                                                                                 :items="affectationIgvs"
                                                                                 item-text="description"
@@ -363,7 +365,8 @@
                                     </v-col>
                                     <!-- Fin Dialog add Productos a carrito -->
                                     <v-col cols="12" sm="5">
-                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2" v-model="form.description">
+                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2"
+                                            v-model="form.description">
                                         </v-textarea>
                                     </v-col>
                                     <!-- Tabla Carrito -->
@@ -510,12 +513,12 @@ export default {
                 voucher_number: '',
                 date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 documents_id: '',
-                customers_id:'',
+                customers_id: '',
                 payment_methods_id: '',
                 coins_id: '',
                 exchange_rate: this.exchange_rate,
-                description:'',
-                products:'',
+                description: '',
+                products: '',
                 total: 0,
             },
             headers: [
@@ -591,17 +594,17 @@ export default {
         initialize() {
             this.desserts = []
         },
-        editItem(item) {              
+        editItem(item) {
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
             // bloquear inputs
-            const inpPro=document.getElementById('inputProducts')
-            inpPro.disabled=true  
-            const inpPre=document.getElementById('inputPresentations')
-            inpPre.disabled=true  
-            const inpAff=document.getElementById('inputAffectationIgv')
-            inpAff.disabled=true  
+            const inpPro = document.getElementById('inputProducts')
+            inpPro.disabled = true
+            const inpPre = document.getElementById('inputPresentations')
+            inpPre.disabled = true
+            const inpAff = document.getElementById('inputAffectationIgv')
+            inpAff.disabled = true
         },
 
         deleteItem(item) {
@@ -622,12 +625,12 @@ export default {
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
             // Desbloquear inputs
-            const inpPro=document.getElementById('inputProducts')
-            inpPro.disabled=false  
-            const inpPre=document.getElementById('inputPresentations')
-            inpPre.disabled=false  
-            const inpAff=document.getElementById('inputAffectationIgv')
-            inpAff.disabled=false  
+            const inpPro = document.getElementById('inputProducts')
+            inpPro.disabled = false
+            const inpPre = document.getElementById('inputPresentations')
+            inpPre.disabled = false
+            const inpAff = document.getElementById('inputAffectationIgv')
+            inpAff.disabled = false
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -640,8 +643,14 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.total //quitando precio del producto
-                this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount// calculando nuevo precio
-                this.form.total += this.editedItem.total // agregando el nuevo precio
+                // calculando nuevo precio
+                var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                if (this.tipoMoneda.code == 'PEN') {
+                    this.editedItem.total = subTotal
+                } else {
+                    this.editedItem.total = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                }
+                this.form.total += this.editedItem.total
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
             } else {
@@ -665,19 +674,24 @@ export default {
                 this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
                 this.editedItem.igvAffectationDescription = this.editedItem.datosAffectationIgv.description
                 this.editedItem.igvAffectationId = this.editedItem.datosAffectationIgv.id
-                this.editedItem.total = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal=(this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                if (this.tipoMoneda.code == 'PEN') {
+                    this.editedItem.total = subTotal
+                } else {
+                    this.editedItem.total = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                }
 
                 // Datos Formulario
                 this.form.proof_payments_id = this.tipoComprobate.id
                 if (this.tipoComprobate.name == 'Comprobante') {
-                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroComprobantes
+                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroComprobantes
                 } if (this.tipoComprobate.name == 'Factura') {
-                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroFacturas
+                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroFacturas
                 } if (this.tipoComprobate.name == 'Boleta de Venta') {
-                    this.form.voucher_number = this.tipoComprobate.serie+'-'+this.nroBoletas
+                    this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroBoletas
                 }
                 this.form.documents_id = this.tipoDoc.id
-                this.form.customers_id=this.datosCliente.id
+                this.form.customers_id = this.datosCliente.id
                 this.form.payment_methods_id = this.metodoPago.id
                 this.form.coins_id = this.tipoMoneda.id
                 this.form.total += this.editedItem.total
@@ -689,10 +703,10 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
             })
         },
-        send_form () {
-                this.form.products = this.desserts
-                this.$inertia.post(route('orders.store'), this.form)
-            },
+        send_form() {
+            this.form.products = this.desserts
+            this.$inertia.post(route('orders.store'), this.form)
+        },
     },
 }
 </script>
