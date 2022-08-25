@@ -18,9 +18,11 @@ class CreateOrderDetailsTable extends Migration
             $table->foreignId('products_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('orders_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('affectation_igvs_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('presentations_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('quantity');
             $table->decimal('price', 11, 2);
             $table->decimal('discount', 11, 2);
+            $table->decimal('igv', 11, 2);
             $table->decimal('subTotal', 11, 2);
             $table->timestamps();
         });

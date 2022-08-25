@@ -138,7 +138,7 @@
                                     <!-- Fin Dialog Quotas -->
                                     <v-col cols="12" sm="3" md="3">
                                         <v-select :items="coins" label="Moneda" item-text="code" item-value="code"
-                                            v-model="tipoMoneda" return-object></v-select>
+                                            v-model="form.coins" @change="changeMoneda" return-object></v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Tipo Cambio" type="number" v-model="form.exchange_rate"
@@ -146,11 +146,8 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
-                                        <v-text-field v-if="tipoMoneda.code == 'PEN'" label="Total" type="number"
-                                            v-model="form.total" outlined prefix="S/" readonly>
-                                        </v-text-field>
-                                        <v-text-field v-if="tipoMoneda.code == 'USD'" label="Total" type="number"
-                                            v-model="form.total" outlined prefix="$" readonly>
+                                        <v-text-field label="Total" type="number"
+                                            v-model="form.total" outlined :prefix="simboloMoneda" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Dialog add Productos a carrito -->
@@ -505,10 +502,10 @@ export default {
             datosCliente: '',
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
-            tipoMoneda: this.coins[0],
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
+            simboloMoneda:'S/',
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -517,7 +514,8 @@ export default {
                 documents_id: '',
                 customers_id: '',
                 payment_methods_id: '',
-                coins_id: '',
+                coins_id: this.coins[0].id,
+                coins:this.coins[0],
                 exchange_rate: this.exchange_rate,
                 description: '',
                 products: '',
@@ -627,6 +625,15 @@ export default {
                 this.form.voucher_number = this.nroBoletas
             }
         },
+        changeMoneda(){
+            if(this.form.coins.code=='PEN'){
+                this.simboloMoneda='S/'
+                this.form.coins_id=this.form.coins.id
+            }if(this.form.coins.code=='USD'){
+                this.simboloMoneda='$'
+                this.form.coins_id=this.form.coins.id
+            }
+        },
         changeProduct() {
             this.editedItem.sale_price = this.editedItem.datosProducto.sale_price
             this.editedItem.price_by_unit = this.editedItem.datosProducto.price_by_unit
@@ -694,7 +701,7 @@ export default {
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
                 // calculando nuevo precio
                 var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
-                if (this.tipoMoneda.code == 'PEN') {
+                if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
                     this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
@@ -735,7 +742,7 @@ export default {
                     return;
                 }
                 var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
-                if (this.tipoMoneda.code == 'PEN') {
+                if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
                     this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
@@ -756,7 +763,6 @@ export default {
             this.form.documents_id = this.tipoDoc.id
             this.form.customers_id = this.datosCliente.id
             this.form.payment_methods_id = this.metodoPago.id
-            this.form.coins_id = this.tipoMoneda.id
             this.form.products = this.desserts
             if (this.form.products == '') {
                 this.snackbar_text = 'Carrito Vacio';
