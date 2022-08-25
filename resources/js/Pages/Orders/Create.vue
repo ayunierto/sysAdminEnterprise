@@ -38,7 +38,7 @@
                                     <v-col cols="12" sm="6" md="3">
                                         <v-select hint="Seleccione Comprobante" :items="proofPayments"
                                             label="Comprobante" item-text="name" item-value="code"
-                                            v-model="tipoComprobate" return-object>
+                                            v-model="tipoComprobate" @change="changeComprobante" return-object>
                                         </v-select>
                                         <!-- {{ tipoComprobate }} -->
                                     </v-col>
@@ -48,15 +48,7 @@
                                     </v-col>
                                     <!-- Correlativo de acuerdo al tipo de comprobante -->
                                     <v-col cols="12" sm="4" md="3">
-                                        <v-text-field label="Correlativo" v-if="tipoComprobate.name == 'Comprobante'"
-                                            v-model="nroComprobantes" readonly>
-                                        </v-text-field>
-                                        <v-text-field label="Correlativo" v-if="tipoComprobate.name == 'Factura'"
-                                            v-model="nroFacturas" readonly>
-                                        </v-text-field>
-                                        <v-text-field label="Correlativo"
-                                            v-if="tipoComprobate.name == 'Boleta de Venta'" v-model="nroBoletas"
-                                            readonly>
+                                        <v-text-field label="Correlativo" v-model="form.voucher_number" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="3">
@@ -191,9 +183,12 @@
                                                                                 label="Producto" auto-select-first
                                                                                 hide-no-data hide-selected
                                                                                 placeholder="Seleccione Producto"
-                                                                                persistent-hint return-object required>
+                                                                                persistent-hint return-object
+                                                                                @change="changeProduct" required>
                                                                             </v-autocomplete>
-                                                                            <h4>Stock Actual: {{editedItem.datosProducto.stock}}</h4>
+                                                                            <h4>Stock Actual:
+                                                                                {{ editedItem.datosProducto.stock }}
+                                                                            </h4>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
@@ -204,7 +199,8 @@
                                                                                 auto-select-first hide-no-data
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Presentación"
-                                                                                persistent-hint return-object required>
+                                                                                persistent-hint return-object
+                                                                                @change="changePresentation" required>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="3">
@@ -215,9 +211,9 @@
                                                                         </v-col>
                                                                         <v-col cols="9" sm="6" md="3">
                                                                             <v-text-field
-                                                                                v-model="editedItem.datosProducto.sale_price"
-                                                                                id="precioVenta" label="Precio Venta"
-                                                                                type="number" min="0" readonly>
+                                                                                v-model="editedItem.sale_price"
+                                                                                label="Precio Venta" type="number"
+                                                                                min="0">
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="2" sm="2" md="2">
@@ -249,8 +245,8 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
-                                                                                                                v-model="editedItem.datosProducto.price_by_unit"
-                                                                                                                readonly
+                                                                                                                v-model="editedItem.price_by_unit"
+                                                                                                                readonly                                                                                                                
                                                                                                                 solo>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
@@ -259,7 +255,7 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab>
+                                                                                                                fab @click="addPrice1">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -270,7 +266,7 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Mayor"
                                                                                                                 type="number"
-                                                                                                                v-model="editedItem.datosProducto.wholesale_price"
+                                                                                                                v-model="editedItem.wholesale_price"
                                                                                                                 readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
@@ -280,7 +276,7 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab>
+                                                                                                                fab @click="addPrice2">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -291,7 +287,7 @@
                                                                                                             <v-text-field
                                                                                                                 label="Precio Especial"
                                                                                                                 type="number"
-                                                                                                                v-model="editedItem.datosProducto.special_price"
+                                                                                                                v-model="editedItem.special_price"
                                                                                                                 readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
@@ -301,7 +297,7 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab>
+                                                                                                                fab @click="addPrice3">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -334,7 +330,8 @@
                                                                                 auto-select-first hide-no-data
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Afectación IGV"
-                                                                                persistent-hint return-object required>
+                                                                                persistent-hint return-object
+                                                                                @change="changeAffectatioIgv" required>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="4" md="4">
@@ -512,11 +509,10 @@ export default {
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
-            datosProducto:'',
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
-                voucher_number: '',
+                voucher_number: this.nroComprobantes,
                 date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 documents_id: '',
                 customers_id: '',
@@ -544,41 +540,45 @@ export default {
                 datosProducto: '',
                 productId: '',
                 productName: '',
-                sale_price: '',
-                price_by_unit: '',
-                wholesale_price: '',
-                special_price: '',
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
                 datosPresentation: this.presentations[0],
-                presentationId: '',
-                presentationName: '',
-                equivalence: '',
+                presentationId: this.presentations[0].id,
+                presentationName: this.presentations[0].name,
+                equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
                 datosAffectationIgv: this.affectationIgvs[0],
-                igvAffectationId: '',
-                igvAffectationDescription: '',
+                igvAffectationId: this.affectationIgvs[0].id,
+                igvAffectationDescription: this.affectationIgvs[0].description,
                 subTotal: 0,
             },
             defaultItem: {
                 datosProducto: '',
                 productId: '',
                 productName: '',
-                sale_price: '',
-                price_by_unit: '',
-                wholesale_price: '',
-                special_price: '',
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
                 datosPresentation: this.presentations[0],
-                presentationId: '',
-                presentationName: '',
-                equivalence: '',
+                presentationId: this.presentations[0].id,
+                presentationName: this.presentations[0].name,
+                equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
                 datosAffectationIgv: this.affectationIgvs[0],
-                igvAffectationId: '',
-                igvAffectationDescription: '',
+                igvAffectationId: this.affectationIgvs[0].id,
+                igvAffectationDescription: this.affectationIgvs[0].description,
                 subTotal: 0,
             },
         }
+    },
+    // Metodos al cargar formulario
+    mounted() {
+        this.jaja();
     },
     computed: {
         formTitle() {
@@ -600,17 +600,60 @@ export default {
         initialize() {
             this.desserts = []
         },
+        jaja() {
+            alert('Método Inicial')
+        },
+        addPrice1(){
+            this.editedItem.sale_price=this.editedItem.price_by_unit
+            this.dialogPrecios=false
+        },
+        addPrice2(){
+            this.editedItem.sale_price=this.editedItem.wholesale_price
+            this.dialogPrecios=false
+        },
+        addPrice3(){
+            this.editedItem.sale_price=this.editedItem.special_price
+            this.dialogPrecios=false
+        },
+        changeComprobante() {
+            if (this.tipoComprobate.code == '0A1') {
+                this.tipoDoc = this.documents[0]
+                this.form.voucher_number = this.nroComprobantes
+            } if (this.tipoComprobate.code == '01') {
+                this.tipoDoc = this.documents[1]
+                this.form.voucher_number = this.nroFacturas
+            } if (this.tipoComprobate.code == '03') {
+                this.tipoDoc = this.documents[0]
+                this.form.voucher_number = this.nroBoletas
+            }
+        },
+        changeProduct() {
+            this.editedItem.sale_price = this.editedItem.datosProducto.sale_price
+            this.editedItem.price_by_unit = this.editedItem.datosProducto.price_by_unit
+            this.editedItem.wholesale_price = this.editedItem.datosProducto.wholesale_price
+            this.editedItem.special_price = this.editedItem.datosProducto.special_price
+            this.editedItem.productName = this.editedItem.datosProducto.name
+            this.editedItem.productId = this.editedItem.datosProducto.id
+        },
+        changePresentation() {
+            this.editedItem.presentationName = this.editedItem.datosPresentation.name
+            this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
+        },
+        changeAffectatioIgv() {
+            this.editedItem.igvAffectationDescription = this.editedItem.datosAffectationIgv.description
+            this.editedItem.igvAffectationId = this.editedItem.datosAffectationIgv.id
+        },
         editItem(item) {
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
             // bloquear inputs
-            const inpPro = document.getElementById('inputProducts')
-            inpPro.disabled = true
-            const inpPre = document.getElementById('inputPresentations')
-            inpPre.disabled = trueinputProductstipo
-            const inpAff = document.getElementById('inputAffectationIgv')
-            inpAff.disabled = true
+            // const inpPro = document.getElementById('inputProducts')
+            // inpPro.disabled = true
+            // const inpPre = document.getElementById('inputPresentations')
+            // inpPre.disabled = true
+            // const inpAff = document.getElementById('inputAffectationIgv')
+            // inpAff.disabled = true
         },
 
         deleteItem(item) {
@@ -631,12 +674,12 @@ export default {
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
             // Desbloquear inputs
-            const inpPro = document.getElementById('inputProducts')
-            inpPro.disabled = false
-            const inpPre = document.getElementById('inputPresentations')
-            inpPre.disabled = false
-            const inpAff = document.getElementById('inputAffectationIgv')
-            inpAff.disabled = false
+            // const inpPro = document.getElementById('inputProducts')
+            // inpPro.disabled = false
+            // const inpPre = document.getElementById('inputPresentations')
+            // inpPre.disabled = false
+            // const inpAff = document.getElementById('inputAffectationIgv')
+            // inpAff.disabled = false
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -650,7 +693,7 @@ export default {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
                 // calculando nuevo precio
-                var subTotal = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
@@ -658,7 +701,7 @@ export default {
                 }
                 this.form.total += this.editedItem.subTotal
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
-
+                this.close()
             } else {
                 // Comprobando si dejo campos vacios
                 if (this.editedItem.datosProducto == '') {
@@ -673,38 +716,34 @@ export default {
                     this.snackbar = true;
                     return;
                 }
-                if (this.editedItem.discount < 0 ) {
+                if (this.editedItem.sale_price < 1) {
+                    this.snackbar_text = 'Precio incorrecto ';
+                    this.snackbar_color = 'green';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.discount < 0) {
                     this.snackbar_text = 'Descuento incorrecto ';
                     this.snackbar_color = 'lime accent-4';
                     this.snackbar = true;
                     return;
                 }
-                if (this.editedItem.datosProducto.stock < this.editedItem.quantity ) {
+                if (this.editedItem.datosProducto.stock < this.editedItem.quantity) {
                     this.snackbar_text = 'Sin Stock';
                     this.snackbar_color = 'lime accent-4';
                     this.snackbar = true;
                     return;
                 }
-                // Datos tabla
-                this.editedItem.productName = this.editedItem.datosProducto.name
-                this.editedItem.productId = this.editedItem.datosProducto.id
-                this.editedItem.sale_price = this.editedItem.datosProducto.sale_price
-                this.editedItem.price_by_unit = this.editedItem.datosProducto.price_by_unit
-                this.editedItem.wholesale_price = this.editedItem.datosProducto.wholesale_price
-                this.editedItem.special_price = this.editedItem.datosProducto.special_price
-                this.editedItem.presentationName = this.editedItem.datosPresentation.name
-                this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
-                this.editedItem.igvAffectationDescription = this.editedItem.datosAffectationIgv.description
-                this.editedItem.igvAffectationId = this.editedItem.datosAffectationIgv.id
-                var subTotal = (this.editedItem.datosProducto.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
                 if (this.tipoMoneda.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
                     this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
                 }
+                
                 this.form.total += this.editedItem.subTotal
                 // fin agregar producto a editedItem
-                
+
                 this.desserts.push(this.editedItem)
             }
             this.$nextTick(() => {
@@ -714,30 +753,23 @@ export default {
         send_form() {
             // Datos Formulario
             this.form.proof_payments_id = this.tipoComprobate.id
-            if (this.tipoComprobate.name == 'Comprobante') {
-                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroComprobantes
-            } if (this.tipoComprobate.name == 'Factura') {
-                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroFacturas
-            } if (this.tipoComprobate.name == 'Boleta de Venta') {
-                this.form.voucher_number = this.tipoComprobate.serie + '-' + this.nroBoletas
-            }
             this.form.documents_id = this.tipoDoc.id
             this.form.customers_id = this.datosCliente.id
             this.form.payment_methods_id = this.metodoPago.id
             this.form.coins_id = this.tipoMoneda.id
             this.form.products = this.desserts
             if (this.form.products == '') {
-                    this.snackbar_text = 'Carrito Vacio';
-                    this.snackbar_color = 'amber lighten-1';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.datosCliente=='') {
-                    this.snackbar_text = 'Datos de Cliente Vacio';
-                    this.snackbar_color = 'green darken-1';
-                    this.snackbar = true;
-                    return;
-                }
+                this.snackbar_text = 'Carrito Vacio';
+                this.snackbar_color = 'amber lighten-1';
+                this.snackbar = true;
+                return;
+            }
+            if (this.datosCliente == '') {
+                this.snackbar_text = 'Datos de Cliente Vacio';
+                this.snackbar_color = 'green darken-1';
+                this.snackbar = true;
+                return;
+            }
             this.$inertia.post(route('orders.store'), this.form)
         },
     },
