@@ -146,8 +146,8 @@
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
-                                        <v-text-field label="Total" type="number"
-                                            v-model="form.total" outlined :prefix="simboloMoneda" readonly>
+                                        <v-text-field label="Total" type="number" v-model="form.total" outlined
+                                            :prefix="simboloMoneda" readonly>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Dialog add Productos a carrito -->
@@ -243,7 +243,7 @@
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.price_by_unit"
-                                                                                                                readonly                                                                                                                
+                                                                                                                readonly
                                                                                                                 solo>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
@@ -252,7 +252,8 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab @click="addPrice1">
+                                                                                                                fab
+                                                                                                                @click="addPrice1">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -273,7 +274,8 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab @click="addPrice2">
+                                                                                                                fab
+                                                                                                                @click="addPrice2">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -294,7 +296,8 @@
                                                                                                                 color="amber accent-3"
                                                                                                                 small
                                                                                                                 class="ma-2 white--text"
-                                                                                                                fab @click="addPrice3">
+                                                                                                                fab
+                                                                                                                @click="addPrice3">
                                                                                                                 <v-icon
                                                                                                                     dark>
                                                                                                                     mdi-bookmark-check
@@ -505,7 +508,7 @@ export default {
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
-            simboloMoneda:'S/',
+            simboloMoneda: 'S/',
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -515,7 +518,7 @@ export default {
                 customers_id: '',
                 payment_methods_id: '',
                 coins_id: this.coins[0].id,
-                coins:this.coins[0],
+                coins: this.coins[0],
                 exchange_rate: this.exchange_rate,
                 description: '',
                 products: '',
@@ -524,10 +527,10 @@ export default {
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
                 { text: 'PRESENTACIÓN', value: 'presentationName' },
-                { text: 'EQUIVALENCIA', value: 'equivalence' },
                 { text: 'CANTIDAD', value: 'quantity' },
                 { text: 'PRECIO', value: 'sale_price' },
                 { text: 'DESCUENTO', value: 'discount' },
+                { text: 'IGV', value: 'igv' },
                 { text: 'AFECTACIÓN IGV', value: 'igvAffectationDescription' },
                 { text: 'SUB TOTAL', value: 'subTotal' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
@@ -548,6 +551,7 @@ export default {
                 equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
+                igv: 0,
                 datosAffectationIgv: this.affectationIgvs[0],
                 igvAffectationId: this.affectationIgvs[0].id,
                 igvAffectationDescription: this.affectationIgvs[0].description,
@@ -567,6 +571,7 @@ export default {
                 equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
+                igv: 0,
                 datosAffectationIgv: this.affectationIgvs[0],
                 igvAffectationId: this.affectationIgvs[0].id,
                 igvAffectationDescription: this.affectationIgvs[0].description,
@@ -601,17 +606,17 @@ export default {
         jaja() {
             alert('Método Inicial')
         },
-        addPrice1(){
-            this.editedItem.sale_price=this.editedItem.price_by_unit
-            this.dialogPrecios=false
+        addPrice1() {
+            this.editedItem.sale_price = this.editedItem.price_by_unit
+            this.dialogPrecios = false
         },
-        addPrice2(){
-            this.editedItem.sale_price=this.editedItem.wholesale_price
-            this.dialogPrecios=false
+        addPrice2() {
+            this.editedItem.sale_price = this.editedItem.wholesale_price
+            this.dialogPrecios = false
         },
-        addPrice3(){
-            this.editedItem.sale_price=this.editedItem.special_price
-            this.dialogPrecios=false
+        addPrice3() {
+            this.editedItem.sale_price = this.editedItem.special_price
+            this.dialogPrecios = false
         },
         changeComprobante() {
             if (this.tipoComprobate.code == '0A1') {
@@ -625,13 +630,13 @@ export default {
                 this.form.voucher_number = this.nroBoletas
             }
         },
-        changeMoneda(){
-            if(this.form.coins.code=='PEN'){
-                this.simboloMoneda='S/'
-                this.form.coins_id=this.form.coins.id
-            }if(this.form.coins.code=='USD'){
-                this.simboloMoneda='$'
-                this.form.coins_id=this.form.coins.id
+        changeMoneda() {
+            if (this.form.coins.code == 'PEN') {
+                this.simboloMoneda = 'S/'
+                this.form.coins_id = this.form.coins.id
+            } if (this.form.coins.code == 'USD') {
+                this.simboloMoneda = '$'
+                this.form.coins_id = this.form.coins.id
             }
         },
         changeProduct() {
@@ -699,12 +704,25 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
+
+                // calculo de igv
+                if (this.editedItem.datosAffectationIgv.code == '10') {
+                    var des= Number.parseFloat(this.editedItem.discount)
+                    var cant = Number.parseFloat(this.editedItem.quantity)
+                    var pres = Number.parseFloat(this.editedItem.sale_price)
+                    var descuentoUnitario=(des/cant).toFixed(2)
+                    var nvoPrecio=pres+ Number.parseFloat(descuentoUnitario) 
+                    var valor_igv =(nvoPrecio * 0.18).toFixed(2) 
+                    var nvoPrecioVenta =nvoPrecio - Number.parseFloat(valor_igv)
+                    this.editedItem.sale_price =nvoPrecioVenta
+                    this.editedItem.igv = Number.parseFloat(valor_igv)
+                }
                 // calculando nuevo precio
-                var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity)))+Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
-                    this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                    this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
                 this.form.total += this.editedItem.subTotal
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -741,13 +759,26 @@ export default {
                     this.snackbar = true;
                     return;
                 }
-                var subTotal = (this.editedItem.sale_price * this.editedItem.quantity) - this.editedItem.discount
+                // calculo de igv
+                if (this.editedItem.datosAffectationIgv.code == '10') {
+                    var des= Number.parseFloat(this.editedItem.discount)
+                    var cant = Number.parseFloat(this.editedItem.quantity)
+                    var pres = Number.parseFloat(this.editedItem.sale_price)
+                    var descuentoUnitario=(des/cant).toFixed(2)
+                    var nvoPrecio=pres+ Number.parseFloat(descuentoUnitario) 
+                    var valor_igv =(nvoPrecio * 0.18).toFixed(2) 
+                    var nvoPrecioVenta =nvoPrecio - Number.parseFloat(valor_igv)
+                    this.editedItem.sale_price =nvoPrecioVenta
+                    this.editedItem.igv = Number.parseFloat(valor_igv)
+                }
+                // calculando nuevo precio
+                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity)))+Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
-                    this.editedItem.subTotal = parseFloat((subTotal / this.exchange_rate).toFixed(3))
+                    this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
-                
+
                 this.form.total += this.editedItem.subTotal
                 // fin agregar producto a editedItem
 
