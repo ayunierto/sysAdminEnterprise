@@ -512,6 +512,7 @@ export default {
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
+            datosProducto:'',
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',

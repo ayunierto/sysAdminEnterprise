@@ -162,6 +162,8 @@ class OrderController extends Controller
         $products = $request->products;
         foreach ($products as $key => $value) {
             $order_details = new orderDetail();
+            $idProducto=$value['productId'];
+            $stockProducto = Product::find($idProducto);
             $order_details->orders_id = $order->id;
             $order_details->products_id = $value['productId'];
             $order_details->affectation_igvs_id = $value['igvAffectationId'];
@@ -171,6 +173,9 @@ class OrderController extends Controller
             $order_details->subTotal = $value['subTotal'];
 
             $order_details->save();
+            $stockProducto->update([
+                $stockProducto->stock -= $value['quantity']
+            ]);
         }
 
 
