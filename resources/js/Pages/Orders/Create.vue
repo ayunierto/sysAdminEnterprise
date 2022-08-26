@@ -721,7 +721,7 @@ export default {
                 // calculando nuevo precio
                 var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
-                    this.editedItem.subTotal = subTotal
+                    this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
@@ -784,7 +784,7 @@ export default {
                 // calculando nuevo precio
                 var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
-                    this.editedItem.subTotal = subTotal
+                    this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
