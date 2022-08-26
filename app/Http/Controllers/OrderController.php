@@ -16,6 +16,7 @@ use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Presentation;
 use App\Models\Product;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -72,6 +73,7 @@ class OrderController extends Controller
                             'quantity' => $d->quantity,
                             'price' => $d->price,
                             'discount' => $d->discount,
+                            'igv' => $d->igv,
                             'subTotal' => $d->subTotal,
                         ];
                     }),
@@ -91,12 +93,12 @@ class OrderController extends Controller
     public function create()
     {
         $query = new SunatController;
-        if($query->exchange_rate()=='error'){
-            $exchange_rate=0;
-        }else{
+        if ($query->exchange_rate() == 'error') {
+            $exchange_rate = 0;
+        } else {
             $exchange_rate = $query->exchange_rate()['venta'];
         }
-        
+
         $company = Auth::user()->companies_id;
         return Inertia::render('Orders/Create', [
             'colors' => Customizer::where('companies_id', $company)->get(),
@@ -144,42 +146,49 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $order = new Order();
+        try {
+            $order = new Order();
 
-        $order->companies_id = $request->companies_id;
-        $order->customers_id = $request->customers_id;
-        $order->payment_methods_id = $request->payment_methods_id;
-        $order->proof_payments_id = $request->proof_payments_id;
-        $order->coins_id = $request->coins_id;
-        $order->documents_id = $request->documents_id;
-        $order->voucher_number = $request->voucher_number;
-        $order->exchange_rate = $request->exchange_rate;
-        $order->total = $request->total;
-        $order->date = $request->date;
-        $order->description = $request->description;
-        $order->save();
+            $order->companies_id = $request->companies_id;
+            $order->customers_id = $request->customers_id;
+            $order->payment_methods_id = $request->payment_methods_id;
+            $order->proof_payments_id = $request->proof_payments_id;
+            $order->coins_id = $request->coins_id;
+            $order->documents_id = $request->documents_id;
+            $order->voucher_number = $request->voucher_number;
+            $order->exchange_rate = $request->exchange_rate;
+            $order->total = $request->total;
+            $order->date = $request->date;
+            $order->description = $request->description;
+            $order->save();
 
-        $products = $request->products;
-        foreach ($products as $key => $value) {
-            $order_details = new orderDetail();
-            $idProducto=$value['productId'];
-            $stockProducto = Product::find($idProducto);
-            $order_details->orders_id = $order->id;
-            $order_details->products_id = $value['productId'];
-            $order_details->affectation_igvs_id = $value['igvAffectationId'];
-            $order_details->quantity = $value['quantity'];
-            $order_details->price = $value['sale_price'];
-            $order_details->discount = $value['discount'];
-            $order_details->subTotal = $value['subTotal'];
+            $products = $request->products;
+            foreach ($products as $key => $value) {
+                $order_details = new orderDetail();
+                $idProducto = $value['productId'];
+                $stockProducto = Product::find($idProducto);
+                $order_details->orders_id = $order->id;
+                $order_details->products_id = $value['productId'];
+                $order_details->affectation_igvs_id = $value['igvAffectationId'];
+                $order_details->presentations_id = $value['presentationId'];
+                $order_details->quantity = $value['quantity'];
+                $order_details->price = $value['sale_price'];
+                $order_details->discount = $value['discount'];
+                $order_details->igv = $value['igv'];
+                $order_details->subTotal = $value['subTotal'];
 
-            $order_details->save();
-            $stockProducto->update([
-                $stockProducto->stock -= $value['quantity']
-            ]);
+                $order_details->save();
+                $stockProducto->update([
+                    $stockProducto->stock -= $value['quantity']
+                ]);
+            }
+
+
+            return Redirect::route('orders.index')->with('message', 'Venta agregada');
+        } catch (Exception $e) {
+            return Redirect::route('orders.create')->with('message', 'Error al agregar venta');
+            echo $e;
         }
-
-
-        return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
 
     /**
