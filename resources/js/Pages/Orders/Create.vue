@@ -191,7 +191,7 @@
                                                                             <v-autocomplete color="primary"
                                                                                 id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
-                                                                                :items="presentations" item-text="name"
+                                                                                :items="itemsPresentation" item-text="name"
                                                                                 item-value="id" label="Presentación"
                                                                                 auto-select-first hide-no-data
                                                                                 hide-selected
@@ -509,6 +509,7 @@ export default {
             snackbar_text: '',
             snackbar_color: '',
             simboloMoneda: 'S/',
+            itemsPresentation:null,
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -527,6 +528,7 @@ export default {
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
                 { text: 'PRESENTACIÓN', value: 'presentationName' },
+                { text: 'EQUIVALENCIA', value: 'equivalence' },
                 { text: 'CANTIDAD', value: 'quantity' },
                 { text: 'PRECIO', value: 'sale_price' },
                 { text: 'DESCUENTO', value: 'discount' },
@@ -545,10 +547,10 @@ export default {
                 price_by_unit: 0,
                 wholesale_price: 0,
                 special_price: 0,
-                datosPresentation: this.presentations[0],
-                presentationId: this.presentations[0].id,
-                presentationName: this.presentations[0].name,
-                equivalence: this.presentations[0].equivalence,
+                datosPresentation: '',
+                presentationId: '',
+                presentationName:'',
+                equivalence: '',
                 quantity: 1,
                 discount: 0,
                 igv: 0,
@@ -565,10 +567,10 @@ export default {
                 price_by_unit: 0,
                 wholesale_price: 0,
                 special_price: 0,
-                datosPresentation: this.presentations[0],
-                presentationId: this.presentations[0].id,
-                presentationName: this.presentations[0].name,
-                equivalence: this.presentations[0].equivalence,
+                datosPresentation: '',
+                presentationId: '',
+                presentationName: '',
+                equivalence: '',
                 quantity: 1,
                 discount: 0,
                 igv: 0,
@@ -646,8 +648,14 @@ export default {
             this.editedItem.special_price = this.editedItem.datosProducto.special_price
             this.editedItem.productName = this.editedItem.datosProducto.name
             this.editedItem.productId = this.editedItem.datosProducto.id
+            this.itemsPresentation=this.editedItem.datosProducto.presentation
+            this.editedItem.datosPresentation=this.editedItem.datosProducto.presentation[0]
+            this.editedItem.presentationId = this.editedItem.datosPresentation.id
+            this.editedItem.presentationName = this.editedItem.datosPresentation.name
+            this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
         },
         changePresentation() {
+            this.editedItem.presentationId = this.editedItem.datosPresentation.id
             this.editedItem.presentationName = this.editedItem.datosPresentation.name
             this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
         },
@@ -772,7 +780,7 @@ export default {
                     var igvTotal = totalVenta * 0.18
                     this.editedItem.sale_price = precUni
                     this.editedItem.igv = igvTotal
-                }else{
+                } else {
                     var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
                     var prec = Number.parseFloat(this.editedItem.sale_price)
@@ -818,15 +826,15 @@ export default {
                 return;
             }
             // Validar Si algun dato del for es nulo o cacio
-            const isEmpty = Object.values(this.form).some(x => (x === ''))
-            if (isEmpty == true) {
-                this.snackbar_text = 'Error al enviar Datos';
-                this.snackbar_color = 'blue lighten-2';
-                this.snackbar = true;
-                return;
-            } else {
+            // const isEmpty = Object.values(this.form).some(x => (x === ''))
+            // if (isEmpty == true) {
+            //     this.snackbar_text = 'Error al enviar Datos';
+            //     this.snackbar_color = 'blue lighten-2';
+            //     this.snackbar = true;
+            //     return;
+            // } else {
                 this.$inertia.post(route('orders.store'), this.form)
-            }
+            // }
         },
     },
 }

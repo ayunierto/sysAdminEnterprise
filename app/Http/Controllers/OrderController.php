@@ -132,7 +132,7 @@ class OrderController extends Controller
                     'special_price' => $p->special_price,
                     'description' => $p->description,
                     'state' => $p->state,
-                    'presentation' => Presentation::where('products_id', $p->id)->first(),
+                    'presentation' => Presentation::where('products_id', $p->id)->get(),
                 ];
             }),
         ]);
@@ -177,8 +177,9 @@ class OrderController extends Controller
                 $order_details->subTotal = $value['subTotal'];
 
                 $order_details->save();
+                $cant=$value['quantity']*$value['equivalence'];
                 $stockProducto->update([
-                    $stockProducto->stock -= $value['quantity']
+                    $stockProducto->stock -= $cant
                 ]);
             }
 
@@ -219,7 +220,6 @@ class OrderController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -230,6 +230,6 @@ class OrderController extends Controller
     {
         $orders = Order::find($id);
         $orders->delete();
-        return Redirect::route('orders.index')->with('message', 'Venta eliminada');
+        return Redirect::route('orders.index')->with('message', 'venta eliminada');
     }
 }
