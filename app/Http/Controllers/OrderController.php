@@ -146,7 +146,6 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        try {
             $order = new Order();
 
             $order->companies_id = $request->companies_id;
@@ -185,10 +184,6 @@ class OrderController extends Controller
 
 
             return Redirect::route('orders.index')->with('message', 'Venta agregada');
-        } catch (Exception $e) {
-            return Redirect::route('orders.create')->with('message', 'Error al agregar venta');
-            echo $e;
-        }
     }
 
     /**

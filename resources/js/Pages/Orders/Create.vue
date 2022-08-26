@@ -809,7 +809,17 @@ export default {
                 this.snackbar = true;
                 return;
             }
-            this.$inertia.post(route('orders.store'), this.form)
+            // Validar Si algun dato del for es nulo o cacio
+            const isEmpty = Object.values(this.form).some(x => (x === ''))
+            if(isEmpty==true){
+                this.snackbar_text = 'Error al enviar Datos';
+                this.snackbar_color = 'blue lighten-2';
+                this.snackbar = true;
+                return;
+            }else{
+                this.$inertia.post(route('orders.store'), this.form)
+            }
+                
         },
     },
 }
