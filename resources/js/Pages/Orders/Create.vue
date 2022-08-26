@@ -772,6 +772,14 @@ export default {
                     var igvTotal = totalVenta * 0.18
                     this.editedItem.sale_price = precUni
                     this.editedItem.igv = igvTotal
+                }else{
+                    var des = Number.parseFloat(this.editedItem.discount)
+                    var cant = Number.parseFloat(this.editedItem.quantity)
+                    var prec = Number.parseFloat(this.editedItem.sale_price)
+                    var totalVenta1 = (cant * prec) - des
+                    var precUni = totalVenta1 / cant
+                    var totalVenta = cant * precUni
+                    this.editedItem.sale_price = precUni
                 }
                 // calculando nuevo precio
                 var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
@@ -811,15 +819,14 @@ export default {
             }
             // Validar Si algun dato del for es nulo o cacio
             const isEmpty = Object.values(this.form).some(x => (x === ''))
-            if(isEmpty==true){
+            if (isEmpty == true) {
                 this.snackbar_text = 'Error al enviar Datos';
                 this.snackbar_color = 'blue lighten-2';
                 this.snackbar = true;
                 return;
-            }else{
+            } else {
                 this.$inertia.post(route('orders.store'), this.form)
             }
-                
         },
     },
 }
