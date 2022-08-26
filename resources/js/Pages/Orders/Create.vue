@@ -705,20 +705,21 @@ export default {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
 
-                // calculo de igv
+                // calcular de igv
                 if (this.editedItem.datosAffectationIgv.code == '10') {
-                    var des= Number.parseFloat(this.editedItem.discount)
+                    var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
-                    var pres = Number.parseFloat(this.editedItem.sale_price)
-                    var descuentoUnitario=(des/cant).toFixed(2)
-                    var nvoPrecio=pres+ Number.parseFloat(descuentoUnitario) 
-                    var valor_igv =(nvoPrecio * 0.18).toFixed(2) 
-                    var nvoPrecioVenta =nvoPrecio - Number.parseFloat(valor_igv)
-                    this.editedItem.sale_price =nvoPrecioVenta
-                    this.editedItem.igv = Number.parseFloat(valor_igv)
+                    var prec = Number.parseFloat(this.editedItem.sale_price)
+                    var totalVenta1 = (cant * prec) - des
+                    var prIgv = cant + (0.18 * cant)
+                    var precUni = totalVenta1 / prIgv
+                    var totalVenta = cant * precUni
+                    var igvTotal = totalVenta * 0.18
+                    this.editedItem.sale_price = precUni
+                    this.editedItem.igv = igvTotal
                 }
                 // calculando nuevo precio
-                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity)))+Number.parseFloat(this.editedItem.igv)
+                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
@@ -759,20 +760,21 @@ export default {
                     this.snackbar = true;
                     return;
                 }
-                // calculo de igv
+                // calcular de igv
                 if (this.editedItem.datosAffectationIgv.code == '10') {
-                    var des= Number.parseFloat(this.editedItem.discount)
+                    var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
-                    var pres = Number.parseFloat(this.editedItem.sale_price)
-                    var descuentoUnitario=(des/cant).toFixed(2)
-                    var nvoPrecio=pres+ Number.parseFloat(descuentoUnitario) 
-                    var valor_igv =(nvoPrecio * 0.18).toFixed(2) 
-                    var nvoPrecioVenta =nvoPrecio - Number.parseFloat(valor_igv)
-                    this.editedItem.sale_price =nvoPrecioVenta
-                    this.editedItem.igv = Number.parseFloat(valor_igv)
+                    var prec = Number.parseFloat(this.editedItem.sale_price)
+                    var totalVenta1 = (cant * prec) - des
+                    var prIgv = cant + (0.18 * cant)
+                    var precUni = totalVenta1 / prIgv
+                    var totalVenta = cant * precUni
+                    var igvTotal = totalVenta * 0.18
+                    this.editedItem.sale_price = precUni
+                    this.editedItem.igv = igvTotal
                 }
                 // calculando nuevo precio
-                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity)))+Number.parseFloat(this.editedItem.igv)
+                var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = subTotal
                 } else {
