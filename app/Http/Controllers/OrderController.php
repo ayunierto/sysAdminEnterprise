@@ -10,6 +10,8 @@ use App\Models\Document;
 use App\Models\Customer;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Models\AccountPayable;
+use App\Models\AccountReceivable;
 use App\Models\AffectationIgv;
 use App\Models\Coin;
 use App\Models\OrderDetail;
@@ -146,46 +148,50 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-            $order = new Order();
+        $order = new Order();
 
-            $order->companies_id = $request->companies_id;
-            $order->customers_id = $request->customers_id;
-            $order->payment_methods_id = $request->payment_methods_id;
-            $order->proof_payments_id = $request->proof_payments_id;
-            $order->coins_id = $request->coins_id;
-            $order->documents_id = $request->documents_id;
-            $order->voucher_number = $request->voucher_number;
-            $order->exchange_rate = $request->exchange_rate;
-            $order->total = $request->total;
-            $order->date = $request->date;
-            $order->description = $request->description;
-            $order->save();
+        $order->companies_id = $request->companies_id;
+        $order->customers_id = $request->customers_id;
+        $order->payment_methods_id = $request->payment_methods_id;
+        $order->proof_payments_id = $request->proof_payments_id;
+        $order->coins_id = $request->coins_id;
+        $order->documents_id = $request->documents_id;
+        $order->voucher_number = $request->voucher_number;
+        $order->exchange_rate = $request->exchange_rate;
+        $order->total = $request->total;
+        $order->date = $request->date;
+        $order->description = $request->description;
+        $order->save();
 
-            $products = $request->products;
-            foreach ($products as $key => $value) {
-                $order_details = new orderDetail();
-                $idProducto = $value['productId'];
-                $stockProducto = Product::find($idProducto);
-                $order_details->orders_id = $order->id;
-                $order_details->products_id = $value['productId'];
-                $order_details->affectation_igvs_id = $value['igvAffectationId'];
-                $order_details->presentations_id = $value['presentationId'];
-                $order_details->quantity = $value['quantity'];
-                $order_details->price = $value['sale_price'];
-                $order_details->discount = $value['discount'];
-                $order_details->igv = $value['igv'];
-                $order_details->subTotal = $value['subTotal'];
+        $products = $request->products;
+        foreach ($products as $key => $value) {
+            $order_details = new orderDetail();
+            $idProducto = $value['productId'];
+            $stockProducto = Product::find($idProducto);
+            $order_details->orders_id = $order->id;
+            $order_details->products_id = $value['productId'];
+            $order_details->affectation_igvs_id = $value['igvAffectationId'];
+            $order_details->presentations_id = $value['presentationId'];
+            $order_details->quantity = $value['quantity'];
+            $order_details->price = $value['sale_price'];
+            $order_details->discount = $value['discount'];
+            $order_details->igv = $value['igv'];
+            $order_details->subTotal = $value['subTotal'];
 
-                $order_details->save();
-                $cant=$value['quantity']*$value['equivalence'];
-                $stockProducto->update([
+            $order_details->save();
+            $cant = $value['quantity'] * $value['equivalence'];
+            $stockProducto->update([
                 $stockProducto->stock -= $cant
-                ]);
-            }
-            
-
-
-            return Redirect::route('orders.index')->with('message', 'Venta agregada');
+            ]);
+        }
+        if ($request->totalPago < $request->total) {
+            $accountReceivable = new AccountReceivable();
+            $accountReceivable->orders_id = $order->id;
+            $accountReceivable->payment = $request->totalPago;
+            $accountReceivable->debt = $request->total - $request->totalPago;
+            $accountReceivable->save();
+        }
+        return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
 
     /**
