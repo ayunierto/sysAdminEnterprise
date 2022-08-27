@@ -70,7 +70,7 @@
                                             placeholder="Buscar por Documento" persistent-hint return-object required>
                                         </v-autocomplete>
                                         <v-autocomplete v-if="tipoDoc.name == 'RUC'" color="primary" :items="customers"
-                                            item-text="name" v-model="datosCliente" item-value="id" label="Cliente"
+                                            item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
                                             auto-select-first hide-no-data hide-selected placeholder="Buscar por Nombre"
                                             persistent-hint return-object required>
                                         </v-autocomplete>
@@ -435,13 +435,13 @@
                                                     <v-row>
                                                         <v-col cols="12" md="6">
                                                             <v-text-field label="Total" v-model="form.total"
-                                                                type="number" readonly>
+                                                                :prefix="simboloMoneda" type="number" readonly>
                                                             </v-text-field>
                                                         </v-col>
 
                                                         <v-col cols="12" md="6">
                                                             <v-text-field label="Monto a pagar" v-model="pagoVenta"
-                                                                type="number" required>
+                                                                :prefix="simboloMoneda" min="0" :max="this.form.total" type="number" required>
                                                             </v-text-field>
                                                         </v-col>
                                                     </v-row>
@@ -825,6 +825,12 @@ export default {
             })
         },
         send_form() {
+            if(this.pagoVenta<0 || this.pagoVenta=='' || this.pagoVenta>this.form.total){
+                this.snackbar_text = 'Pago incorrecto';
+                this.snackbar_color = 'amber';
+                this.snackbar = true;
+                return;
+            }
             // Datos Formulario
             this.form.proof_payments_id = this.tipoComprobate.id
             this.form.documents_id = this.tipoDoc.id
