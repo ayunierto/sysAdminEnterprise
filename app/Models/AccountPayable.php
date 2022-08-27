@@ -13,6 +13,5 @@ class AccountPayable extends Model
         'payment',
         'debt',
         'description',
-        'date',
     ];
 }

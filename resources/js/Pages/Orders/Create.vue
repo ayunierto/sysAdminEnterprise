@@ -108,7 +108,7 @@
                                                     <v-card>
                                                         <v-card-title class="headline">Quotas</v-card-title>
                                                         <v-container>
-                                                            <v-row>
+                                                            <v-row id="nroQuotas">
                                                                 <v-col cols="12" sm="6" md="6">
                                                                     <v-text-field label="Monto" type="number" outlined>
                                                                     </v-text-field>
@@ -117,9 +117,10 @@
                                                                     <v-text-field label="fecha" type="date" outlined>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="6" md="6"><a>+ add quota</a>
+                                                                <v-col cols="12" sm="6" md="6"><a id="add_button"
+                                                                        title="+ add quota<"> + add
+                                                                        quota</a>
                                                                 </v-col>
-
                                                             </v-row>
                                                         </v-container>
 
@@ -191,10 +192,10 @@
                                                                             <v-autocomplete color="primary"
                                                                                 id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
-                                                                                :items="itemsPresentation" item-text="name"
-                                                                                item-value="id" label="Presentación"
-                                                                                auto-select-first hide-no-data
-                                                                                hide-selected
+                                                                                :items="itemsPresentation"
+                                                                                item-text="name" item-value="id"
+                                                                                label="Presentación" auto-select-first
+                                                                                hide-no-data hide-selected
                                                                                 placeholder="Seleccione Presentación"
                                                                                 persistent-hint return-object
                                                                                 @change="changePresentation" required>
@@ -421,7 +422,7 @@
                                 <div class="text-center">
                                     <v-dialog v-model="dialogPago" width="450">
                                         <template v-slot:activator="{ on, attrs }">
-                                            <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                                            <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="asignarTotal">
                                                 Confirmar
                                             </v-btn>
                                         </template>
@@ -439,7 +440,7 @@
                                                         </v-col>
 
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Monto a pagar" :value="form.total"
+                                                            <v-text-field label="Monto a pagar" v-model="pagoVenta"
                                                                 type="number" required>
                                                             </v-text-field>
                                                         </v-col>
@@ -509,7 +510,8 @@ export default {
             snackbar_text: '',
             snackbar_color: '',
             simboloMoneda: 'S/',
-            itemsPresentation:null,
+            itemsPresentation: null,            
+            pagoVenta:0,
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -524,6 +526,7 @@ export default {
                 description: '',
                 products: '',
                 total: 0,
+                totalPago:0,
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -549,7 +552,7 @@ export default {
                 special_price: 0,
                 datosPresentation: '',
                 presentationId: '',
-                presentationName:'',
+                presentationName: '',
                 equivalence: '',
                 quantity: 1,
                 discount: 0,
@@ -608,6 +611,21 @@ export default {
         jaja() {
             alert('Método Inicial')
         },
+        asignarTotal(){
+            this.pagoVenta=this.form.total
+        },
+
+        // Agregar quotas
+        // hola() {
+        //     var maxField = 10;
+        //     var wrapper = document.getElementById('nroQuotas') 
+        //     var fieldHTML = '<div>v-text-field label="fecha" type="date" outlined></v-text-field></div>';
+        //     var x = 1; 
+        //     if (x < maxField) {
+        //         x++;
+        //         wrapper.append(fieldHTML); 
+        //     }
+        // },
         addPrice1() {
             this.editedItem.sale_price = this.editedItem.price_by_unit
             this.dialogPrecios = false
@@ -648,8 +666,8 @@ export default {
             this.editedItem.special_price = this.editedItem.datosProducto.special_price
             this.editedItem.productName = this.editedItem.datosProducto.name
             this.editedItem.productId = this.editedItem.datosProducto.id
-            this.itemsPresentation=this.editedItem.datosProducto.presentation
-            this.editedItem.datosPresentation=this.editedItem.datosProducto.presentation[0]
+            this.itemsPresentation = this.editedItem.datosProducto.presentation
+            this.editedItem.datosPresentation = this.editedItem.datosProducto.presentation[0]
             this.editedItem.presentationId = this.editedItem.datosPresentation.id
             this.editedItem.presentationName = this.editedItem.datosPresentation.name
             this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
@@ -812,6 +830,8 @@ export default {
             this.form.documents_id = this.tipoDoc.id
             this.form.customers_id = this.datosCliente.id
             this.form.payment_methods_id = this.metodoPago.id
+            this.form.totalPago=this.pagoVenta
+
             this.form.products = this.desserts
             if (this.form.products == '') {
                 this.snackbar_text = 'Carrito Vacio';
@@ -833,7 +853,7 @@ export default {
             //     this.snackbar = true;
             //     return;
             // } else {
-                this.$inertia.post(route('orders.store'), this.form)
+            this.$inertia.post(route('orders.store'), this.form)
             // }
         },
     },

@@ -179,9 +179,10 @@ class OrderController extends Controller
                 $order_details->save();
                 $cant=$value['quantity']*$value['equivalence'];
                 $stockProducto->update([
-                    $stockProducto->stock -= $cant
+                $stockProducto->stock -= $cant
                 ]);
             }
+            
 
 
             return Redirect::route('orders.index')->with('message', 'Venta agregada');

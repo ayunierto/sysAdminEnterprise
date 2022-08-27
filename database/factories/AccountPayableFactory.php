@@ -20,7 +20,6 @@ class AccountPayableFactory extends Factory
             'payment' => rand(1,5),
             'debt' => rand(1,5),
             'description' => $this->faker->word(4),
-            'date'=> $this->faker->date(),
         ];
     }
 }

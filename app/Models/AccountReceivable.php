@@ -13,6 +13,5 @@ class AccountReceivable extends Model
         'payment',
         'debt',
         'description',
-        'date',
     ];
 }
