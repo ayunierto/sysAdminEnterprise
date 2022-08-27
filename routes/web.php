@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/presentations', PresentationController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/purchases', PurchaseController::class)->except('show');
     Route::resource('dashboard/settings', SettingController::class)->except('edit');
+    Route::resource('dashboard/warehouses', WarehouseController::class)->except('create', 'edit', 'show');
 });
 
 // Rutas de vendedores

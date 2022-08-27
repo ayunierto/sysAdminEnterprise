@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Warehouse;
 use App\Http\Requests\StoreWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
+use App\Models\Company;
+use App\Models\Customizer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class WarehouseController extends Controller
 {
@@ -15,19 +20,14 @@ class WarehouseController extends Controller
      */
     public function index()
     {
-        //
+        $company = Auth::user()->companies_id;
+        return Inertia::render('Warehouses/Index', [
+            'warehouses' => Warehouse::where('companies_id', Auth::user()->companies_id)->get(),
+            'companies' => Company::all(),
+            'colors' => Customizer::where('companies_id', $company)->get(),
+            'company' => Company::find(Auth::user()->companies_id),
+        ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -36,31 +36,9 @@ class WarehouseController extends Controller
      */
     public function store(StoreWarehouseRequest $request)
     {
-        //
+        Warehouse::create($request->all());
+        return Redirect::route('warehouses.index')->with('message', 'Almacén Registrado');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Warehouse  $warehouse
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Warehouse $warehouse)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Warehouse  $warehouse
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Warehouse $warehouse)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -68,9 +46,11 @@ class WarehouseController extends Controller
      * @param  \App\Models\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
+    public function update(UpdateWarehouseRequest $request, $id)
     {
-        //
+        $mark = Warehouse::find($id);
+        $mark->update($request->all());
+        return Redirect::route('warehouses.index')->with('message', 'Almacén Actualizadao');
     }
 
     /**
@@ -79,8 +59,10 @@ class WarehouseController extends Controller
      * @param  \App\Models\Warehouse  $warehouse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Warehouse $warehouse)
+    public function destroy($id)
     {
-        //
+        $mark = Warehouse::find($id);
+        $mark->delete();
+        return Redirect::route('warehouses.index')->with('message', 'Almacén eliminado');
     }
 }
