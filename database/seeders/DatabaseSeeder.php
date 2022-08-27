@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
             OrderDetailSeeder::class,
             AccountReceivableSeeder::class,
             AccountPayableSeeder::class,
+            WarehouseSeeder::class,
         ]);
     }
 }

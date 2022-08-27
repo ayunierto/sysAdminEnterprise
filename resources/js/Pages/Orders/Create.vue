@@ -415,9 +415,11 @@
                         <v-divider></v-divider>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="red" @click="" dark>
+                            <inertia-link :href="route('orders.create')">
+                            <v-btn color="red" dark>
                                 Cancelar
                             </v-btn>
+                            </inertia-link>
                             <template>
                                 <div class="text-center">
                                     <v-dialog v-model="dialogPago" width="450">
