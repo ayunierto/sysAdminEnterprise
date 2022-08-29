@@ -12,6 +12,7 @@ use App\Models\Measure;
 use App\Models\Presentation;
 use App\Models\Customizer;
 use App\Models\Provider;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class ProductController extends Controller
         $company_id = Auth::user()->companies_id;
 
         return Inertia::render('Products/Index', [
+            'warehouses' => Warehouse::where('companies_id', $company_id)->get(),
             'products' => Product::where('companies_id', $company_id)->get(),
             'companies' => Company::all(),
             'categories' => Category::where('companies_id', $company_id)->get(),

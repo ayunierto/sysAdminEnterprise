@@ -305,7 +305,7 @@
                             </v-card>
 
                         </v-list-group>
-                        
+
                         <!-- <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'"> -->
                             <v-list-item link :style="item_style()">
                                 <v-list-item-icon>
@@ -333,6 +333,17 @@
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>PROVEEDORES</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </inertia-link>
+
+                        <inertia-link :href="route('warehouses.index')" v-if="$page.props.user.role != 'seller'">
+                            <v-list-item link :style="item_style()">
+                                <v-list-item-icon>
+                                    <v-icon :style="item_style()">mdi-warehouse</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>ALMACENES</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </inertia-link>
@@ -411,12 +422,12 @@ export default {
             drawer: null,
             hidden: false,
 
-            colorMenu: this.$page.props.colors[0].color_menu != '' ? this.$page.props.colors[0].color_menu : 'indigo darken-2', 
-            colorSubMenu: this.$page.props.colors[0].color_sub_menu != '' ? this.$page.props.colors[0].color_sub_menu : 'indigo darken-2', 
+            colorMenu: this.$page.props.colors[0].color_menu != '' ? this.$page.props.colors[0].color_menu : 'indigo darken-2',
+            colorSubMenu: this.$page.props.colors[0].color_sub_menu != '' ? this.$page.props.colors[0].color_sub_menu : 'indigo darken-2',
             colorHeader: this.$page.props.colors[0].color_header != '' ? this.$page.props.colors[0].color_header : 'indigo darken-2',
             colorFooter: this.$page.props.colors[0].color_footer != '' ? this.$page.props.colors[0].color_footer : 'indigo darken-2',
             colorText: this.$page.props.colors[0].color_text != '' ? this.$page.props.colors[0].color_text : '#FFFFFFFF',
-            
+
         };
     },
     methods: {

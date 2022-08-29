@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('warehouses_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('categories_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('marks_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
@@ -33,7 +34,7 @@ class CreateProductsTable extends Migration
             $table->string('description')->nullable();
             $table->boolean('state')->default(1);
             $table->date('expiration_date')->nullable();
-            
+
             $table->timestamps();
         });
     }

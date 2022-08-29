@@ -8,6 +8,7 @@ use App\Models\Mark;
 use App\Models\Measure;
 use App\Models\Presentation;
 use App\Models\Provider;
+use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
@@ -24,9 +25,11 @@ class ProductFactory extends Factory
         $marks = Mark::count();
         $measures = Measure::count();
         $providers = Provider::count();
+        $warehouses=Warehouse::count();
 
         return [
             'companies_id' => rand(1, $companies),
+            'warehouses_id'=> rand(1, $warehouses),
             'categories_id' => rand(1, $categories),
             'marks_id' => rand(1, $marks),
             'measures_id' => rand(1, $measures),

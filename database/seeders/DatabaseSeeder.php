@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             MarkSeeder::class,
             MeasureSeeder::class,
             ProviderSeeder::class,
+            WarehouseSeeder::class,
             ProductSeeder::class,
             PresentationSeeder::class,
             CustomerSeeder::class,
@@ -49,7 +50,6 @@ class DatabaseSeeder extends Seeder
             OrderDetailSeeder::class,
             AccountReceivableSeeder::class,
             AccountPayableSeeder::class,
-            WarehouseSeeder::class,
         ]);
     }
 }

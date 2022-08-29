@@ -17,7 +17,7 @@
                     <v-spacer></v-spacer>
 
                     <v-dialog v-model="dialog" max-width="700px" persistent>
-                    
+
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                             Agregar Producto
@@ -45,6 +45,15 @@
                                                 :items="companies" item-text="name" item-value="id" label="Empresa"
                                                 auto-select-first hide-no-data hide-selected
                                                 placeholder="Seleccione Empresa" persistent-hint>
+                                            </v-autocomplete>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="4">
+                                            <v-autocomplete v-model="editedItem.warehouses_id" color="primary"
+                                                :items="warehouses" item-text="name" item-value="id" label="Almacén"
+                                                auto-select-first hide-no-data hide-selected
+                                                placeholder="Seleccione Almacén" persistent-hint
+                                                :rules="requiredField" required>
                                             </v-autocomplete>
                                         </v-col>
 
@@ -127,7 +136,7 @@
                                             <v-text-field v-model="editedItem.special_price" type="number"
                                                 label="Precio especial" min="0"></v-text-field>
                                         </v-col>
-                                        
+
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.stock_min" type="number"
                                                 label="Stock mínimo" min="1"></v-text-field>
@@ -216,6 +225,7 @@
 
 export default {
     props: [
+        'warehouses',
         'products',
         'companies',
         'categories',
@@ -258,6 +268,7 @@ export default {
 
                 editedItem: {
                     companies_id: this.$page.props.user.companies_id,
+                    warehouses_id:'',
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',
@@ -279,6 +290,7 @@ export default {
 
                 defaultItem: {
                     companies_id: this.$page.props.user.companies_id,
+                    warehouses_id:'',
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',
@@ -297,7 +309,7 @@ export default {
                     state: 1,
                     expiration_date: '',
                 },
-                
+
             }
         },
 
@@ -327,7 +339,7 @@ export default {
 
     updated() {
 
-        // Para que agregue en el data table el item despues de saber que no hay errores en 
+        // Para que agregue en el data table el item despues de saber que no hay errores en
         // en el formulario de crear
 
         if (Object.values(this.$page.props.errors).length == 0) {
@@ -385,14 +397,14 @@ export default {
         save() {
             if (this.editedIndex > -1) {
 
-                // esto agregaba el item a la tabla con solo javascrip 
+                // esto agregaba el item a la tabla con solo javascrip
                 //pero ya no es necesario porque se renderiza el componente desde
                 // el servidor
                 // Object.assign(this.desserts[this.editedIndex], this.editedItem)
 
                 // Update
                 // ***************************************
-                // enviado formulario de almacenar 
+                // enviado formulario de almacenar
                 this.$inertia.patch(route('products.update', this.editedItem), this.editedItem)
                 // ***************************************
 
@@ -400,7 +412,7 @@ export default {
 
                 // Store
                 // ***************************************
-                // enviado formulario de almacenar 
+                // enviado formulario de almacenar
                 this.$inertia.post(route('products.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
