@@ -208,12 +208,12 @@
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="9" sm="6" md="3">
-                                                                            <v-text-field
+                                                                            <v-text-field id="precioV"
                                                                                 v-model="editedItem.sale_price"
                                                                                 label="Precio Venta" type="number"
                                                                                 min="0">
                                                                             </v-text-field>
-                                                                        </v-col>
+                                                                        </v-col>                                                                     
                                                                         <v-col cols="2" sm="2" md="2">
                                                                             <!--Dialog Lista de Precios -->
                                                                             <template>
@@ -416,9 +416,9 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <inertia-link :href="route('orders.create')">
-                            <v-btn color="red" dark>
-                                Cancelar
-                            </v-btn>
+                                <v-btn color="red" dark>
+                                    Cancelar
+                                </v-btn>
                             </inertia-link>
                             <template>
                                 <div class="text-center">
@@ -443,7 +443,8 @@
 
                                                         <v-col cols="12" md="6">
                                                             <v-text-field label="Monto a pagar" v-model="pagoVenta"
-                                                                :prefix="simboloMoneda" min="0" :max="this.form.total" type="number" required>
+                                                                :prefix="simboloMoneda" min="0" :max="this.form.total"
+                                                                type="number" required>
                                                             </v-text-field>
                                                         </v-col>
                                                     </v-row>
@@ -512,8 +513,8 @@ export default {
             snackbar_text: '',
             snackbar_color: '',
             simboloMoneda: 'S/',
-            itemsPresentation: null,            
-            pagoVenta:0,
+            itemsPresentation: null,
+            pagoVenta: 0,
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 proof_payments_id: '',
@@ -528,7 +529,7 @@ export default {
                 description: '',
                 products: '',
                 total: 0,
-                totalPago:0,
+                totalPago: 0,
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -613,8 +614,8 @@ export default {
         jaja() {
             alert('Método Inicial')
         },
-        asignarTotal(){
-            this.pagoVenta=this.form.total
+        asignarTotal() {
+            this.pagoVenta = this.form.total
         },
 
         // Agregar quotas
@@ -687,6 +688,20 @@ export default {
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
+            if(this.form.coins.code=='PEN'){
+                var piu=this.editedItem.igv/this.editedItem.quantity
+                var dis=this.editedItem.discount/this.editedItem.quantity
+                var val=Number.parseFloat(this.editedItem.sale_price)+Number.parseFloat(dis)+Number.parseFloat(piu)
+                this.editedItem.sale_price =Number.parseFloat(val.toFixed(2))
+            }else{
+                this.editedItem.igv=this.editedItem.igv*this.exchange_rate
+                this.editedItem.discount=this.editedItem.discount*this.exchange_rate
+                var piu=this.editedItem.igv/this.editedItem.quantity
+                var dis=this.editedItem.discount/this.editedItem.quantity
+                var prc =(this.editedItem.sale_price*this.exchange_rate)+dis+piu      
+                this.editedItem.sale_price=Number.parseFloat(prc.toFixed(2))
+            }
+            
             // bloquear inputs
             // const inpPro = document.getElementById('inputProducts')
             // inpPro.disabled = true
@@ -732,7 +747,37 @@ export default {
             if (this.editedIndex > -1) {
                 // Actualizando precios segun compra
                 this.form.total -= this.editedItem.subTotal //quitando precio del producto
-
+                // Comprobando si dejo campos vacios
+                if (this.editedItem.datosProducto == '') {
+                    this.snackbar_text = 'Complete los campos';
+                    this.snackbar_color = 'red';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.quantity < 1) {
+                    this.snackbar_text = 'Cantidad incorrecta';
+                    this.snackbar_color = 'light-blue darken-2';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.sale_price < 1) {
+                    this.snackbar_text = 'Precio incorrecto ';
+                    this.snackbar_color = 'green';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.discount < 0) {
+                    this.snackbar_text = 'Descuento incorrecto ';
+                    this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
+                if (this.editedItem.datosProducto.stock < this.editedItem.quantity) {
+                    this.snackbar_text = 'Sin Stock';
+                    this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
                 // calcular de igv
                 if (this.editedItem.datosAffectationIgv.code == '10') {
                     var des = Number.parseFloat(this.editedItem.discount)
@@ -745,12 +790,23 @@ export default {
                     var igvTotal = totalVenta * 0.18
                     this.editedItem.sale_price = precUni
                     this.editedItem.igv = igvTotal
+                } else {
+                    var des = Number.parseFloat(this.editedItem.discount)
+                    var cant = Number.parseFloat(this.editedItem.quantity)
+                    var prec = Number.parseFloat(this.editedItem.sale_price)
+                    var totalVenta1 = (cant * prec) - des
+                    var precUni = totalVenta1 / cant
+                    this.editedItem.sale_price = precUni
+                    this.editedItem.igv=0
                 }
                 // calculando nuevo precio
                 var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
+                    this.editedItem.sale_price=this.editedItem.sale_price/this.exchange_rate
+                    this.editedItem.igv=this.editedItem.igv/this.exchange_rate
+                    this.editedItem.discount=this.editedItem.discount/this.exchange_rate
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
                 this.form.total += this.editedItem.subTotal
@@ -814,12 +870,16 @@ export default {
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
+                    this.editedItem.sale_price=this.editedItem.sale_price/this.exchange_rate
+                    this.editedItem.igv=this.editedItem.igv/this.exchange_rate
+                    this.editedItem.discount=this.editedItem.discount/this.exchange_rate
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
 
                 this.form.total += this.editedItem.subTotal
                 // fin agregar producto a editedItem
 
+                // Valor inicial de precio de venta
                 this.desserts.push(this.editedItem)
             }
             this.$nextTick(() => {
@@ -827,7 +887,7 @@ export default {
             })
         },
         send_form() {
-            if(this.pagoVenta<0 || this.pagoVenta=='' || this.pagoVenta>this.form.total){
+            if (this.pagoVenta < 0 || this.pagoVenta == '' || this.pagoVenta > this.form.total) {
                 this.snackbar_text = 'Pago incorrecto';
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
@@ -838,7 +898,7 @@ export default {
             this.form.documents_id = this.tipoDoc.id
             this.form.customers_id = this.datosCliente.id
             this.form.payment_methods_id = this.metodoPago.id
-            this.form.totalPago=this.pagoVenta
+            this.form.totalPago = this.pagoVenta
 
             this.form.products = this.desserts
             if (this.form.products == '') {

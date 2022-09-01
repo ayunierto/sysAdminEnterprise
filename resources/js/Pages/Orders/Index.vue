@@ -109,7 +109,6 @@
                                                     <th class="text-left"> PRODUCTO </th>
                                                     <th class="text-left"> CANTIDAD </th>
                                                     <th class="text-left"> PRECIO </th>
-                                                    <th class="text-left"> DESCUENTO </th>
                                                     <th class="text-left"> IGV </th>
                                                     <th class="text-left"> SUB TOTAL </th>
                                                 </tr>
@@ -120,7 +119,6 @@
                                                     <td>{{ item.product_name }}</td>
                                                     <td>{{ item.quantity }}</td>
                                                     <td>{{ item.price }}</td>
-                                                    <td>{{ item.discount }}</td>
                                                     <td>{{ item.igv }}</td>
                                                     <td>{{ item.subTotal }}</td>
                                                 </tr>
