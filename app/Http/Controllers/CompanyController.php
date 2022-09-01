@@ -8,6 +8,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Customer;
 use App\Models\Provider;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -50,6 +51,12 @@ class CompanyController extends Controller
         $provider->companies_id = $company->id;
         $provider->name ="Proveedor General";
         $provider->document  = 0;
+        $provider->save();
+        //agregar un almacén general
+        $warehouse= new Warehouse();
+        $warehouse->companies_id = $company->id;
+        $provider->name ="Almacén General";
+        $provider->	contact_number  = 000000000;
         $provider->save();
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
     }

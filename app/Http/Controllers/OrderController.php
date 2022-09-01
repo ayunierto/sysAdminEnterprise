@@ -161,6 +161,9 @@ class OrderController extends Controller
         $order->total = $request->total;
         $order->date = $request->date;
         $order->description = $request->description;
+        if ($request->totalPago < $request->total) {
+            $order->state = 0;
+        }
         $order->save();
 
         $products = $request->products;

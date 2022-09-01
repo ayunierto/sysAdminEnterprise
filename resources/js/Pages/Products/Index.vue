@@ -268,7 +268,7 @@ export default {
 
                 editedItem: {
                     companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:'',
+                    warehouses_id:this.warehouses[0],
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',
@@ -290,7 +290,7 @@ export default {
 
                 defaultItem: {
                     companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:'',
+                    warehouses_id:this.warehouses[0],
                     categories_id: '',
                     marks_id: '',
                     measures_id: '',

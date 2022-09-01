@@ -64,16 +64,16 @@
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-autocomplete v-if="tipoDoc.name == 'DNI'" color="primary" :items="customers"
+                                        <v-autocomplete color="primary" :items="customers"
                                             item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
                                             auto-select-first hide-no-data hide-selected
                                             placeholder="Buscar por Documento" persistent-hint return-object required>
                                         </v-autocomplete>
-                                        <v-autocomplete v-if="tipoDoc.name == 'RUC'" color="primary" :items="customers"
+                                        <!-- <v-autocomplete v-if="tipoDoc.name == 'DNI'" color="primary" :items="customers"
                                             item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
                                             auto-select-first hide-no-data hide-selected placeholder="Buscar por Nombre"
                                             persistent-hint return-object required>
-                                        </v-autocomplete>
+                                        </v-autocomplete> -->
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
                                         <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly>
