@@ -155,7 +155,7 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'CLIENTE', value: 'customers_name' },
-                { text: 'TOTAL', value: 'total_order' },
+                { text: 'TOTAL', value: 'total' },
                 { text: 'PAGO', value: 'payment' },
                 { text: 'DEUDA', value: 'debt' },
                 { text: 'DESCRIPCION', value: 'description' },
