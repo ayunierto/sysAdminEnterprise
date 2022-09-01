@@ -14,7 +14,7 @@
             </div>
         </div>
         <!-- Fin de Alertas -->
-        <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
+        <v-data-table :headers="headers" :items="desserts" sort-desc sort-by="date" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Listado de Ventas</v-toolbar-title>

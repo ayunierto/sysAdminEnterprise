@@ -197,6 +197,18 @@
                                         </v-list-item>
                                     <!-- </inertia-link> -->
 
+                                    <inertia-link :href="route('accountReceivables.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>CUENTAS POR COBRAR</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                 </v-list-item-group>
                             </v-card>
                         </v-list-group>
