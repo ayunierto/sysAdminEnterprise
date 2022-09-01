@@ -15,10 +15,12 @@ class CreateAccountReceivablesTable extends Migration
     {
         Schema::create('account_receivables', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('orders_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('payment', 11, 2);
             $table->decimal('debt', 11, 2);
             $table->string('description', 250)->nullable();
+            $table->boolean('state')->default(0);
             $table->timestamps();
         });
     }

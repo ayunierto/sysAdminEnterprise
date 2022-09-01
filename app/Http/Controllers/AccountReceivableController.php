@@ -5,6 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\AccountReceivable;
 use App\Http\Requests\StoreAccountReceivableRequest;
 use App\Http\Requests\UpdateAccountReceivableRequest;
+use App\Models\Coin;
+use App\Models\Company;
+use App\Models\Customer;
+use App\Models\Customizer;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\ProofPayment;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class AccountReceivableController extends Controller
 {
@@ -15,7 +25,43 @@ class AccountReceivableController extends Controller
      */
     public function index()
     {
-        //
+        $company = Auth::user()->companies_id;
+        return Inertia::render('AccountReceivables/Index', [
+            'accountReceivables' => AccountReceivable::where('companies_id', $company)->where('state', 0)->get()->map(function ($p) {
+                return [
+                    'id' => $p->id,
+                    'orders_id' => $p->orders_id,
+                    $id_cliente = Order::where('id', $p->orders_id)->value('customers_id'),
+                    'customers_name' => Customer::find($id_cliente)->name,
+                    $id_comprobante = Order::where('id', $p->orders_id)->value('proof_payments_id'),
+                    'proof_payments_name' => ProofPayment::find($id_comprobante)->name,
+                    $id_moneda = Order::where('id', $p->orders_id)->value('coins_id'),
+                    'coin' => Coin::find($id_moneda)->code,
+                    'exchange_rate' => Order::where('id', $p->orders_id)->value('exchange_rate'),
+                    'total' => Order::where('id', $p->orders_id)->value('total'),
+                    'date' => Order::where('id', $p->orders_id)->value('date'),
+                    'payment' => $p->payment,
+                    'debt'  => $p->debt,
+                    'description' => $p->description,
+                    'details' => OrderDetail::where('orders_id', $p->orders_id)->get()->map(function ($d) {
+                        return [
+                            'id' => $d->id,
+                            'orders_id' => $d->orders_id,
+                            'products_id' => $d->products_id,
+                            'product_name' => Product::find($d->products_id)->name,
+                            'quantity' => $d->quantity,
+                            'price' => $d->price,
+                            'discount' => $d->discount,
+                            'igv' => $d->igv,
+                            'subTotal' => $d->subTotal,
+                        ];
+                    }),
+                ];
+            }),
+            'company' => Company::find($company),
+            'colors' => Customizer::where('companies_id', $company)->get(),
+
+        ]);
     }
 
     /**

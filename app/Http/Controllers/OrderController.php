@@ -34,16 +34,6 @@ class OrderController extends Controller
     {
         $company = Auth::user()->companies_id;
         return Inertia::render('Orders/Index', [
-            'companies' => Company::all(),
-            'customers' => Customer::all(),
-            'payment_methods' => PaymentMethod::all(),
-            'proof_payments' => ProofPayment::all(),
-            'coins' => Coin::all(),
-            'documents' => Document::all(),
-            'presentations' => Presentation::all(),
-            'affectationIgvs' => AffectationIgv::all(),
-            'products' => Product::all(),
-
             'orders' => Order::where('companies_id', $company)->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
@@ -189,6 +179,7 @@ class OrderController extends Controller
         }
         if ($request->totalPago < $request->total) {
             $accountReceivable = new AccountReceivable();
+            $accountReceivable->companies_id = $request->companies_id;
             $accountReceivable->orders_id = $order->id;
             $accountReceivable->payment = $request->totalPago;
             $accountReceivable->debt = $request->total - $request->totalPago;

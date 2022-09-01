@@ -17,7 +17,7 @@
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Listado de Ventas</v-toolbar-title>
+                    <v-toolbar-title>CUENTAS POR COBRAR</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical></v-divider>
 
@@ -25,9 +25,9 @@
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line hide-details>
                     </v-text-field>
                     <v-spacer></v-spacer>
-                    <inertia-link :href="route('orders.create')">
+                    <inertia-link :href="route('orders.index')">
                         <v-btn color="primary" dark class="mb-2">
-                            Nueva Venta
+                            VENTAS
                         </v-btn>
                     </inertia-link>
                     <!-- Memsaje al presionar boton borrar -->
@@ -72,11 +72,7 @@
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="METODO PAGO" v-model="editedItem.payment_method" readonly>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="COMPROBANTE" v-model="editedItem.proof_payment" readonly>
+                                    <v-text-field label="COMPROBANTE" v-model="editedItem.proof_payments_name" readonly>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
@@ -84,7 +80,7 @@
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="Tipo de cambio" v-model="editedItem.exchange_rate" readonly>
+                                    <v-text-field label="TIPO DE CAMBIO" v-model="editedItem.exchange_rate" readonly>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
@@ -93,10 +89,6 @@
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
                                     <v-text-field label="FECHA" v-model="editedItem.date" readonly>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="ESTADO" v-model="editedItem.state_name" readonly>
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -148,7 +140,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 
 export default {
     props: [
-        'orders',
+        'accountReceivables',
     ],
     components: {
         AdminLayout,
@@ -162,10 +154,11 @@ export default {
             dialog: false,
             dialogDelete: false,
             headers: [
-                { text: 'FECHA', value: 'date' },
                 { text: 'CLIENTE', value: 'customers_name' },
-                { text: 'TOTAL', value: 'total' },
-                { text: 'ESTADO', value: 'state_name' },
+                { text: 'TOTAL', value: 'total_order' },
+                { text: 'PAGO', value: 'payment' },
+                { text: 'DEUDA', value: 'debt' },
+                { text: 'DESCRIPCION', value: 'description' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -174,47 +167,29 @@ export default {
 
             editedItem: {
                 id:'',
-                companies_id: '',
-                company_name: '',
-                customers_id: '',
-                customers_name: '',
-                payment_methods_id: '',
-                payment_method: '',
-                proof_payments_id: '',
-                proof_payment: '',
-                coins_id: '',
-                coin: '',
-                documents_id: '',
-                documents_name: '',
-                exchange_rate: '',
-                total: '',
-                date: '',
-                state: '',
-                state_name: '',
-                description: '',
+                companies_id: this.$page.props.user.companies_id,
+                proof_payments_name:'',
+                coin:'',
+                exchange_rate:'',
+                total:'',
+                date:'',
+                payment: '',
+                debt: '',
+                description:'',
                 details: '',
             },
 
             defaultItem: {
                 id:'',
-                companies_id: '',
-                company_name: '',
-                customers_id: '',
-                customers_name: '',
-                payment_methods_id: '',
-                payment_method: '',
-                proof_payments_id: '',
-                proof_payment: '',
-                coins_id: '',
-                coin: '',
-                documents_id: '',
-                documents_name: '',
-                exchange_rate: '',
-                total: '',
-                date: '',
-                state: '',
-                state_name: '',
-                description: '',
+                companies_id: this.$page.props.user.companies_id,
+                proof_payments_name:'',
+                coin:'',
+                exchange_rate:'',
+                total:'',
+                date:'',
+                payment: '',
+                debt: '',
+                description:'',
                 details: '',
             },
 
@@ -244,7 +219,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.orders
+            this.desserts = this.accountReceivables
         },
 
         viewItem(item) {
@@ -264,7 +239,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('orders.destroy', this.editedItem.id))
+            this.$inertia.delete(this.route('accountReceivables.destroy', this.editedItem.id))
             // ***************************************
         },
         closeDelete() {

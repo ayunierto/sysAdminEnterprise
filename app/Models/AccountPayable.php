@@ -9,9 +9,11 @@ class AccountPayable extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'companies_id',
         'purchases_id',
         'payment',
         'debt',
         'description',
+        'state',
     ];
 }

@@ -9,9 +9,11 @@ class AccountReceivable extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'companies_id',
         'orders_id',
         'payment',
         'debt',
         'description',
+        'state',
     ];
 }
