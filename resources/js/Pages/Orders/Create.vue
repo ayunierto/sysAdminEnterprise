@@ -688,6 +688,7 @@ export default {
             this.editedIndex = this.desserts.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
+            // al editar, cargar valores actuales sin aplicar descuento e igv
             if(this.form.coins.code=='PEN'){
                 var piu=this.editedItem.igv/this.editedItem.quantity
                 var dis=this.editedItem.discount/this.editedItem.quantity
