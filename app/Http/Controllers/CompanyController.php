@@ -6,6 +6,8 @@ use App\Models\Company;
 use App\Models\Customizer;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Models\Customer;
+use App\Models\Provider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -36,7 +38,19 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        Company::create($request->all());
+        $company=Company::create($request->all());
+        // agregar un cliente general
+        $customer= new Customer();
+        $customer->companies_id = $company->id;
+        $customer->name ="Cliente General";
+        $customer->document  = 0;
+        $customer->save();
+        //agregar un proveedor general
+        $provider= new Provider();
+        $provider->companies_id = $company->id;
+        $provider->name ="Proveedor General";
+        $provider->document  = 0;
+        $provider->save();
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
     }
 

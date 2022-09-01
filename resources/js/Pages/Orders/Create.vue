@@ -192,7 +192,7 @@
                                                                             <v-autocomplete color="primary"
                                                                                 id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
-                                                                                :items="itemsPresentation"
+                                                                                :items="presentations"
                                                                                 item-text="name" item-value="id"
                                                                                 label="Presentación" auto-select-first
                                                                                 hide-no-data hide-selected
@@ -506,14 +506,13 @@ export default {
             dialogDelete: false,
             search: '',
             tipoComprobate: this.proofPayments[0],
-            datosCliente: '',
+            datosCliente: this.customers[0],
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
             simboloMoneda: 'S/',
-            itemsPresentation: null,
             pagoVenta: 0,
             form: {
                 companies_id: this.$page.props.user.companies_id,
@@ -553,10 +552,10 @@ export default {
                 price_by_unit: 0,
                 wholesale_price: 0,
                 special_price: 0,
-                datosPresentation: '',
-                presentationId: '',
-                presentationName: '',
-                equivalence: '',
+                datosPresentation: this.presentations[0],
+                presentationId: this.presentations[0].id,
+                presentationName: this.presentations[0].name,
+                equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
                 igv: 0,
@@ -573,10 +572,10 @@ export default {
                 price_by_unit: 0,
                 wholesale_price: 0,
                 special_price: 0,
-                datosPresentation: '',
-                presentationId: '',
-                presentationName: '',
-                equivalence: '',
+                datosPresentation: this.presentations[0],
+                presentationId: this.presentations[0].id,
+                presentationName: this.presentations[0].name,
+                equivalence: this.presentations[0].equivalence,
                 quantity: 1,
                 discount: 0,
                 igv: 0,
@@ -669,11 +668,6 @@ export default {
             this.editedItem.special_price = this.editedItem.datosProducto.special_price
             this.editedItem.productName = this.editedItem.datosProducto.name
             this.editedItem.productId = this.editedItem.datosProducto.id
-            this.itemsPresentation = this.editedItem.datosProducto.presentation
-            this.editedItem.datosPresentation = this.editedItem.datosProducto.presentation[0]
-            this.editedItem.presentationId = this.editedItem.datosPresentation.id
-            this.editedItem.presentationName = this.editedItem.datosPresentation.name
-            this.editedItem.equivalence = this.editedItem.datosPresentation.equivalence
         },
         changePresentation() {
             this.editedItem.presentationId = this.editedItem.datosPresentation.id
@@ -746,8 +740,6 @@ export default {
         },
         save() {
             if (this.editedIndex > -1) {
-                // Actualizando precios segun compra
-                this.form.total -= this.editedItem.subTotal //quitando precio del producto
                 // Comprobando si dejo campos vacios
                 if (this.editedItem.datosProducto == '') {
                     this.snackbar_text = 'Complete los campos';
@@ -773,12 +765,15 @@ export default {
                     this.snackbar = true;
                     return;
                 }
-                if (this.editedItem.datosProducto.stock < this.editedItem.quantity) {
+                var stk=this.editedItem.quantity*this.editedItem.equivalence
+                if (this.editedItem.datosProducto.stock < stk) {
                     this.snackbar_text = 'Sin Stock';
                     this.snackbar_color = 'lime accent-4';
                     this.snackbar = true;
                     return;
                 }
+                // Actualizando precios segun compra
+                this.form.total -= this.editedItem.subTotal
                 // calcular de igv
                 if (this.editedItem.datosAffectationIgv.code == '10') {
                     var des = Number.parseFloat(this.editedItem.discount)
@@ -839,7 +834,8 @@ export default {
                     this.snackbar = true;
                     return;
                 }
-                if (this.editedItem.datosProducto.stock < this.editedItem.quantity) {
+                var stk=this.editedItem.quantity*this.editedItem.equivalence
+                if (this.editedItem.datosProducto.stock < stk) {
                     this.snackbar_text = 'Sin Stock';
                     this.snackbar_color = 'lime accent-4';
                     this.snackbar = true;
@@ -909,6 +905,7 @@ export default {
                 return;
             }
             if (this.datosCliente == '') {
+                this.datosCliente=this.customers[0]
                 this.snackbar_text = 'Datos de Cliente Vacio';
                 this.snackbar_color = 'green darken-1';
                 this.snackbar = true;

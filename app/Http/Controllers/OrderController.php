@@ -134,7 +134,7 @@ class OrderController extends Controller
                     'special_price' => $p->special_price,
                     'description' => $p->description,
                     'state' => $p->state,
-                    'presentation' => Presentation::where('products_id', $p->id)->get(),
+                    'presentation' => Presentation::where('products_id', $p->id)->first(),
                 ];
             }),
         ]);
