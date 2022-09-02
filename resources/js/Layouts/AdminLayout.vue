@@ -9,7 +9,7 @@
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                        <v-img aspect-ratio="2.5" contain  src="../img/empresa1/ecsmac9.png">
+                        <v-img aspect-ratio="2.5" contain  :src='logoEmpresa'>
                         </v-img>
                     <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
@@ -433,7 +433,7 @@ export default {
         return {
             drawer: null,
             hidden: false,
-
+            logoEmpresa:this.$page.props.colors[0].logo,
             colorMenu: this.$page.props.colors[0].color_menu != '' ? this.$page.props.colors[0].color_menu : 'indigo darken-2',
             colorSubMenu: this.$page.props.colors[0].color_sub_menu != '' ? this.$page.props.colors[0].color_sub_menu : 'indigo darken-2',
             colorHeader: this.$page.props.colors[0].color_header != '' ? this.$page.props.colors[0].color_header : 'indigo darken-2',

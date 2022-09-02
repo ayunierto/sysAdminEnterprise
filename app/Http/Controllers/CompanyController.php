@@ -55,9 +55,9 @@ class CompanyController extends Controller
         //agregar un almacén general
         $warehouse= new Warehouse();
         $warehouse->companies_id = $company->id;
-        $provider->name ="Almacén General";
-        $provider->	contact_number  = 000000000;
-        $provider->save();
+        $warehouse->name ="Almacén General";
+        $warehouse->	contact_number  = 000000000;
+        $warehouse->save();
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
     }
 

@@ -162,11 +162,17 @@
                                                 </template>
                                             </v-text-field>
                                         </v-col>
-                                        <!-- <v-col cols="12" sm="6" md="6">
-                                            <v-file-input v-model="editedItem.logo"
+                                        <v-col cols="12" sm="6" md="6">
+                                            <label for="Logo">Logo Empresa</label>
+                                            <v-file-input v-model="editedItem.logo" @change="Preview_logo"
                                                 accept="image/png, image/jpeg, image/bmp" placeholder="Pick an avatar"
                                                 prepend-icon="mdi-camera" show-size label="Avatar"></v-file-input>
-                                        </v-col> -->
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-img contain aspect-ratio="2"
+                                                max-height="180" max-width="180" :src="editedItem.url">
+                                            </v-img>
+                                        </v-col>
                                     </v-row>
                                 </v-container>
                             </v-card-text>
@@ -242,7 +248,7 @@ export default {
 
             search: '',
             dialog: false,
-            dialogDelete: false,
+            dialogDelete: false,            
             headers: [
                 { text: 'EMPRESA', value: 'name' },
                 { text: 'MENU', value: 'color_menu' },
@@ -265,6 +271,7 @@ export default {
                 color_footer: '',
                 color_text: '',
                 logo: '',
+                url: '',
             },
 
             defaultItem: {
@@ -275,6 +282,7 @@ export default {
                 color_footer: '#1976D2FF',
                 color_text: '#FF9595FF',
                 logo: '',
+                url: '',
             },
 
         }
@@ -373,6 +381,9 @@ export default {
     },
 
     methods: {
+        Preview_logo() {
+            this.editedItem.url = URL.createObjectURL(this.editedItem.logo)
+        },
 
         initialize() {
             this.desserts = this.customizers
