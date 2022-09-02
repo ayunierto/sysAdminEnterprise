@@ -64,10 +64,10 @@
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-autocomplete color="primary" :items="customers"
-                                            item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
-                                            auto-select-first hide-no-data hide-selected
-                                            placeholder="Buscar por Documento" persistent-hint return-object required>
+                                        <v-autocomplete color="primary" :items="customers" item-text="document"
+                                            v-model="datosCliente" item-value="id" label="Cliente" auto-select-first
+                                            hide-no-data hide-selected placeholder="Buscar por Documento"
+                                            persistent-hint return-object required>
                                         </v-autocomplete>
                                         <!-- <v-autocomplete v-if="tipoDoc.name == 'DNI'" color="primary" :items="customers"
                                             item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
@@ -138,8 +138,12 @@
                                     </v-col>
                                     <!-- Fin Dialog Quotas -->
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-select :items="coins" label="Moneda" item-text="code" item-value="code"
-                                            v-model="form.coins" @change="changeMoneda" return-object></v-select>
+                                        <v-select v-if="parseFloat(form.total) > 0" readonly :items="coins" label="Moneda"
+                                            item-text="code" item-value="code" v-model="form.coins"
+                                            @change="changeMoneda" return-object></v-select>
+                                        <v-select v-else :items="coins" label="Moneda" item-text="code"
+                                            item-value="code" v-model="form.coins" @change="changeMoneda" return-object>
+                                        </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Tipo Cambio" type="number" v-model="form.exchange_rate"
@@ -192,10 +196,10 @@
                                                                             <v-autocomplete color="primary"
                                                                                 id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
-                                                                                :items="presentations"
-                                                                                item-text="name" item-value="id"
-                                                                                label="Presentación" auto-select-first
-                                                                                hide-no-data hide-selected
+                                                                                :items="presentations" item-text="name"
+                                                                                item-value="id" label="Presentación"
+                                                                                auto-select-first hide-no-data
+                                                                                hide-selected
                                                                                 placeholder="Seleccione Presentación"
                                                                                 persistent-hint return-object
                                                                                 @change="changePresentation" required>
@@ -213,7 +217,7 @@
                                                                                 label="Precio Venta" type="number"
                                                                                 min="0">
                                                                             </v-text-field>
-                                                                        </v-col>                                                                     
+                                                                        </v-col>
                                                                         <v-col cols="2" sm="2" md="2">
                                                                             <!--Dialog Lista de Precios -->
                                                                             <template>
@@ -244,8 +248,7 @@
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.price_by_unit"
-                                                                                                                readonly
-                                                                                                                solo>
+                                                                                                                readonly>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -266,8 +269,7 @@
                                                                                                                 label="Precio Mayor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.wholesale_price"
-                                                                                                                readonly
-                                                                                                                solo>
+                                                                                                                readonly>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -288,8 +290,7 @@
                                                                                                                 label="Precio Especial"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.special_price"
-                                                                                                                readonly
-                                                                                                                solo>
+                                                                                                                readonly>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -335,7 +336,10 @@
                                                                                 @change="changeAffectatioIgv" required>
                                                                             </v-autocomplete>
                                                                         </v-col>
-                                                                        <v-col cols="12" sm="4" md="4">
+                                                                        <v-col cols="12" sm="4" md="4"
+                                                                            v-if="editedItem.sale_price > 0 && editedItem.quantity > 0
+                                                                            && parseFloat(editedItem.discount) >= 0 && editedItem.datosProducto != ''"
+                                                                            v-show="true">
                                                                             <v-btn color="primary" class="white--text"
                                                                                 fab small @click="save">
                                                                                 <v-icon dark>
@@ -683,20 +687,20 @@ export default {
             this.editedItem = Object.assign({}, item);
             this.dialogAddProducts = true;
             // al editar, cargar valores actuales sin aplicar descuento e igv
-            if(this.form.coins.code=='PEN'){
-                var piu=this.editedItem.igv/this.editedItem.quantity
-                var dis=this.editedItem.discount/this.editedItem.quantity
-                var val=Number.parseFloat(this.editedItem.sale_price)+Number.parseFloat(dis)+Number.parseFloat(piu)
-                this.editedItem.sale_price =Number.parseFloat(val.toFixed(2))
-            }else{
-                this.editedItem.igv=this.editedItem.igv*this.exchange_rate
-                this.editedItem.discount=this.editedItem.discount*this.exchange_rate
-                var piu=this.editedItem.igv/this.editedItem.quantity
-                var dis=this.editedItem.discount/this.editedItem.quantity
-                var prc =(this.editedItem.sale_price*this.exchange_rate)+dis+piu      
-                this.editedItem.sale_price=Number.parseFloat(prc.toFixed(2))
+            if (this.form.coins.code == 'PEN') {
+                var piu = this.editedItem.igv / this.editedItem.quantity
+                var dis = this.editedItem.discount / this.editedItem.quantity
+                var val = Number.parseFloat(this.editedItem.sale_price) + Number.parseFloat(dis) + Number.parseFloat(piu)
+                this.editedItem.sale_price = Number.parseFloat(val.toFixed(2))
+            } else {
+                this.editedItem.igv = this.editedItem.igv * this.exchange_rate
+                this.editedItem.discount = this.editedItem.discount * this.exchange_rate
+                var piu = this.editedItem.igv / this.editedItem.quantity
+                var dis = this.editedItem.discount / this.editedItem.quantity
+                var prc = (this.editedItem.sale_price * this.exchange_rate) + dis + piu
+                this.editedItem.sale_price = Number.parseFloat(prc.toFixed(2))
             }
-            
+
             // bloquear inputs
             // const inpPro = document.getElementById('inputProducts')
             // inpPro.disabled = true
@@ -740,35 +744,17 @@ export default {
         },
         save() {
             if (this.editedIndex > -1) {
-                // Comprobando si dejo campos vacios
-                if (this.editedItem.datosProducto == '') {
-                    this.snackbar_text = 'Complete los campos';
-                    this.snackbar_color = 'red';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.quantity < 1) {
-                    this.snackbar_text = 'Cantidad incorrecta';
-                    this.snackbar_color = 'light-blue darken-2';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.sale_price < 1) {
-                    this.snackbar_text = 'Precio incorrecto ';
-                    this.snackbar_color = 'green';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.discount < 0) {
-                    this.snackbar_text = 'Descuento incorrecto ';
-                    this.snackbar_color = 'lime accent-4';
-                    this.snackbar = true;
-                    return;
-                }
-                var stk=this.editedItem.quantity*this.editedItem.equivalence
+                var stk = this.editedItem.quantity * this.editedItem.equivalence
                 if (this.editedItem.datosProducto.stock < stk) {
                     this.snackbar_text = 'Sin Stock';
                     this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
+                var totItem = this.editedItem.quantity * this.editedItem.sale_price
+                if (this.editedItem.discount > totItem) {
+                    this.snackbar_text = 'El descuento no puede ser mayor al total';
+                    this.snackbar_color = 'green darken-2';
                     this.snackbar = true;
                     return;
                 }
@@ -793,51 +779,33 @@ export default {
                     var totalVenta1 = (cant * prec) - des
                     var precUni = totalVenta1 / cant
                     this.editedItem.sale_price = precUni
-                    this.editedItem.igv=0
+                    this.editedItem.igv = 0
                 }
                 // calculando nuevo precio
                 var subTotal = ((Number.parseFloat(this.editedItem.sale_price) * Number.parseFloat(this.editedItem.quantity))) + Number.parseFloat(this.editedItem.igv)
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
-                    this.editedItem.sale_price=this.editedItem.sale_price/this.exchange_rate
-                    this.editedItem.igv=this.editedItem.igv/this.exchange_rate
-                    this.editedItem.discount=this.editedItem.discount/this.exchange_rate
+                    this.editedItem.sale_price = this.editedItem.sale_price / this.exchange_rate
+                    this.editedItem.igv = this.editedItem.igv / this.exchange_rate
+                    this.editedItem.discount = this.editedItem.discount / this.exchange_rate
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
                 this.form.total += this.editedItem.subTotal
                 Object.assign(this.desserts[this.editedIndex], this.editedItem)
                 this.close()
             } else {
-                // Comprobando si dejo campos vacios
-                if (this.editedItem.datosProducto == '') {
-                    this.snackbar_text = 'Complete los campos';
-                    this.snackbar_color = 'red';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.quantity < 1) {
-                    this.snackbar_text = 'Cantidad incorrecta';
-                    this.snackbar_color = 'light-blue darken-2';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.sale_price < 1) {
-                    this.snackbar_text = 'Precio incorrecto ';
-                    this.snackbar_color = 'green';
-                    this.snackbar = true;
-                    return;
-                }
-                if (this.editedItem.discount < 0) {
-                    this.snackbar_text = 'Descuento incorrecto ';
-                    this.snackbar_color = 'lime accent-4';
-                    this.snackbar = true;
-                    return;
-                }
-                var stk=this.editedItem.quantity*this.editedItem.equivalence
+                var stk = this.editedItem.quantity * this.editedItem.equivalence
                 if (this.editedItem.datosProducto.stock < stk) {
                     this.snackbar_text = 'Sin Stock';
                     this.snackbar_color = 'lime accent-4';
+                    this.snackbar = true;
+                    return;
+                }
+                var totItem = this.editedItem.quantity * this.editedItem.sale_price
+                if (this.editedItem.discount > totItem) {
+                    this.snackbar_text = 'El descuento no puede ser mayor al total';
+                    this.snackbar_color = 'green darken-2';
                     this.snackbar = true;
                     return;
                 }
@@ -867,9 +835,9 @@ export default {
                 if (this.form.coins.code == 'PEN') {
                     this.editedItem.subTotal = Number.parseFloat(subTotal.toFixed(2))
                 } else {
-                    this.editedItem.sale_price=this.editedItem.sale_price/this.exchange_rate
-                    this.editedItem.igv=this.editedItem.igv/this.exchange_rate
-                    this.editedItem.discount=this.editedItem.discount/this.exchange_rate
+                    this.editedItem.sale_price = this.editedItem.sale_price / this.exchange_rate
+                    this.editedItem.igv = this.editedItem.igv / this.exchange_rate
+                    this.editedItem.discount = this.editedItem.discount / this.exchange_rate
                     this.editedItem.subTotal = Number.parseFloat(((subTotal / Number.parseFloat(this.exchange_rate)).toFixed(3)))
                 }
 
@@ -885,7 +853,7 @@ export default {
         },
         send_form() {
             if (this.pagoVenta < 0 || this.pagoVenta == '' || this.pagoVenta > this.form.total) {
-                this.snackbar_text = 'Pago incorrecto';
+                this.snackbar_text = 'Monto incorrecto';
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
                 return;
@@ -905,7 +873,7 @@ export default {
                 return;
             }
             if (this.datosCliente == '') {
-                this.datosCliente=this.customers[0]
+                this.datosCliente = this.customers[0]
                 this.snackbar_text = 'Datos de Cliente Vacio';
                 this.snackbar_color = 'green darken-1';
                 this.snackbar = true;

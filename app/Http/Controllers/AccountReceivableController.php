@@ -14,6 +14,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProofPayment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class AccountReceivableController extends Controller
@@ -114,9 +115,28 @@ class AccountReceivableController extends Controller
      * @param  \App\Models\AccountReceivable  $accountReceivable
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateAccountReceivableRequest $request, AccountReceivable $accountReceivable)
+    public function update(UpdateAccountReceivableRequest $request, $id)
     {
-        //
+        $accountReceivable = AccountReceivable::find($id);
+        $id_order = AccountReceivable::where('id', $id)->value('orders_id');
+        $orders = Order::find($id_order);
+        $nvPago=$request->payment+$request->totalPago;
+        $nvDeuda=$request->debt-$request->totalPago;
+        if ($nvDeuda==0) {
+            $nvestado=1;
+        }else {
+            $nvestado=0;
+        };
+        $accountReceivable->update([
+            'payment' => $nvPago,
+            'debt' => $nvDeuda,
+            'description' => $request->description,
+            'state' => $nvestado,
+        ]);
+        $orders->update([
+            'state' => $nvestado,
+        ]);
+        return Redirect::route('accountReceivables.index')->with('message', 'Pago realizado Correctamente');
     }
 
     /**

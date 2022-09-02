@@ -30,15 +30,35 @@
                             VENTAS
                         </v-btn>
                     </inertia-link>
-                    <!-- Memsaje al presionar boton borrar -->
-                    <v-dialog v-model="dialogDelete" max-width="500px">
+                    <!-- Mensaje al presionar boton borrar -->
+                    <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
-                            <v-card-title class="text-h5">Está seguro que desea eliminar?</v-card-title>
+                            <v-card-title class="text-h5">DATOS DE DEUDA</v-card-title>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" md="6">
+                                            <v-text-field label="DEUDA" v-model="editedItem.debt" type="number"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" md="6">
+                                            <v-text-field label="Monto a pagar" v-model="editedItem.totalPago" min="0"
+                                                type="number" :max="editedItem.debt" required>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" md="12">
+                                            <v-textarea label="Descripción" rows="1" v-model="editedItem.description" required>
+                                            </v-textarea>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -47,11 +67,11 @@
             </template>
 
             <template v-slot:item.actions="{ item }">
-                <v-icon small class="mr-2" @click="viewItem(item)">
+                <v-icon class="mr-2" @click="viewItem(item)">
                     mdi-eye
                 </v-icon>
-                <v-icon small @click="deleteItem(item)">
-                    mdi-delete
+                <v-icon @click="editItem(item)">
+                    mdi-cash-register
                 </v-icon>
             </template>
 
@@ -132,6 +152,9 @@
             </v-row>
         </template>
         <!-- Fin Ver detalles Ventas -->
+        <v-snackbar v-model="snackbar" :color="snackbar_color" right top>
+            {{ snackbar_text }}
+        </v-snackbar>
     </admin-layout>
 </template>
 
@@ -152,7 +175,9 @@ export default {
             menu: false,
             search: '',
             dialog: false,
-            dialogDelete: false,
+            snackbar: false,
+            snackbar_text: '',
+            snackbar_color: '',
             headers: [
                 { text: 'CLIENTE', value: 'customers_name' },
                 { text: 'TOTAL', value: 'total' },
@@ -166,31 +191,33 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                id:'',
+                id: '',
                 companies_id: this.$page.props.user.companies_id,
-                proof_payments_name:'',
-                coin:'',
-                exchange_rate:'',
-                total:'',
-                date:'',
+                proof_payments_name: '',
+                coin: '',
+                exchange_rate: '',
+                total: '',
+                date: '',
                 payment: '',
                 debt: '',
-                description:'',
+                description: '',
                 details: '',
+                totalPago: 0,
             },
 
             defaultItem: {
-                id:'',
+                id: '',
                 companies_id: this.$page.props.user.companies_id,
-                proof_payments_name:'',
-                coin:'',
-                exchange_rate:'',
-                total:'',
-                date:'',
+                proof_payments_name: '',
+                coin: '',
+                exchange_rate: '',
+                total: '',
+                date: '',
                 payment: '',
                 debt: '',
-                description:'',
+                description: '',
                 details: '',
+                totalPago: 0,
             },
 
         }
@@ -198,9 +225,6 @@ export default {
     watch: {
         dialog(val) {
             val || this.close()
-        },
-        dialogDelete(val) {
-            val || this.closeDelete()
         },
     },
 
@@ -227,23 +251,29 @@ export default {
             this.editedItem = Object.assign({}, item)
             this.dialog_view = true
         },
-        deleteItem(item) {
+        editItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            this.dialogDelete = true
+            this.dialog = true
+            this.editedItem.totalPago = this.editedItem.debt
         },
 
-        deleteItemConfirm() {
-            this.desserts.splice(this.editedIndex, 1)
-            this.closeDelete()
-
+        save() {
+            if (this.editedItem.totalPago < 0 || this.editedItem.totalPago == '' || Number.parseFloat(this.editedItem.totalPago)  > Number.parseFloat(this.editedItem.debt)) {
+                this.snackbar_text = 'Monto incorrecto';
+                this.snackbar_color = 'teal lighten-1';
+                this.snackbar = true;
+                return;
+            }
+            // Update
             // ***************************************
-            // enviando formulario para eliminar
-            this.$inertia.delete(this.route('accountReceivables.destroy', this.editedItem.id))
+            // enviado formulario de almacenar 
+            this.$inertia.patch(route('accountReceivables.update', this.editedItem), this.editedItem)
             // ***************************************
+            this.close();
         },
-        closeDelete() {
-            this.dialogDelete = false
+        close() {
+            this.dialog = false
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1
