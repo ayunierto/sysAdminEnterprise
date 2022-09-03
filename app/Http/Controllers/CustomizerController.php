@@ -40,13 +40,13 @@ class CustomizerController extends Controller
     {
         // Customizer::create($request->all());
         // return Redirect::route('customizers.index')->with('message', 'Personalización creada');
-
+        if($request->hasFile("logo")){
+        
         $cod= $request->companies_id;
         $nombre='logo_empresa'.$cod.'.'.$request->logo->getClientOriginalExtension();
         $destino='img/empresa'.$cod.'/';
         $directorio=$destino.$nombre;
         $uploadSuccess=$request->logo->move($destino,$nombre);
-
         Customizer::create([
             'companies_id' => $request->companies_id,
             'color_menu' => $request->color_menu,
@@ -56,6 +56,19 @@ class CustomizerController extends Controller
             'color_text' =>$request->color_text,
             'logo' => '../'.$directorio,
         ]);
+    }else{
+        Customizer::create([
+            'companies_id' => $request->companies_id,
+            'color_menu' => $request->color_menu,
+            'color_sub_menu' => $request->color_sub_menu,
+            'color_header' => $request->color_header,
+            'color_footer' => $request->color_footer,
+            'color_text' =>$request->color_text,
+            'logo' => '../img/default.png',
+        ]);
+    }
+
+        
         return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
     }
 
@@ -69,7 +82,36 @@ class CustomizerController extends Controller
     public function update(UpdateCustomizerRequest $request, $id)
     {
         $customizer = Customizer::find($id);
-        $customizer->update($request->all());
+        if($request->hasFile("logo")){
+        $cod= $request->companies_id;
+        $nombre='logo_empresa'.$cod.'.'.$request->logo->getClientOriginalExtension();
+        $destino='img/empresa'.$cod.'/';
+        $directorio=$destino.$nombre;
+        if(file_exists($destino)) {
+            echo 'The file "'.$destino.'" exists.';
+            unlink($destino);
+        }
+        $uploadSuccess=$request->logo->move($destino,$nombre);
+        $customizer->update([
+            'companies_id' => $request->companies_id,
+            'color_menu' => $request->color_menu,
+            'color_sub_menu' => $request->color_sub_menu,
+            'color_header' => $request->color_header,
+            'color_footer' => $request->color_footer,
+            'color_text' =>$request->color_text,
+            'logo' => '../'.$directorio,
+        ]);
+        }else{
+            $customizer->update([
+                'companies_id' => $request->companies_id,
+                'color_menu' => $request->color_menu,
+                'color_sub_menu' => $request->color_sub_menu,
+                'color_header' => $request->color_header,
+                'color_footer' => $request->color_footer,
+                'color_text' =>$request->color_text,
+            ]);
+        }
+        
         return Redirect::route('customizers.index')->with('message', 'Personalización actualizada');
     }
 
