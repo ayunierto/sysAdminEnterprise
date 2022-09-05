@@ -87,10 +87,10 @@ class CustomizerController extends Controller
             $nombre = 'logo_empresa' . $cod . '.' . $request->logo->getClientOriginalExtension();
             $destino = 'img/empresa' . $cod . '/';
             $directorio = $destino . $nombre;
-            if (file_exists($destino)) {
-                echo 'The file "' . $destino . '" exists.';
-                unlink($destino);
-            }
+            // if (file_exists($destino)) {
+            //     echo 'The file "' . $destino . '" exists.';
+            //     unlink($destino);
+            // }
             $uploadSuccess = $request->logo->move($destino, $nombre);
             $customizer->update([
                 'companies_id' => $request->companies_id,

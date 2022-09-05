@@ -166,7 +166,7 @@
                                             <label for="Logo">Logo Empresa</label>
                                             <v-file-input v-model="editedItem.logo" @change="Preview_logo"
                                                 accept="image/*" placeholder="Cargar Logo" prepend-icon="mdi-camera"
-                                                label="Cargar Logo"></v-file-input>
+                                                label="Cargar Logo" ></v-file-input>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
                                             <v-img contain aspect-ratio="2" max-height="180" max-width="180"
@@ -440,7 +440,7 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-
+                alert(this.editedItem.companies_id)
                 // esto agregaba el item a la tabla con solo javascrip 
                 //pero ya no es necesario porque se renderiza el componente desde
                 // el servidor
