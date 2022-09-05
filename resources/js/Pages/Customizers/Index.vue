@@ -270,7 +270,7 @@ export default {
                 color_header: '',
                 color_footer: '',
                 color_text: '',
-                logo: [],
+                logo:null,
                 url: '',
             },
 
@@ -281,7 +281,7 @@ export default {
                 color_header: '#1976D2FF',
                 color_footer: '#1976D2FF',
                 color_text: '#FF9595FF',
-                logo: [],
+                logo: null,
                 url: '',
             },
 
