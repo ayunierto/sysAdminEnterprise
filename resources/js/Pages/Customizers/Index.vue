@@ -169,7 +169,8 @@
                                                 label="Cargar Logo"></v-file-input>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-img contain aspect-ratio="2" max-height="180" max-width="180" :src="url">
+                                            <v-img contain aspect-ratio="2" max-height="180" max-width="180"
+                                                :src="editedItem.url">
                                             </v-img>
                                         </v-col>
                                     </v-row>
@@ -248,7 +249,6 @@ export default {
             search: '',
             dialog: false,
             dialogDelete: false,
-            url: '../img/default.png',
             headers: [
                 { text: 'EMPRESA', value: 'name' },
                 { text: 'MENU', value: 'color_menu' },
@@ -270,7 +270,8 @@ export default {
                 color_header: '',
                 color_footer: '',
                 color_text: '',
-                logo: null,
+                logo: [],
+                url: '',
             },
 
             defaultItem: {
@@ -280,7 +281,8 @@ export default {
                 color_header: '#1976D2FF',
                 color_footer: '#1976D2FF',
                 color_text: '#FF9595FF',
-                logo: null,
+                logo: [],
+                url: '',
             },
 
         }
@@ -379,9 +381,9 @@ export default {
     methods: {
         Preview_logo() {
             if (this.editedItem.logo == null) {
-                this.url = '../img/default.png'
+                this.editedItem.url = '../img/default.png'
             } else {
-                this.url = URL.createObjectURL(this.editedItem.logo)
+                this.editedItem.url = URL.createObjectURL(this.editedItem.logo)
             }
         },
 
@@ -396,13 +398,12 @@ export default {
             http.open('HEAD', this.editedItem.logo, false);
             http.send();
             if (http.status != 404) {
-                this.url = this.editedItem.logo
+                this.editedItem.url = this.editedItem.logo
             } else {
-                this.url = '../img/default.png'
+                this.editedItem.url = '../img/default.png'
             }
             this.editedItem.logo = null
             this.dialog = true
-
         },
 
         deleteItem(item) {
@@ -447,7 +448,7 @@ export default {
 
                 // Update
                 // ***************************************
-                // enviado formulario de almacenar 
+                // enviado formulario de almacenar    
                 this.$inertia.patch(route('customizers.update', this.editedItem), this.editedItem)
                 // ***************************************
 

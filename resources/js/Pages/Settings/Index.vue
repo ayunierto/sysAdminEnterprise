@@ -171,6 +171,19 @@
                                                     </template>
                                                 </v-text-field>
                                             </v-col>
+                                            <v-col cols="9" sm="3" md="3">
+                                                Logo Empresa
+                                                <v-file-input v-model="editedItem.logo" @change="Preview_logo"
+                                                    accept="image/*" placeholder="Cargar Logo" prepend-icon="mdi-camera"
+                                                    label="Cargar Logo"></v-file-input>
+                                            </v-col>
+                                            <v-col cols="3" sm="1" md="1">
+                                                <label for="">LOGO</label>
+                                                <v-card max-height="50" max-width="50" :color="colorFondoImg">
+                                                    <v-img aspect-ratio="2" contain height="50" width="50" :src="url">
+                                                    </v-img>
+                                                </v-card>
+                                            </v-col>
                                         </v-row>
                                     </v-container>
                                 </v-card-text>
@@ -219,6 +232,8 @@ export default {
             menu_color_header: false,
             menu_color_footer: false,
             menu_color_text: false,
+            colorFondoImg: this.$page.props.settings[0].color_menu,
+            url: this.$page.props.settings[0].logo,
 
             editedItem: {
                 id: this.$page.props.settings[0].companies_id,
@@ -236,6 +251,7 @@ export default {
                 color_header: this.$page.props.settings[0].color_header,
                 color_footer: this.$page.props.settings[0].color_footer,
                 color_text: this.$page.props.settings[0].color_text,
+                logo: this.$page.props.settings[0].logo,
             },
         }
     },
@@ -295,6 +311,13 @@ export default {
         },
     },
     methods: {
+        Preview_logo() {
+            if (this.editedItem.logo == null) {
+                this.url = '../img/default.png'
+            } else {
+                this.url = URL.createObjectURL(this.editedItem.logo)
+            }
+        },
         save() {
             this.isEditing = !this.isEditing;
             this.$inertia.put(this.route('settings.update', this.editedItem), this.editedItem);
