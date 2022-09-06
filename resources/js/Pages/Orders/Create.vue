@@ -96,7 +96,7 @@
                                     <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
                                         <v-container>
                                             <v-layout row justify-center>
-                                                <v-dialog v-model="quotasAdd" persistent max-width="400">
+                                                <v-dialog v-model="quotasAdd" persistent max-width="420">
                                                     <template v-slot:activator="{ on, attrs }">
                                                         <v-btn color="lime darken-2" small class="ma-2 white--text" fab
                                                             v-bind="attrs" v-on="on">
@@ -109,27 +109,45 @@
                                                         <v-card-title class="headline">Quotas</v-card-title>
                                                         <v-container>
                                                             <v-row id="nroQuotas">
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field label="Monto" type="number" outlined>
+                                                                <v-col cols="4" sm="4" md="4">
+                                                                    <v-text-field v-model="editedItemQuotas.monto"
+                                                                        label="Monto" type="number" min="0" outlined>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="6" md="6">
-                                                                    <v-text-field label="fecha" type="date" outlined>
+                                                                <v-col cols="6" sm="6" md="6">
+                                                                    <v-text-field v-model="editedItemQuotas.date"
+                                                                        label="fecha" type="date" outlined>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="12" sm="6" md="6"><a id="add_button"
-                                                                        title="+ add quota<"> + add
-                                                                        quota</a>
+                                                                <v-col cols="1" sm="1" md="1">
+                                                                    <v-btn color="amber accent-3" small
+                                                                        class="ma-2 white--text" fab @click="addQuota">
+                                                                        <v-icon dark>
+                                                                            mdi-bookmark-check
+                                                                        </v-icon>
+                                                                    </v-btn>
+                                                                </v-col>
+                                                                <v-col cols="12" sm="12" md="12">
+                                                                    <v-data-table id="tablaQuotas" hide-default-footer
+                                                                        :headers="quotasHeaders" :items="quotas"
+                                                                        sort-by="date" class="elevation-1">
+                                                                        <template v-slot:item.actions="{ item }">
+                                                                            <v-icon small @click="deleteQuota(item)">
+                                                                                mdi-delete
+                                                                            </v-icon>
+                                                                        </template>
+                                                                    </v-data-table>
                                                                 </v-col>
                                                             </v-row>
                                                         </v-container>
 
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn color="primary" @click.native="quotasAdd = false">
-                                                                Disagree</v-btn>
-                                                            <v-btn color="primary" @click.native="quotasAdd = false">
-                                                                Agree</v-btn>
+                                                            <v-btn color="red" text @click="close()">
+                                                                Cancelar</v-btn>
+                                                            <v-btn color="primary" text
+                                                                @click.native="quotasAdd = false">
+                                                                Confirmar</v-btn>
                                                         </v-card-actions>
                                                     </v-card>
                                                 </v-dialog>
@@ -138,8 +156,8 @@
                                     </v-col>
                                     <!-- Fin Dialog Quotas -->
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-select v-if="parseFloat(form.total) > 0" readonly :items="coins" label="Moneda"
-                                            item-text="code" item-value="code" v-model="form.coins"
+                                        <v-select v-if="parseFloat(form.total) > 0" readonly :items="coins"
+                                            label="Moneda" item-text="code" item-value="code" v-model="form.coins"
                                             @change="changeMoneda" return-object></v-select>
                                         <v-select v-else :items="coins" label="Moneda" item-text="code"
                                             item-value="code" v-model="form.coins" @change="changeMoneda" return-object>
@@ -506,8 +524,8 @@ export default {
             dialogAddProducts: false,
             dialogPago: false,
             dialogPrecios: false,
-            quotasAdd: false,
             dialogDelete: false,
+            quotasAdd: false,
             search: '',
             tipoComprobate: this.proofPayments[0],
             datosCliente: this.customers[0],
@@ -533,6 +551,21 @@ export default {
                 products: '',
                 total: 0,
                 totalPago: 0,
+            },
+            editedIndexQuotas: -1,
+            quotasHeaders: [
+                { text: 'FECHA', value: 'date' },
+                { text: 'MONTO', value: 'monto' },
+                { text: 'ACCIONES', value: 'actions', sortable: false },
+            ],
+            quotas: [],
+            editedItemQuotas: {
+                date: '',
+                monto: 0,
+            },
+            defaultItemQuotas: {
+                date: '',
+                monto: 0
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -741,6 +774,18 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
+        },
+        addQuota() {
+            this.quotas.push(this.editedItemQuotas)
+            this.$nextTick(() => {
+                this.editedItemQuotas = Object.assign({}, this.defaultItemQuotas)
+            })
+            // alert(this.quotas.length)
+        },
+        deleteQuota(item){
+            this.editedIndexQuotas = this.quotas.indexOf(item)
+            this.editedIndexQuotas = Object.assign({}, item)
+            this.quotas.splice(this.editedIndexQuotas, 1)
         },
         save() {
             if (this.editedIndex > -1) {
