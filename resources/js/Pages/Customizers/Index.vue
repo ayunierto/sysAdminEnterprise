@@ -206,7 +206,7 @@
                 </v-toolbar>
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:[`item.actions`]="{ item }">
                 <v-icon small class="mr-2" @click="editItem(item)">
                     mdi-pencil
                 </v-icon>
@@ -381,7 +381,7 @@ export default {
     methods: {
         Preview_logo() {
             if (this.editedItem.logo == null) {
-                this.editedItem.url = '../img/default.png'
+                this.editedItem.url = '../../img/default.png'
             } else {
                 this.editedItem.url = URL.createObjectURL(this.editedItem.logo)
             }
@@ -400,8 +400,9 @@ export default {
             if (http.status != 404) {
                 this.editedItem.url = this.editedItem.logo
             } else {
-                this.editedItem.url = '../img/default.png'
+                this.editedItem.url = '../../img/default.png'
             }  
+            this.dialog = true
         },
 
         deleteItem(item) {
