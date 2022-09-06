@@ -173,7 +173,7 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
-                                    <!-- <inertia-link :href="route('orders.create')"> -->
+                                    <inertia-link :href="route('orders.create')">
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
@@ -183,9 +183,9 @@
                                                 <h5>NUEVA VENTA</h5>
                                             </v-list-item-title>
                                         </v-list-item>
-                                    <!-- </inertia-link> -->
+                                    </inertia-link>
 
-                                    <!-- <inertia-link :href="route('orders.index')"> -->
+                                    <inertia-link :href="route('orders.index')">
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
@@ -195,7 +195,7 @@
                                                 <h5>LISTA DE VENTAS</h5>
                                             </v-list-item-title>
                                         </v-list-item>
-                                    <!-- </inertia-link> -->
+                                    </inertia-link>
 
                                     <inertia-link :href="route('accountReceivables.index')">
                                         <v-list-item link :style="item_style()">
@@ -223,7 +223,7 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
-                                        <!-- <inertia-link :href="route('purchases.create')"> -->
+                                        <inertia-link :href="route('purchases.create')">
                                             <v-list-item link :style="item_style()">
                                                 <v-list-item-icon>
                                                     <v-spacer></v-spacer>
@@ -233,9 +233,9 @@
                                                     <h5>NUEVA COMPRA</h5>
                                                 </v-list-item-title>
                                             </v-list-item>
-                                        <!-- </inertia-link> -->
+                                        </inertia-link>
 
-                                        <!-- <inertia-link :href="route('purchases.index')"> -->
+                                        <inertia-link :href="route('purchases.index')">
                                             <v-list-item link :style="item_style()">
                                                 <v-list-item-icon>
                                                     <v-spacer></v-spacer>
@@ -245,7 +245,7 @@
                                                     <h5>LISTA DE COMPRAS</h5>
                                                 </v-list-item-title>
                                             </v-list-item>
-                                        <!-- </inertia-link> -->
+                                        </inertia-link>
 
                                 </v-list-item-group>
                             </v-card>
@@ -318,7 +318,7 @@
 
                         </v-list-group>
 
-                        <!-- <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'"> -->
+                        <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'">
                             <v-list-item link :style="item_style()">
                                 <v-list-item-icon>
                                     <v-icon :style="item_style()">mdi-account-group</v-icon>
@@ -327,7 +327,7 @@
                                     <v-list-item-title>CLIENTES</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                        <!-- </inertia-link> -->
+                        </inertia-link>
 
                         <!-- <v-list-item link :style="item_style()" v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
