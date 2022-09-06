@@ -476,6 +476,9 @@
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
+                                                <v-btn color="red" text @click="closeDialoPago">
+                                                    Cancelar
+                                                </v-btn>
                                                 <v-btn color="primary" text @click="send_form">
                                                     Pagar
                                                 </v-btn>
@@ -755,8 +758,7 @@ export default {
             this.form.total -= this.editedItem.subTotal
         },
         close() {
-            this.dialogAddProducts = false;
-            this.dialogPago = false;            
+            this.dialogAddProducts = false;                        
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
             // Desbloquear inputs
@@ -766,6 +768,9 @@ export default {
             // inpPre.disabled = false
             // const inpAff = document.getElementById('inputAffectationIgv')
             // inpAff.disabled = false
+        },
+        closeDialoPago(){
+            this.dialogPago = false
         },
         closeDialogQuotas(){
             this.dialogQuotasAdd=false
