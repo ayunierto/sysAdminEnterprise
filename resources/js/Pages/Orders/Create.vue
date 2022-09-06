@@ -111,18 +111,18 @@
                                                             <v-row id="nroQuotas">
                                                                 <v-col cols="4" sm="4" md="4">
                                                                     <v-text-field v-model="editedItemQuotas.monto"
-                                                                        label="Monto" type="number" min="0" outlined>
+                                                                        label="Monto" type="number" min="0" dense outlined>
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="6" sm="6" md="6">
                                                                     <v-text-field v-model="editedItemQuotas.date"
-                                                                        label="fecha" type="date" outlined>
+                                                                        label="fecha" type="date" dense outlined>
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="1" sm="1" md="1" v-if="editedItemQuotas.monto>0 
                                                                 && editedItemQuotas.monto!='' && editedItemQuotas.date!=''" v-show="true">
                                                                     <v-btn color="amber accent-3" small
-                                                                        class="ma-2 white--text" fab @click="addQuota">
+                                                                        class=" white--text" fab @click="addQuota">
                                                                         <v-icon dark>
                                                                             mdi-bookmark-check
                                                                         </v-icon>

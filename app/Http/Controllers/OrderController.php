@@ -94,7 +94,7 @@ class OrderController extends Controller
         $company = Auth::user()->companies_id;
         return Inertia::render('Orders/Create', [
             'colors' => Customizer::where('companies_id', $company)->get(),
-            'company' => Company::find(Auth::user()->companies_id),
+            'company' => Company::find($company),
             'proofPayments' => ProofPayment::all(),
             'documents' => Document::all(),
             'customers' => Customer::where('companies_id', $company)->get(),
