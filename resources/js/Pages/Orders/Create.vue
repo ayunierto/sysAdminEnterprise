@@ -111,7 +111,8 @@
                                                             <v-row id="nroQuotas">
                                                                 <v-col cols="4" sm="4" md="4">
                                                                     <v-text-field v-model="editedItemQuotas.monto"
-                                                                        label="Monto" type="number" min="0" dense outlined>
+                                                                        label="Monto" type="number" min="0" dense
+                                                                        outlined>
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="6" sm="6" md="6">
@@ -119,8 +120,9 @@
                                                                         label="fecha" type="date" dense outlined>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="1" sm="1" md="1" v-if="editedItemQuotas.monto>0 
-                                                                && editedItemQuotas.monto!='' && editedItemQuotas.date!=''" v-show="true">
+                                                                <v-col cols="1" sm="1" md="1"
+                                                                    v-if="editedItemQuotas.monto>0 
+                                                                    && editedItemQuotas.monto!='' && editedItemQuotas.date!=''" v-show="true">
                                                                     <v-btn color="amber accent-3" small
                                                                         class=" white--text" fab @click="addQuota">
                                                                         <v-icon dark>
@@ -132,7 +134,7 @@
                                                                     <v-data-table id="tablaQuotas" hide-default-footer
                                                                         :headers="quotasHeaders" :items="quotas"
                                                                         sort-by="date" class="elevation-1">
-                                                                        <template v-slot:item.actions="{ item }">
+                                                                        <template v-slot:[`item.actions`]="{ item }">
                                                                             <v-icon small @click="deleteQuota(item)">
                                                                                 mdi-delete
                                                                             </v-icon>
@@ -146,7 +148,8 @@
                                                             <v-spacer></v-spacer>
                                                             <v-btn color="red" text @click="closeDialogQuotas()">
                                                                 Cancelar</v-btn>
-                                                            <v-btn v-if="this.quotas.length>0" v-show="true" color="primary" text
+                                                            <v-btn v-if="this.quotas.length>0" v-show="true"
+                                                                color="primary" text
                                                                 @click.native="dialogQuotasAdd = false">
                                                                 Confirmar</v-btn>
                                                         </v-card-actions>
@@ -423,7 +426,7 @@
                                                 </v-toolbar>
                                             </template>
                                             <!-- Acciones de la tabla -->
-                                            <template v-slot:item.actions="{ item }">
+                                            <template v-slot:[`item.actions`]="{ item }">
                                                 <v-icon small class="mr-2" @click="editItem(item)">
                                                     mdi-pencil
                                                 </v-icon>
@@ -438,9 +441,9 @@
                         <v-divider></v-divider>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                                <v-btn color="red" dark @click="limpiarCarrito">
-                                    Cancelar
-                                </v-btn>
+                            <v-btn color="red" dark @click="limpiarCarrito">
+                                Cancelar
+                            </v-btn>
                             <template>
                                 <div class="text-center">
                                     <v-dialog v-model="dialogPago" width="450">
@@ -463,9 +466,9 @@
                                                         </v-col>
 
                                                         <v-col cols="12" md="6">
-                                                            <v-text-field label="Monto a pagar" v-model="pagoVenta"
-                                                                :prefix="simboloMoneda" min="0" :max="this.form.total"
-                                                                type="number" required>
+                                                            <v-text-field type="number" label="Monto a pagar"
+                                                                v-model="pagoVenta" :prefix="simboloMoneda" min="0"
+                                                                :max="this.form.total" required>
                                                             </v-text-field>
                                                         </v-col>
                                                     </v-row>
@@ -723,14 +726,6 @@ export default {
                 var prc = (this.editedItem.sale_price * this.exchange_rate) + dis + piu
                 this.editedItem.sale_price = Number.parseFloat(prc.toFixed(2))
             }
-
-            // bloquear inputs
-            // const inpPro = document.getElementById('inputProducts')
-            // inpPro.disabled = true
-            // const inpPre = document.getElementById('inputPresentations')
-            // inpPre.disabled = true
-            // const inpAff = document.getElementById('inputAffectationIgv')
-            // inpAff.disabled = true
         },
 
         deleteItem(item) {
@@ -746,7 +741,7 @@ export default {
             this.form.total -= this.editedItem.subTotal
         },
         close() {
-            this.dialogAddProducts = false;                        
+            this.dialogAddProducts = false;
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
             // Desbloquear inputs
@@ -757,12 +752,14 @@ export default {
             // const inpAff = document.getElementById('inputAffectationIgv')
             // inpAff.disabled = false
         },
-        closeDialoPago(){
+        closeDialoPago() {
             this.dialogPago = false
         },
-        closeDialogQuotas(){
-            this.dialogQuotasAdd=false
-            this.quotas=[]
+        closeDialogQuotas() {
+            this.dialogQuotasAdd = false
+            this.quotas = []
+            this.editedItemQuotas.monto = 0
+            this.editedItemQuotas.date = ''
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -776,23 +773,23 @@ export default {
             this.$nextTick(() => {
                 this.editedItemQuotas = Object.assign({}, this.defaultItemQuotas)
             })
-            // alert(this.quotas.length)
+            alert(this.quotas.length)
         },
-        deleteQuota(item){
+        deleteQuota(item) {
             this.editedIndexQuotas = this.quotas.indexOf(item)
             this.editedIndexQuotas = Object.assign({}, item)
             this.quotas.splice(this.editedIndexQuotas, 1)
         },
-        limpiarCarrito(){
-            this.desserts=[]
-            this.tipoComprobate= this.proofPayments[0]
-            this.datosCliente=this.customers[0]
-            this.tipoDoc= this.documents[0]
-            this. metodoPago= this.paymentMethods[0]
-            this.form.total=0
-            this.form.coins=this.coins[0]
-            this.simboloMoneda= 'S/'
-            this.form.description=''
+        limpiarCarrito() {
+            this.desserts = []
+            this.tipoComprobate = this.proofPayments[0]
+            this.datosCliente = this.customers[0]
+            this.tipoDoc = this.documents[0]
+            this.metodoPago = this.paymentMethods[0]
+            this.form.total = 0
+            this.form.coins = this.coins[0]
+            this.simboloMoneda = 'S/'
+            this.form.description = ''
         },
         save() {
             if (this.editedIndex > -1) {
@@ -931,7 +928,7 @@ export default {
                 this.snackbar = true;
                 return;
             }
-            // Validar Si algun dato del for es nulo o cacio
+            // Validar Si algun dato del form es nulo o cacio
             // const isEmpty = Object.values(this.form).some(x => (x === ''))
             // if (isEmpty == true) {
             //     this.snackbar_text = 'Error al enviar Datos';
