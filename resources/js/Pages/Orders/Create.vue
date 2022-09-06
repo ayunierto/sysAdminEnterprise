@@ -655,18 +655,6 @@ export default {
         asignarTotal() {
             this.pagoVenta = this.form.total
         },
-
-        // Agregar quotas
-        // hola() {
-        //     var maxField = 10;
-        //     var wrapper = document.getElementById('nroQuotas') 
-        //     var fieldHTML = '<div>v-text-field label="fecha" type="date" outlined></v-text-field></div>';
-        //     var x = 1; 
-        //     if (x < maxField) {
-        //         x++;
-        //         wrapper.append(fieldHTML); 
-        //     }
-        // },
         addPrice1() {
             this.editedItem.sale_price = this.editedItem.price_by_unit
             this.dialogPrecios = false
