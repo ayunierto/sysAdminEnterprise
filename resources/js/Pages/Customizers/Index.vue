@@ -164,9 +164,9 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
                                             <label for="Logo">Logo Empresa</label>
-                                            <v-file-input v-model="editedItem.logo" @change="Preview_logo"
+                                            <v-file-input id="pruebalogo" v-model="editedItem.logo" @change="Preview_logo"
                                                 accept="image/*" placeholder="Cargar Logo" prepend-icon="mdi-camera"
-                                                label="Cargar Logo" ></v-file-input>
+                                                label="Cargar Logo"></v-file-input>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
                                             <v-img contain aspect-ratio="2" max-height="180" max-width="180"
@@ -270,7 +270,7 @@ export default {
                 color_header: '',
                 color_footer: '',
                 color_text: '',
-                logo:null,
+                logo: null,
                 url: '',
             },
 
@@ -401,9 +401,7 @@ export default {
                 this.editedItem.url = this.editedItem.logo
             } else {
                 this.editedItem.url = '../img/default.png'
-            }
-            this.editedItem.logo = null
-            this.dialog = true
+            }  
         },
 
         deleteItem(item) {
