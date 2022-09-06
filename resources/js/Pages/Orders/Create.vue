@@ -96,7 +96,7 @@
                                     <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
                                         <v-container>
                                             <v-layout row justify-center>
-                                                <v-dialog v-model="quotasAdd" persistent max-width="420">
+                                                <v-dialog v-model="dialogQuotasAdd" persistent max-width="420">
                                                     <template v-slot:activator="{ on, attrs }">
                                                         <v-btn color="lime darken-2" small class="ma-2 white--text" fab
                                                             v-bind="attrs" v-on="on">
@@ -119,7 +119,8 @@
                                                                         label="fecha" type="date" outlined>
                                                                     </v-text-field>
                                                                 </v-col>
-                                                                <v-col cols="1" sm="1" md="1">
+                                                                <v-col cols="1" sm="1" md="1" v-if="editedItemQuotas.monto>0 
+                                                                && editedItemQuotas.monto!='' && editedItemQuotas.date!=''" v-show="true">
                                                                     <v-btn color="amber accent-3" small
                                                                         class="ma-2 white--text" fab @click="addQuota">
                                                                         <v-icon dark>
@@ -143,10 +144,10 @@
 
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn color="red" text @click="close()">
+                                                            <v-btn color="red" text @click="closeDialogQuotas()">
                                                                 Cancelar</v-btn>
-                                                            <v-btn color="primary" text
-                                                                @click.native="quotasAdd = false">
+                                                            <v-btn v-if="this.quotas.length>0" v-show="true" color="primary" text
+                                                                @click.native="dialogQuotasAdd = false">
                                                                 Confirmar</v-btn>
                                                         </v-card-actions>
                                                     </v-card>
@@ -437,11 +438,9 @@
                         <v-divider></v-divider>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <inertia-link :href="route('orders.create')">
-                                <v-btn color="red" dark>
+                                <v-btn color="red" dark @click="limpiarCarrito">
                                     Cancelar
                                 </v-btn>
-                            </inertia-link>
                             <template>
                                 <div class="text-center">
                                     <v-dialog v-model="dialogPago" width="450">
@@ -525,7 +524,7 @@ export default {
             dialogPago: false,
             dialogPrecios: false,
             dialogDelete: false,
-            quotasAdd: false,
+            dialogQuotasAdd: false,
             search: '',
             tipoComprobate: this.proofPayments[0],
             datosCliente: this.customers[0],
@@ -757,7 +756,7 @@ export default {
         },
         close() {
             this.dialogAddProducts = false;
-            this.dialogPago = false;
+            this.dialogPago = false;            
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
             // Desbloquear inputs
@@ -767,6 +766,10 @@ export default {
             // inpPre.disabled = false
             // const inpAff = document.getElementById('inputAffectationIgv')
             // inpAff.disabled = false
+        },
+        closeDialogQuotas(){
+            this.dialogQuotasAdd=false
+            this.quotas=[]
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -786,6 +789,17 @@ export default {
             this.editedIndexQuotas = this.quotas.indexOf(item)
             this.editedIndexQuotas = Object.assign({}, item)
             this.quotas.splice(this.editedIndexQuotas, 1)
+        },
+        limpiarCarrito(){
+            this.desserts=[]
+            this.tipoComprobate= this.proofPayments[0]
+            this.datosCliente=this.customers[0]
+            this.tipoDoc= this.documents[0]
+            this. metodoPago= this.paymentMethods[0]
+            this.form.total=0
+            this.form.coins=this.coins[0]
+            this.simboloMoneda= 'S/'
+            this.form.description=''
         },
         save() {
             if (this.editedIndex > -1) {
