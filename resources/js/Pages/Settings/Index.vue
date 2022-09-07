@@ -178,7 +178,7 @@
                                                     label="Cargar Logo"></v-file-input>
                                             </v-col>
                                             <v-col cols="3" sm="1" md="1">
-                                                <label for="">LOGO</label>
+                                                <label for="logo">LOGO</label>
                                                 <v-card max-height="50" max-width="50" :color="colorFondoImg">
                                                     <v-img aspect-ratio="2" contain height="50" width="50" :src="url">
                                                     </v-img>
@@ -214,7 +214,8 @@ import AdminLayout from '@/Layouts/AdminLayout'
 
 export default {
     props: [
-        'settings',
+        'customizers',
+        'companies',
         'company',
     ],
     components: {
@@ -232,26 +233,27 @@ export default {
             menu_color_header: false,
             menu_color_footer: false,
             menu_color_text: false,
-            colorFondoImg: this.$page.props.settings[0].color_menu,
-            url: this.$page.props.settings[0].logo,
+            colorFondoImg: this.customizers[0].color_menu,
+            url: this.customizers[0].logo,
 
             editedItem: {
-                id: this.$page.props.settings[0].companies_id,
-                name: this.$page.props.settings[0].name,
-                ruc: this.$page.props.settings[0].ruc,
-                description: this.$page.props.settings[0].description,
-                phone: this.$page.props.settings[0].phone,
-                address: this.$page.props.settings[0].address,
-                department: this.$page.props.settings[0].department,
-                province: this.$page.props.settings[0].province,
-                district: this.$page.props.settings[0].district,
-                country_code: this.$page.props.settings[0].country_code,
-                color_menu: this.$page.props.settings[0].color_menu,
-                color_sub_menu: this.$page.props.settings[0].color_sub_menu,
-                color_header: this.$page.props.settings[0].color_header,
-                color_footer: this.$page.props.settings[0].color_footer,
-                color_text: this.$page.props.settings[0].color_text,
-                logo: this.$page.props.settings[0].logo,
+                companies_id: this.$page.props.user.companies_id,
+                name: this.companies[0].name,
+                ruc: this.companies[0].ruc,
+                description: this.companies[0].description,
+                phone: this.companies[0].phone,
+                address: this.companies[0].address,
+                department: this.companies[0].department,
+                province: this.companies[0].province,
+                district: this.companies[0].district,
+                country_code: this.companies[0].country_code,
+                customizers_id:this.customizers[0].id,
+                color_menu: this.customizers[0].color_menu,
+                color_sub_menu: this.customizers[0].color_sub_menu,
+                color_header: this.customizers[0].color_header,
+                color_footer: this.customizers[0].color_footer,
+                color_text: this.customizers[0].color_text,
+                logo: null,
             },
         }
     },
@@ -313,15 +315,39 @@ export default {
     methods: {
         Preview_logo() {
             if (this.editedItem.logo == null) {
-                this.url = '../img/default.png'
+                this.url = '../../img/logo_user.png'
             } else {
                 this.url = URL.createObjectURL(this.editedItem.logo)
             }
         },
         save() {
             this.isEditing = !this.isEditing;
-            this.$inertia.put(this.route('settings.update', this.editedItem), this.editedItem);
+            // this.$inertia.put(this.route('settings.update', this.editedItem), this.editedItem);
+            // enviado formulario de actualizar    
+            this.$inertia.post(route('settings.update', this.editedItem.companies_id), {
+                _method: 'put',
+                logo: this.editedItem.logo,
+
+                companies_id: this.editedItem.companies_id,
+                name: this.editedItem.name,
+                ruc: this.editedItem.ruc,
+                description: this.editedItem.description,
+                phone: this.editedItem.phone,
+                address: this.editedItem.address,
+                department: this.editedItem.department,
+                province: this.editedItem.province,
+                district: this.editedItem.district,
+                country_code: this.editedItem.country_code,
+                customizers_id:this.editedItem.customizers_id,
+                color_menu: this.editedItem.color_menu,
+                color_sub_menu: this.editedItem.color_sub_menu,
+                color_header: this.editedItem.color_header,
+                color_footer: this.editedItem.color_footer,
+                color_text: this.editedItem.color_text,
+
+            })
             this.hasSaved = true;
+
         },
     },
 }

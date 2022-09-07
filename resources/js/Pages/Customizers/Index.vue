@@ -162,16 +162,17 @@
                                                 </template>
                                             </v-text-field>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="6">
+                                        <v-col cols="9" sm="4" md="4">
                                             <label for="Logo">Logo Empresa</label>
                                             <v-file-input v-model="editedItem.logo" @change="Preview_logo"
                                                 accept="image/*" placeholder="Cargar Logo" prepend-icon="mdi-camera"
                                                 label="Cargar Logo"></v-file-input>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-img contain aspect-ratio="2" max-height="180" max-width="180"
-                                                :src="editedItem.url">
-                                            </v-img>
+                                        <v-col cols="3" sm="2" md="2">
+                                            <v-card max-height="80" max-width="80" :color="colorFondoImg">
+                                                    <v-img aspect-ratio="2" contain height="80" width="80" :src="editedItem.url">
+                                                    </v-img>
+                                                </v-card>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -244,6 +245,7 @@ export default {
             menu_color_header: false,
             menu_color_footer: false,
             menu_color_text: false,
+            colorFondoImg: this.$page.props.customizers[0].color_menu,
 
             search: '',
             dialog: false,
@@ -372,9 +374,7 @@ export default {
         if (Object.values(this.$page.props.errors).length == 0) {
 
             this.initialize();
-
         }
-
     },
 
     methods: {
