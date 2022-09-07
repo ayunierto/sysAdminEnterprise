@@ -31,9 +31,9 @@
                     <v-dialog v-model="dialog" max-width="700px">
 
                         <template v-slot:activator="{ on, attrs }">
-                            <!-- <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar personalización
-                            </v-btn> -->
+                            </v-btn>
                             <v-spacer></v-spacer>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
                                 hide-details></v-text-field>
@@ -164,7 +164,7 @@
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
                                             <label for="Logo">Logo Empresa</label>
-                                            <v-file-input id="pruebalogo" v-model="editedItem.logo" @change="Preview_logo"
+                                            <v-file-input v-model="editedItem.logo" @change="Preview_logo"
                                                 accept="image/*" placeholder="Cargar Logo" prepend-icon="mdi-camera"
                                                 label="Cargar Logo"></v-file-input>
                                         </v-col>
@@ -210,10 +210,9 @@
                 <v-icon small class="mr-2" @click="editItem(item)">
                     mdi-pencil
                 </v-icon>
-
-                <!-- <v-icon small @click="deleteItem(item)">
+                <v-icon small @click="deleteItem(item)">
                     mdi-delete
-                </v-icon> -->
+                </v-icon>
             </template>
 
         </v-data-table>
@@ -256,7 +255,7 @@ export default {
                 { text: 'ENCABEZADO', value: 'color_header' },
                 { text: 'PIE', value: 'color_footer' },
                 { text: 'TEXTO', value: 'color_text' },
-                // { text: 'LOGOTIPO', value: 'logo' },
+                { text: 'LOGOTIPO', value: 'logo' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -264,25 +263,25 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                companies_id: 0,
+                companies_id:'' ,
                 color_menu: '',
                 color_sub_menu: '',
                 color_header: '',
                 color_footer: '',
                 color_text: '',
                 logo: null,
-                url: '',
+                url: '../../img/logo_user.png',
             },
 
             defaultItem: {
-                companies_id: this.$page.props.user.companies_id,
+                companies_id: '',
                 color_menu: '#1976D2FF',
                 color_sub_menu: '#1976D2FF',
                 color_header: '#1976D2FF',
                 color_footer: '#1976D2FF',
                 color_text: '#FF9595FF',
                 logo: null,
-                url: '',
+                url: '../../img/logo_user.png',
             },
 
         }
@@ -381,7 +380,7 @@ export default {
     methods: {
         Preview_logo() {
             if (this.editedItem.logo == null) {
-                this.editedItem.url = '../../img/default.png'
+                this.editedItem.url = '../../img/logo_user.png'
             } else {
                 this.editedItem.url = URL.createObjectURL(this.editedItem.logo)
             }
@@ -395,14 +394,14 @@ export default {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
 
-            // var http = new XMLHttpRequest();
-            // http.open('HEAD', this.editedItem.logo, false);
-            // http.send();
-            // if (http.status != 404) {
-            //     this.editedItem.url = this.editedItem.logo
-            // } else {
-            //     this.editedItem.url = '../../img/default.png'
-            // }  
+            var http = new XMLHttpRequest();
+            http.open('HEAD', this.editedItem.logo, false);
+            http.send();
+            if (http.status != 404) {
+                this.editedItem.url = this.editedItem.logo
+            } else {
+                this.editedItem.url = '../../img/logo_user.png'
+            }  
 
             this.dialog = true
             this.editedItem.logo=null
@@ -420,7 +419,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            // this.$inertia.delete(this.route('customizers.destroy', this.editedItem))
+            this.$inertia.delete(this.route('customizers.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -454,7 +453,7 @@ export default {
                     _method: 'put',
                     logo: this.editedItem.logo,
 
-                    companies_id: this.$page.props.user.companies_id,
+                    companies_id: this.editedItem.companies_id,
                     color_menu: this.editedItem.color_menu,
                     color_sub_menu: this.editedItem.color_sub_menu,
                     color_header: this.editedItem.color_header,
