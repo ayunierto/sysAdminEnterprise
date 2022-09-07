@@ -87,7 +87,7 @@ class CustomizerController extends Controller
             $destino = 'img/empresa' . $cod . '/';
             $directorio = $destino . $nombre;
             if (file_exists($destino)) {
-                $files = glob($destino.'/*'); //obtenemos todos los nombres de los ficheros
+                $files = glob($destino . '/*'); //obtenemos todos los nombres de los ficheros
                 foreach ($files as $file) {
                     if (is_file($file))
                         unlink($file); //elimino el fichero
@@ -127,6 +127,18 @@ class CustomizerController extends Controller
     {
         $customizer = Customizer::find($id);
         $customizer->delete();
+        $sd = $customizer->companies_id;
+        $destino = 'img/empresa' . $sd  . '/';
+        if (file_exists($destino)) {
+            if (file_exists($destino)) {
+                $files = glob($destino . '/*'); //obtenemos todos los nombres de los ficheros
+                foreach ($files as $file) {
+                    if (is_file($file))
+                        unlink($file); //elimino el fichero
+                }
+                rmdir($destino);
+            }
+        }
         return Redirect::route('customizers.index')->with('message', 'Personalización eliminada');
     }
 }
