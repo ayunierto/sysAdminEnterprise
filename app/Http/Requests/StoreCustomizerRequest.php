@@ -24,12 +24,12 @@ class StoreCustomizerRequest extends FormRequest
     public function rules()
     {
         return [
-            'companies_id'=> 'required|integer',
-            'color_menu'=> 'nullable|string|max:50',
-            'color_sub_menu'=> 'nullable|string|max:50',
-            'color_header'=> 'nullable|string|max:50',
-            'color_footer'=> 'nullable|string|max:50',
-            'color_text'=> 'nullable|string|max:50',
+            // 'companies_id'=> 'required|integer',
+            'color_menu'=> 'string|max:50',
+            'color_sub_menu'=> 'string|max:50',
+            'color_header'=> 'string|max:50',
+            'color_footer'=> 'string|max:50',
+            'color_text'=> 'string|max:50',
             // 'logo'=> 'nullable|file|size:512|dimensions:min_width=200,min_height=200|image',
         ];
     }

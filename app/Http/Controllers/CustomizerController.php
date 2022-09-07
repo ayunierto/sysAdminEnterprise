@@ -38,8 +38,6 @@ class CustomizerController extends Controller
      */
     public function store(StoreCustomizerRequest $request)
     {
-
-        
         // Customizer::create($request->all());
         // return Redirect::route('customizers.index')->with('message', 'Personalización creada');
         if ($request->hasFile("logo")) {
@@ -65,7 +63,7 @@ class CustomizerController extends Controller
                 'color_sub_menu' => $request->color_sub_menu,
                 'color_header' => $request->color_header,
                 'color_footer' => $request->color_footer,
-                'color_text' => $request->color_text,
+                'color  _text' => $request->color_text,
                 'logo' => '../../img/default.png',
             ]);
         }
@@ -83,6 +81,8 @@ class CustomizerController extends Controller
      */
     public function update(UpdateCustomizerRequest $request, $id)
     {
+
+        return $request                             ;
         $customizer = Customizer::find($id);
         if ($request->hasFile("logo")) {
             $cod = $request->companies_id;

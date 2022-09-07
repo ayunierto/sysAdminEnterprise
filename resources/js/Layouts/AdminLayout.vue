@@ -433,13 +433,12 @@ export default {
         return {
             drawer: null,
             hidden: false,
-            logoEmpresa: this.$page.props.colors[0].logo != '' ? this.$page.props.colors[0].logo : '',
-            colorMenu: this.$page.props.colors[0].color_menu != '' ? this.$page.props.colors[0].color_menu : 'indigo darken-2',
-            colorSubMenu: this.$page.props.colors[0].color_sub_menu != '' ? this.$page.props.colors[0].color_sub_menu : 'indigo darken-2',
-            colorHeader: this.$page.props.colors[0].color_header != '' ? this.$page.props.colors[0].color_header : 'indigo darken-2',
-            colorFooter: this.$page.props.colors[0].color_footer != '' ? this.$page.props.colors[0].color_footer : 'indigo darken-2',
-            colorText: this.$page.props.colors[0].color_text != '' ? this.$page.props.colors[0].color_text : '#FFFFFFFF',
-
+            logoEmpresa: this.$page.props.colors[0].logo,
+            colorMenu: this.$page.props.colors[0].color_menu,
+            colorSubMenu: this.$page.props.colors[0].color_sub_menu,
+            colorHeader: this.$page.props.colors[0].color_header,
+            colorFooter: this.$page.props.colors[0].color_footer,
+            colorText: this.$page.props.colors[0].color_text,
         };
     },
     methods: {

@@ -31,9 +31,9 @@
                     <v-dialog v-model="dialog" max-width="700px">
 
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            <!-- <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar personalización
-                            </v-btn>
+                            </v-btn> -->
                             <v-spacer></v-spacer>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
                                 hide-details></v-text-field>
@@ -211,9 +211,9 @@
                     mdi-pencil
                 </v-icon>
 
-                <v-icon small @click="deleteItem(item)">
+                <!-- <v-icon small @click="deleteItem(item)">
                     mdi-delete
-                </v-icon>
+                </v-icon> -->
             </template>
 
         </v-data-table>
@@ -264,18 +264,18 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                companies_id: '',
-                color_menu: '',
-                color_sub_menu: '',
-                color_header: '',
-                color_footer: '',
-                color_text: '',
+                companies_id: this.$page.props.user.companies_id,
+                color_menu: '#1976D2FF',
+                color_sub_menu: '#1976D2FF',
+                color_header: '#1976D2FF',
+                color_footer: '#1976D2FF',
+                color_text: '#FF9595FF',
                 logo: null,
                 url: '',
             },
 
             defaultItem: {
-                companies_id: '',
+                companies_id: this.$page.props.user.companies_id,
                 color_menu: '#1976D2FF',
                 color_sub_menu: '#1976D2FF',
                 color_header: '#1976D2FF',
@@ -448,7 +448,7 @@ export default {
 
                 // Update
                 // ***************************************
-                // enviado formulario de almacenar    
+                // enviado formulario de actualizar    
                 this.$inertia.patch(route('customizers.update', this.editedItem), this.editedItem)
                 // ***************************************
 

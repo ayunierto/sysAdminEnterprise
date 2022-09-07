@@ -56,8 +56,18 @@ class CompanyController extends Controller
         $warehouse= new Warehouse();
         $warehouse->companies_id = $company->id;
         $warehouse->name ="Almacén General";
-        $warehouse->	contact_number  = 000000000;
+        $warehouse->contact_number  = 000000000;
         $warehouse->save();
+        // agregar una personalizacion 
+        Customizer::create([
+            'companies_id'=> $company->id,
+            'color_menu'=> '#3F51B5',
+            'color_sub_menu'=> '#3F51B5',
+            'color_header'=> '#3F51B5',
+            'color_footer'=> '#3F51B5',
+            'color_text'=> '#FFCDD2',
+            'logo' => '/img/logo_user.png'
+        ]);
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
     }
 
