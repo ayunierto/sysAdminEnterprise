@@ -150,8 +150,7 @@
                                                             <v-btn color="red" text @click="closeDialogQuotas()">
                                                                 Cancelar</v-btn>
                                                             <v-btn v-if="this.quotas.length>0" v-show="true"
-                                                                color="primary" text
-                                                                @click="ConfirmarQuotas()">
+                                                                color="primary" text @click="ConfirmarQuotas()">
                                                                 Confirmar</v-btn>
                                                         </v-card-actions>
                                                     </v-card>
@@ -567,12 +566,12 @@ export default {
             editedItemQuotas: {
                 dateQuota: '',
                 montoQuota: 0,
-                totalQuotas:0
+                totalQuotas: 0
             },
             defaultItemQuotas: {
                 dateQuota: '',
                 montoQuota: 0,
-                totalQuotas:0
+                totalQuotas: 0
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -772,21 +771,21 @@ export default {
             const quotasValor = this.quotas.map(function (montoValor) {
                 tot += Number.parseFloat(montoValor.montoQuota)
             });
-            this.editedItemQuotas.totalQuotas=tot
+            this.editedItemQuotas.totalQuotas = tot
             alert(this.editedItemQuotas.totalQuotas)
 
-            if(tot>this.form.total){
+            if (tot > this.form.total) {
                 this.snackbar_text = 'Monto de cuotas excede al total';
                 this.snackbar_color = 'red darken-1';
                 this.snackbar = true;
             }
 
         },
-        ConfirmarQuotas(){
-                this.snackbar_text = 'Cuotas agregadas correctamente';
-                this.snackbar_color = 'green';
-                this.snackbar = true;
-                this.dialogQuotasAdd = false
+        ConfirmarQuotas() {
+            this.snackbar_text = 'Cuotas agregadas correctamente';
+            this.snackbar_color = 'green';
+            this.snackbar = true;
+            this.dialogQuotasAdd = false
         },
         deleteQuota(item) {
             this.editedIndexQuotas = this.quotas.indexOf(item)
