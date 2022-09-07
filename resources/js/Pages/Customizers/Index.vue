@@ -403,6 +403,7 @@ export default {
                 this.editedItem.url = '../../img/default.png'
             }  
             this.dialog = true
+            this.editedItem.logo=null
         },
 
         deleteItem(item) {
