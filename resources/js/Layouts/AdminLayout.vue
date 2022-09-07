@@ -412,7 +412,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <!-- <pre>{{ $page }}</pre> -->
+            <pre>{{ $page }}</pre>
         </v-main>
 
         <!-- PIE DE PAGINA -->
@@ -433,7 +433,7 @@ export default {
         return {
             drawer: null,
             hidden: false,
-            logoEmpresa:this.$page.props.colors[0].logo,
+            logoEmpresa: this.$page.props.colors[0].logo != '' ? this.$page.props.colors[0].logo : '',
             colorMenu: this.$page.props.colors[0].color_menu != '' ? this.$page.props.colors[0].color_menu : 'indigo darken-2',
             colorSubMenu: this.$page.props.colors[0].color_sub_menu != '' ? this.$page.props.colors[0].color_sub_menu : 'indigo darken-2',
             colorHeader: this.$page.props.colors[0].color_header != '' ? this.$page.props.colors[0].color_header : 'indigo darken-2',

@@ -21,7 +21,7 @@ class CustomizerSeeder extends Seeder
             'color_header' => '#195497',
             'color_footer' => '#195497',
             'color_text' => '#FFFCF9',
-            'logo' => 'urllogo',
+            'logo' => '/img/logo_user.png',
         ]);
         Customizer::create([
             'companies_id' => '2',
@@ -30,7 +30,7 @@ class CustomizerSeeder extends Seeder
             'color_header' => '#014ba0',
             'color_footer' => '#014ba0',
             'color_text' => '#FFFFFFFF',
-            'logo' => 'urllogo',
+            'logo' => '/img/logo_user.png',
         ]);
         Customizer::create([
             'companies_id' => '3',
@@ -39,7 +39,7 @@ class CustomizerSeeder extends Seeder
             'color_header' => '#F48633',
             'color_footer' => '#F48633',
             'color_text' => '#FEFEFE',
-            'logo' => 'urllogo',
+            'logo' => '/img/logo_user.png',
         ]);
         // Customizer::factory(16)->create();
     }
