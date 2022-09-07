@@ -38,6 +38,8 @@ class CustomizerController extends Controller
      */
     public function store(StoreCustomizerRequest $request)
     {
+
+        
         // Customizer::create($request->all());
         // return Redirect::route('customizers.index')->with('message', 'Personalización creada');
         if ($request->hasFile("logo")) {
