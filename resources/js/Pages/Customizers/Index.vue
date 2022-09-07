@@ -264,12 +264,12 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                companies_id: this.$page.props.user.companies_id,
-                color_menu: '#1976D2FF',
-                color_sub_menu: '#1976D2FF',
-                color_header: '#1976D2FF',
-                color_footer: '#1976D2FF',
-                color_text: '#FF9595FF',
+                companies_id: 0,
+                color_menu: '',
+                color_sub_menu: '',
+                color_header: '',
+                color_footer: '',
+                color_text: '',
                 logo: null,
                 url: '',
             },
@@ -394,14 +394,16 @@ export default {
         editItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            var http = new XMLHttpRequest();
-            http.open('HEAD', this.editedItem.logo, false);
-            http.send();
-            if (http.status != 404) {
-                this.editedItem.url = this.editedItem.logo
-            } else {
-                this.editedItem.url = '../../img/default.png'
-            }  
+
+            // var http = new XMLHttpRequest();
+            // http.open('HEAD', this.editedItem.logo, false);
+            // http.send();
+            // if (http.status != 404) {
+            //     this.editedItem.url = this.editedItem.logo
+            // } else {
+            //     this.editedItem.url = '../../img/default.png'
+            // }  
+
             this.dialog = true
             this.editedItem.logo=null
         },
@@ -418,7 +420,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('customizers.destroy', this.editedItem))
+            // this.$inertia.delete(this.route('customizers.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -440,7 +442,6 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                alert(this.editedItem.companies_id)
                 // esto agregaba el item a la tabla con solo javascrip 
                 //pero ya no es necesario porque se renderiza el componente desde
                 // el servidor
@@ -449,7 +450,18 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de actualizar    
-                this.$inertia.patch(route('customizers.update', this.editedItem), this.editedItem)
+                this.$inertia.post(route('customizers.update', this.editedItem.companies_id), {
+                    _method: 'put',
+                    logo: this.editedItem.logo,
+
+                    companies_id: this.$page.props.user.companies_id,
+                    color_menu: this.editedItem.color_menu,
+                    color_sub_menu: this.editedItem.color_sub_menu,
+                    color_header: this.editedItem.color_header,
+                    color_footer: this.editedItem.color_footer,
+                    color_text: this.editedItem.color_text,
+
+                })
                 // ***************************************
 
             } else {

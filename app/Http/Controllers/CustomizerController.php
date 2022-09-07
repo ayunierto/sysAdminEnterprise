@@ -40,36 +40,36 @@ class CustomizerController extends Controller
     {
         // Customizer::create($request->all());
         // return Redirect::route('customizers.index')->with('message', 'Personalización creada');
-        if ($request->hasFile("logo")) {
+        // if ($request->hasFile("logo")) {
 
-            $cod = $request->companies_id;
-            $nombre = 'logo_empresa' . $cod . '.' . $request->logo->getClientOriginalExtension();
-            $destino = 'img/empresa' . $cod . '/';
-            $directorio = $destino . $nombre;
-            $uploadSuccess = $request->logo->move($destino, $nombre);
-            Customizer::create([
-                'companies_id' => $request->companies_id,
-                'color_menu' => $request->color_menu,
-                'color_sub_menu' => $request->color_sub_menu,
-                'color_header' => $request->color_header,
-                'color_footer' => $request->color_footer,
-                'color_text' => $request->color_text,
-                'logo' => '../../' . $directorio,
-            ]);
-        } else {
-            Customizer::create([
-                'companies_id' => $request->companies_id,
-                'color_menu' => $request->color_menu,
-                'color_sub_menu' => $request->color_sub_menu,
-                'color_header' => $request->color_header,
-                'color_footer' => $request->color_footer,
-                'color  _text' => $request->color_text,
-                'logo' => '../../img/default.png',
-            ]);
-        }
+        //     $cod = $request->companies_id;
+        //     $nombre = 'logo_empresa' . $cod . '.' . $request->logo->getClientOriginalExtension();
+        //     $destino = 'img/empresa' . $cod . '/';
+        //     $directorio = $destino . $nombre;
+        //     $uploadSuccess = $request->logo->move($destino, $nombre);
+        //     Customizer::create([
+        //         'companies_id' => $request->companies_id,
+        //         'color_menu' => $request->color_menu,
+        //         'color_sub_menu' => $request->color_sub_menu,
+        //         'color_header' => $request->color_header,
+        //         'color_footer' => $request->color_footer,
+        //         'color_text' => $request->color_text,
+        //         'logo' => '../../' . $directorio,
+        //     ]);
+        // } else {
+        //     Customizer::create([
+        //         'companies_id' => $request->companies_id,
+        //         'color_menu' => $request->color_menu,
+        //         'color_sub_menu' => $request->color_sub_menu,
+        //         'color_header' => $request->color_header,
+        //         'color_footer' => $request->color_footer,
+        //         'color  _text' => $request->color_text,
+        //         'logo' => '../../img/default.png',
+        //     ]);
+        // }
 
 
-        return Redirect::route('customizers.index')->with('message', 'Colores Asignados');
+        // return Redirect::route('customizers.index')->with('message', 'Agregado');
     }
 
     /**
@@ -81,8 +81,7 @@ class CustomizerController extends Controller
      */
     public function update(UpdateCustomizerRequest $request, $id)
     {
-
-        return $request                             ;
+        // return $request;
         $customizer = Customizer::find($id);
         if ($request->hasFile("logo")) {
             $cod = $request->companies_id;
