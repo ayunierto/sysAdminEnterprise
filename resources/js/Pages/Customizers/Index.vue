@@ -256,7 +256,7 @@ export default {
                 { text: 'ENCABEZADO', value: 'color_header' },
                 { text: 'PIE', value: 'color_footer' },
                 { text: 'TEXTO', value: 'color_text' },
-                { text: 'LOGOTIPO', value: 'logo' },
+                // { text: 'LOGOTIPO', value: 'logo' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
