@@ -122,7 +122,8 @@
                                                                 </v-col>
                                                                 <v-col cols="1" sm="1" md="1"
                                                                     v-if="editedItemQuotas.montoQuota>0 
-                                                                    && editedItemQuotas.montoQuota!='' && editedItemQuotas.dateQuota!=''" v-show="true">
+                                                                    && editedItemQuotas.montoQuota!='' && editedItemQuotas.dateQuota!=''"
+                                                                    v-show="true">
                                                                     <v-btn color="amber accent-3" small
                                                                         class=" white--text" fab @click="addQuota">
                                                                         <v-icon dark>
@@ -150,7 +151,7 @@
                                                                 Cancelar</v-btn>
                                                             <v-btn v-if="this.quotas.length>0" v-show="true"
                                                                 color="primary" text
-                                                                @click.native="dialogQuotasAdd = false">
+                                                                @click="ConfirmarQuotas()">
                                                                 Confirmar</v-btn>
                                                         </v-card-actions>
                                                     </v-card>
@@ -551,8 +552,8 @@ export default {
                 exchange_rate: this.exchange_rate,
                 description: '',
                 products: '',
-                quotasVenta:'',
-                nroQuotas:0,
+                quotasVenta: '',
+                nroQuotas: 0,
                 total: 0,
                 totalPago: 0,
             },
@@ -566,10 +567,12 @@ export default {
             editedItemQuotas: {
                 dateQuota: '',
                 montoQuota: 0,
+                totalQuotas:0
             },
             defaultItemQuotas: {
                 dateQuota: '',
-                montoQuota: 0
+                montoQuota: 0,
+                totalQuotas:0
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -761,11 +764,29 @@ export default {
             });
         },
         addQuota() {
-            var tot=0
             this.quotas.push(this.editedItemQuotas)
             this.$nextTick(() => {
                 this.editedItemQuotas = Object.assign({}, this.defaultItemQuotas)
             })
+            var tot = 0
+            const quotasValor = this.quotas.map(function (montoValor) {
+                tot += Number.parseFloat(montoValor.montoQuota)
+            });
+            this.editedItemQuotas.totalQuotas=tot
+            alert(this.editedItemQuotas.totalQuotas)
+
+            if(tot>this.form.total){
+                this.snackbar_text = 'Monto de cuotas excede al total';
+                this.snackbar_color = 'red darken-1';
+                this.snackbar = true;
+            }
+
+        },
+        ConfirmarQuotas(){
+                this.snackbar_text = 'Cuotas agregadas correctamente';
+                this.snackbar_color = 'green';
+                this.snackbar = true;
+                this.dialogQuotasAdd = false
         },
         deleteQuota(item) {
             this.editedIndexQuotas = this.quotas.indexOf(item)
@@ -908,8 +929,8 @@ export default {
             this.form.totalPago = this.pagoVenta
             this.form.products = this.desserts
 
-            this.form.quotasVenta=this.quotas
-            this.form.nroQuotas=this.quotas.length
+            this.form.quotasVenta = this.quotas
+            this.form.nroQuotas = this.quotas.length
 
 
             if (this.form.products == '') {
