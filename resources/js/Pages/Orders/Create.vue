@@ -108,21 +108,21 @@
                                                     <v-card>
                                                         <v-card-title class="headline">Quotas</v-card-title>
                                                         <v-container>
-                                                            <v-row id="nroQuotas">
+                                                            <v-row>
                                                                 <v-col cols="4" sm="4" md="4">
-                                                                    <v-text-field v-model="editedItemQuotas.monto"
+                                                                    <v-text-field v-model="editedItemQuotas.montoQuota"
                                                                         label="Monto" type="number" min="0" dense
                                                                         outlined>
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="6" sm="6" md="6">
-                                                                    <v-text-field v-model="editedItemQuotas.date"
+                                                                    <v-text-field v-model="editedItemQuotas.dateQuota"
                                                                         label="fecha" type="date" dense outlined>
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="1" sm="1" md="1"
-                                                                    v-if="editedItemQuotas.monto>0 
-                                                                    && editedItemQuotas.monto!='' && editedItemQuotas.date!=''" v-show="true">
+                                                                    v-if="editedItemQuotas.montoQuota>0 
+                                                                    && editedItemQuotas.montoQuota!='' && editedItemQuotas.dateQuota!=''" v-show="true">
                                                                     <v-btn color="amber accent-3" small
                                                                         class=" white--text" fab @click="addQuota">
                                                                         <v-icon dark>
@@ -372,11 +372,8 @@
                                                                     </v-row>
                                                                 </div>
                                                             </v-container>
-
                                                         </v-card-text>
-
                                                         <v-divider></v-divider>
-
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
                                                             <v-btn color="primary" text @click="close">
@@ -554,23 +551,25 @@ export default {
                 exchange_rate: this.exchange_rate,
                 description: '',
                 products: '',
+                quotasVenta:'',
+                nroQuotas:0,
                 total: 0,
                 totalPago: 0,
             },
             editedIndexQuotas: -1,
             quotasHeaders: [
-                { text: 'FECHA', value: 'date' },
-                { text: 'MONTO', value: 'monto' },
+                { text: 'FECHA', value: 'dateQuota' },
+                { text: 'MONTO', value: 'montoQuota' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             quotas: [],
             editedItemQuotas: {
-                date: '',
-                monto: 0,
+                dateQuota: '',
+                montoQuota: 0,
             },
             defaultItemQuotas: {
-                date: '',
-                monto: 0
+                dateQuota: '',
+                montoQuota: 0
             },
             headers: [
                 { text: 'PRODUCTO', value: 'productName' },
@@ -744,13 +743,6 @@ export default {
             this.dialogAddProducts = false;
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
-            // Desbloquear inputs
-            // const inpPro = document.getElementById('inputProducts')
-            // inpPro.disabled = false
-            // const inpPre = document.getElementById('inputPresentations')
-            // inpPre.disabled = false
-            // const inpAff = document.getElementById('inputAffectationIgv')
-            // inpAff.disabled = false
         },
         closeDialoPago() {
             this.dialogPago = false
@@ -758,8 +750,8 @@ export default {
         closeDialogQuotas() {
             this.dialogQuotasAdd = false
             this.quotas = []
-            this.editedItemQuotas.monto = 0
-            this.editedItemQuotas.date = ''
+            this.editedItemQuotas.montoQuota = 0
+            this.editedItemQuotas.dateQuota = ''
         },
         closeDelete() {
             this.dialogDelete = false;
@@ -769,11 +761,11 @@ export default {
             });
         },
         addQuota() {
+            var tot=0
             this.quotas.push(this.editedItemQuotas)
             this.$nextTick(() => {
                 this.editedItemQuotas = Object.assign({}, this.defaultItemQuotas)
             })
-            alert(this.quotas.length)
         },
         deleteQuota(item) {
             this.editedIndexQuotas = this.quotas.indexOf(item)
@@ -782,6 +774,7 @@ export default {
         },
         limpiarCarrito() {
             this.desserts = []
+            this.quotas = []
             this.tipoComprobate = this.proofPayments[0]
             this.datosCliente = this.customers[0]
             this.tipoDoc = this.documents[0]
@@ -913,8 +906,12 @@ export default {
             this.form.customers_id = this.datosCliente.id
             this.form.payment_methods_id = this.metodoPago.id
             this.form.totalPago = this.pagoVenta
-
             this.form.products = this.desserts
+
+            this.form.quotasVenta=this.quotas
+            this.form.nroQuotas=this.quotas.length
+
+
             if (this.form.products == '') {
                 this.snackbar_text = 'Carrito Vacio';
                 this.snackbar_color = 'amber lighten-1';

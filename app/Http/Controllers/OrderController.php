@@ -18,6 +18,7 @@ use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Presentation;
 use App\Models\Product;
+use App\Models\Quota;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -184,6 +185,16 @@ class OrderController extends Controller
             $accountReceivable->payment = $request->totalPago;
             $accountReceivable->debt = $request->total - $request->totalPago;
             $accountReceivable->save();
+        }
+        if ($request->nroQuotas > 0) {
+            $quotas = $request->quotasVenta;
+            foreach ($quotas as $key => $value) {
+                $quota = new Quota();
+                $quota->orders_id = $order->id;
+                $quota->payment_date = $value['dateQuota'];
+                $quota->amount = $value['montoQuota'];
+                $quota->save();
+            }
         }
         return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
