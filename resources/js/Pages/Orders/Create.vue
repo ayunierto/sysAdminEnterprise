@@ -777,7 +777,7 @@ export default {
 
             if(tot>this.form.total){
                 this.snackbar_text = 'Monto de cuotas excede al total';
-                this.snackbar_color = 'deep-purple ';
+                this.snackbar_color = 'red darken-1';
                 this.snackbar = true;
             }
 
