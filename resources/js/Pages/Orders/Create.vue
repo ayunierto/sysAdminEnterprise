@@ -203,9 +203,10 @@
                                                                             <v-autocomplete color="primary"
                                                                                 :items="products" id="inputProducts"
                                                                                 v-model="editedItem.datosProducto"
-                                                                                item-text="name" item-value="id"
-                                                                                label="Producto" auto-select-first
-                                                                                hide-no-data hide-selected
+                                                                                :item-text="getProductText"
+                                                                                item-value="id" label="Producto"
+                                                                                auto-select-first hide-no-data
+                                                                                hide-selected
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object
                                                                                 @change="changeProduct" required>
@@ -218,7 +219,8 @@
                                                                             <v-autocomplete color="primary"
                                                                                 id="inputPresentations"
                                                                                 v-model="editedItem.datosPresentation"
-                                                                                :items="presentations" item-text="name"
+                                                                                :items="presentations"
+                                                                                :item-text="getPresentationText"
                                                                                 item-value="id" label="Presentación"
                                                                                 auto-select-first hide-no-data
                                                                                 hide-selected
@@ -652,6 +654,12 @@ export default {
     methods: {
         initialize() {
             this.desserts = []
+        },
+        getProductText(item) {
+            return `${item.marks_name} - ${item.name} - ${item.warehouses_name}`;
+        },
+        getPresentationText(item) {
+            return `${item.name} - equivalencia: ${item.equivalence} UND`;
         },
         jaja() {
             alert('Método Inicial')

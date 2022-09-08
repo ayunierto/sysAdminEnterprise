@@ -14,11 +14,13 @@ use App\Models\AccountPayable;
 use App\Models\AccountReceivable;
 use App\Models\AffectationIgv;
 use App\Models\Coin;
+use App\Models\Mark;
 use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\Quota;
+use App\Models\Warehouse;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -110,8 +112,11 @@ class OrderController extends Controller
             'products' => Product::where('companies_id', $company)->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
+                    'warehouses_id'=> $p->warehouses_id,
+                    'warehouses_name' => Warehouse::find($p->warehouses_id)->name,
                     'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
+                    'marks_name'=> Mark::find($p->marks_id)->name,
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
                     'name' => $p->name,
@@ -125,7 +130,7 @@ class OrderController extends Controller
                     'special_price' => $p->special_price,
                     'description' => $p->description,
                     'state' => $p->state,
-                    'presentation' => Presentation::where('products_id', $p->id)->first(),
+                    // 'presentation' => Presentation::where('products_id', $p->id)->first(),
                 ];
             }),
         ]);
