@@ -412,7 +412,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ $page }}</pre>
+            <!-- <pre>{{ $page }}</pre> -->
         </v-main>
 
         <!-- PIE DE PAGINA -->

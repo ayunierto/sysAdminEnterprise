@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\Customizer;
+use App\Models\Order;
+use App\Models\Purchase;
+use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -22,10 +25,10 @@ class DashboardController extends Controller
         $company = Auth::user()->companies_id;
         $company_id = Auth::user()->companies_id;
 
-        $data = [];
-        for ( $i = 1; $i < 5; $i++ ) {
-                $data += [ $i ];
-        } 
+        // $data = [];
+        // for ( $i = 1; $i < 5; $i++ ) {
+        //         $data += [ $i ];
+        // } 
 
         $products = Product::where('companies_id', $company)->get();
         $stock_min = [];
@@ -34,13 +37,22 @@ class DashboardController extends Controller
                 array_push($stock_min, $p);
             } 
         }   
+        $DateAndTime = date('Y-m-d');
 
-
+        $totalV=Order::where('companies_id', $company)->where('date', $DateAndTime)->get();
+        $totalVentasDia = 0;
+        foreach ($totalV as $key => $p) {
+            $totalVentasDia+=$p->total;
+        }
+        
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
+            'orders' => Order::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
+            'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find( $company_id ),
             'stock_min' => $stock_min,
+            'totalVent' => number_format($totalVentasDia, 2),
         ]);
     }
 }

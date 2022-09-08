@@ -101,7 +101,6 @@
                                                             <v-card elevation="24">
                                                                 <div :style="swatchStyleMenu" v-on="on" />
                                                             </v-card>
-                                                            
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -124,7 +123,8 @@
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
                                                             <v-card elevation="24">
-                                                            <div :style="swatchStyleSubMenu" v-on="on" /></v-card>
+                                                                <div :style="swatchStyleSubMenu" v-on="on" />
+                                                            </v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -147,7 +147,8 @@
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
                                                             <v-card elevation="24">
-                                                            <div :style="swatchStyleHeader" v-on="on" /></v-card>
+                                                                <div :style="swatchStyleHeader" v-on="on" />
+                                                            </v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -170,7 +171,8 @@
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
                                                             <v-card elevation="24">
-                                                            <div :style="swatchStyleFooter" v-on="on" /></v-card>
+                                                                <div :style="swatchStyleFooter" v-on="on" />
+                                                            </v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -193,7 +195,8 @@
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
                                                             <v-card elevation="24">
-                                                            <div :style="swatchStyleText" v-on="on" /></v-card>
+                                                                <div :style="swatchStyleText" v-on="on" />
+                                                            </v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
