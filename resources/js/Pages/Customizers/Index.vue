@@ -20,6 +20,43 @@
         <!-- Fin de Alertas -->
 
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
+            <template v-slot:[`item.color_menu`]="{ item }">
+                <v-card max-height="30" max-width="30" class="ma-2">
+                    <v-sheet :color="item.color_menu" elevation="24" height="30" width="30"></v-sheet>
+                </v-card>
+            </template>
+
+            <template v-slot:[`item.color_sub_menu`]="{ item }">
+                <v-card max-height="30" max-width="30" class="ma-2">
+                    <v-sheet :color="item.color_sub_menu" elevation="24" height="30" width="30"></v-sheet>
+                </v-card>
+            </template>
+
+            <template v-slot:[`item.color_header`]="{ item }">
+                <v-card max-height="30" max-width="30" class="ma-2">
+                    <v-sheet :color="item.color_header" elevation="24" height="30" width="30"></v-sheet>
+                </v-card>
+            </template>
+
+            <template v-slot:[`item.color_footer`]="{ item }">
+                <v-card max-height="30" max-width="30" class="ma-2">
+                    <v-sheet :color="item.color_footer" elevation="24" height="30" width="30"></v-sheet>
+                </v-card>
+            </template>
+
+            <template v-slot:[`item.color_text`]="{ item }">
+                <v-card max-height="30" max-width="30" class="ma-2">
+                    <v-sheet :color="item.color_text" elevation="24" height="30" width="30"></v-sheet>
+                </v-card>
+            </template>
+
+            <template v-slot:[`item.logo`]="{ item }">
+                <v-card max-height="50" max-width="50" class="ma-2">
+                    <v-img aspect-ratio="2" :src="item.logo" :alt="item.logo" contain height="50" width="50">
+                    </v-img>
+                </v-card>
+            </template>
+
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Listado de Personalizaciones</v-toolbar-title>
@@ -61,7 +98,10 @@
                                                     <v-menu v-model="menu_color_menu" top nudge-bottom="105"
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
-                                                            <div :style="swatchStyleMenu" v-on="on" />
+                                                            <v-card elevation="24">
+                                                                <div :style="swatchStyleMenu" v-on="on" />
+                                                            </v-card>
+                                                            
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -83,7 +123,8 @@
                                                     <v-menu v-model="menu_color_sub_menu" top nudge-bottom="105"
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
-                                                            <div :style="swatchStyleSubMenu" v-on="on" />
+                                                            <v-card elevation="24">
+                                                            <div :style="swatchStyleSubMenu" v-on="on" /></v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -105,7 +146,8 @@
                                                     <v-menu v-model="menu_color_header" top nudge-bottom="105"
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
-                                                            <div :style="swatchStyleHeader" v-on="on" />
+                                                            <v-card elevation="24">
+                                                            <div :style="swatchStyleHeader" v-on="on" /></v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -127,7 +169,8 @@
                                                     <v-menu v-model="menu_color_footer" top nudge-bottom="105"
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
-                                                            <div :style="swatchStyleFooter" v-on="on" />
+                                                            <v-card elevation="24">
+                                                            <div :style="swatchStyleFooter" v-on="on" /></v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -149,7 +192,8 @@
                                                     <v-menu v-model="menu_color_text" top nudge-bottom="105"
                                                         nudge-left="16" :close-on-content-click="false">
                                                         <template v-slot:activator="{ on }">
-                                                            <div :style="swatchStyleText" v-on="on" />
+                                                            <v-card elevation="24">
+                                                            <div :style="swatchStyleText" v-on="on" /></v-card>
                                                         </template>
                                                         <v-card>
                                                             <v-card-text class="pa-0">
@@ -170,9 +214,10 @@
                                         </v-col>
                                         <v-col cols="3" sm="2" md="2">
                                             <v-card max-height="80" max-width="80" :color="colorFondoImg">
-                                                    <v-img aspect-ratio="2" contain height="80" width="80" :src="editedItem.url">
-                                                    </v-img>
-                                                </v-card>
+                                                <v-img aspect-ratio="2" contain height="80" width="80"
+                                                    :src="editedItem.url">
+                                                </v-img>
+                                            </v-card>
                                         </v-col>
                                     </v-row>
                                 </v-container>
@@ -215,7 +260,6 @@
                     mdi-delete
                 </v-icon>
             </template>
-
         </v-data-table>
 
     </admin-layout>
@@ -265,7 +309,7 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                companies_id:'' ,
+                companies_id: '',
                 color_menu: '',
                 color_sub_menu: '',
                 color_header: '',
@@ -401,10 +445,10 @@ export default {
                 this.editedItem.url = this.editedItem.logo
             } else {
                 this.editedItem.url = '../../img/logo_user.png'
-            }  
+            }
 
             this.dialog = true
-            this.editedItem.logo=null
+            this.editedItem.logo = null
         },
 
         deleteItem(item) {
