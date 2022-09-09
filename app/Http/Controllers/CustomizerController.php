@@ -62,7 +62,7 @@ class CustomizerController extends Controller
                 'color_header' => $request->color_header,
                 'color_footer' => $request->color_footer,
                 'color  _text' => $request->color_text,
-                'logo' => '../../img/default.png',
+                'logo' => '../../img/logo_user.png',
             ]);
         }
 

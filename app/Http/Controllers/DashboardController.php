@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Customizer;
 use App\Models\Order;
 use App\Models\Purchase;
+use App\Models\Warehouse;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,15 +31,16 @@ class DashboardController extends Controller
         //         $data += [ $i ];
         // } 
 
-        $products = Product::where('companies_id', $company)->get();
+        // $products = Product::where('companies_id', $company)->get();
+        $products=Product::select('products.*', 'warehouses.name as nameAlmacen')->join('warehouses', 'products.warehouses_id', '=', 'warehouses.id')->where('products.companies_id', $company)->get();
         $stock_min = [];
         foreach ($products as $key => $p) {
             if ( $p->stock <= $p->stock_min){
                 array_push($stock_min, $p);
             } 
         }   
+        // 'customizers' => Customizer::select('customizers.*', 'companies.name')->join('companies', 'customizers.companies_id', '=', 'companies.id')->get(),
         $DateAndTime = date('Y-m-d');
-
         $totalV=Order::where('companies_id', $company)->where('date', $DateAndTime)->get();
         $totalVentasDia = 0;
         foreach ($totalV as $key => $p) {

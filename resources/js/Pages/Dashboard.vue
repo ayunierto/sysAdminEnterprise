@@ -58,7 +58,7 @@
                                 </v-col>
                                 <v-col cols="4" sm="4">
                                     <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain src="https://cdn-icons-png.flaticon.com/512/743/743007.png">
+                                        <v-img contain src="/img/dashboard/productos.png">
                                         </v-img>
                                     </v-avatar>
                                 </v-col>
@@ -90,8 +90,7 @@
                                 </v-col>
                                 <v-col cols="4" sm="4">
                                     <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain
-                                            src="https://images.vexels.com/media/users/3/205437/isolated/preview/1d84c7d31a188b47fe75640a85af8d9c-icono-de-trazo-de-venta-de-compras-en-linea.png">
+                                        <v-img contain src="/img/dashboard/ventas.png">
                                         </v-img>
                                     </v-avatar>
                                 </v-col>
@@ -121,8 +120,7 @@
                                 </v-col>
                                 <v-col cols="4" sm="4">
                                     <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain
-                                            src="https://play-lh.googleusercontent.com/NbBfE5lM2isTNrGLiksDl1v49boQP_APd3LvHDSq2WO3iICB7zpe6J3TgHd5FSnEYfBw">
+                                        <v-img contain src="/img/dashboard/caja.png">
                                         </v-img>
                                     </v-avatar>
                                 </v-col>
@@ -154,8 +152,7 @@
                                 </v-col>
                                 <v-col cols="4" sm="4">
                                     <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain
-                                            src="https://png.pngtree.com/png-vector/20220719/ourmid/pngtree-shopping-chart-3d-icon-png-image_6006290.png">
+                                        <v-img contain src="/img/dashboard/compras.png">
                                         </v-img>
                                     </v-avatar>
                                 </v-col>
@@ -170,9 +167,16 @@
                             <v-spacer></v-spacer>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
                                 hide-details></v-text-field>
+                            <v-spacer></v-spacer>
+                            <inertia-link :href="route('purchases.create')">
+                                <v-btn color="primary" dark class="mb-2">
+                                    COMPRAR
+                                </v-btn>
+                            </inertia-link>
                         </v-card-title>
                         <v-data-table :headers="[
                             {text: 'Producto', value: 'name'},
+                            {text: 'Almacén', value: 'nameAlmacen'},
                             {text: 'Stock', value: 'stock', align: 'center',},
                             {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
                             {text: 'Descripción', value: 'description'}
