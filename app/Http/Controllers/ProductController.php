@@ -70,7 +70,7 @@ class ProductController extends Controller
             $product->price_by_unit =$request->price_by_unit;
             $product->wholesale_price =$request->wholesale_price;
             $product->special_price =$request->special_price;
-            $product->special_price =$request->stock_min;
+            $product->stock_min =$request->stock_min;
             $product->description =$request->description;
             $product->expiration_date =$request->expiration_date;
             $product->save();

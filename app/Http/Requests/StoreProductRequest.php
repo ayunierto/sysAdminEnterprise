@@ -30,6 +30,7 @@ class StoreProductRequest extends FormRequest
             'measures_id' => 'required|integer',
             'providers_id' => 'required|integer',
             
+            'type' => 'nullable|string|max:25',
             'name' => 'required|string',
             'code' => 'nullable|string|max:25',
             'bar_code' => 'nullable|string|max:25',
