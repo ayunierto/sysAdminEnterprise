@@ -32,27 +32,29 @@ class DashboardController extends Controller
         // } 
 
         // $products = Product::where('companies_id', $company)->get();
-        $products=Product::select('products.*', 'warehouses.name as nameAlmacen')->join('warehouses', 'products.warehouses_id', '=', 'warehouses.id')->where('products.companies_id', $company)->get();
+        $products = Product::select('products.*','warehouses.name as nameWarehouse','marks.name as nameMark')
+            ->join('warehouses', 'products.warehouses_id', '=', 'warehouses.id')
+            ->join('marks', 'products.marks_id', '=', 'marks.id')
+            ->where('products.companies_id', $company)->get();
         $stock_min = [];
         foreach ($products as $key => $p) {
-            if ( $p->stock <= $p->stock_min){
+            if ($p->stock <= $p->stock_min) {
                 array_push($stock_min, $p);
-            } 
-        }   
-        // 'customizers' => Customizer::select('customizers.*', 'companies.name')->join('companies', 'customizers.companies_id', '=', 'companies.id')->get(),
+            }
+        }
         $DateAndTime = date('Y-m-d');
-        $totalV=Order::where('companies_id', $company)->where('date', $DateAndTime)->get();
+        $totalV = Order::where('companies_id', $company)->where('date', $DateAndTime)->get();
         $totalVentasDia = 0;
         foreach ($totalV as $key => $p) {
-            $totalVentasDia+=$p->total;
+            $totalVentasDia += $p->total;
         }
-        
+
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->count(),
             'orders' => Order::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company)->get(),
-            'company' => Company::find( $company_id ),
+            'company' => Company::find($company_id),
             'stock_min' => $stock_min,
             'totalVent' => number_format($totalVentasDia, 2),
         ]);

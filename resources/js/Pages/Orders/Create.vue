@@ -4,7 +4,6 @@
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
-
         <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
             <div v-for="item in Object.keys($page.props.errors)" :key="item">
@@ -397,6 +396,11 @@
                                     <v-col cols="12">
                                         <v-data-table :headers="headers" :items="desserts" sort-by="name"
                                             class="elevation-2" :search="search" fixed-header :items-per-page="5">
+                                            <template v-slot:[`item.full_name`]="{ item }">{{ item.datosProducto.name }}
+                                                - {{ item.datosProducto.marks_name }} - {{
+                                                item.datosProducto.warehouses_name }}</template>
+                                            <template v-slot:[`item.presentation`]="{ item }">{{ item.presentationName
+                                            }}: {{ item.equivalence }} UND</template>
                                             <template v-slot:top>
                                                 <v-toolbar flat>
                                                     <v-toolbar-title>Carrito de Ventas</v-toolbar-title>
@@ -410,8 +414,8 @@
                                                     <v-dialog v-model="dialogDelete" max-width="500px">
                                                         <v-card>
                                                             <v-card-title class="text-h5">¿Está seguro de querer
-                                                                borrar el
-                                                                producto?</v-card-title>
+                                                                borrar el producto?
+                                                            </v-card-title>
                                                             <v-card-actions>
                                                                 <v-spacer></v-spacer>
                                                                 <v-btn color="red darken-1" text @click="closeDelete">
@@ -576,9 +580,8 @@ export default {
                 totalQuotas: 0
             },
             headers: [
-                { text: 'PRODUCTO', value: 'productName' },
-                { text: 'PRESENTACIÓN', value: 'presentationName' },
-                { text: 'EQUIVALENCIA', value: 'equivalence' },
+                { text: 'PRODUCTO', value: 'full_name' },
+                { text: 'PRESENTACIÓN', value: 'presentation' },
                 { text: 'CANTIDAD', value: 'quantity' },
                 { text: 'PRECIO UNITARIO', value: 'sale_price' },
                 { text: 'DESCUENTO', value: 'discount' },
@@ -656,10 +659,10 @@ export default {
             this.desserts = []
         },
         getProductText(item) {
-            return `${item.marks_name} - ${item.name} - ${item.warehouses_name}`;
+            return `${item.name} - ${item.marks_name} - ${item.warehouses_name}`;
         },
         getPresentationText(item) {
-            return `${item.name} - equivalencia: ${item.equivalence} UND`;
+            return `${item.name}: ${item.equivalence} UND`;
         },
         jaja() {
             alert('Método Inicial')

@@ -175,13 +175,13 @@
                             </inertia-link>
                         </v-card-title>
                         <v-data-table :headers="[
-                            {text: 'Producto', value: 'name'},
-                            {text: 'Almacén', value: 'nameAlmacen'},
-                            {text: 'Stock', value: 'stock', align: 'center',},
-                            {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
-                            {text: 'Descripción', value: 'description'}
-                        ]" :items="stock_min" :items-per-page="5" class="elevation-1" dense :search="search"
-                            locale="es">
+                        {text: 'Producto', value: 'name'},
+                        {text: 'Marca', value: 'nameMark'},
+                        {text: 'Almacén', value: 'nameWarehouse'},
+                        {text: 'Stock', value: 'stock', align: 'center',},
+                        {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
+                        {text: 'Descripción', value: 'description'}]" :items="stock_min" :items-per-page="5"
+                            class="elevation-1" dense :search="search" locale="es">
                             <template v-slot:[`item.stock_min`]="{ item }">
                                 <v-chip color="warning" dark>
                                     {{ item.stock_min }}
