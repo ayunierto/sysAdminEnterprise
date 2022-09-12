@@ -56,12 +56,12 @@ class ProductController extends Controller
             $product = Product::create($request->all());
 
 
-            $presenation = new Presentation();
-            $presenation->companies_id = Auth::user()->companies_id;
-            $presenation->products_id = $product->id;
-            $presenation->name = "Unidad";
-            $presenation->equivalence = 1;
-            $presenation->save();
+            // $presenation = new Presentation();
+            // $presenation->companies_id = Auth::user()->companies_id;
+            // $presenation->products_id = $product->id;
+            // $presenation->name = "Unidad";
+            // $presenation->equivalence = 1;
+            // $presenation->save();
 
             return Redirect::route('products.index')->with('message', 'Producto agregado');
         }

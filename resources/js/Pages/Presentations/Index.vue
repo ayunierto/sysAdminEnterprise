@@ -53,12 +53,12 @@
                                                 label="Seleccione empresa" single-line></v-select>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
+                                        <!-- <v-col cols="12" sm="6" md="6">
                                             <v-select v-model="editedItem.products_id" hint="Seleccione el producto"
                                                 :items="products" item-text="name" item-value="id"
                                                 label="Seleccione producto" persistent-hint single-line
                                                 :rules="requiredField" required></v-select>
-                                        </v-col>
+                                        </v-col> -->
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field v-model="editedItem.name" label="Nombre de la presentación"
@@ -126,7 +126,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 export default {
     props: [
         'companies',
-        'products',
+        // 'products',
         'presentations',
         'company',
     ],
@@ -152,7 +152,7 @@ export default {
             headers: [
                 { text: 'PRESENTACION', value: 'name' },
                 { text: 'EQUIVALENCIA(UND)', value: 'equivalence' },
-                { text: 'PRODUCTO', value: 'product' },
+                // { text: 'PRODUCTO', value: 'product' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -161,18 +161,18 @@ export default {
 
             editedItem: {
                 companies_id: this.$page.props.user.companies_id,
-                products_id: '',
+                // products_id: '',
                 name: '',
                 equivalence: '',
-                product: '',
+                // product: '',
             },
 
             defaultItem: {
                 companies_id: this.$page.props.user.companies_id,
-                products_id: '',
+                // products_id: '',
                 name: '',
                 equivalence: '',
-                product: '',
+                // product: '',
             },
 
         }

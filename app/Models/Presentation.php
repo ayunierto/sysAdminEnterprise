@@ -10,7 +10,7 @@ class Presentation extends Model
     use HasFactory;
     protected $fillable = [
         'companies_id',
-        'products_id',
+        // 'products_id',
         'name',
         'equivalence',
     ];

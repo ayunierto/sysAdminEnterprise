@@ -7,6 +7,7 @@ use App\Models\Customizer;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Customer;
+use App\Models\Presentation;
 use App\Models\Provider;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
@@ -39,33 +40,41 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        $company=Company::create($request->all());
+        $company = Company::create($request->all());
         // agregar un cliente general
-        $customer= new Customer();
+        $customer = new Customer();
         $customer->companies_id = $company->id;
-        $customer->name ="Cliente General";
+        $customer->name = "Cliente General";
         $customer->document  = 0;
         $customer->save();
         //agregar un proveedor general
-        $provider= new Provider();
+        $provider = new Provider();
         $provider->companies_id = $company->id;
-        $provider->name ="Proveedor General";
+        $provider->name = "Proveedor General";
         $provider->document  = 0;
         $provider->save();
         //agregar un almacén general
-        $warehouse= new Warehouse();
+        $warehouse = new Warehouse();
         $warehouse->companies_id = $company->id;
-        $warehouse->name ="Almacén General";
+        $warehouse->name = "Almacén General";
         $warehouse->contact_number  = 000000000;
         $warehouse->save();
+
+        //agregar un almacén general
+        $presenation = new Presentation();
+        $presenation->companies_id = $company->id;
+        $presenation->name = "Unidad";
+        $presenation->equivalence = 1;
+        $presenation->save();
+
         // agregar una personalizacion 
         Customizer::create([
-            'companies_id'=> $company->id,
-            'color_menu'=> '#3F51B5',
-            'color_sub_menu'=> '#3F51B5',
-            'color_header'=> '#3F51B5',
-            'color_footer'=> '#3F51B5',
-            'color_text'=> '#FFCDD2',
+            'companies_id' => $company->id,
+            'color_menu' => '#3F51B5',
+            'color_sub_menu' => '#3F51B5',
+            'color_header' => '#3F51B5',
+            'color_footer' => '#3F51B5',
+            'color_text' => '#FFCDD2',
             'logo' => '/img/logo_user.png'
         ]);
         return Redirect::route('companies.index')->with('message', 'Empresa agregada');
@@ -83,7 +92,6 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->update($request->all());
         return Redirect::route('companies.index')->with('message', 'Empresa actualizada');
-
     }
 
     /**
@@ -97,6 +105,5 @@ class CompanyController extends Controller
         $company = Company::find($id);
         $company->delete();
         return Redirect::route('companies.index')->with('message', 'Empresa eliminada');
-
     }
 }

@@ -31,15 +31,15 @@ class PresentationController extends Controller
                 return [
                     'id' => $presentation->id,
                     'companies_id' => $presentation->companies_id,
-                    'products_id' => $presentation->products_id,
+                    // 'products_id' => $presentation->products_id,
                     'colors' => Customizer::where('companies_id',$company)->get(),
                     'name' => $presentation->name,
                     'equivalence' => $presentation->equivalence,
-                    'product' => Product::find($presentation->products_id)->name,
+                    // 'product' => Product::find($presentation->products_id)->name,
                 ];
 
             }),
-            'products' => Product::where('companies_id', $company)->get(),
+            // 'products' => Product::where('companies_id', $company)->get(),
             'companies' => Company::all(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find($company),
