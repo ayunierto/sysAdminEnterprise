@@ -120,6 +120,7 @@ class OrderController extends Controller
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
                     'name' => $p->name,
+                    'type' => $p->type,
                     'code' => $p->code,
                     'bar_code' => $p->bar_code,
                     'stock' => $p->stock,
@@ -179,9 +180,12 @@ class OrderController extends Controller
 
             $order_details->save();
             $cant = $value['quantity'] * $value['equivalence'];
-            $stockProducto->update([
+            if($value['type']=='Producto'){
+                $stockProducto->update([
                 $stockProducto->stock -= $cant
             ]);
+            }
+            
         }
         if ($request->totalPago < $request->total) {
             $accountReceivable = new AccountReceivable();

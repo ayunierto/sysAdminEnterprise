@@ -49,19 +49,23 @@ class ServiceController extends Controller
         if (Auth::user()->role == 'seller') {
             return Redirect::route('services.index')->with('message', 'No tiene permisos para realizar esta acción');
         } else {
-            $product = new Product();
-            $product->companies_id = $request->companies_id;
-            $product->measures_id = $request->measures_id;
-            $product->type = 'Servicio';
-            $product->name = $request->name;
-            $product->code = $request->code;
-            $product->stock = 999;
-            $product->purchase_price = $request->purchase_price;
-            $product->sale_price = $request->sale_price;
-            $product->price_by_unit = $request->price_by_unit;
-            $product->wholesale_price = $request->wholesale_price;
-            $product->special_price = $request->special_price;
-            $product->description = $request->description;
+            $product=new Product();
+            $product->companies_id =$request->companies_id;
+            $product->warehouses_id =$request->warehouses_id;
+            $product->categories_id =$request->categories_id;
+            $product->marks_id =$request->marks_id;
+            $product->measures_id =$request->measures_id;
+            $product->providers_id =$request->providers_id;
+            $product->type ='Servicio';
+            $product->name =$request->name;
+            $product->code =$request->code;
+            $product->stock =9999;
+            $product->sale_price =$request->sale_price;
+            $product->price_by_unit =$request->price_by_unit;
+            $product->wholesale_price =$request->wholesale_price;
+            $product->special_price =$request->special_price;
+            $product->stock_min =1;
+            $product->description =$request->description;
             $product->save();
 
             return Redirect::route('services.index')->with('message', 'Servicio agregado');

@@ -595,6 +595,7 @@ export default {
             editedItem: {
                 datosProducto: '',
                 productId: '',
+                type: '',
                 productName: '',
                 sale_price: 0,
                 price_by_unit: 0,
@@ -615,6 +616,7 @@ export default {
             defaultItem: {
                 datosProducto: '',
                 productId: '',
+                type: '',
                 productName: '',
                 sale_price: 0,
                 price_by_unit: 0,
@@ -710,6 +712,7 @@ export default {
             this.editedItem.special_price = this.editedItem.datosProducto.special_price
             this.editedItem.productName = this.editedItem.datosProducto.name
             this.editedItem.productId = this.editedItem.datosProducto.id
+            this.editedItem.type = this.editedItem.datosProducto.type
         },
         changePresentation() {
             this.editedItem.presentationId = this.editedItem.datosPresentation.id

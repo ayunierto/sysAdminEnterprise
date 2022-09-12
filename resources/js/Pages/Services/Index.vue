@@ -44,7 +44,7 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" label="Nombre Producto"
+                                            <v-text-field v-model="editedItem.name" label="Nombre Servicio"
                                                 :rules="requiredField" required></v-text-field>
                                         </v-col>
 
@@ -60,11 +60,6 @@
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.code" label="Código" required>
                                             </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.purchase_price" label="Precio de compra"
-                                                type="number" min="0"></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -181,7 +176,11 @@ export default {
 
             editedItem: {
                 companies_id: this.$page.props.user.companies_id,
+                warehouses_id: this.warehouses[0].id,
+                categories_id: this.categories[0].id,
+                marks_id: this.marks[0].id,
                 measures_id: this.measures[58].id,
+                providers_id: this.providers[0].id,
                 name: '',
                 code: '',
                 purchase_price: 0,
@@ -194,7 +193,11 @@ export default {
 
             defaultItem: {
                 companies_id: this.$page.props.user.companies_id,
+                warehouses_id: this.warehouses[0].id,
+                categories_id: this.categories[0].id,
+                marks_id: this.marks[0].id,
                 measures_id: this.measures[58].id,
+                providers_id: this.providers[0].id,
                 name: '',
                 code: '',
                 purchase_price: 0,

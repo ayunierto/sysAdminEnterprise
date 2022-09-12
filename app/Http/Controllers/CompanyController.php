@@ -6,7 +6,9 @@ use App\Models\Company;
 use App\Models\Customizer;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Mark;
 use App\Models\Presentation;
 use App\Models\Provider;
 use App\Models\Warehouse;
@@ -60,12 +62,24 @@ class CompanyController extends Controller
         $warehouse->contact_number  = 000000000;
         $warehouse->save();
 
-        //agregar un almacén general
+        //agregar un Presentación general
         $presenation = new Presentation();
         $presenation->companies_id = $company->id;
         $presenation->name = "Unidad";
         $presenation->equivalence = 1;
         $presenation->save();
+
+        //agregar un Categoria general
+        $categoria = new Category();
+        $categoria->companies_id = $company->id;
+        $categoria->name = "Sin Categoria";
+        $categoria->save();
+
+        //agregar un marca general
+        $marca = new Mark();
+        $marca->companies_id = $company->id;
+        $marca->name = "Sin Marca";
+        $marca->save();
 
         // agregar una personalizacion 
         Customizer::create([
