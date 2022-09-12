@@ -18,6 +18,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Foundation\Application;
@@ -81,6 +82,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
 {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('dashboard/products', ProductController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/services', ServiceController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/proofPayments', ProofPaymentController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/orders', OrderController::class)->except('show');
 });

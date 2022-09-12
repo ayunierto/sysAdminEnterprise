@@ -10,7 +10,7 @@
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Lista Productos</v-toolbar-title>
+                    <v-toolbar-title>Lista Servicios</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical></v-divider>
 
@@ -18,24 +18,19 @@
 
                     <v-dialog v-model="dialog" max-width="700px" persistent>
 
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                            Agregar Producto
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-text-field
-                            v-model="search"
-                            append-icon="mdi-magnify"
-                            label="Buscar"
-                            single-line
-                            hide-details
-                        ></v-text-field>
-                    </template>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                                Agregar Servicio
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                                hide-details></v-text-field>
+                        </template>
 
-                    <v-card>
-                        <v-card-title>
-                            <span class="text-h5">{{ formTitle }}</span>
-                        </v-card-title>
+                        <v-card>
+                            <v-card-title>
+                                <span class="text-h5">{{ formTitle }}</span>
+                            </v-card-title>
 
                             <v-card-text>
                                 <v-container>
@@ -49,29 +44,8 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.warehouses_id" color="primary"
-                                                :items="warehouses" item-text="name" item-value="id" label="Almacén"
-                                                auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Almacén" persistent-hint
-                                                :rules="requiredField" required>
-                                            </v-autocomplete>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.categories_id" color="primary"
-                                                :items="categories" item-text="name" item-value="id" label="Categoría"
-                                                auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Categoría" persistent-hint
-                                                :rules="requiredField" required>
-                                            </v-autocomplete>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.marks_id" color="primary" :items="marks"
-                                                item-text="name" item-value="id" label="Marca" auto-select-first
-                                                hide-no-data hide-selected placeholder="Seleccione Marca"
-                                                persistent-hint :rules="requiredField" required>
-                                            </v-autocomplete>
+                                            <v-text-field v-model="editedItem.name" label="Nombre Producto"
+                                                :rules="requiredField" required></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -84,32 +58,8 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-autocomplete v-model="editedItem.providers_id" color="primary"
-                                                :items="providers" item-text="name" item-value="id" label="Proveedor"
-                                                auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Proveedor" persistent-hint
-                                                :rules="requiredField" required>
-                                            </v-autocomplete>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.name" label="Nombre Producto"
-                                                :rules="requiredField" required></v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.code" label="Código" required>
                                             </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.bar_code" label="Código de barra">
-                                            </v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.stock" label="Stock" type="number"
-                                                min="0"></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -135,35 +85,6 @@
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.special_price" type="number"
                                                 label="Precio especial" min="0"></v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.stock_min" type="number"
-                                                label="Stock mínimo" min="1"></v-text-field>
-                                        </v-col>
-
-                                        <v-col cols="12" sm="6" md="4">
-                                            <v-menu ref="menu" v-model="menu" :close-on-content-click="false"
-                                                :return-value.sync="editedItem.expiration_date"
-                                                transition="scale-transition" offset-y min-width="auto">
-
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-text-field v-model="editedItem.expiration_date"
-                                                        label="Selecione fecha de vecimiento"
-                                                        prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on">
-                                                    </v-text-field>
-                                                </template>
-                                                <v-date-picker v-model="editedItem.expiration_date" no-title scrollable>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn text color="primary" @click="menu = false">
-                                                        Cancel
-                                                    </v-btn>
-                                                    <v-btn text color="primary"
-                                                        @click="$refs.menu.save(editedItem.expiration_date)">
-                                                        OK
-                                                    </v-btn>
-                                                </v-date-picker>
-                                            </v-menu>
                                         </v-col>
 
                                         <v-col cols="12" sm="12" md="12">
@@ -219,14 +140,14 @@
 </template>
 
 <script>
-    import AdminLayout from '@/Layouts/AdminLayout'
-    import route from '../../../../vendor/tightenco/ziggy/src/js'
-    import Alerts from '../../Components/Alerts'
+import AdminLayout from '@/Layouts/AdminLayout'
+import route from '../../../../vendor/tightenco/ziggy/src/js'
+import Alerts from '../../Components/Alerts'
 
 export default {
     props: [
         'warehouses',
-        'products',
+        'services',
         'companies',
         'categories',
         'marks',
@@ -245,85 +166,59 @@ export default {
                 v => !!v || '*Campo Ogligatorio',
             ],
             menu: false,
-
-            items_state: [
-                { name: 'Activo', value: 1 },
-                { name: 'Inactivo', value: 0 },
-            ],
-
             search: '',
             dialog: false,
             dialogDelete: false,
             headers: [
                 { text: 'NOMBRE', value: 'name' },
-                { text: 'STOCK', value: 'stock' },
-                { text: 'PRECIO COMPRA', value: 'purchase_price' },
-                { text: 'PRECIO VENTA', value: 'sale_price' },
-                { text: 'FECHA DE VENCIMIENTO', value: 'expiration_date' },
+                { text: 'PRECIO', value: 'purchase_price' },
+                { text: 'DESCRIPCIÓN', value: 'description' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
 
             editedIndex: -1,
 
-                editedItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:this.warehouses[0].id,
-                    categories_id: '',
-                    marks_id: '',
-                    measures_id: this.measures[57].id,
-                    providers_id: '',
-                    name: '',
-                    code: '',
-                    bar_code: '',
-                    stock: '',
-                    purchase_price: 0,
-                    sale_price: 0,
-                    price_by_unit: 0,
-                    wholesale_price: 0,
-                    special_price: 0,
-                    stock_min: 1,
-                    description: '',
-                    state: 1,
-                    expiration_date: '',
-                },
-
-                defaultItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:this.warehouses[0].id,
-                    categories_id: '',
-                    marks_id: '',
-                    measures_id: this.measures[57].id,
-                    providers_id: '',
-                    name: '',
-                    code: '',
-                    bar_code: '',
-                    stock: '',
-                    purchase_price: '',
-                    sale_price: 0,
-                    price_by_unit: 0,
-                    wholesale_price: 0,
-                    special_price: 0,
-                    stock_min: 1,
-                    description: '',
-                    state: 1,
-                    expiration_date: '',
-                },
-
-            }
-        },
-
-        computed: {
-            formTitle () {
-                return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
+            editedItem: {
+                companies_id: this.$page.props.user.companies_id,
+                measures_id: this.measures[58].id,
+                name: '',
+                code: '',
+                purchase_price: 0,
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
+                description: '',
             },
-        },
 
-        watch: {
-
-            dialog (val) {
-                val || this.close()
+            defaultItem: {
+                companies_id: this.$page.props.user.companies_id,
+                measures_id: this.measures[58].id,
+                name: '',
+                code: '',
+                purchase_price: 0,
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
+                description: '',
             },
+
+        }
+    },
+
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'Nuevo Servicio' : 'Editar Servicio'
+        },
+    },
+
+    watch: {
+
+        dialog(val) {
+            val || this.close()
+        },
 
         dialogDelete(val) {
             val || this.closeDelete()
@@ -353,7 +248,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.products
+            this.desserts = this.services
         },
 
         editItem(item) {
@@ -374,7 +269,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('products.destroy', this.editedItem))
+            this.$inertia.delete(this.route('services.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -405,7 +300,7 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de almacenar
-                this.$inertia.patch(route('products.update', this.editedItem), this.editedItem)
+                this.$inertia.patch(route('services.update', this.editedItem), this.editedItem)
                 // ***************************************
 
             } else {
@@ -413,7 +308,7 @@ export default {
                 // Store
                 // ***************************************
                 // enviado formulario de almacenar
-                this.$inertia.post(route('products.store'), this.editedItem)
+                this.$inertia.post(route('services.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
 
