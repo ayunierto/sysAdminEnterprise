@@ -166,7 +166,7 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'NOMBRE', value: 'name' },
-                { text: 'PRECIO', value: 'purchase_price' },
+                { text: 'PRECIO', value: 'sale_price' },
                 { text: 'DESCRIPCIÓN', value: 'description' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
