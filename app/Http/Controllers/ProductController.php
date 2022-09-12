@@ -31,7 +31,7 @@ class ProductController extends Controller
 
         return Inertia::render('Products/Index', [
             'warehouses' => Warehouse::where('companies_id', $company_id)->get(),
-            'products' => Product::where('companies_id', $company_id)->get(),
+            'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->get(),
             'companies' => Company::all(),
             'categories' => Category::where('companies_id', $company_id)->get(),
             'marks' => Mark::where('companies_id', $company_id)->get(),
@@ -53,9 +53,30 @@ class ProductController extends Controller
         if (Auth::user()->role == 'seller') {
             return Redirect::route('products.index')->with('message', 'No tiene permisos para realizar esta acción');
         } else {
-            $product = Product::create($request->all());
+            $product=new Product();
+            $product->companies_id =$request->companies_id;
+            $product->warehouses_id =$request->warehouses_id;
+            $product->categories_id =$request->categories_id;
+            $product->marks_id =$request->marks_id;
+            $product->measures_id =$request->measures_id;
+            $product->providers_id =$request->providers_id;
+            $product->type ='Producto';
+            $product->name =$request->name;
+            $product->code =$request->code;
+            $product->bar_code =$request->bar_code;
+            $product->stock =$request->stock;
+            $product->purchase_price =$request->purchase_price;
+            $product->sale_price =$request->sale_price;
+            $product->price_by_unit =$request->price_by_unit;
+            $product->wholesale_price =$request->wholesale_price;
+            $product->special_price =$request->special_price;
+            $product->special_price =$request->stock_min;
+            $product->description =$request->description;
+            $product->expiration_date =$request->expiration_date;
+            $product->save();
 
 
+            // $product = Product::create($request->all());
             // $presenation = new Presentation();
             // $presenation->companies_id = Auth::user()->companies_id;
             // $presenation->products_id = $product->id;

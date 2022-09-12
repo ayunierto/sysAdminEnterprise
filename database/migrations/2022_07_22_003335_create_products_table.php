@@ -16,11 +16,12 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('warehouses_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('categories_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('marks_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('warehouses_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('categories_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('marks_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('measures_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('providers_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('type');
             $table->string('name');
             $table->string('code')->nullable();
             $table->string('bar_code')->nullable();
@@ -30,7 +31,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price_by_unit', 11, 2)->nullable();
             $table->decimal('wholesale_price', 11, 2)->nullable();
             $table->decimal('special_price', 11, 2)->nullable();
-            $table->integer('stock_min');
+            $table->integer('stock_min')->nullable();
             $table->string('description')->nullable();
             $table->boolean('state')->default(1);
             $table->date('expiration_date')->nullable();

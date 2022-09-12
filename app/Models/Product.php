@@ -20,6 +20,7 @@ class Product extends Model
         'providers_id',
         'batches_id',
         'name',
+        'type',
         'code',
         'bar_code',
         'stock',
