@@ -16,11 +16,11 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('warehouses_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('categories_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('marks_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('measures_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('providers_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('warehouses_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('categories_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('marks_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('measures_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('providers_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('type');
             $table->string('name');
             $table->string('code')->nullable();
