@@ -18,24 +18,19 @@
 
                     <v-dialog v-model="dialog" max-width="700px" persistent>
 
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                            Agregar Producto
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-text-field
-                            v-model="search"
-                            append-icon="mdi-magnify"
-                            label="Buscar"
-                            single-line
-                            hide-details
-                        ></v-text-field>
-                    </template>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                                Agregar Producto
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                                hide-details></v-text-field>
+                        </template>
 
-                    <v-card>
-                        <v-card-title>
-                            <span class="text-h5">{{ formTitle }}</span>
-                        </v-card-title>
+                        <v-card>
+                            <v-card-title>
+                                <span class="text-h5">{{ formTitle }}</span>
+                            </v-card-title>
 
                             <v-card-text>
                                 <v-container>
@@ -52,8 +47,8 @@
                                             <v-autocomplete v-model="editedItem.warehouses_id" color="primary"
                                                 :items="warehouses" item-text="name" item-value="id" label="Almacén"
                                                 auto-select-first hide-no-data hide-selected
-                                                placeholder="Seleccione Almacén" persistent-hint
-                                                :rules="requiredField" required>
+                                                placeholder="Seleccione Almacén" persistent-hint :rules="requiredField"
+                                                required>
                                             </v-autocomplete>
                                         </v-col>
 
@@ -103,8 +98,22 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field v-model="editedItem.bar_code" label="Código de barra">
+                                            <v-text-field autofocus v-model="editedItem.bar_code" label="Código de barra">
                                             </v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
+                                            <v-card color="#ECEFF1">
+                                                <h3 style="font-size: 12px;">Producto: {{editedItem.name}}</h3>
+                                                <v-layout class="ma-1" row wrap align-center justify-center fill-height >
+                                                    <barcode v-bind:value="editedItem.bar_code" height="30" width="1"
+                                                        background="transparent">
+                                                        Código de Barras
+                                                    </barcode>
+                                                </v-layout>
+
+                                            </v-card>
+
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
@@ -219,9 +228,10 @@
 </template>
 
 <script>
-    import AdminLayout from '@/Layouts/AdminLayout'
-    import route from '../../../../vendor/tightenco/ziggy/src/js'
-    import Alerts from '../../Components/Alerts'
+import AdminLayout from '@/Layouts/AdminLayout'
+import route from '../../../../vendor/tightenco/ziggy/src/js'
+import Alerts from '../../Components/Alerts'
+import VueBarcode from 'vue-barcode'
 
 export default {
     props: [
@@ -236,7 +246,8 @@ export default {
     ],
     components: {
         AdminLayout,
-        Alerts
+        Alerts,
+        'barcode': VueBarcode
     },
     data() {
         return {
@@ -250,6 +261,8 @@ export default {
                 { name: 'Activo', value: 1 },
                 { name: 'Inactivo', value: 0 },
             ],
+
+            barcodeValue: '',
 
             search: '',
             dialog: false,
@@ -266,64 +279,64 @@ export default {
 
             editedIndex: -1,
 
-                editedItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:this.warehouses[0].id,
-                    categories_id: '',
-                    marks_id: '',
-                    measures_id: this.measures[57].id,
-                    providers_id: '',
-                    name: '',
-                    code: '',
-                    bar_code: '',
-                    stock: '',
-                    purchase_price: 0,
-                    sale_price: 0,
-                    price_by_unit: 0,
-                    wholesale_price: 0,
-                    special_price: 0,
-                    stock_min: 1,
-                    description: '',
-                    state: 1,
-                    expiration_date: '',
-                },
-
-                defaultItem: {
-                    companies_id: this.$page.props.user.companies_id,
-                    warehouses_id:this.warehouses[0].id,
-                    categories_id: '',
-                    marks_id: '',
-                    measures_id: this.measures[57].id,
-                    providers_id: '',
-                    name: '',
-                    code: '',
-                    bar_code: '',
-                    stock: '',
-                    purchase_price: '',
-                    sale_price: 0,
-                    price_by_unit: 0,
-                    wholesale_price: 0,
-                    special_price: 0,
-                    stock_min: 1,
-                    description: '',
-                    state: 1,
-                    expiration_date: '',
-                },
-
-            }
-        },
-
-        computed: {
-            formTitle () {
-                return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
+            editedItem: {
+                companies_id: this.$page.props.user.companies_id,
+                warehouses_id: this.warehouses[0].id,
+                categories_id: '',
+                marks_id: '',
+                measures_id: this.measures[57].id,
+                providers_id: '',
+                name: '',
+                code: '',
+                bar_code: '',
+                stock: '',
+                purchase_price: 0,
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
+                stock_min: 1,
+                description: '',
+                state: 1,
+                expiration_date: '',
             },
-        },
 
-        watch: {
-
-            dialog (val) {
-                val || this.close()
+            defaultItem: {
+                companies_id: this.$page.props.user.companies_id,
+                warehouses_id: this.warehouses[0].id,
+                categories_id: '',
+                marks_id: '',
+                measures_id: this.measures[57].id,
+                providers_id: '',
+                name: '',
+                code: '',
+                bar_code: '',
+                stock: '',
+                purchase_price: '',
+                sale_price: 0,
+                price_by_unit: 0,
+                wholesale_price: 0,
+                special_price: 0,
+                stock_min: 1,
+                description: '',
+                state: 1,
+                expiration_date: '',
             },
+
+        }
+    },
+
+    computed: {
+        formTitle() {
+            return this.editedIndex === -1 ? 'Nuevo producto' : 'Editar producto'
+        },
+    },
+
+    watch: {
+
+        dialog(val) {
+            val || this.close()
+        },
 
         dialogDelete(val) {
             val || this.closeDelete()
