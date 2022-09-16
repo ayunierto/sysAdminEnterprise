@@ -102,7 +102,7 @@
                                             </v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
+                                        <!-- <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
                                             <v-card color="#ECEFF1">
                                                 <h3 style="font-size: 12px;">Producto: {{editedItem.name}}</h3>
                                                 <v-layout class="ma-1" row wrap align-center justify-center fill-height >
@@ -111,10 +111,8 @@
                                                         Código de Barras
                                                     </barcode>
                                                 </v-layout>
-
                                             </v-card>
-
-                                        </v-col>
+                                        </v-col> -->
 
                                         <v-col cols="12" sm="6" md="4">
                                             <v-text-field v-model="editedItem.stock" label="Stock" type="number"
@@ -231,7 +229,7 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 import Alerts from '../../Components/Alerts'
-import VueBarcode from 'vue-barcode'
+// import VueBarcode from 'vue-barcode'
 
 export default {
     props: [
@@ -247,7 +245,7 @@ export default {
     components: {
         AdminLayout,
         Alerts,
-        'barcode': VueBarcode
+        // 'barcode': VueBarcode
     },
     data() {
         return {
