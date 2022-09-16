@@ -102,7 +102,7 @@
                                             </v-text-field>
                                         </v-col>
 
-                                        <!-- <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
+                                        <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
                                             <v-card color="#ECEFF1">
                                                 <h3 style="font-size: 12px;">Producto: {{editedItem.name}}</h3>
                                                 <v-layout class="ma-1" row wrap align-center justify-center fill-height >
@@ -112,6 +112,12 @@
                                                     </barcode>
                                                 </v-layout>
                                             </v-card>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="4">
+                                        </v-col>
+
+                                        <!-- <v-col cols="12" sm="6" md="4">
+                                            <qrcode value="Hello, World!" :options="{ width: 200 }"></qrcode>
                                         </v-col> -->
 
                                         <v-col cols="12" sm="6" md="4">
@@ -229,7 +235,8 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 import Alerts from '../../Components/Alerts'
-// import VueBarcode from 'vue-barcode'
+import VueBarcode from 'vue-barcode'
+// import VueQrcode from '@chenfengyuan/vue-qrcode';
 
 export default {
     props: [
@@ -245,7 +252,8 @@ export default {
     components: {
         AdminLayout,
         Alerts,
-        // 'barcode': VueBarcode
+        'barcode': VueBarcode,
+        // 'qrcode':VueQrcode,
     },
     data() {
         return {
@@ -362,7 +370,6 @@ export default {
     },
 
     methods: {
-
         initialize() {
             this.desserts = this.products
         },
