@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <v-col cols="12" class="mt-3">
         <v-form>
-            <b-form-group id="exampleInputGroup1" label="Code Barre" label-for="barcode">
-                <b-form-input id="barcode" type="text" v-model="barcode" required placeholder="Saisissez le Code Barre">
-                </b-form-input>
-            </b-form-group>
+            <v-container>
+                
+            </v-container>
+            <label for="barcode">Code Barre</label>
+                <v-text-field id="barcode" type="text" v-model="barcode" required placeholder="Saisissez le Code Barre"></v-text-field>
         </v-form>
-
         <v-card no-body>
             <v-tabs card>
                 <v-tab title="Barcode" active>
@@ -27,7 +27,7 @@
                 </v-tab>
             </v-tabs>
         </v-card>
-    </div>
+    </v-col>
 </template>
 
 <script>

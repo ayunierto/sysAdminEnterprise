@@ -49,7 +49,6 @@ Route::get('/', function () {
     return Redirect::route('login');
 });
 
-
 // Rutas de administrador de la pagina
 Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function ()
 {
