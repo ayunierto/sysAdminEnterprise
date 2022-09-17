@@ -105,7 +105,8 @@
 
                                         <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
                                             <v-card color="#ECEFF1" id="my-node">
-                                                <h3 style="font-size: 12px;">Producto: {{editedItem.name}}</h3>
+                                                <h3 style="font-size: 12px;">&nbsp;&nbsp;Producto:
+                                                    {{editedItem.name}}</h3>
                                                 <v-layout class="ma-1" row wrap align-center justify-center fill-height>
                                                     <barcode v-bind:value="editedItem.bar_code" height="35" width="1"
                                                         background="transparent">
@@ -114,9 +115,11 @@
                                                 </v-layout>
                                             </v-card>
                                         </v-col>
-                                        <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
-                                            <v-btn @click="guardarImagen">
-                                                descargar
+                                        <v-col cols="1" sm="1" md="1" v-if="editedItem.bar_code!=''" v-show="true">
+                                            <v-btn color="green darken-2" x-small class="white--text" fab @click="guardarImagen">
+                                                <v-icon dark>
+                                                    mdi-folder-download
+                                                </v-icon>
                                             </v-btn>
                                         </v-col>
 
@@ -124,7 +127,7 @@
                                             <qrcode value="Hello, World!" :options="{ width: 200 }"></qrcode>
                                         </v-col> -->
 
-                                        <v-col cols="12" sm="6" md="4">
+                                        <v-col cols="11" sm="5" md="3">
                                             <v-text-field v-model="editedItem.stock" label="Stock" type="number"
                                                 min="0"></v-text-field>
                                         </v-col>
