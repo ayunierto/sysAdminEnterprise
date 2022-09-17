@@ -381,8 +381,9 @@ export default {
 
     methods: {
         guardarImagen() {
+            var extension=this.editedItem.name
             domtoimage.toBlob(document.getElementById("my-node")).then(function (blob) {
-                window.saveAs(blob, "my-node.png");
+                window.saveAs(blob, extension+'.png');
             });
         },
         initialize() {
