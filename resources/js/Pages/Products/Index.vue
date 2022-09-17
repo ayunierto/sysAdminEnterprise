@@ -98,15 +98,16 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field autofocus v-model="editedItem.bar_code" label="Código de barra">
+                                            <v-text-field autofocus v-model="editedItem.bar_code"
+                                                label="Código de barra">
                                             </v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
-                                            <v-card color="#ECEFF1">
+                                            <v-card color="#ECEFF1"  id="my-node">
                                                 <h3 style="font-size: 12px;">Producto: {{editedItem.name}}</h3>
-                                                <v-layout class="ma-1" row wrap align-center justify-center fill-height >
-                                                    <barcode v-bind:value="editedItem.bar_code" height="30" width="1"
+                                                <v-layout class="ma-1" row wrap align-center justify-center fill-height>
+                                                    <barcode v-bind:value="editedItem.bar_code" height="35" width="1"
                                                         background="transparent">
                                                         Código de Barras
                                                     </barcode>
@@ -114,6 +115,9 @@
                                             </v-card>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="4">
+                                            <v-btn @click="guardarImagen">
+                                                descargar
+                                            </v-btn>
                                         </v-col>
 
                                         <!-- <v-col cols="12" sm="6" md="4">
@@ -237,6 +241,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 import Alerts from '../../Components/Alerts'
 import VueBarcode from 'vue-barcode'
 // import VueQrcode from '@chenfengyuan/vue-qrcode';
+import domtoimage from "dom-to-image-more";
 
 export default {
     props: [
@@ -254,6 +259,7 @@ export default {
         Alerts,
         'barcode': VueBarcode,
         // 'qrcode':VueQrcode,
+        domtoimage
     },
     data() {
         return {
@@ -370,6 +376,20 @@ export default {
     },
 
     methods: {
+        guardarImagen() {
+            var node = document.getElementById("my-node");
+
+            domtoimage
+                .toPng(node)
+                .then(function (dataUrl) {
+                    var img = new Image();
+                    img.src = dataUrl;
+                    document.body.appendChild(img);
+                })
+                .catch(function (error) {
+                    console.error("oops, something went wrong!", error);
+                });
+        },
         initialize() {
             this.desserts = this.products
         },
