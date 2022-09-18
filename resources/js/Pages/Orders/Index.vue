@@ -148,7 +148,6 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import axios from 'axios'
 
 export default {
     props: [

@@ -10,7 +10,6 @@ use App\Models\Document;
 use App\Models\Customer;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
-use App\Models\AccountPayable;
 use App\Models\AccountReceivable;
 use App\Models\AffectationIgv;
 use App\Models\Coin;
@@ -21,7 +20,6 @@ use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\Quota;
 use App\Models\Warehouse;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -36,6 +34,7 @@ class OrderController extends Controller
     public function index()
     {
         $company = Auth::user()->companies_id;
+        
         return Inertia::render('Orders/Index', [
             'orders' => Order::where('companies_id', $company)->get()->map(function ($p) {
                 return [
@@ -251,6 +250,6 @@ class OrderController extends Controller
     {
         $orders = Order::find($id);
         $orders->delete();
-        return Redirect::route('orders.index')->with('message', 'venta eliminada');
+        return Redirect::route('orders.index')->with('message', 'Venta eliminada');
     }
 }
