@@ -47,6 +47,9 @@
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
+                <v-icon small class="mr-2" @click="printItem(item)">
+                    mdi-printer
+                </v-icon>
                 <v-icon small class="mr-2" @click="viewItem(item)">
                     mdi-eye
                 </v-icon>
@@ -145,6 +148,7 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+import axios from 'axios'
 
 export default {
     props: [
@@ -245,6 +249,16 @@ export default {
 
         initialize() {
             this.desserts = this.orders
+        },
+
+
+        printItem(item) {
+            this.editedIndex = this.desserts.indexOf(item)
+            this.editedItem = Object.assign({}, item)
+
+            // Enviando el id a la pagina de impresion
+            window.open('/print_invoice?id=' + item.id, '_blank')
+            
         },
 
         viewItem(item) {
