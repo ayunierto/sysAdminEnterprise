@@ -32,18 +32,21 @@
                             item-text="name"
                             item-value="id"
                             label="Seleccione comprobante"
-                            single-line
+                            outlined
                             ></v-select>
                         </v-col>
+
 
                         <v-col cols="12" sm="4" md="3">
                             <v-text-field dense
                                 label="Nro Comprobante"
                                 v-model="form.voucher_number"
                                 hint="Nro Comprobante"
+                                outlined
                             ></v-text-field>
                         </v-col>
 
+                        <!-- Fecha -->
                         <v-col cols="12" sm="4" md="3">
                             <v-menu
                                 ref="menu"
@@ -61,6 +64,7 @@
                                         readonly
                                         v-bind="attrs"
                                         v-on="on"
+                                        outlined
                                     ></v-text-field>
                                 </template>
 
@@ -85,7 +89,7 @@
                             item-text="name"
                             item-value="id"
                             label="Seleccione proveedor"
-                            single-line
+                            outlined
                             ></v-select>
                         </v-col>
 
@@ -101,7 +105,7 @@
                             item-text="description"
                             item-value="id"
                             label="Seleccione método de pago"
-                            single-line
+                            outlined
                             ></v-select>
                         </v-col>
 
@@ -113,7 +117,8 @@
                             item-text="code"
                             item-value="id"
                             label="Seleccione moneda"
-                            single-line
+                            outlined
+                            @change="coin_change"
                             ></v-select>
                         </v-col>
 
@@ -123,6 +128,7 @@
                             label="Tipo de cambio"
                             required
                             readonly
+                            outlined
                             ></v-text-field>
                         </v-col>
 
@@ -132,6 +138,7 @@
                             label="Total"
                             required
                             readonly
+                            outlined
                             ></v-text-field>
                         </v-col>
 
@@ -143,14 +150,12 @@
                             item-value="value"
                             label="Seleccione estado"
                             persistent-hint
-                            single-line
+                            outlined
                             ></v-select>
                         </v-col>
 
-                        <v-col cols="12">
-                            
-                        </v-col>
-
+                        
+                        <!-- Carrito -->
                         <v-col cols="12">
                             <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1" >
                                 <template v-slot:top>
@@ -185,18 +190,6 @@
                                         <v-card-text>
                                         <v-container>
                                             <v-row>
-                                                <!-- <v-col cols="12" sm="6" md="4" >
-                                                    <v-text-field
-                                                    v-model="editedItem.name"
-                                                    label="Producto"
-                                                    ></v-text-field>
-                                                </v-col>
-                                                <v-col cols="12" sm="6" md="4" >
-                                                    <v-text-field
-                                                    v-model="editedItem.presentation"
-                                                    label="Presentación"
-                                                    ></v-text-field>
-                                                </v-col> -->
                                                 <v-col cols="12" sm="12" md="8" v-if="editedIndex == -1">
                                                     <v-autocomplete
                                                     clearable
@@ -208,24 +201,24 @@
                                                     ></v-autocomplete>
                                                 </v-col>
 
+                                                <v-col cols="12" sm="12" md="8">
+                                                    <v-autocomplete
+                                                    clearable
+                                                    label="Presentación"
+                                                    v-model="editedItem.presentation"
+                                                    :items="presentations"
+                                                    return-object
+                                                    item-text="name"
+                                                    ></v-autocomplete>
+                                                </v-col>   
+                                                
                                                 <v-col cols="12" sm="6" md="4">
                                                     <v-text-field
                                                     v-model="editedItem.amount"
                                                     label="Cantidad"
+                                                    type="number"
                                                     ></v-text-field>
                                                 </v-col>
-                                                <!-- <v-col cols="12" sm="6" md="4" >
-                                                    <v-text-field
-                                                    v-model="editedItem.purchase_price"
-                                                    label="Precio de compra"
-                                                    ></v-text-field>
-                                                </v-col> -->
-                                                <!-- <v-col cols="12" sm="6" md="4" >
-                                                    <v-text-field
-                                                    v-model="editedItem.total"
-                                                    label="Total"
-                                                    ></v-text-field>
-                                                </v-col> -->
                                             </v-row>
                                         </v-container>
                                         </v-card-text>
@@ -275,6 +268,8 @@
                                 </template>
                             </v-data-table>
                         </v-col>
+                        <!-- Fin Carrito -->
+
                     </v-row>
                 </v-container>
             </v-card-text>
@@ -314,6 +309,7 @@
             'coins',
             'exchange_rate',
             'products',
+            'presentations'
         ],
         components: {
             AdminLayout,
@@ -325,13 +321,13 @@
                 form: {
                     companies_id: this.$page.props.user.companies_id,
                     providers_id: '',
-                    payment_methods_id: '',
-                    proof_payments_id: '',
+                    payment_methods_id: 1,
+                    proof_payments_id: 3,
                     voucher_number: '',
                     exchange_rate: this.exchange_rate,
                     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-                    coins_id: '',
-                    state: '',
+                    coins_id: 1,
+                    state: 1,
                     products: null,
                     total: 0,
                 },
@@ -349,15 +345,13 @@
                     { name: 'Inactivo', value: 0 },
                 ],
 
-
-
                 // para el carrito
                 dialog: false,
                 dialogDelete: false,
                 headers: [
                 
                     { text: 'PRODUCTO', value: 'name' },
-                    { text: 'PRESENTACION', value: 'presentation' },
+                    // { text: 'PRESENTACION', value: 'presentation' },
                     { text: 'CANTIDAD', value: 'amount' },
                     { text: 'PRECIO', value: 'purchase_price' },
                     { text: 'TOTAL', value: 'total' },
@@ -369,7 +363,7 @@
                 editedItem: {
                     id: '',
                     name: '',
-                    presentation: 0,
+                    presentation: '',
                     amount: 1,
                     purchase_price: 0,
                     total: 0,
@@ -377,7 +371,7 @@
                 defaultItem: {
                     id: '',
                     name: '',
-                    presentation: 0,
+                    presentation: '',
                     amount: 1,
                     purchase_price: 0,
                     total: 0,
@@ -472,7 +466,7 @@
 
                     this.editedItem.id = this.new_item_car.id
                     this.editedItem.name = this.new_item_car.name
-                    this.editedItem.presentation = this.new_item_car.presentation.name
+                    // this.editedItem.presentation = this.new_item_car.presentation.name
                     this.editedItem.purchase_price = this.new_item_car.purchase_price
                     this.editedItem.total = this.new_item_car.purchase_price * this.editedItem.amount
                     this.form.total +=  this.editedItem.total
@@ -489,6 +483,24 @@
                 this.form.products = this.desserts
                 this.$inertia.post(route('purchases.store'), this.form)
             },
+
+            // para cambiar de moneda
+            coin_change() {
+                if (this.form.coins_id == 1) {
+                    this.form.total = this.mathRound2(this.form.total * this.exchange_rate, 2)
+
+                } 
+                if (this.form.coins_id == 2) {
+                    this.form.total = this.mathRound2(this.form.total / this.exchange_rate, 2)
+                    
+                }
+            },
+
+            // redondea un numero a dos decimales
+            mathRound2 (num, decimales = 2) {
+                var exponente = Math.pow(10, decimales);
+                return (num >= 0 || -1) * Math.round(Math.abs(num) * exponente) / exponente;
+            }
 
 
         },

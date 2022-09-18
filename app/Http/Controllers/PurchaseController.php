@@ -99,6 +99,7 @@ class PurchaseController extends Controller
             'providers' => Provider::where('companies_id', $company)->get(),
             'payment_methods' => PaymentMethod::all(),
             'proof_payments' =>ProofPayment::all(),
+            'presentations' => Presentation::where('companies_id', $company)->get(),
             'coins' => Coin::all(),
             'exchange_rate' => $exchange_rate,
             'documents' => Document::all(),
@@ -121,7 +122,7 @@ class PurchaseController extends Controller
                     'special_price' => $p->special_price,
                     'description' => $p->description,
                     'state' => $p->state,
-                    'presentation' => Presentation::where('products_id', $p->id)->first(),
+                    // 'presentation' => Presentation::where('products_id', $p->id)->first(),
                 ];
             }),
 
