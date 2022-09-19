@@ -30,73 +30,199 @@
                 <v-app-bar app>
                     <!-- -->
                 </v-app-bar>
-
-                <!-- Sizes your content based upon application components -->
                 <v-main>
-                    <!-- Provides the application the proper gutter -->
                     <template>
-                        <div class="text-center">
-                            <v-dialog v-model="dialog" width="450">
-                                <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        color="red lighten-2"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                    >
-                                        Confirmar
-                                    </v-btn>
-                                </template>
-
-                                <v-card>
-                                    <v-card-title
-                                        class="text-h5 grey lighten-2"
-                                    >
-                                        DATOS COMPRA
-                                    </v-card-title>
-                                    <v-card-text>
-                                      <v-container>
-                                        <v-row>
-                                          <v-col
-                                            cols="12"
-                                            md="6"
-                                          >
-                                            <v-text-field
-                                              label="Total"
-                                              type="number"
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                  
-                                          <v-col
-                                            cols="12"
-                                            md="6"
-                                          >
-                                            <v-text-field
-                                              label="Monto a pagar"
-                                              type="number"
-                                              required
-                                            ></v-text-field>
-                                          </v-col>
-                                        </v-row>
-                                      </v-container>
-                                    </v-card-text>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            color="primary"
-                                            text
-                                            @click="dialog = false"
-                                        >
-                                            Pagar
-                                        </v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
-                        </div>
+                        <v-card class="ma-3" color="blue lighten-5">
+                            <v-card-title
+                                class="text-center justify-center py-6"
+                            >
+                                <h3 class="font-weight-bold basil--text">
+                                    GENERADOR DE CÓDIGOS
+                                </h3>
+                            </v-card-title>
+                            <v-tabs fixed-tabs icons-and-text>
+                                <v-tab>
+                                    BARCode <v-icon>mdi-barcode</v-icon>
+                                </v-tab>
+                                <v-tab>
+                                    QRCode <v-icon>mdi-qrcode</v-icon>
+                                </v-tab>
+                                <!-- Generador de BARCODE -->
+                                <v-tab-item>
+                                    <v-card elevation="2">
+                                        <v-container>
+                                            <h5>DATOS DE CÓDIGO</h5>
+                                            <v-row>
+                                                <v-col
+                                                    cols="12"
+                                                    sm="12"
+                                                    md="12"
+                                                >
+                                                    <v-row>
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="3"
+                                                            md="3"
+                                                        >
+                                                            <v-text-field
+                                                                label="Nombre Producto"
+                                                                placeholder="Name"
+                                                                v-model="namebarcode"
+                                                                outlined
+                                                            >
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="3"
+                                                            md="3"
+                                                        >
+                                                            <v-text-field
+                                                                label="Código Barra"
+                                                                placeholder="BARCODE"
+                                                                v-model="barcode"
+                                                                outlined
+                                                            >
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="2"
+                                                            md="2"
+                                                        >
+                                                            <v-text-field
+                                                                label="Tamaño Código"
+                                                                v-model="escalaCode"
+                                                                type="number"
+                                                                min="1"
+                                                                outlined
+                                                            >
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-layout
+                                                        class="ma-2"
+                                                        row
+                                                        wrap
+                                                        align-center
+                                                        justify-center
+                                                    >
+                                                        <v-card
+                                                            color="#FFFFFF"
+                                                            id="my-node"
+                                                        >
+                                                            <h3
+                                                                style="
+                                                                    font-size: 13px;
+                                                                "
+                                                            >
+                                                                &nbsp;&nbsp;Producto:
+                                                                {{namebarcode}}&nbsp;
+                                                            </h3>
+                                                            <v-layout
+                                                                class="ma-2"
+                                                                row
+                                                                wrap
+                                                                align-center
+                                                                justify-center
+                                                                fill-height
+                                                            >
+                                                                <barcode
+                                                                    class="col-xs-6 barcode"
+                                                                    :value="barcode"
+                                                                    height="100"
+                                                                    :width="escalaCode"
+                                                                    background="transparent"
+                                                                >
+                                                                </barcode>
+                                                            </v-layout>
+                                                        </v-card>
+                                                    </v-layout>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-card>
+                                </v-tab-item>
+                                <!-- Generador de QRCODE -->
+                                <v-tab-item>
+                                    <v-card elevation="2">
+                                        <v-container>
+                                            <h5>DATOS DE CÓDIGO</h5>
+                                            <v-row>
+                                                <v-col
+                                                    cols="12"
+                                                    sm="12"
+                                                    md="12"
+                                                >
+                                                    <v-row>
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="3"
+                                                            md="3"
+                                                        >
+                                                            <v-text-field
+                                                                label="Nombre Producto"
+                                                                placeholder="Name"
+                                                                v-model="nameqrcode"
+                                                                outlined
+                                                            >
+                                                            </v-text-field>
+                                                        </v-col>
+                                                        <v-col
+                                                            cols="12"
+                                                            sm="3"
+                                                            md="3"
+                                                        >
+                                                            <v-text-field
+                                                                label="Código QR"
+                                                                placeholder="QRCODE"
+                                                                v-model="qrcode"
+                                                                outlined
+                                                            >
+                                                            </v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                    <v-layout
+                                                        class="ma-2"
+                                                        row
+                                                        wrap
+                                                        align-center
+                                                        justify-center
+                                                    >
+                                                        <v-card
+                                                            color="#FFFFFF"
+                                                            id="my-node"
+                                                        >
+                                                            <h3
+                                                                style="
+                                                                    font-size: 13px;
+                                                                "
+                                                            >
+                                                                &nbsp;&nbsp;Producto:
+                                                                {{nameqrcode}}&nbsp;
+                                                            </h3>
+                                                            <v-layout
+                                                                class="ma-2"
+                                                                row
+                                                                wrap
+                                                                align-center
+                                                                justify-center
+                                                                fill-height
+                                                            >
+                                                                <qrcode
+                                                                    v-model="qrcode"
+                                                                    :options="{ width: 200 }"
+                                                                ></qrcode>
+                                                            </v-layout>
+                                                        </v-card>
+                                                    </v-layout>
+                                                </v-col>
+                                            </v-row>
+                                        </v-container>
+                                    </v-card>
+                                </v-tab-item>
+                            </v-tabs>
+                        </v-card>
                     </template>
                 </v-main>
 
@@ -112,9 +238,15 @@
             new Vue({
                 el: "#app",
                 vuetify: new Vuetify(),
-                data: () => ({
-                    dialog: false,
-                }),
+                data() {
+                    return {
+                        barcode: "Alpa2022",
+                        namebarcode: "",
+                        escalaCode: 1,
+                        qrcode: "Alpa Perú 2022",
+                        nameqrcode: "",
+                    };
+                },
             });
         </script>
     </body>

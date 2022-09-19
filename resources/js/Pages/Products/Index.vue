@@ -7,7 +7,9 @@
         <v-alert type="success" border="left" dismissible v-if="$page.props.flash.message">
             {{ $page.props.flash.message }}
         </v-alert>
+
         <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
+
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Lista Productos</v-toolbar-title>
@@ -116,16 +118,13 @@
                                             </v-card>
                                         </v-col>
                                         <v-col cols="1" sm="1" md="1" v-if="editedItem.bar_code!=''" v-show="true">
-                                            <v-btn color="green darken-2" x-small class="white--text" fab @click="guardarImagen">
+                                            <v-btn color="green darken-2" x-small class="white--text" fab
+                                                @click="guardarImagen">
                                                 <v-icon dark>
                                                     mdi-folder-download
                                                 </v-icon>
                                             </v-btn>
                                         </v-col>
-
-                                        <!-- <v-col cols="12" sm="6" md="4">
-                                            <qrcode value="Hello, World!" :options="{ width: 200 }"></qrcode>
-                                        </v-col> -->
 
                                         <v-col cols="11" sm="5" md="3">
                                             <v-text-field v-model="editedItem.stock" label="Stock" type="number"
@@ -233,8 +232,7 @@
                     mdi-delete
                 </v-icon>
             </template>
-        </v-data-table>
-
+        </v-data-table>>
     </admin-layout>
 </template>
 
@@ -243,7 +241,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 import Alerts from '../../Components/Alerts'
 import VueBarcode from 'vue-barcode'
-// import VueQrcode from '@chenfengyuan/vue-qrcode';
+import VueQrcode from '@chenfengyuan/vue-qrcode';
 import domtoimage from "dom-to-image-more";
 import { saveAs } from 'file-saver';
 
@@ -262,7 +260,7 @@ export default {
         AdminLayout,
         Alerts,
         'barcode': VueBarcode,
-        // 'qrcode':VueQrcode,
+        'qrcode': VueQrcode,
         domtoimage,
     },
     data() {
@@ -381,9 +379,9 @@ export default {
 
     methods: {
         guardarImagen() {
-            var extension=this.editedItem.name
+            var extension = this.editedItem.name
             domtoimage.toBlob(document.getElementById("my-node")).then(function (blob) {
-                window.saveAs(blob, extension+'.png');
+                window.saveAs(blob, extension + '.png');
             });
         },
         initialize() {
