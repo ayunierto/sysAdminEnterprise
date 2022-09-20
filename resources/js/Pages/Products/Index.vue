@@ -232,7 +232,7 @@
                     mdi-delete
                 </v-icon>
             </template>
-        </v-data-table>>
+        </v-data-table>
     </admin-layout>
 </template>
 
@@ -262,6 +262,7 @@ export default {
         'barcode': VueBarcode,
         'qrcode': VueQrcode,
         domtoimage,
+        saveAs,
     },
     data() {
         return {
