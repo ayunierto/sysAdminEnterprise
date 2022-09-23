@@ -7,98 +7,133 @@
 
         <v-container>
             <v-row>
-                <!-- <v-col cols="12" sm="6" md="4">
-                    <v-card rounded>
-                        <v-list-item three-line>
-                            <v-list-item-content>
-                                <div class="text-overline mb-4">
-                                    PRODUCTOS
-                                </div>
-                                <v-list-item-title class="text-h5 mb-1">
-                                    {{ products }}
-                                </v-list-item-title>
-                            </v-list-item-content>
-                            <v-list-item-avatar tile size="80">
-                                <v-img
-                                    src="https://st.depositphotos.com/1378583/4449/v/600/depositphotos_44495673-stock-illustration-home-repair-logo.jpg">
-                                </v-img>
-                            </v-list-item-avatar>
-                        </v-list-item>
+                <!-- Productos -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('products.index')">
+                            <v-card color="amber accent-2" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="8" sm="8">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <div>
+                                                    <v-list-item-title class="headline mb-1 white--text">
+                                                        {{ products }}
+                                                    </v-list-item-title>
+                                                </div>
+                                                <v-list-item-subtitle class="white--text ma-0">PRODUCTOS
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="4" sm="4">
+                                        <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                            <v-img contain src="/img/dashboard/productos.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
+                    </v-hover>
+                </v-col>
+                <!-- Servicios -->
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.services>0" v-show="true">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('services.index')">
+                            <v-card color="blue-grey" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="8" sm="8">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <div>
+                                                    <v-list-item-title class="headline mb-1 white--text">
+                                                        {{ services }}
+                                                    </v-list-item-title>
+                                                </div>
+                                                <v-list-item-subtitle class="white--text ma-0">SERVICIOS
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="4" sm="4">
+                                        <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                            <v-img contain src="/img/dashboard/services.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
+                    </v-hover>
+                </v-col>
+                <!-- Ventas -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('orders.index')">
+                            <v-card color="cyan darken-1" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="8" sm="8">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <div>
 
-                        <v-card-actions>
-                            <inertia-link :href="route('products.index')">
-                                <v-btn outlined rounded text>
-                                    VER MÁS
-                                </v-btn>
-                            </inertia-link>
-                        </v-card-actions>
-                    </v-card>
-                </v-col> -->
-                <v-col cols="12" sm="6" md="3" class="mt-5">
-                    <v-hover v-slot="{ hover }" open-delay="200">
-                        <v-card color="amber accent-2" :elevation="hover ? 16 : 2">
-                            <v-row>
-                                <v-col cols="8" sm="8">
-                                    <v-list-item three-line>
-                                        <v-list-item-content>
-                                            <div>
-                                                <inertia-link :href="route('products.index')">
-                                                    <v-btn fab color="amber accent-1" elevation="0">
-                                                        <v-icon color="white">mdi-one-up</v-icon>
-                                                    </v-btn>
-                                                </inertia-link>
-                                            </div>
-                                            <v-list-item-title class="headline mb-1 white--text">
-                                                {{ products }}
-                                            </v-list-item-title>
-                                            <v-list-item-subtitle class="white--text ma-0">PRODUCTOS
-                                            </v-list-item-subtitle>
-                                        </v-list-item-content>
-                                    </v-list-item>
-                                </v-col>
-                                <v-col cols="4" sm="4">
-                                    <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain src="/img/dashboard/productos.png">
-                                        </v-img>
-                                    </v-avatar>
-                                </v-col>
-                            </v-row>
-                        </v-card>
+                                                    <v-list-item-title class="headline mb-1 white--text">
+                                                        {{ orders }}
+                                                    </v-list-item-title>
+
+                                                </div>
+                                                <v-list-item-subtitle class="white--text">VENTAS DEL DÍA
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="4" sm="4">
+                                        <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                            <v-img contain src="/img/dashboard/ventas.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
                     </v-hover>
                 </v-col>
-                <v-col cols="12" sm="6" md="3" class="mt-5">
+                <!-- Compras -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
-                        <v-card color="cyan darken-1" :elevation="hover ? 16 : 2">
-                            <v-row>
-                                <v-col cols="8" sm="8">
-                                    <v-list-item three-line>
-                                        <v-list-item-content>
-                                            <div>
-                                                <inertia-link :href="route('orders.index')">
-                                                    <v-btn fab color="cyan lighten-2" elevation="0">
-                                                        <v-icon color="white">mdi-cart</v-icon>
-                                                    </v-btn>
-                                                </inertia-link>
-                                            </div>
-                                            <v-list-item-title class="headline mb-1 white--text">
-                                                {{ orders }}
-                                            </v-list-item-title>
-                                            <v-list-item-subtitle class="white--text">VENTAS DEL DÍA
-                                            </v-list-item-subtitle>
-                                        </v-list-item-content>
-                                    </v-list-item>
-                                </v-col>
-                                <v-col cols="4" sm="4">
-                                    <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain src="/img/dashboard/ventas.png">
-                                        </v-img>
-                                    </v-avatar>
-                                </v-col>
-                            </v-row>
-                        </v-card>
+                        <inertia-link :href="route('purchases.index')">
+                            <v-card color="yellow darken-4" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="8" sm="8">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <div>
+
+                                                    <v-list-item-title class="headline mb-1 white--text">
+                                                        {{ purchases }}
+                                                    </v-list-item-title>
+
+                                                </div>
+
+                                                <v-list-item-subtitle class="white--text">COMPRAS DEL DÍA
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="4" sm="4">
+                                        <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                            <v-img contain src="/img/dashboard/compras.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
                     </v-hover>
                 </v-col>
-                <v-col cols="12" sm="6" md="3" class="mt-5">
+                <!-- Caja Soles -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <v-card color="light-green" :elevation="hover ? 16 : 2">
                             <v-row>
@@ -106,13 +141,13 @@
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
-                                                <v-btn fab color="light-green lighten-1" elevation="0">
-                                                    <v-icon color="white">mdi-currency-usd</v-icon>
-                                                </v-btn>
+                                                <v-list-item-subtitle class="headline mb-1 white--text">
+                                                    S/. {{totalVentSol }}
+                                                </v-list-item-subtitle>
+                                                <v-list-item-title class="headline mb-1 white--text">
+                                                    $. {{totalVentDolar }}
+                                                </v-list-item-title>
                                             </div>
-                                            <v-list-item-title class="headline mb-1 white--text">
-                                                {{totalVent }}
-                                            </v-list-item-title>
                                             <v-list-item-subtitle class="white--text">CAJA
                                             </v-list-item-subtitle>
                                         </v-list-item-content>
@@ -128,38 +163,36 @@
                         </v-card>
                     </v-hover>
                 </v-col>
-                <v-col cols="12" sm="6" md="3" class="mt-5">
-                    <v-hover v-slot="{ hover }" open-delay="200">
-                        <v-card color="yellow darken-4" :elevation="hover ? 16 : 2">
-                            <v-row>
-                                <v-col cols="8" sm="8">
-                                    <v-list-item three-line>
-                                        <v-list-item-content>
-                                            <div>
-                                                <inertia-link :href="route('purchases.index')">
-                                                    <v-btn fab color="yellow darken-3" elevation="0">
-                                                        <v-icon color="white">mdi-account-cash-outline</v-icon>
-                                                    </v-btn>
-                                                </inertia-link>
-                                            </div>
-                                            <v-list-item-title class="headline mb-1 white--text">
-                                                {{ purchases }}
-                                            </v-list-item-title>
-                                            <v-list-item-subtitle class="white--text">COMPRAS DEL DÍA
-                                            </v-list-item-subtitle>
-                                        </v-list-item-content>
-                                    </v-list-item>
-                                </v-col>
-                                <v-col cols="4" sm="4">
-                                    <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain src="/img/dashboard/compras.png">
-                                        </v-img>
-                                    </v-avatar>
-                                </v-col>
-                            </v-row>
-                        </v-card>
-                    </v-hover>
-                </v-col>
+                <!-- Grafica de ventas -->
+                <!-- <v-col cols="12" sm="4" md="9" class="mt-5">
+                    <v-card class="mx-auto text-center" color="green" dark>
+                        <v-card-text>
+                            <v-sheet color="rgba(0, 0, 0, .12)">
+                                <v-sparkline :value="value" color="rgba(255, 255, 255, .7)" height="50" line-width="1"
+                                    smooth>
+                                    <template v-slot:label="item">
+                                        ${{ item.value }}
+                                    </template>
+                                </v-sparkline>
+                            </v-sheet>
+                        </v-card-text>
+
+                        <v-card-text>
+                            <div class="text-h4 font-weight-thin">
+                                Sales Last 24h
+                            </div>
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions class="justify-center">
+                            <v-btn block text>
+                                Go to Report
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-col> -->
+                <!-- Tabla Productos -->
                 <v-col cols="12" class="mt-3">
                     <v-card elevation="24" color="blue lighten-4" outlined>
                         <v-card-title>
@@ -193,6 +226,7 @@
                         </v-data-table>
                     </v-card>
                 </v-col>
+
             </v-row>
         </v-container>
     </admin-layout>
@@ -206,11 +240,20 @@ export default {
         AdminLayout,
     },
 
-    props: ['products', 'company', 'stock_min', 'orders', 'totalVent', 'purchases'],
+    props: ['products', 'services', 'company', 'stock_min', 'orders', 'totalVentSol', 'totalVentDolar', 'purchases'],
 
     data() {
         return {
             search: '',
+            // value: [
+            //     423,
+            //     446,
+            //     675,
+            //     510,
+            //     590,
+            //     610,
+            //     760,
+            // ],
         }
     },
 }
