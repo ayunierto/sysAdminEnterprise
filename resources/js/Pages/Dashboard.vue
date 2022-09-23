@@ -67,6 +67,62 @@
                         </inertia-link>
                     </v-hover>
                 </v-col>
+                <!-- Caja Soles -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <v-card color="light-green" :elevation="hover ? 16 : 2">
+                            <v-row>
+                                <v-col cols="8" sm="8">
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                <v-list-item-subtitle class="headline mb-1 white--text">
+                                                    S/ {{totalVentSol }}
+                                                </v-list-item-subtitle>
+                                            </div>
+                                            <v-list-item-subtitle class="white--text">CAJA SOLES
+                                            </v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="4" sm="4">
+                                    <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                        <v-img contain src="/img/dashboard/caja.png">
+                                        </v-img>
+                                    </v-avatar>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </v-hover>
+                </v-col>
+                <!-- Caja Dolares -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <v-card color="green darken-1" :elevation="hover ? 16 : 2">
+                            <v-row>
+                                <v-col cols="8" sm="8">
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                <v-list-item-subtitle class="headline mb-1 white--text">
+                                                    $. {{totalVentDolar }}
+                                                </v-list-item-subtitle>
+                                            </div>
+                                            <v-list-item-subtitle class="white--text">CAJA DOLARES
+                                            </v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </v-list-item>
+                                </v-col>
+                                <v-col cols="4" sm="4">
+                                    <v-avatar size="85" class="ml-n10 mt-6" tile>
+                                        <v-img contain src="/img/dashboard/cajadolares.png">
+                                        </v-img>
+                                    </v-avatar>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                    </v-hover>
+                </v-col>
                 <!-- Ventas -->
                 <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
@@ -131,38 +187,37 @@
                             </v-card>
                         </inertia-link>
                     </v-hover>
-                </v-col>
-                <!-- Caja Soles -->
+                </v-col>      
+                <!-- Cuetas por Cobrar -->
                 <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
-                        <v-card color="light-green" :elevation="hover ? 16 : 2">
+                        <inertia-link :href="route('accountReceivables.index')">
+                        <v-card color="orange accent-2" :elevation="hover ? 16 : 2">
                             <v-row>
                                 <v-col cols="8" sm="8">
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
                                                 <v-list-item-subtitle class="headline mb-1 white--text">
-                                                    S/. {{totalVentSol }}
+                                                    {{accountsR }}
                                                 </v-list-item-subtitle>
-                                                <v-list-item-title class="headline mb-1 white--text">
-                                                    $. {{totalVentDolar }}
-                                                </v-list-item-title>
                                             </div>
-                                            <v-list-item-subtitle class="white--text">CAJA
+                                            <v-list-item-subtitle class="white--text">CUENTAS POR COBRAR
                                             </v-list-item-subtitle>
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-col>
                                 <v-col cols="4" sm="4">
                                     <v-avatar size="85" class="ml-n10 mt-6" tile>
-                                        <v-img contain src="/img/dashboard/caja.png">
+                                        <v-img contain src="/img/dashboard/cobrar.png">
                                         </v-img>
                                     </v-avatar>
                                 </v-col>
                             </v-row>
                         </v-card>
+                    </inertia-link>
                     </v-hover>
-                </v-col>
+                </v-col>          
                 <!-- Grafica de ventas -->
                 <!-- <v-col cols="12" sm="4" md="9" class="mt-5">
                     <v-card class="mx-auto text-center" color="green" dark>
@@ -240,7 +295,8 @@ export default {
         AdminLayout,
     },
 
-    props: ['products', 'services', 'company', 'stock_min', 'orders', 'totalVentSol', 'totalVentDolar', 'purchases'],
+    props: ['products', 'services', 'company', 'stock_min', 'orders', 
+    'totalVentSol', 'totalVentDolar', 'purchases','accountsR'],
 
     data() {
         return {

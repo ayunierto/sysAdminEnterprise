@@ -66,7 +66,7 @@
                 </v-toolbar>
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:[`item.actions`]="{ item }">
                 <v-icon class="mr-2" @click="viewItem(item)">
                     mdi-eye
                 </v-icon>

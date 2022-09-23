@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountReceivable;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\Customizer;
@@ -59,6 +60,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->count(),
             'services' => Product::where('companies_id', $company_id)->where('type', 'Servicio')->count(),
+            'accountsR' => AccountReceivable::where('companies_id', $company_id)->where('state', 0)->count(),
             'orders' => Order::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company)->get(),

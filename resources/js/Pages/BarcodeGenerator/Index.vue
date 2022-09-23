@@ -113,6 +113,8 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import VueBarcode from 'vue-barcode'
 import VueQrcode from '@chenfengyuan/vue-qrcode';
+import domtoimage from "dom-to-image-more";
+import { saveAs } from 'file-saver';
 
 export default {
     name: 'hello',
@@ -120,6 +122,7 @@ export default {
         AdminLayout,
         'barcode': VueBarcode,
         'qrcode': VueQrcode,
+        saveAs,
     },
     data() {
         return {
