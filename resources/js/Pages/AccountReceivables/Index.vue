@@ -49,7 +49,8 @@
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" md="12">
-                                            <v-textarea label="Descripción" rows="1" v-model="editedItem.description" required>
+                                            <v-textarea label="Descripción" rows="1" v-model="editedItem.description"
+                                                required>
                                             </v-textarea>
                                         </v-col>
                                     </v-row>
@@ -259,7 +260,7 @@ export default {
         },
 
         save() {
-            if (this.editedItem.totalPago < 0 || this.editedItem.totalPago == '' || Number.parseFloat(this.editedItem.totalPago)  > Number.parseFloat(this.editedItem.debt)) {
+            if (this.editedItem.totalPago < 0 || this.editedItem.totalPago == '' || Number.parseFloat(this.editedItem.totalPago) > Number.parseFloat(this.editedItem.debt)) {
                 this.snackbar_text = 'Monto incorrecto';
                 this.snackbar_color = 'teal lighten-1';
                 this.snackbar = true;
