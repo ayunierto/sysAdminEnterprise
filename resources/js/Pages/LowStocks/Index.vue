@@ -19,7 +19,7 @@
         </div>
         <!-- Fin de Alertas -->
 
-        <v-card elevation="24" color="blue lighten-4" outlined>
+        <v-card outlined>
             <v-card-title>
                 PRODUCTOS CON BAJO STOCK
                 <v-spacer></v-spacer>
@@ -38,10 +38,10 @@
             {text: 'Almacén', value: 'nameWarehouse'},
             {text: 'Stock', value: 'stock', align: 'center',},
             {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
-            {text: 'Descripción', value: 'description'}]" :items="products" :items-per-page="5"
+            {text: 'Descripción', value: 'description'}]" :items="products"
                 class="elevation-1" dense :search="search" locale="es">
                 <template v-slot:[`item.stock_min`]="{ item }">
-                    <v-chip color="warning" dark>
+                    <v-chip small color="warning" dark >
                         {{ item.stock_min }}
                     </v-chip>
                 </template>
@@ -56,7 +56,6 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
