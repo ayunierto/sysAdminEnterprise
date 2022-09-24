@@ -247,7 +247,7 @@
                     </v-card>
                 </v-col>
                 <!-- Tabla Productos -->
-                <v-col cols="12"  class="mt-3">
+                <!-- <v-col cols="12"  class="mt-3">
                     <v-card elevation="24" color="blue lighten-4" outlined>
                         <v-card-title>
                             PRODUCTOS CON BAJO STOCK
@@ -279,7 +279,7 @@
                             </template>
                         </v-data-table>
                     </v-card>
-                </v-col>
+                </v-col> -->
 
             </v-row>
         </v-container>
@@ -294,7 +294,7 @@ export default {
         AdminLayout,
     },
 
-    props: ['products', 'services', 'company', 'stock_min', 'orders', 
+    props: ['products', 'services', 'company', 'orders', 
     'totalVentSol', 'totalVentDolar', 'purchases','accountsR'],
 
     data() {

@@ -408,7 +408,7 @@
             <!-- Menú horizontal -->
             <v-app-bar app :color="colorHeader" dense elevation="24">
                 <v-app-bar-nav-icon @click="drawer = !drawer" :style="item_style()"></v-app-bar-nav-icon>
-                
+
                 <v-toolbar-title>
                     <!-- INICIO -->
 
@@ -416,14 +416,17 @@
 
                 <v-spacer></v-spacer>
                 <v-list-item right>
-                    <v-avatar>
-                        <v-badge left overlap color="red" content="1">
-                            <v-icon medium dark>mdi-bell</v-icon>
+                    <v-spacer></v-spacer>
+                    <inertia-link :href="route('lowStocks.index')">
+                        <v-icon medium dark>mdi-bell</v-icon>
+                        <v-badge offset-y="-9" offset-x="-5" dot left overlap color="red" content="1"
+                            v-if="this.$page.props.nrodts>0" v-show="true">
                         </v-badge>
-                    </v-avatar>
+
+                    </inertia-link>
                 </v-list-item>
                 <v-card>
-
+                    
                 </v-card>
 
                 <v-menu left bottom>
