@@ -408,7 +408,7 @@
             <!-- Menú horizontal -->
             <v-app-bar app :color="colorHeader" dense elevation="24">
                 <v-app-bar-nav-icon @click="drawer = !drawer" :style="item_style()"></v-app-bar-nav-icon>
-
+                
                 <v-toolbar-title>
                     <!-- INICIO -->
 
