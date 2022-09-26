@@ -55,56 +55,5 @@ class UserSeeder extends Seeder
             'role' => 'seller',
             'password' => bcrypt('12345678'),
         ]);
-
-        // company ECSMAC
-        User::create([
-            'name' => 'Master',
-            'companies_id' => 2,
-            'email' => 'master02@gmail.com',
-            'role' => 'master',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        
-        User::create([
-            'name' => 'Admin',
-            'companies_id' => 2,
-            'email' => 'admin02@gmail.com',
-            'role' => 'admin',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        User::create([
-            'name' => 'Seller',
-            'companies_id' => 2,
-            'email' => 'seller02@gmail.com',
-            'role' => 'seller',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        // empresa VargasDCP
-        User::create([
-            'name' => 'Master',
-            'companies_id' => 3,
-            'email' => 'master03@gmail.com',
-            'role' => 'master',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        User::create([
-            'name' => 'Admin',
-            'companies_id' => 3,
-            'email' => 'admin03@gmail.com',
-            'role' => 'admin',
-            'password' => bcrypt('12345678'),
-        ]);
-
-        User::create([
-            'name' => 'Seller',
-            'companies_id' => 3,
-            'email' => 'seller03@gmail.com',
-            'role' => 'seller',
-            'password' => bcrypt('12345678'),
-        ]);
     }
 }

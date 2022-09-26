@@ -92,7 +92,7 @@
                                         </v-select>
                                     </v-col>
                                     <!-- Dialog Quotas -->
-                                    <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito'">
+                                    <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito' && tipoComprobate.name=='Factura'">
                                         <v-container>
                                             <v-layout row justify-center>
                                                 <v-dialog v-model="dialogQuotasAdd" persistent max-width="420">
@@ -661,7 +661,7 @@ export default {
             this.desserts = []
         },
         getProductText(item) {
-            return `${item.name} - ${item.marks_name} - ${item.warehouses_name}`;
+            return `${item.bar_code} - ${item.name} - ${item.marks_name} - ${item.warehouses_name}`;
         },
         getPresentationText(item) {
             return `${item.name}: ${item.equivalence} UND`;
