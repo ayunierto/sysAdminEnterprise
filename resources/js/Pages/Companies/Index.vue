@@ -37,126 +37,142 @@
                             Agregar empresa
                         </v-btn>
                         <v-spacer></v-spacer>
-                        <v-text-field
+                        <v-text-field dense
                             v-model="search"
                             append-icon="mdi-magnify"
                             label="Buscar"
-                            single-line
+                            outlined
                             hide-details
                         ></v-text-field>
                     </template>
 
+                    <form @submit.prevent="save">
                     <v-card>
+
                         <v-card-title>
                         <span class="text-h5">{{ formTitle }}</span>
                         </v-card-title>
 
                         <v-card-text>
                             <v-container>
-                                <v-row>
-                                    <v-col cols="12" sm="6" md="6">
-                                        <v-text-field
-                                        v-model="editedItem.name"
-                                        label="Nombre"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field 
+                                            v-model="editedItem.name"
+                                            label="Nombre"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
 
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.ruc"
-                                        label="Ruc"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.phone"
-                                        label="Teléfono"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.address"
-                                        label="Dirección"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.department"
-                                        label="Departamento"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.province"
-                                        label="Provincia"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.district"
-                                        label="Distrito"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <v-text-field
-                                        v-model="editedItem.country_code"
-                                        label="Código de Area"
-                                        required
-                                        ></v-text-field>
-                                    </v-col>
-                                    
-                                    <v-col cols="12" sm="6" md="6" >
-                                        <!-- <v-text-field
-                                        v-model="editedItem.state"
-                                        label="Esado"
-                                        required
-                                        ></v-text-field> -->
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.ruc"
+                                            label="Ruc"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.phone"
+                                            label="Teléfono"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.address"
+                                            label="Dirección"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.department"
+                                            label="Departamento"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.province"
+                                            label="Provincia"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.district"
+                                            label="Distrito"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-text-field
+                                            v-model="editedItem.country_code"
+                                            label="Código de Area"
+                                            required
+                                            dense
+                                            outlined
+                                            ></v-text-field>
+                                        </v-col>
+                                        
+                                        <v-col cols="12" sm="6" md="6" >
+                                            <v-select
+                                            v-model="editedItem.state"
+                                            :items="items_state"
+                                            item-text="name"
+                                            item-value="abbr"
+                                            label="Seleccione estado"
+                                            dense
+                                            outlined
+                                            ></v-select>
+                                        </v-col>
 
-                                        <v-select
-                                        v-model="editedItem.state"
-                                        :items="items_state"
-                                        item-text="name"
-                                        item-value="abbr"
-                                        label="Seleccione estado"
-                                        persistent-hint
-                                        single-line
-                                        ></v-select>
-                                    </v-col>
-
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-textarea v-model="editedItem.description" class="mx-2"
-                                            label="Descripción" rows="2" hint="Descripcion de la empresa">
-                                        </v-textarea>
-                                    </v-col>
-                                </v-row>
+                                        <v-col cols="12" sm="12" md="12">
+                                            <v-textarea v-model="editedItem.description" 
+                                            label="Descripción" rows="2" hint="Descripcion de la empresa"
+                                            dense
+                                            outlined    
+                                            ></v-textarea>
+                                        </v-col>
+                                    </v-row>
                             </v-container>
                         </v-card-text>
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="blue darken-1" text @click="close" >
+                            <v-btn color="red darken-1" text @click="close" >
                                 Cancelar
                             </v-btn>
 
-                            <v-btn color="blue darken-1" type="submit" text @click="save" >
+                            <v-btn color="blue darken-1" type="submit" text >
                                 Guardar
                             </v-btn>
                         </v-card-actions>
                     </v-card>
+                </form>
+
                     </v-dialog>
 
                     <v-dialog v-model="dialogDelete" max-width="500px">

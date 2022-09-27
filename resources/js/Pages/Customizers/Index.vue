@@ -68,14 +68,15 @@
                     <v-dialog v-model="dialog" max-width="700px">
 
                         <template v-slot:activator="{ on, attrs }">
-                            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
+                            <!-- <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
                                 Agregar personalización
-                            </v-btn>
+                            </v-btn> -->
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense
                                 hide-details></v-text-field>
                         </template>
 
+                        <form @submit.prevent="save">
                         <v-card>
                             <v-card-title>
                                 <span class="text-h5">{{ formTitle }}</span>
@@ -84,11 +85,11 @@
                             <v-card-text>
                                 <v-container>
                                     <v-row>
-                                        <v-col cols="12" sm="12" md="12">
+                                        <!-- <v-col cols="12" sm="12" md="12">
                                             <v-select v-model="editedItem.companies_id" hint="Seleccione empresa"
                                                 :items="companies" item-text="name" item-value="id"
-                                                label="Seleccione empresa" single-line></v-select>
-                                        </v-col>
+                                                label="Seleccione empresa" outlined></v-select>
+                                        </v-col> -->
 
                                         <v-col cols="12" sm="6" md="6">
                                             Color del Menú
@@ -233,11 +234,12 @@
                                     Cancelar
                                 </v-btn>
 
-                                <v-btn color="blue darken-1" type="submit" text @click="save">
+                                <v-btn color="blue darken-1" type="submit" text >
                                     Guardar
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
+                    </form>
                     </v-dialog>
 
                     <v-dialog v-model="dialogDelete" max-width="500px">

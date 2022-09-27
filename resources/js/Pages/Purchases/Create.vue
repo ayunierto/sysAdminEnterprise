@@ -198,6 +198,9 @@
                                                     :items="products"
                                                     return-object
                                                     item-text="name"
+                                                    outlined dense
+                                                    auto-select-first
+
                                                     ></v-autocomplete>
                                                 </v-col>
 
@@ -209,14 +212,17 @@
                                                     :items="presentations"
                                                     return-object
                                                     item-text="name"
+                                                    outlined dense
+                                                    auto-select-first
                                                     ></v-autocomplete>
                                                 </v-col>   
                                                 
-                                                <v-col cols="12" sm="6" md="4">
+                                                <v-col cols="12" sm="12" md="12">
                                                     <v-text-field
                                                     v-model="editedItem.amount"
                                                     label="Cantidad"
                                                     type="number"
+                                                    outlined dense
                                                     ></v-text-field>
                                                 </v-col>
                                             </v-row>
@@ -457,6 +463,14 @@
 
                     // agregar producto a editedItem
                     if (this.new_item_car == null) { // Comprobando se dejo campo vacio
+                        this.snackbar_text = 'Complete los campos';
+                        this.snackbar_color = 'red';
+                        this.snackbar = true;
+
+                        return ;
+                    }
+
+                    if (this.editedItem.presentation == '') { // Comprobando se dejo campo vacio
                         this.snackbar_text = 'Complete los campos';
                         this.snackbar_color = 'red';
                         this.snackbar = true;

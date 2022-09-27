@@ -28,7 +28,7 @@
                             v-model="search"
                             append-icon="mdi-magnify"
                             label="Buscar"
-                            single-line
+                            outlined dense
                             hide-details
                         ></v-text-field>
                     <v-spacer></v-spacer>

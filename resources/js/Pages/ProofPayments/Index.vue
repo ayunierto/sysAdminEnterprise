@@ -31,9 +31,10 @@
                                 Agregar Comprobante
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense
                                 hide-details></v-text-field>
                         </template>
+                        <form @submit.prevent="save">
                         <v-card>
                             <!-- Titulo de modal agreagar Unidad Medida -->
                             <v-card-title>
@@ -46,18 +47,18 @@
                                     <v-row>
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field label="Código*" v-model="editedItem.code"
-                                                hint="Verificar códigos en Sunat..." required>
+                                                hint="Verificar códigos en Sunat..." required outlined dense>
                                             </v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field label="Nombre*" v-model="editedItem.name"
-                                                hint="Verificar comprobantes segun Sunat" required>
+                                                hint="Verificar comprobantes segun Sunat" required outlined dense>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field label="serie*" v-model="editedItem.serie"
-                                                hint="Verificar series Sunat" required>
+                                            <v-text-field label="Serie*" v-model="editedItem.serie"
+                                                hint="Verificar series Sunat" required outlined dense>
                                             </v-text-field>
                                         </v-col>
                                     </v-row>
@@ -71,11 +72,12 @@
                                 <v-btn color="red darken-1" text @click="close">
                                     Cerrar
                                 </v-btn>
-                                <v-btn color="blue darken-1" text @click="save">
+                                <v-btn color="blue darken-1" text type="submit">
                                     Agregar
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
+                        </form>
                     </v-dialog>
                     <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
                     <v-dialog v-model="dialogDelete" max-width="500px">

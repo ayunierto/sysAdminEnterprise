@@ -31,9 +31,10 @@
                                 Agregar Documento
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
+                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense
                                 hide-details></v-text-field>
                         </template>
+                        <form @submit.prevent="save">
                         <v-card>
                             <!-- Titulo de modal agreagar Documentos -->
                             <v-card-title>
@@ -46,23 +47,24 @@
                                     <v-row>
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field label="Código*" v-model="editedItem.code"
-                                                hint="verificar codigos sunat..." required>
+                                                hint="verificar codigos sunat..." required outlined dense>
                                             </v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
                                             <v-text-field label="Nombre*" v-model="editedItem.name" hint="Nombre"
-                                                required>
+                                            required outlined dense>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field label="Descripcion" v-model="editedItem.description" hint="Descripción">
+                                            <v-text-field label="Descripcion" v-model="editedItem.description" hint="Descripción"
+                                            required outlined dense>
                                             </v-text-field>
                                         </v-col>
                                         <v-col cols="12" sm="6" md="6">
                                             <v-select v-model="editedItem.state" :items="items_state" item-text="name"
                                                 item-value="value" label="Seleccione estado" persistent-hint
-                                                single-line></v-select>
+                                                required outlined dense></v-select>
                                         </v-col>
 
                                     </v-row>
@@ -76,11 +78,12 @@
                                 <v-btn color="red darken-1" text @click="close">
                                     Cerrar
                                 </v-btn>
-                                <v-btn color="blue darken-1" text @click="save">
+                                <v-btn color="blue darken-1" text type="submit">
                                     Agregar
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
+                    </form>
                     </v-dialog>
                     <!-- Mensaje de confirmacion de borrado de Documentos -->
                     <v-dialog v-model="dialogDelete" max-width="500px">
@@ -144,14 +147,14 @@ export default {
                 code: '',
                 name: '',
                 description: '',
-                state: '',
+                state: 1,
             },
 
             defaultItem: {
                 code: '',
                 name: '',
                 description: '',
-                state: '',
+                state: 1,
             },
 
         }

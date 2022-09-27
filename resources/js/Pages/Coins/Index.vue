@@ -40,11 +40,12 @@
                             v-model="search"
                             append-icon="mdi-magnify"
                             label="Buscar"
-                            single-line
+                            outlined dense
                             hide-details
                         ></v-text-field>
                     </template>
 
+                    <form @submit.prevent="save">
                     <v-card>
                         <v-card-title>
                         <span class="text-h5">{{ formTitle }}</span>
@@ -58,11 +59,13 @@
                                         v-model="editedItem.code"
                                         label="Moneda"
                                         required
+                                        outlined
+                                        dense
                                         ></v-text-field>
                                     </v-col>
 
                                     <v-col cols="12" sm="12" md="12">
-                                        <v-textarea v-model="editedItem.description" class="mx-2"
+                                        <v-textarea v-model="editedItem.description"  outlined required dense
                                             label="Descripción" rows="2" hint="Descripcion de la moneda">
                                         </v-textarea>
                                     </v-col>
@@ -73,15 +76,16 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="blue darken-1" text @click="close" >
+                            <v-btn color="red darken-1" text @click="close" >
                                 Cancelar
                             </v-btn>
 
-                            <v-btn color="blue darken-1" type="submit" text @click="save" >
+                            <v-btn color="blue darken-1" type="submit" text  >
                                 Guardar
                             </v-btn>
                         </v-card-actions>
                     </v-card>
+                    </form>
                     </v-dialog>
 
                     <v-dialog v-model="dialogDelete" max-width="500px">

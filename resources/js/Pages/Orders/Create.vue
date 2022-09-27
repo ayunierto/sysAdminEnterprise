@@ -37,21 +37,21 @@
                                     <v-col cols="12" sm="6" md="3">
                                         <v-select hint="Seleccione Comprobante" :items="proofPayments"
                                             label="Comprobante" item-text="name" item-value="code"
-                                            v-model="tipoComprobate" @change="changeComprobante" return-object>
+                                            v-model="tipoComprobate" @change="changeComprobante" return-object outlined dense>
                                         </v-select>
                                         <!-- {{ tipoComprobate }} -->
                                     </v-col>
                                     <v-col cols="12" sm="6" md="2">
-                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" readonly>
+                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" readonly outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Correlativo de acuerdo al tipo de comprobante -->
                                     <v-col cols="12" sm="4" md="3">
-                                        <v-text-field label="Correlativo" v-model="form.voucher_number" readonly>
+                                        <v-text-field label="Correlativo" v-model="form.voucher_number" readonly outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="3">
-                                        <v-text-field label="Fecha" v-model="form.date" readonly>
+                                        <v-text-field label="Fecha" v-model="form.date" readonly outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
@@ -59,14 +59,14 @@
                                     </v-col>
                                     <v-col class="d-flex" cols="12" sm="2" md="2">
                                         <v-select :items="documents" label="Tipo Documento" item-text="name"
-                                            item-value="code" v-model="tipoDoc" return-object>
+                                            item-value="code" v-model="tipoDoc" return-object outlined dense>
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
                                         <v-autocomplete color="primary" :items="customers" item-text="document"
                                             v-model="datosCliente" item-value="id" label="Cliente" auto-select-first
                                             hide-no-data hide-selected placeholder="Buscar por Documento"
-                                            persistent-hint return-object required>
+                                            persistent-hint return-object required outlined dense>
                                         </v-autocomplete>
                                         <!-- <v-autocomplete v-if="tipoDoc.name == 'DNI'" color="primary" :items="customers"
                                             item-text="document" v-model="datosCliente" item-value="id" label="Cliente"
@@ -75,11 +75,11 @@
                                         </v-autocomplete> -->
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
-                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly>
+                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly>
+                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
@@ -88,7 +88,7 @@
                                     <v-col cols="9" sm="3" md="3">
                                         <v-select :items="paymentMethods" label="Contado/crédito"
                                             item-text="description" item-value="description" v-model="metodoPago"
-                                            return-object>
+                                            return-object outlined dense>
                                         </v-select>
                                     </v-col>
                                     <!-- Dialog Quotas -->
@@ -146,8 +146,9 @@
 
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn color="red" text @click="closeDialogQuotas()">
+                                                            <v-btn color="red" text @click="closeDialogQuotas()" class="mr-2">
                                                                 Cancelar</v-btn>
+                                                                <v-spacer></v-spacer>
                                                             <v-btn v-if="this.quotas.length>0" v-show="true"
                                                                 color="primary" text @click="ConfirmarQuotas()">
                                                                 Confirmar</v-btn>
@@ -161,19 +162,21 @@
                                     <v-col cols="12" sm="3" md="3">
                                         <v-select v-if="parseFloat(form.total) > 0" readonly :items="coins"
                                             label="Moneda" item-text="code" item-value="code" v-model="form.coins"
-                                            @change="changeMoneda" return-object></v-select>
+                                            @change="changeMoneda" return-object outlined dense>
+                                        </v-select>
+
                                         <v-select v-else :items="coins" label="Moneda" item-text="code"
-                                            item-value="code" v-model="form.coins" @change="changeMoneda" return-object>
+                                            item-value="code" v-model="form.coins" @change="changeMoneda" return-object outlined dense>
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Tipo Cambio" type="number" v-model="form.exchange_rate"
-                                            min="0" outlined>
+                                            min="0" outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
                                         <v-text-field label="Total" type="number" v-model="form.total" outlined
-                                            :prefix="simboloMoneda" readonly>
+                                            :prefix="simboloMoneda" readonly dense>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Dialog add Productos a carrito -->
@@ -208,7 +211,7 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object
-                                                                                @change="changeProduct" required>
+                                                                                @change="changeProduct" required outlined dense>
                                                                             </v-autocomplete>
                                                                             <h4>Stock Actual:
                                                                                 {{ editedItem.datosProducto.stock }}
@@ -225,20 +228,20 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Presentación"
                                                                                 persistent-hint return-object
-                                                                                @change="changePresentation" required>
+                                                                                @change="changePresentation" required outlined dense>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="3">
                                                                             <v-text-field v-model="editedItem.quantity"
                                                                                 label="Cantidad" type="number" min="0"
-                                                                                required>
+                                                                                required outlined dense>
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="9" sm="6" md="3">
                                                                             <v-text-field id="precioV"
                                                                                 v-model="editedItem.sale_price"
                                                                                 label="Precio Venta" type="number"
-                                                                                min="0">
+                                                                                min="0" required outlined dense>
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="2" sm="2" md="2">
@@ -271,7 +274,7 @@
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.price_by_unit"
-                                                                                                                readonly>
+                                                                                                                readonly  outlined dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -292,7 +295,7 @@
                                                                                                                 label="Precio Mayor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.wholesale_price"
-                                                                                                                readonly>
+                                                                                                                readonly  outlined dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -313,7 +316,7 @@
                                                                                                                 label="Precio Especial"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.special_price"
-                                                                                                                readonly>
+                                                                                                                readonly outlined dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -341,7 +344,7 @@
                                                                         <v-col cols="12" sm="4" md="3">
                                                                             <v-text-field v-model="editedItem.discount"
                                                                                 label="Descuento" min="0" type="number"
-                                                                                required>
+                                                                                required outlined dense>
                                                                             </v-text-field>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
@@ -356,7 +359,7 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Afectación IGV"
                                                                                 persistent-hint return-object
-                                                                                @change="changeAffectatioIgv" required>
+                                                                                @change="changeAffectatioIgv" required outlined dense>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="4" md="4"
@@ -388,7 +391,7 @@
                                     </v-col>
                                     <!-- Fin Dialog add Productos a carrito -->
                                     <v-col cols="12" sm="5">
-                                        <v-textarea filled label="Comentario" type="text" rows="1" class="mx-2"
+                                        <v-textarea filled label="Comentario" type="text" rows="1" outlined
                                             v-model="form.description">
                                         </v-textarea>
                                     </v-col>
@@ -408,7 +411,7 @@
                                                     <v-spacer></v-spacer>
                                                     <v-spacer></v-spacer>
                                                     <v-text-field v-model="search" append-icon="mdi-magnify"
-                                                        label="Buscar" single-line hide-details>
+                                                        label="Buscar" single-line hide-details outlined dense>
                                                     </v-text-field>
                                                     <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
                                                     <v-dialog v-model="dialogDelete" max-width="500px">

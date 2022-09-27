@@ -44,98 +44,116 @@
                                 v-model="search"
                                 append-icon="mdi-magnify"
                                 label="Buscar"
-                                single-line
+                                outlined dense
                                 hide-details
                             ></v-text-field>
                         </template>
 
-                        <v-card>
-                            <v-card-title>
-                                <span class="text-h5">{{ formTitle }}</span>
-                            </v-card-title>
+                        <form @submit.prevent="save">
+                            <v-card>
+                                <v-card-title>
+                                    <span class="text-h5">{{ formTitle }}</span>
+                                </v-card-title>
 
-                            <v-card-text>
-                                <v-container>
-                                    <v-row>
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-text-field
-                                            v-model="editedItem.name"
-                                            label="Nombre"
-                                            ></v-text-field>
-                                        </v-col>
+                                <v-card-text>
+                                    <v-container>
+                                        <v-row>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-text-field
+                                                v-model="editedItem.name"
+                                                label="Nombre"
+                                                required
+                                                outlined
+                                                dense
+                                                ></v-text-field>
+                                            </v-col>
 
-                                        <v-col cols="12" sm="6" md="6">
-                                            <v-select
-                                            v-model="editedItem.companies_id"
-                                            hint="Selecciones empresa"
-                                            :items="companies"
-                                            item-text="name"
-                                            item-value="id"
-                                            label="Selecciones empresa"
-                                            single-line
-                                            ></v-select>
-                                        </v-col>
+                                            <v-col cols="12" sm="6" md="6">
+                                                <v-select
+                                                v-model="editedItem.companies_id"
+                                                hint="Selecciones empresa"
+                                                :items="companies"
+                                                item-text="name"
+                                                item-value="id"
+                                                label="Selecciones empresa"
+                                                outlined
+                                                dense
+                                                required
+                                                :rules="[(v) => !!v || 'La empresa es requerida']"
+                                                persistent-hint
+                                                ></v-select>
+                                            </v-col>
 
-                                        <v-col cols="12" sm="6" md="6" v-if="editedIndex > -1"> 
-                                            <v-text-field
-                                            v-model="editedItem.change_password"
-                                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                            :type="show1 ? 'text' : 'password'"
-                                            label="Clave"
-                                            hint="Al menos 8 carácteres"
-                                            counter
-                                            @click:append="show1 = !show1"
-                                            ></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" sm="6" md="6" v-else>
-                                            <v-text-field
-                                            v-model="editedItem.password"
-                                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                            :type="show1 ? 'text' : 'password'"
-                                            label="Clave"
-                                            hint="Al menos 8 carácteres"
-                                            counter
-                                            @click:append="show1 = !show1"
-                                            ></v-text-field>
-                                        </v-col>
+                                            <v-col cols="12" sm="6" md="6" v-if="editedIndex > -1"> 
+                                                <v-text-field
+                                                v-model="editedItem.change_password"
+                                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                                :type="show1 ? 'text' : 'password'"
+                                                label="Clave"
+                                                hint="Al menos 8 carácteres"
+                                                counter
+                                                @click:append="show1 = !show1"
+                                                dense outlined required
+                                                :rules="[(v) => !!v || 'La contraseña es requerida']"
+                                                ></v-text-field>
+                                            </v-col>
+                                            <v-col cols="12" sm="6" md="6" v-else>
+                                                <v-text-field
+                                                v-model="editedItem.password"
+                                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                                :type="show1 ? 'text' : 'password'"
+                                                label="Clave"
+                                                hint="Al menos 8 carácteres"
+                                                counter
+                                                @click:append="show1 = !show1"
+                                                dense outlined required
+                                                :rules="[(v) => !!v || 'La contraseña es requerida']"
+                                                ></v-text-field>
+                                            </v-col>
 
-                                        <v-col cols="12" sm="6" md="6" >
-                                            <v-text-field
-                                            v-model="editedItem.email"
-                                            label="Correo"
-                                            ></v-text-field>
-                                        </v-col>
+                                            <v-col cols="12" sm="6" md="6" >
+                                                <v-text-field
+                                                v-model="editedItem.email"
+                                                label="Correo"
+                                                dense outlined required
+                                                type="email"
+                                                :rules="[(v) => !!v || 'El correo es requerido']"
+                                                ></v-text-field>
+                                            </v-col>
 
-                                        <v-col cols="12" sm="6" md="6" >
-                                            <v-select
-                                            v-model="editedItem.role"
-                                            :items="roles"
-                                            item-text="name"
-                                            item-value="value"
-                                            label="Selecione permisos"
-                                            persistent-hint
-                                            hint="Selecione permiso" 
-                                            single-line
-                                            ></v-select>
-                                        </v-col>
-                                        
-                                    </v-row>
-                                </v-container>
-                            </v-card-text>
+                                            <v-col cols="12" sm="6" md="6" >
+                                                <v-select
+                                                v-model="editedItem.role"
+                                                :items="roles"
+                                                item-text="name"
+                                                item-value="value"
+                                                label="Selecione permisos"
+                                                persistent-hint
+                                                hint="Selecione permiso" 
+                                                dense outlined required
+                                                :rules="[(v) => !!v || 'El rol es requerido']"
+                                                ></v-select>
+                                            </v-col>
+                                            
+                                        </v-row>
+                                    </v-container>
+                                </v-card-text>
 
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
 
-                                <v-btn color="blue darken-1" text @click="close" >
-                                    Cancelar
-                                </v-btn>
+                                    <v-btn color="red darken-1" text @click="close" >
+                                        Cancelar
+                                    </v-btn>
 
-                                <v-btn color="blue darken-1" type="submit" text @click="save" >
-                                    Guardar
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
+                                    <v-btn color="blue darken-1" type="submit" text>
+                                        Guardar
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </form>
                     </v-dialog>
+
 
                     <v-dialog v-model="dialogDelete" max-width="500px">
                         <v-card>
@@ -204,10 +222,10 @@
 
                 editedItem: {
                     name: '',
-                    companies_id: '',
+                    companies_id: 1,
                     email: '',
                     password: '',
-                    role: '',
+                    role: 'seller',
                     created_at: '',
                     updated_at: '',
                     change_password: '',
@@ -216,10 +234,10 @@
 
                 defaultItem: {
                     name: '',
-                    companies_id: '',
+                    companies_id: 1,
                     email: '',
                     password: '',
-                    role: '',
+                    role: 'seller',
                     created_at: '',
                     updated_at: '',
                     change_password: '',

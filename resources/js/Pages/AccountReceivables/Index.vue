@@ -22,7 +22,7 @@
                     <v-divider class="mx-4" inset vertical></v-divider>
 
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line hide-details>
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense hide-details>
                     </v-text-field>
                     <v-spacer></v-spacer>
                     <inertia-link :href="route('orders.index')">
