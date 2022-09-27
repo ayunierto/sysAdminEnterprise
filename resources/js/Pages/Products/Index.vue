@@ -100,12 +100,14 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="4">
-                                            <v-text-field autofocus v-model="editedItem.bar_code"
+                                            <v-text-field v-model="editedItem.bar_code"
                                                 label="Código de barra">
                                             </v-text-field>
                                         </v-col>
 
-                                        <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
+
+                                        <!-- barcode -->
+                                        <!-- <v-col cols="12" sm="6" md="4" v-if="editedItem.bar_code!=''" v-show="true">
                                             <v-card color="#ECEFF1" id="my-node">
                                                 <h3 style="font-size: 12px;">&nbsp;&nbsp;Producto:
                                                     {{editedItem.name}}</h3>
@@ -124,7 +126,7 @@
                                                     mdi-folder-download
                                                 </v-icon>
                                             </v-btn>
-                                        </v-col>
+                                        </v-col> -->
 
                                         <v-col cols="11" sm="5" md="3">
                                             <v-text-field v-model="editedItem.stock" label="Stock" type="number"

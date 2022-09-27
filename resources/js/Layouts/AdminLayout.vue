@@ -5,12 +5,12 @@
             <!-- Menú vertical -->
             <!-- <v-navigation-drawer app v-model="drawer" v-bind="color="> -->
             <v-navigation-drawer app v-model="drawer" :color="colorMenu">
-            <!-- style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(25,71,154,1) 35%);" -->
+                <!-- style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(25,71,154,1) 35%);" -->
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                        <v-img aspect-ratio="2.5" contain  :src='logoEmpresa'>
-                        </v-img>
+                    <v-img aspect-ratio="2.5" contain :src='logoEmpresa'>
+                    </v-img>
                     <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
                             <v-img src="../img/empresa1/empresa01.png">
@@ -223,29 +223,29 @@
                             <v-card :color="colorSubMenu">
                                 <v-list-item-group :style="item_style()">
 
-                                        <inertia-link :href="route('purchases.create')">
-                                            <v-list-item link :style="item_style()">
-                                                <v-list-item-icon>
-                                                    <v-spacer></v-spacer>
-                                                    <v-icon :style="item_style()" small>mdi-cart-plus</v-icon>
-                                                </v-list-item-icon>
-                                                <v-list-item-title>
-                                                    <h5>NUEVA COMPRA</h5>
-                                                </v-list-item-title>
-                                            </v-list-item>
-                                        </inertia-link>
+                                    <inertia-link :href="route('purchases.create')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-cart-plus</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>NUEVA COMPRA</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
 
-                                        <inertia-link :href="route('purchases.index')">
-                                            <v-list-item link :style="item_style()">
-                                                <v-list-item-icon>
-                                                    <v-spacer></v-spacer>
-                                                    <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
-                                                </v-list-item-icon>
-                                                <v-list-item-title>
-                                                    <h5>LISTA DE COMPRAS</h5>
-                                                </v-list-item-title>
-                                            </v-list-item>
-                                        </inertia-link>
+                                    <inertia-link :href="route('purchases.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-cards-variant</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>LISTA DE COMPRAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
 
                                 </v-list-item-group>
                             </v-card>
@@ -389,7 +389,8 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-item :href="route('settings.index')" link :style="item_style()" v-if="$page.props.user.role != 'seller'">
+                        <v-list-item :href="route('settings.index')" link :style="item_style()"
+                            v-if="$page.props.user.role != 'seller'">
                             <v-list-item-icon>
                                 <v-icon :style="item_style()">mdi-spin mdi-cog</v-icon>
                             </v-list-item-icon>
@@ -410,14 +411,24 @@
 
                 <v-toolbar-title>
                     <!-- INICIO -->
+
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
-                <!-- <v-list-item-avatar>
-                    <v-img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwr_zZjgvmu4BccwDNIHic8K5dyehw7cSYA&usqp=CAU">
-                    </v-img>
-                </v-list-item-avatar> -->
+                <v-list-item right>
+                    <v-spacer></v-spacer>
+                    <inertia-link :href="route('lowStocks.index')">
+                        <v-icon medium dark>mdi-bell</v-icon>
+                        <v-badge offset-y="-9" offset-x="-5" dot left overlap color="red" content="1"
+                            v-if="this.$page.props.nrodts>0" v-show="true">
+                        </v-badge>
+
+                    </inertia-link>
+                </v-list-item>
+                <v-card>
+                    
+                </v-card>
+
                 <v-menu left bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on" :style="item_style()">
@@ -448,7 +459,7 @@
         <!-- <v-footer padless v-bind="color=" height="60px"> -->
         <v-footer padless height="60px" :color="colorFooter" app>
             <v-col class="text-center" cols="12" absolute :style="item_style()">
-                {{ new Date().getFullYear() }} — <strong >{{this.$page.props.company.name}}</strong>
+                {{ new Date().getFullYear() }} — <strong>{{this.$page.props.company.name}}</strong>
             </v-col>
         </v-footer>
         <!-- PIE DE PAGINA END -->
@@ -475,8 +486,7 @@ export default {
         logout() {
             this.$inertia.post(route('logout'));
         },
-
-        item_style(){
+        item_style() {
             return {
                 color: this.colorText,
             }

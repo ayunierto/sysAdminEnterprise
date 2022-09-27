@@ -32,15 +32,17 @@ class DashboardController extends Controller
         //         $data += [ $i ];
         // } 
 
-        // $products = Product::where('companies_id', $company)->get();
+        $products = Product::where('companies_id', $company)->get();
         $products = Product::select('products.*', 'warehouses.name as nameWarehouse', 'marks.name as nameMark')
             ->join('warehouses', 'products.warehouses_id', '=', 'warehouses.id')
             ->join('marks', 'products.marks_id', '=', 'marks.id')
             ->where('products.companies_id', $company)->get();
         $stock_min = [];
+        $nrodedatos=0;
         foreach ($products as $key => $p) {
             if ($p->stock <= $p->stock_min) {
                 array_push($stock_min, $p);
+                $nrodedatos+=1;
             }
         }
         $DateAndTime = date('Y-m-d');
@@ -65,9 +67,11 @@ class DashboardController extends Controller
             'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find($company_id),
-            'stock_min' => $stock_min,
+            // 'stock_min' => $stock_min,
             'totalVentSol' => number_format($totalVentasDiaSoles, 2),
             'totalVentDolar' => number_format($totalVentasDiaDolares, 2),
+            'nrodts' => $nrodedatos,
+
         ]);
     }
 }

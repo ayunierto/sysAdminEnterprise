@@ -18,6 +18,7 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\LowStockController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PrintController;
 use App\Http\Controllers\ServiceController;
@@ -76,6 +77,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/warehouses', WarehouseController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/accountReceivables', AccountReceivableController::class)->except('show');
     Route::resource('dashboard/barcodeGenerator', BarcodeGeneratorController::class)->except('show');
+    Route::resource('dashboard/lowStocks', LowStockController::class)->except('show');
 });
 
 // Rutas de vendedores
