@@ -169,7 +169,7 @@
                                     <v-spacer></v-spacer>
                                     <v-dialog
                                     v-model="dialog"
-                                    max-width="500px"
+                                    max-width="800px"
                                     >
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-btn
@@ -188,55 +188,83 @@
                                         </v-card-title>
 
                                         <v-card-text>
-                                        <v-container>
-                                            <v-row>
-                                                <v-col cols="12" sm="12" md="8" v-if="editedIndex == -1">
-                                                    <v-autocomplete
-                                                    clearable
-                                                    label="Producto"
-                                                    v-model="new_item_car"
-                                                    :items="products"
-                                                    return-object
-                                                    item-text="name"
-                                                    outlined dense
-                                                    auto-select-first
+                                            <v-container>
+                                                <v-row>
+                                                    <v-col cols="12" sm="12" md="6" v-if="editedIndex == -1">
+                                                        <v-autocomplete
+                                                        clearable
+                                                        label="Producto"
+                                                        v-model="new_item_car"
+                                                        :items="products"
+                                                        return-object
+                                                        item-text="name"
+                                                        outlined dense
+                                                        auto-select-first
 
-                                                    ></v-autocomplete>
-                                                </v-col>
+                                                        ></v-autocomplete>
+                                                    </v-col>
 
-                                                <v-col cols="12" sm="12" md="8">
-                                                    <v-autocomplete
-                                                    clearable
-                                                    label="Presentación"
-                                                    v-model="editedItem.presentation"
-                                                    :items="presentations"
-                                                    return-object
-                                                    item-text="name"
-                                                    outlined dense
-                                                    auto-select-first
-                                                    ></v-autocomplete>
-                                                </v-col>   
-                                                
-                                                <v-col cols="12" sm="12" md="12">
-                                                    <v-text-field
-                                                    v-model="editedItem.amount"
-                                                    label="Cantidad"
-                                                    type="number"
-                                                    outlined dense
-                                                    ></v-text-field>
-                                                </v-col>
-                                            </v-row>
-                                        </v-container>
+                                                    <v-col cols="12" sm="12" md="6">
+                                                        <v-autocomplete
+                                                        clearable
+                                                        label="Presentación"
+                                                        v-model="editedItem.presentation"
+                                                        :items="presentations"
+                                                        return-object
+                                                        item-text="name"
+                                                        outlined dense
+                                                        auto-select-first
+                                                        ></v-autocomplete>
+                                                    </v-col>   
+                                                    
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field
+                                                        v-model="editedItem.amount"
+                                                        label="Cantidad"
+                                                        type="number"
+                                                        outlined dense
+                                                        ></v-text-field>
+                                                    </v-col>
+
+                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-text-field
+                                                        v-model="editedItem.amount_transport"
+                                                        label="Costo Trasporte"
+                                                        type="number"
+                                                        outlined dense
+                                                        ></v-text-field>
+                                                    </v-col>
+
+                                                    <v-col cols="12" sm="12" md="12">
+                                                        <v-radio-group v-model="form.igv" row>
+                                                            <v-radio
+                                                            label="IGV Incluido"
+                                                            value="1"
+                                                        ></v-radio>
+                                                        <v-radio value="0">
+                                                            <template v-slot:label>
+                                                            <div>IGV <strong class="error--text">NO</strong> Incluido</div>
+                                                            </template>
+                                                        </v-radio>
+                                                        </v-radio-group>
+                                                    </v-col>
+
+                                                    
+
+
+                                                </v-row>
+                                            </v-container>
+                                            
                                         </v-card-text>
 
                                         <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="secondary" @click="close" elevation="9">
-                                            Cancelar
-                                        </v-btn>
-                                        <v-btn color="primary" @click="save" elevation="9">
-                                            Guardar
-                                        </v-btn>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="secondary" @click="close" elevation="9">
+                                                Cancelar
+                                            </v-btn>
+                                            <v-btn color="primary" @click="save" elevation="9">
+                                                Guardar
+                                            </v-btn>
                                         </v-card-actions>
                                     </v-card>
                                     </v-dialog>
@@ -336,6 +364,7 @@
                     state: 1,
                     products: null,
                     total: 0,
+                    igv: 0,
                 },
 
                 snackbar: false,

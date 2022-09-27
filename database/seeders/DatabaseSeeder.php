@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             ProofPaymentSeeder::class,
             CoinSeeder::class,
             PaymentMethodSeeder::class,
-            // CustomizerSeeder::class,
+            CustomizerSeeder::class,
             AffectationIgvSeeder::class,
             // PurchaseSeeder::class,
             // PurchaseDetailSeeder::class,
