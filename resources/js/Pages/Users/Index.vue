@@ -12,7 +12,7 @@
 
         <!-- Alertas -->
         <div v-if="$page.props.errorBags.default">
-            <div v-for="item in Object.keys($page.props.errors)">
+            <div v-for="item in Object.keys($page.props.errors)" :key="item">
                 <v-alert type="warning" border="left" dismissible>
                     {{ $page.props.errors[item] }}
                 </v-alert>
@@ -170,7 +170,7 @@
                 </v-toolbar>
             </template>
 
-            <template v-slot:item.actions="{ item }">
+            <template v-slot:[`item.actions`]="{ item }">
                 <v-icon small class="mr-2" @click="editItem(item)" >
                     mdi-pencil
                 </v-icon>

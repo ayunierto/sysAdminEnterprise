@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountReceivableController;
+use App\Http\Controllers\BarcodeGeneratorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CompanyController;
@@ -49,7 +50,6 @@ Route::get('/', function () {
     return Redirect::route('login');
 });
 
-
 // Rutas de administrador de la pagina
 Route::middleware(['auth:sanctum', 'verified', 'CheckMaster'])->group(function ()
 {
@@ -75,6 +75,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/settings', SettingController::class)->except('edit');
     Route::resource('dashboard/warehouses', WarehouseController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/accountReceivables', AccountReceivableController::class)->except('show');
+    Route::resource('dashboard/barcodeGenerator', BarcodeGeneratorController::class)->except('show');
 });
 
 // Rutas de vendedores
@@ -86,4 +87,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function ()
     Route::resource('dashboard/proofPayments', ProofPaymentController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/orders', OrderController::class)->except('show');
     Route::get('/print_invoice', [PrintController::class, 'invoice'])->name('print_invoice');
+    
 });
