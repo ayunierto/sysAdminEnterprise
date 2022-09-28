@@ -29,6 +29,7 @@ class PrintController extends Controller
                 'product' => Product::find($o->products_id)->name,
                 'presentation' => Presentation::find($o->presentations_id)->name,
                 'price' => $o->price,
+                'igv' => $o->igv,
                 'subTotal' => $o->subTotal
             ];
         });
