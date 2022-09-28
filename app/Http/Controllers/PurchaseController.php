@@ -68,7 +68,7 @@ class PurchaseController extends Controller
                             'product_name' => Product::find($d->products_id)->name,
                             'amount' => $d->amount,
                             'price' => $d->price,
-                            'total' => $d->total,
+                            'subTotal' => $d->total,
                         ];
                     }),
                 ];
