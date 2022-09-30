@@ -423,7 +423,6 @@
 
                 <v-toolbar-title>
                     <!-- INICIO -->
-
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
@@ -432,9 +431,8 @@
                     <inertia-link :href="route('lowStocks.index')">
                         <v-icon medium dark>mdi-bell</v-icon>
                         <v-badge offset-y="-9" offset-x="-5" dot left overlap color="red" content="1"
-                            v-if="this.$page.props.nrodts>0" v-show="true">
+                            v-if="this.$page.props.flash.nrodts>0" v-show="true">
                         </v-badge>
-
                     </inertia-link>
                 </v-list-item>
                 <v-card>
