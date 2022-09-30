@@ -254,7 +254,7 @@
                                                 <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title>
-                                                <h5>CUENTAS POR COBRAR</h5>
+                                                <h5>CUENTAS POR PAGAR</h5>
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
