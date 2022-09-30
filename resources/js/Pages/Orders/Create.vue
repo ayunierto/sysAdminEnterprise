@@ -37,17 +37,20 @@
                                     <v-col cols="12" sm="6" md="3">
                                         <v-select hint="Seleccione Comprobante" :items="proofPayments"
                                             label="Comprobante" item-text="name" item-value="code"
-                                            v-model="tipoComprobate" @change="changeComprobante" return-object outlined dense>
+                                            v-model="tipoComprobate" @change="changeComprobante" return-object outlined
+                                            dense>
                                         </v-select>
                                         <!-- {{ tipoComprobate }} -->
                                     </v-col>
                                     <v-col cols="12" sm="6" md="2">
-                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" readonly outlined dense>
+                                        <v-text-field label="Serie" type="text" v-model="tipoComprobate.serie" readonly
+                                            outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <!-- Correlativo de acuerdo al tipo de comprobante -->
                                     <v-col cols="12" sm="4" md="3">
-                                        <v-text-field label="Correlativo" v-model="form.voucher_number" readonly outlined dense>
+                                        <v-text-field label="Correlativo" v-model="form.voucher_number" readonly
+                                            outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="6" md="3">
@@ -75,11 +78,13 @@
                                         </v-autocomplete> -->
                                     </v-col>
                                     <v-col cols="12" sm="4" md="4">
-                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly outlined dense>
+                                        <v-text-field label="Nombre/Razon Social" :value="datosCliente.name" readonly
+                                            outlined dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12" sm="3" md="3">
-                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly outlined dense>
+                                        <v-text-field label="Dirección" :value="datosCliente.address" readonly outlined
+                                            dense>
                                         </v-text-field>
                                     </v-col>
                                     <v-col cols="12">
@@ -92,7 +97,8 @@
                                         </v-select>
                                     </v-col>
                                     <!-- Dialog Quotas -->
-                                    <v-col cols="2" sm="1" md="1" v-if="metodoPago.description == 'Credito' && tipoComprobate.name=='Factura'">
+                                    <v-col cols="2" sm="1" md="1"
+                                        v-if="metodoPago.description == 'Credito' && tipoComprobate.name=='Factura'">
                                         <v-container>
                                             <v-layout row justify-center>
                                                 <v-dialog v-model="dialogQuotasAdd" persistent max-width="420">
@@ -146,9 +152,10 @@
 
                                                         <v-card-actions>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn color="red" text @click="closeDialogQuotas()" class="mr-2">
+                                                            <v-btn color="red" text @click="closeDialogQuotas()"
+                                                                class="mr-2">
                                                                 Cancelar</v-btn>
-                                                                <v-spacer></v-spacer>
+                                                            <v-spacer></v-spacer>
                                                             <v-btn v-if="this.quotas.length>0" v-show="true"
                                                                 color="primary" text @click="ConfirmarQuotas()">
                                                                 Confirmar</v-btn>
@@ -166,7 +173,8 @@
                                         </v-select>
 
                                         <v-select v-else :items="coins" label="Moneda" item-text="code"
-                                            item-value="code" v-model="form.coins" @change="changeMoneda" return-object outlined dense>
+                                            item-value="code" v-model="form.coins" @change="changeMoneda" return-object
+                                            outlined dense>
                                         </v-select>
                                     </v-col>
                                     <v-col cols="12" sm="2" md="2">
@@ -211,11 +219,10 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Producto"
                                                                                 persistent-hint return-object
-                                                                                @change="changeProduct" required outlined dense>
+                                                                                @change="changeProduct" required
+                                                                                outlined dense
+                                                                                :hint=" editedItem.datosProducto!=''? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
                                                                             </v-autocomplete>
-                                                                            <h4>Stock Actual:
-                                                                                {{ editedItem.datosProducto.stock }}
-                                                                            </h4>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
@@ -228,7 +235,8 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Presentación"
                                                                                 persistent-hint return-object
-                                                                                @change="changePresentation" required outlined dense>
+                                                                                @change="changePresentation" required
+                                                                                outlined dense>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="3">
@@ -274,7 +282,9 @@
                                                                                                                 label="Precio Menor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.price_by_unit"
-                                                                                                                readonly  outlined dense>
+                                                                                                                readonly
+                                                                                                                outlined
+                                                                                                                dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -295,7 +305,9 @@
                                                                                                                 label="Precio Mayor"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.wholesale_price"
-                                                                                                                readonly  outlined dense>
+                                                                                                                readonly
+                                                                                                                outlined
+                                                                                                                dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -316,7 +328,9 @@
                                                                                                                 label="Precio Especial"
                                                                                                                 type="number"
                                                                                                                 v-model="editedItem.special_price"
-                                                                                                                readonly outlined dense>
+                                                                                                                readonly
+                                                                                                                outlined
+                                                                                                                dense>
                                                                                                             </v-text-field>
                                                                                                         </v-col>
                                                                                                         <v-col cols="2">
@@ -359,7 +373,8 @@
                                                                                 hide-selected
                                                                                 placeholder="Seleccione Afectación IGV"
                                                                                 persistent-hint return-object
-                                                                                @change="changeAffectatioIgv" required outlined dense>
+                                                                                @change="changeAffectatioIgv" required
+                                                                                outlined dense>
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="4" md="4"
@@ -413,7 +428,7 @@
                                                     <v-text-field v-model="search" append-icon="mdi-magnify"
                                                         label="Buscar" single-line hide-details outlined dense>
                                                     </v-text-field>
-                                                    <!-- Mensaje de confirmacion de borrado de Unidad Medida -->
+                                                    <!-- Mensaje de confirmacion de borrado de p -->
                                                     <v-dialog v-model="dialogDelete" max-width="500px">
                                                         <v-card>
                                                             <v-card-title class="text-h5">¿Está seguro de querer
@@ -450,6 +465,7 @@
                             <v-btn color="red" dark @click="limpiarCarrito">
                                 Cancelar
                             </v-btn>
+                            &nbsp;
                             <template>
                                 <div class="text-center">
                                     <v-dialog v-model="dialogPago" width="450">
@@ -640,9 +656,9 @@ export default {
         }
     },
     // Metodos al cargar formulario
-    mounted() {
-        this.jaja();
-    },
+    // mounted() {
+    //     this.jaja();
+    // },
     computed: {
         formTitle() {
             return this.editedIndex === -1 ? 'Agregar Productos' : 'Editar Producto'
@@ -669,9 +685,9 @@ export default {
         getPresentationText(item) {
             return `${item.name}: ${item.equivalence} UND`;
         },
-        jaja() {
-            alert('Método Inicial')
-        },
+        // jaja() {
+        //     alert('Método Inicial')
+        // },
         asignarTotal() {
             this.pagoVenta = this.form.total
         },

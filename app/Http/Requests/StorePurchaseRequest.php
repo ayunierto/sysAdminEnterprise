@@ -24,16 +24,16 @@ class StorePurchaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'providers_id' => 'required',
-            'companies_id' => 'required',
-            'payment_methods_id' => 'required',
-            'proof_payments_id' => 'required',
-            'voucher_number' => 'required',
-            'exchange_rate' => 'required',
-            'date' => 'required',
-            'coins_id' => 'required',
-            'state' => 'required',
-            'products' => 'required',
+            // 'providers_id' => 'required',
+            // 'companies_id' => 'required',
+            // 'payment_methods_id' => 'required',
+            // 'proof_payments_id' => 'required',
+            // 'voucher_number' => 'required',
+            // 'exchange_rate' => 'required',
+            // 'date' => 'required',
+            // 'coins_id' => 'required',
+            // 'state' => 'nullable',
+            // 'products' => 'required',
         ];
     }
 }

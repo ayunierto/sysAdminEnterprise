@@ -26,6 +26,8 @@ class PurchaseDetailFactory extends Factory
             'products_id' => rand(1, $products),
             'amount' => rand(1, 4),
             'price' => rand(1, 999),
+            'transpote'=> rand(1, 999),
+            'igv' => $this->faker->word(1),
             'total' => rand(1, 999),
         ];
     }

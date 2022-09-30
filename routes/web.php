@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountPayableController;
 use App\Http\Controllers\AccountReceivableController;
 use App\Http\Controllers\BarcodeGeneratorController;
 use App\Http\Controllers\CategoryController;
@@ -76,6 +77,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/settings', SettingController::class)->except('edit');
     Route::resource('dashboard/warehouses', WarehouseController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/accountReceivables', AccountReceivableController::class)->except('show');
+    Route::resource('dashboard/accountPayables', AccountPayableController::class)->except('show');
     Route::resource('dashboard/barcodeGenerator', BarcodeGeneratorController::class)->except('show');
     Route::resource('dashboard/lowStocks', LowStockController::class)->except('show');
 });
