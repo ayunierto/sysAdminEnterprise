@@ -410,7 +410,6 @@ export default {
                 { text: 'PRECIO COMPRA', value: 'purchase_price' },
                 { text: 'TRANSPORTE', value: 'transporte' },
                 { text: 'IGV', value: 'igv' },
-                { text: 'PRECIO VENTA', value: 'sale_price' },
                 { text: 'SUB TOTAL', value: 'subTotal' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
