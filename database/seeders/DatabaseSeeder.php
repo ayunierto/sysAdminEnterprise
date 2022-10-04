@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CompanySeeder::class,
             UserSeeder::class,
-            // CategorySeeder::class,
+            CategorySeeder::class,
             // MarkSeeder::class,
             MeasureSeeder::class,
             // ProviderSeeder::class,
@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
             // OrderDetailSeeder::class,
             // AccountReceivableSeeder::class,
             // AccountPayableSeeder::class,
+            RoleSedder::class,
         ]);
     }
 }

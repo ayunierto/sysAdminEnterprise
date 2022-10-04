@@ -27,7 +27,6 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------

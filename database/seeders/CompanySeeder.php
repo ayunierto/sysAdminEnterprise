@@ -26,5 +26,8 @@ class CompanySeeder extends Seeder
             'country_code' => '06001',
             'state' => 1,
         ]);
+
+        Company::factory(5)->create();
+
     }
 }
