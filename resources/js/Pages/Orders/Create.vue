@@ -223,6 +223,7 @@
                                                                                 outlined dense
                                                                                 :hint=" editedItem.datosProducto!=''? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
                                                                             </v-autocomplete>
+                                                                            <!-- @keyup.enter="save" Colocar en boton cuando se va a usar lector de barras -->
                                                                         </v-col>
                                                                         <v-col cols="12" sm="6" md="6">
                                                                             <v-autocomplete color="primary"
@@ -525,6 +526,7 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
+
 
 export default {
     props: [

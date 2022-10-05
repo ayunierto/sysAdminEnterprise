@@ -219,7 +219,7 @@
                     </v-hover>
                 </v-col>
                 <!-- Grafica de ventas -->
-                <v-col cols="12" sm="12" md="6" class="mt-2">
+                <v-col cols="12" sm="4" md="3" class="mt-2">
                     <v-card class="mx-auto text-center" color="green" dark>
                         <v-card-text>
                             <div class="text-h5 font-weight-thin" style="height: 10px;">
@@ -234,13 +234,13 @@
                             </v-sheet>
                         </v-card-text>
 
-                        <v-divider></v-divider>
+                        <!-- <v-divider></v-divider>
 
                         <v-card-actions class="justify-center">
                             <v-btn block text>
                                 DESCARGAR REPORTE
                             </v-btn>
-                        </v-card-actions>
+                        </v-card-actions> -->
                     </v-card>
                 </v-col>
                 <!-- Tabla Productos -->
