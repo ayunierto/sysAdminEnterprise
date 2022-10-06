@@ -22,6 +22,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LowStockController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\PrinterController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\WarehouseController;
@@ -79,6 +80,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/accountPayables', AccountPayableController::class)->except('show');
     Route::resource('dashboard/barcodeGenerator', BarcodeGeneratorController::class)->except('show');
     Route::resource('dashboard/lowStocks', LowStockController::class)->except('show');
+    Route::resource('dashboard/printers', PrinterController::class)->except('create', 'edit', 'show');
 });
 
 // Rutas de vendedores

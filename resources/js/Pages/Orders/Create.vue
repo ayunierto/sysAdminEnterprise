@@ -659,7 +659,7 @@ export default {
     },
     // Metodos al cargar formulario
     // mounted() {
-    //     this.jaja();
+    //     this.pruebam();
     // },
     computed: {
         formTitle() {
@@ -687,7 +687,7 @@ export default {
         getPresentationText(item) {
             return `${item.name}: ${item.equivalence} UND`;
         },
-        // jaja() {
+        // pruebam() {
         //     alert('Método Inicial')
         // },
         asignarTotal() {
