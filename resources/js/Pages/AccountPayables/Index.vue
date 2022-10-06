@@ -14,10 +14,10 @@
             </div>
         </div>
         <!-- Fin de Alertas -->
-        <v-data-table :headers="headers" :items="desserts" sort-desc sort-by="date" class="elevation-24" :search="search">
+        <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Listado de Compras</v-toolbar-title>
+                    <v-toolbar-title>CUENTAS POR PAGAR</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical></v-divider>
 
@@ -25,20 +25,41 @@
                     <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense hide-details>
                     </v-text-field>
                     <v-spacer></v-spacer>
-                    <inertia-link :href="route('purchases.create')">
+                    <inertia-link :href="route('purchases.index')">
                         <v-btn color="primary" dark class="mb-2">
-                            Nueva Compra
+                            COMPRAS
                         </v-btn>
                     </inertia-link>
-                    <!-- Memsaje al presionar boton borrar -->
-                    <v-dialog v-model="dialogDelete" max-width="500px">
+                    <!-- Mensaje al presionar boton borrar -->
+                    <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
-                            <v-card-title class="text-h5">Está seguro que desea eliminar?</v-card-title>
+                            <v-card-title class="text-h5">DATOS DE DEUDA</v-card-title>
+                            <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="12" md="6">
+                                            <v-text-field label="DEUDA" v-model="editedItem.debt" type="number"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" md="6">
+                                            <v-text-field label="Monto a pagar" v-model="editedItem.totalPago" min="0"
+                                                type="number" :max="editedItem.debt" required>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" md="12">
+                                            <v-textarea label="Descripción" rows="1" v-model="editedItem.description"
+                                                required>
+                                            </v-textarea>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-
-                                <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
-                                <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                                <v-btn color="blue darken-1" text @click="save">OK</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                         </v-card>
@@ -47,36 +68,32 @@
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small class="mr-2" @click="viewItem(item)">
+                <v-icon class="mr-2" @click="viewItem(item)">
                     mdi-eye
                 </v-icon>
-                <v-icon small @click="deleteItem(item)">
-                    mdi-delete
+                <v-icon @click="editItem(item)">
+                    mdi-cash-register
                 </v-icon>
             </template>
 
         </v-data-table>
-        <!-- Ver detalles Ventas -->
+        <!-- Ver detalles Compras -->
         <template>
             <v-row justify="center">
                 <v-dialog v-model="dialog_view" max-width="700">
 
                     <v-card>
                         <v-card-title class="text-h5">
-                            Detalle de Venta
+                            Detalle de Compra
                         </v-card-title>
                         <v-card-text>
                             <v-row>
                                 <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="CLIENTE" v-model="editedItem.provider_name" readonly>
+                                    <v-text-field label="PROVEEDOR" v-model="editedItem.provider_name" readonly>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="METODO PAGO" v-model="editedItem.payment_method" readonly>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="COMPROBANTE" v-model="editedItem.proof_payment" readonly>
+                                    <v-text-field label="COMPROBANTE" v-model="editedItem.proof_payments_name" readonly>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
@@ -84,7 +101,7 @@
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="Tipo de cambio" v-model="editedItem.exchange_rate" readonly>
+                                    <v-text-field label="TIPO DE CAMBIO" v-model="editedItem.exchange_rate" readonly>
                                     </v-text-field>
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
@@ -93,10 +110,6 @@
                                 </v-col>
                                 <v-col cols="12" sm="6" md="3">
                                     <v-text-field label="FECHA" v-model="editedItem.date" readonly>
-                                    </v-text-field>
-                                </v-col>
-                                <v-col cols="12" sm="6" md="3">
-                                    <v-text-field label="ESTADO" v-model="editedItem.state_name" readonly>
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -109,7 +122,6 @@
                                                     <th class="text-left"> PRODUCTO </th>
                                                     <th class="text-left"> CANTIDAD </th>
                                                     <th class="text-left"> PRECIO </th>
-                                                    <th class="text-left"> TRANSPORTE </th>
                                                     <th class="text-left"> IGV </th>
                                                     <th class="text-left"> SUB TOTAL </th>
                                                 </tr>
@@ -118,9 +130,8 @@
                                             <tbody>
                                                 <tr v-for="item in editedItem.details" :key="item.products_id">
                                                     <td>{{ item.product_name }}</td>
-                                                    <td>{{ item.amount }}</td>
+                                                    <td>{{ item.quantity }}</td>
                                                     <td>{{ item.price }}</td>
-                                                    <td>{{ item.transporte }}</td>
                                                     <td>{{ item.igv }}</td>
                                                     <td>{{ item.subTotal }}</td>
                                                 </tr>
@@ -141,7 +152,10 @@
                 </v-dialog>
             </v-row>
         </template>
-        <!-- Fin Ver detalles Ventas -->
+        <!-- Fin Ver detalles Compras -->
+        <v-snackbar v-model="snackbar" :color="snackbar_color" right top>
+            {{ snackbar_text }}
+        </v-snackbar>
     </admin-layout>
 </template>
 
@@ -150,7 +164,7 @@ import AdminLayout from '@/Layouts/AdminLayout'
 
 export default {
     props: [
-        'purchases',
+        'accountPayables',
     ],
     components: {
         AdminLayout,
@@ -162,12 +176,15 @@ export default {
             menu: false,
             search: '',
             dialog: false,
-            dialogDelete: false,
+            snackbar: false,
+            snackbar_text: '',
+            snackbar_color: '',
             headers: [
-                { text: 'FECHA', value: 'date' },
                 { text: 'PROVEEDOR', value: 'provider_name' },
                 { text: 'TOTAL', value: 'total' },
-                { text: 'ESTADO', value: 'state_name' },
+                { text: 'PAGO', value: 'payment' },
+                { text: 'DEUDA', value: 'debt' },
+                { text: 'DESCRIPCION', value: 'description' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -175,45 +192,34 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                id:'',
-                companies_id: '',
-                company_name: '',
-                providers_id: '',
-                provider_name: '',
-                payment_methods_id: '',
-                payment_method: '',
-                proof_payments_id: '',
-                proof_payment: '',
-                coins_id: '',
+                id: '',
+                companies_id: this.$page.props.user.companies_id,
+                proof_payments_name: '',
+                provider_name:'',
                 coin: '',
                 exchange_rate: '',
                 total: '',
                 date: '',
-                state: '',
-                state_name: '',
+                payment: '',
+                debt: '',
                 description: '',
                 details: '',
+                totalPago: 0,
             },
 
             defaultItem: {
-                id:'',
-                companies_id: '',
-                company_name: '',
-                providers_id: '',
+                id: '',
+                companies_id: this.$page.props.user.companies_id,
                 provider_name: '',
-                payment_methods_id: '',
-                payment_method: '',
-                proof_payments_id: '',
-                proof_payment: '',
-                coins_id: '',
                 coin: '',
                 exchange_rate: '',
                 total: '',
                 date: '',
-                state: '',
-                state_name: '',
+                payment: '',
+                debt: '',
                 description: '',
                 details: '',
+                totalPago: 0,
             },
 
         }
@@ -221,9 +227,6 @@ export default {
     watch: {
         dialog(val) {
             val || this.close()
-        },
-        dialogDelete(val) {
-            val || this.closeDelete()
         },
     },
 
@@ -242,7 +245,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.purchases
+            this.desserts = this.accountPayables
         },
 
         viewItem(item) {
@@ -250,23 +253,29 @@ export default {
             this.editedItem = Object.assign({}, item)
             this.dialog_view = true
         },
-        deleteItem(item) {
+        editItem(item) {
             this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
-            this.dialogDelete = true
+            this.dialog = true
+            this.editedItem.totalPago = this.editedItem.debt
         },
 
-        deleteItemConfirm() {
-            this.desserts.splice(this.editedIndex, 1)
-            this.closeDelete()
-
+        save() {
+            if (this.editedItem.totalPago < 0 || this.editedItem.totalPago == '' || Number.parseFloat(this.editedItem.totalPago) > Number.parseFloat(this.editedItem.debt)) {
+                this.snackbar_text = 'Monto incorrecto';
+                this.snackbar_color = 'teal lighten-1';
+                this.snackbar = true;
+                return;
+            }
+            // Update
             // ***************************************
-            // enviando formulario para eliminar
-            this.$inertia.delete(this.route('purchases.destroy', this.editedItem.id))
+            // enviado formulario de almacenar 
+            this.$inertia.patch(route('accountPayables.update', this.editedItem), this.editedItem)
             // ***************************************
+            this.close();
         },
-        closeDelete() {
-            this.dialogDelete = false
+        close() {
+            this.dialog = false
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem)
                 this.editedIndex = -1

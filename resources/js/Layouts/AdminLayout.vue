@@ -247,6 +247,18 @@
                                         </v-list-item>
                                     </inertia-link>
 
+                                    <inertia-link :href="route('accountPayables.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>CUENTAS POR PAGAR</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                 </v-list-item-group>
                             </v-card>
                         </v-list-group>
@@ -389,15 +401,43 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-item :href="route('settings.index')" link :style="item_style()"
-                            v-if="$page.props.user.role != 'seller'">
-                            <v-list-item-icon>
-                                <v-icon :style="item_style()">mdi-spin mdi-cog</v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-content>
-                                <v-list-item-title>AJUSTES</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+                        <v-list-group v-if="$page.props.user.role == 'master'">
+                            <v-icon slot="prependIcon" :style="item_style()">mdi-spin mdi-cog</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content :style="item_style()">
+                                    <v-list-item-title>AJUSTES</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-card :color="colorSubMenu">
+                                <v-list-item-group>
+
+                                    <inertia-link :href="route('settings.index')">
+                                        <v-list-item :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon small :style="item_style()">mdi-format-color-highlight</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>PERSONALIZAR</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link :href="route('printers.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-printer</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>IMPRESORAS</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                </v-list-item-group>
+                            </v-card>
+                        </v-list-group>
 
                     </v-list-item-group>
                 </v-list>
@@ -411,7 +451,6 @@
 
                 <v-toolbar-title>
                     <!-- INICIO -->
-
                 </v-toolbar-title>
 
                 <v-spacer></v-spacer>
@@ -420,9 +459,8 @@
                     <inertia-link :href="route('lowStocks.index')">
                         <v-icon medium dark>mdi-bell</v-icon>
                         <v-badge offset-y="-9" offset-x="-5" dot left overlap color="red" content="1"
-                            v-if="this.$page.props.nrodts>0" v-show="true">
+                            v-if="this.$page.props.flash.nrodts>0" v-show="true">
                         </v-badge>
-
                     </inertia-link>
                 </v-list-item>
                 <v-card>

@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -36,10 +39,33 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        return array_merge(parent::share($request), [
-            'flash' => [
-                'message' => fn () => $request->session()->get('message')
-            ],
-        ]);
+
+        try {
+            $company_id = Auth::user()->companies_id;
+            $products = Product::select('products.*', 'warehouses.name as nameWarehouse', 'marks.name as nameMark')
+                ->join('warehouses', 'products.warehouses_id', '=', 'warehouses.id')
+                ->join('marks', 'products.marks_id', '=', 'marks.id')
+                ->where('products.companies_id', $company_id)->get();
+            $stock_min = [];
+            $nrodedatos = 0;
+            foreach ($products as $key => $p) {
+                if ($p->stock <= $p->stock_min) {
+                    array_push($stock_min, $p);
+                    $nrodedatos += 1;
+                }
+            }
+            return array_merge(parent::share($request), [
+                'flash' => [
+                    'message' => fn () => $request->session()->get('message'),
+                    'nrodts' => $nrodedatos
+                ],
+            ]);
+        } catch (Exception) {
+            return array_merge(parent::share($request), [
+                'flash' => [
+                    'message' => fn () => $request->session()->get('message'),
+                ],
+            ]);
+        }
     }
 }

@@ -23,6 +23,10 @@ use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Mike42\Escpos\CapabilityProfile;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
 
 class OrderController extends Controller
 {
@@ -34,7 +38,7 @@ class OrderController extends Controller
     public function index()
     {
         $company = Auth::user()->companies_id;
-        
+
         return Inertia::render('Orders/Index', [
             'orders' => Order::where('companies_id', $company)->get()->map(function ($p) {
                 return [
@@ -111,11 +115,11 @@ class OrderController extends Controller
             'products' => Product::where('companies_id', $company)->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
-                    'warehouses_id'=> $p->warehouses_id,
+                    'warehouses_id' => $p->warehouses_id,
                     'warehouses_name' => Warehouse::find($p->warehouses_id)->name,
                     'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
-                    'marks_name'=> Mark::find($p->marks_id)->name,
+                    'marks_name' => Mark::find($p->marks_id)->name,
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
                     'name' => $p->name,
@@ -179,12 +183,11 @@ class OrderController extends Controller
 
             $order_details->save();
             $cant = $value['quantity'] * $value['equivalence'];
-            if($value['type']=='Producto'){
+            if ($value['type'] == 'Producto') {
                 $stockProducto->update([
-                $stockProducto->stock -= $cant
-            ]);
+                    $stockProducto->stock -= $cant
+                ]);
             }
-            
         }
         if ($request->totalPago < $request->total) {
             $accountReceivable = new AccountReceivable();
@@ -204,6 +207,23 @@ class OrderController extends Controller
                 $quota->save();
             }
         }
+        // imprimir Comprobante
+        $nombreImpresora = "EPSON L3210 Series";
+        $profile = CapabilityProfile::load("simple");
+        $connector = new WindowsPrintConnector($nombreImpresora);
+        $impresora = new Printer($connector, $profile);
+        $impresora->setJustification(Printer::JUSTIFY_CENTER);
+        $impresora->setTextSize(2, 2);
+        $impresora->text("Imprimiendo\n");
+        $impresora->text("ticket\n");
+        $impresora->text("desde\n");
+        $impresora->text("Laravel\n");
+        $impresora->setTextSize(1, 1);
+        $impresora->text("https://parzibyte.me");
+        $impresora->feed(5);
+        $impresora->close();
+
+
         return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
 

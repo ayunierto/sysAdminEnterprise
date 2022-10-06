@@ -219,7 +219,7 @@
                     </v-hover>
                 </v-col>
                 <!-- Grafica de ventas -->
-                <v-col cols="12" sm="12" md="6" class="mt-2">
+                <!-- <v-col cols="12" sm="4" md="3" class="mt-2">
                     <v-card class="mx-auto text-center" color="green" dark>
                         <v-card-text>
                             <div class="text-h5 font-weight-thin" style="height: 10px;">
@@ -242,42 +242,7 @@
                             </v-btn>
                         </v-card-actions>
                     </v-card>
-                </v-col>
-                <!-- Tabla Productos -->
-                <!-- <v-col cols="12"  class="mt-3">
-                    <v-card elevation="24" color="blue lighten-4" outlined>
-                        <v-card-title>
-                            PRODUCTOS CON BAJO STOCK
-                            <v-spacer></v-spacer>
-                            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
-                                hide-details></v-text-field>
-                            <v-spacer></v-spacer>
-                            <inertia-link :href="route('purchases.create')">
-                                <v-btn color="primary" dark class="mb-2">
-                                    COMPRAR
-                                </v-btn>
-                            </inertia-link>
-                        </v-card-title>
-                        <v-data-table :headers="[
-                        {text: 'Producto', value: 'name'},
-                        {text: 'Marca', value: 'nameMark'},
-                        {text: 'Almacén', value: 'nameWarehouse'},
-                        {text: 'Stock', value: 'stock', align: 'center',},
-                        {text: 'Stock Mínimo', value: 'stock_min', align: 'center',},
-                        {text: 'Descripción', value: 'description'}]" :items="stock_min" :items-per-page="5"
-                            class="elevation-1" dense :search="search" locale="es">
-                            <template v-slot:[`item.stock_min`]="{ item }">
-                                <v-chip color="warning" dark>
-                                    {{ item.stock_min }}
-                                </v-chip>
-                            </template>
-                            <template v-slot:no-data>
-                                No hay productos con stock mínimo
-                            </template>
-                        </v-data-table>
-                    </v-card>
                 </v-col> -->
-
             </v-row>
         </v-container>
     </admin-layout>
