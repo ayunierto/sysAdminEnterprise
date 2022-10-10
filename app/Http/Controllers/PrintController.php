@@ -114,7 +114,7 @@ class PrintController extends Controller
                 los productos, ahora va el total
             */
             $printer->text("----------------------\n");
-            $printer->text("TOTAL: Bs". $total ."\n");
+            $printer->text("TOTAL: ". $total ."\n");
             // $printer->text("SON ". $total_literal ."\n");
 
             $printer->text("Muchas gracias por su preferencia...");
@@ -142,7 +142,9 @@ class PrintController extends Controller
             */
             $printer->close();
         } catch (Exception $e) {
+
             echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+
         }
 
 
