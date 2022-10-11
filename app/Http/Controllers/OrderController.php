@@ -223,6 +223,10 @@ class OrderController extends Controller
         $impresora->feed(5);
         $impresora->close();
 
+        if ($request->print == 1) {
+            $print = new PrintController();
+            // PrintController::class;
+        }
 
         return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
