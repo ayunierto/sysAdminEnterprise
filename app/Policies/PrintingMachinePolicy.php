@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Printer;
+use App\Models\PrintingMachine;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class PrinterPolicy
+class PrintingMachinePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class PrinterPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Printer  $printer
+     * @param  \App\Models\PrintingMachine  $printingMachine
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Printer $printer)
+    public function view(User $user, PrintingMachine $printingMachine)
     {
         //
     }
@@ -48,10 +48,10 @@ class PrinterPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Printer  $printer
+     * @param  \App\Models\PrintingMachine  $printingMachine
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Printer $printer)
+    public function update(User $user, PrintingMachine $printingMachine)
     {
         //
     }
@@ -60,10 +60,10 @@ class PrinterPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Printer  $printer
+     * @param  \App\Models\PrintingMachine  $printingMachine
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Printer $printer)
+    public function delete(User $user, PrintingMachine $printingMachine)
     {
         //
     }
@@ -72,10 +72,10 @@ class PrinterPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Printer  $printer
+     * @param  \App\Models\PrintingMachine  $printingMachine
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Printer $printer)
+    public function restore(User $user, PrintingMachine $printingMachine)
     {
         //
     }
@@ -84,10 +84,10 @@ class PrinterPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Printer  $printer
+     * @param  \App\Models\PrintingMachine  $printingMachine
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Printer $printer)
+    public function forceDelete(User $user, PrintingMachine $printingMachine)
     {
         //
     }

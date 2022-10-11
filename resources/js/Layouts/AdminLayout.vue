@@ -423,7 +423,7 @@
                                         </v-list-item>
                                     </inertia-link>
 
-                                    <inertia-link :href="route('printers.index')">
+                                    <inertia-link :href="route('printingMachines.index')">
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>

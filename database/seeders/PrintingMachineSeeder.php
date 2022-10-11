@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class PrinterSeeder extends Seeder
+class PrintingMachineSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePrintersTable extends Migration
+class CreatePrintingMachinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePrintersTable extends Migration
      */
     public function up()
     {
-        Schema::create('printers', function (Blueprint $table) {
+        Schema::create('printing_machines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('name');
@@ -29,6 +29,6 @@ class CreatePrintersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('printers');
+        Schema::dropIfExists('printing_machines');
     }
 }

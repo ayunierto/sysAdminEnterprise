@@ -156,7 +156,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
-        'printers',
+        'printingMachines',
         'companies',
     ],
     components: {
@@ -249,7 +249,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.printers
+            this.desserts = this.printingMachines
         },
         getColor(state) {
             if (state == 1) return 'green'
@@ -273,7 +273,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('printers.destroy', this.editedItem))
+            this.$inertia.delete(this.route('printingMachines.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -304,7 +304,7 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.patch(route('printers.update', this.editedItem), this.editedItem)
+                this.$inertia.patch(route('printingMachines.update', this.editedItem), this.editedItem)
                 // ***************************************
 
             } else {
@@ -312,7 +312,7 @@ export default {
                 // Store
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.post(route('printers.store'), this.editedItem)
+                this.$inertia.post(route('printingMachines.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
 
