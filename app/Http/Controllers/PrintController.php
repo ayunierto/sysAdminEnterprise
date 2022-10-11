@@ -20,10 +20,15 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 class PrintController extends Controller
 {
     
-    public function invoice(){
+    public function invoice( $rid = null){
         // Obteniendo el id enviado por url
-        $id = $_REQUEST['id'];
         
+        if ($rid == null) {
+            $id = $_REQUEST['id'];
+        } else {
+             $id = $rid;
+        }
+
         $company = Company::find(Auth::user()->companies_id);
         $customizer = Customizer::where('companies_id', Auth::user()->companies_id)->get()[0];
         $total = 0;        

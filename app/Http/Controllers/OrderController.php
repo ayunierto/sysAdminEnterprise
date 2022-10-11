@@ -208,23 +208,23 @@ class OrderController extends Controller
             }
         }
         // imprimir Comprobante
-        $nombreImpresora = "EPSON L3210 Series";
-        $profile = CapabilityProfile::load("simple");
-        $connector = new WindowsPrintConnector($nombreImpresora);
-        $impresora = new Printer($connector, $profile);
-        $impresora->setJustification(Printer::JUSTIFY_CENTER);
-        $impresora->setTextSize(2, 2);
-        $impresora->text("Imprimiendo\n");
-        $impresora->text("ticket\n");
-        $impresora->text("desde\n");
-        $impresora->text("Laravel\n");
-        $impresora->setTextSize(1, 1);
-        $impresora->text("https://parzibyte.me");
-        $impresora->feed(5);
-        $impresora->close();
+        // $nombreImpresora = "EPSON L3210 Series";
+        // $profile = CapabilityProfile::load("simple");
+        // $connector = new WindowsPrintConnector($nombreImpresora);
+        // $impresora = new Printer($connector, $profile);
+        // $impresora->setJustification(Printer::JUSTIFY_CENTER);
+        // $impresora->setTextSize(2, 2);
+        // $impresora->text("Imprimiendo\n");
+        // $impresora->text("ticket\n");
+        // $impresora->text("desde\n");
+        // $impresora->text("Laravel\n");
+        // $impresora->setTextSize(1, 1);
+        // $impresora->text("https://parzibyte.me");
+        // $impresora->feed(5);
+        // $impresora->close();
 
         if ($request->print == 1) {
-            $print = new PrintController();
+            $print = new PrintController($order->id);
             // PrintController::class;
         }
 
