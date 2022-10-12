@@ -873,8 +873,13 @@ export default {
                     var precUni = totalVenta1 / prIgv
                     var totalVenta = cant * precUni
                     var igvTotal = totalVenta * 0.18
-                    this.editedItem.sale_price = precUni
-                    this.editedItem.igv = igvTotal
+                    if (this.tipoComprobate.code == '0A1') {
+                        this.editedItem.sale_price = totalVenta1/cant
+                        this.editedItem.igv=0
+                    }else{
+                        this.editedItem.sale_price = precUni
+                        this.editedItem.igv = igvTotal
+                    }
                 } else {
                     var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
@@ -921,9 +926,14 @@ export default {
                     var prIgv = cant + (0.18 * cant)
                     var precUni = totalVenta1 / prIgv
                     var totalVenta = cant * precUni
-                    var igvTotal = totalVenta * 0.18
-                    this.editedItem.sale_price = precUni
-                    this.editedItem.igv = igvTotal
+                    var igvTotal = totalVenta * 0.18 
+                    if (this.tipoComprobate.code == '0A1') {
+                        this.editedItem.sale_price = totalVenta1/cant
+                        this.editedItem.igv=0
+                    }else{
+                        this.editedItem.sale_price = precUni
+                        this.editedItem.igv = igvTotal
+                    }                    
                 } else {
                     var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)

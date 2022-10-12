@@ -202,7 +202,7 @@
                                             <v-list-item-content>
                                                 <div>
                                                     <v-list-item-subtitle class="headline mb-1 white--text">
-                                                        {{accountsR }}
+                                                        {{accountsP }}
                                                     </v-list-item-subtitle>
                                                 </div>
                                                 <v-list-item-subtitle class="white--text">CUENTAS X PAGAR
@@ -261,7 +261,7 @@ export default {
     },
 
     props: ['products', 'services', 'company', 'orders',
-        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR', 'cajaChicaSoles', 'cajaChicaDolares'],
+        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR','accountsP','cajaChicaSoles', 'cajaChicaDolares'],
 
     data() {
         return {

@@ -64,7 +64,7 @@ class DashboardController extends Controller
             'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->count(),
             'services' => Product::where('companies_id', $company_id)->where('type', 'Servicio')->count(),
             'accountsR' => AccountReceivable::where('companies_id', $company_id)->where('state', 0)->count(),
-            'accountsR' => AccountPayable::where('companies_id', $company_id)->where('state', 0)->count(),
+            'accountsP' => AccountPayable::where('companies_id', $company_id)->where('state', 0)->count(),
             'orders' => Order::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company_id)->get(),

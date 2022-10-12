@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateAccountPayableRequest;
 use App\Models\Coin;
 use App\Models\Company;
 use App\Models\Customizer;
+use App\Models\PettyCash;
 use App\Models\Product;
 use App\Models\ProofPayment;
 use App\Models\Provider;
@@ -115,15 +116,16 @@ class AccountPayableController extends Controller
      */
     public function update(UpdateAccountPayableRequest $request, $id)
     {
+        $company = Auth::user()->companies_id;
         $accountPayable = AccountPayable::find($id);
         $id_purchase = AccountPayable::where('id', $id)->value('purchases_id');
         $purchases = Purchase::find($id_purchase);
-        $nvPago=$request->payment+$request->totalPago;
-        $nvDeuda=$request->debt-$request->totalPago;
-        if ($nvDeuda==0) {
-            $nvestado=1;
-        }else {
-            $nvestado=0;
+        $nvPago = $request->payment + $request->totalPago;
+        $nvDeuda = $request->debt - $request->totalPago;
+        if ($nvDeuda == 0) {
+            $nvestado = 1;
+        } else {
+            $nvestado = 0;
         };
         $accountPayable->update([
             'payment' => $nvPago,
@@ -134,6 +136,19 @@ class AccountPayableController extends Controller
         $purchases->update([
             'state' => $nvestado,
         ]);
+
+        $pettyCash = PettyCash::where('companies_id', $company)->where('state', 1)->get();
+        if ($purchases->coins_id == 1) {
+            $pettyCash[0]->update([
+                $pettyCash[0]->amount_pen -= $request->totalPago,
+            ]);
+        } else {
+            if ($purchases->coins_id == 2) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_usd -= $request->totalPago,
+                ]);
+            }
+        }
         return Redirect::route('accountPayables.index')->with('message', 'Pago realizado Correctamente');
     }
 
