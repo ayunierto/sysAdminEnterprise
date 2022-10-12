@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Product;
 use App\Models\Customizer;
 use App\Models\Order;
+use App\Models\PettyCash;
 use App\Models\Purchase;
 use App\Models\Warehouse;
 use Faker\Core\Number;
@@ -48,7 +49,13 @@ class DashboardController extends Controller
         foreach ($totalVd as $key => $p) {
             $totalVentasDiaDolares += $p->total;
         }
-
+        $cjc = 0;
+        $hola = PettyCash::where('companies_id', $company_id)->get();
+        if ($hola == '[]') {
+            $cjc = 0;
+        } else {
+            $cjc = $hola[0]->amount;
+        }
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->count(),
             'services' => Product::where('companies_id', $company_id)->where('type', 'Servicio')->count(),
@@ -59,6 +66,9 @@ class DashboardController extends Controller
             'company' => Company::find($company_id),
             'totalVentSol' => number_format($totalVentasDiaSoles, 2),
             'totalVentDolar' => number_format($totalVentasDiaDolares, 2),
+            'cajaChica' => $cjc,
+            // 'cajaChica' => PettyCash::where('companies_id', $company_id)->get(),
+
         ]);
     }
 }

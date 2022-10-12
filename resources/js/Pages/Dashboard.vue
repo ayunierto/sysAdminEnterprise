@@ -215,7 +215,7 @@
                                     </v-col>
                                 </v-row>
                             </v-card>
-                        </inertia-link>
+                        </inertia-link>                        
                     </v-hover>
                 </v-col>
                 <!-- Grafica de ventas -->
@@ -257,7 +257,7 @@ export default {
     },
 
     props: ['products', 'services', 'company', 'orders',
-        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR'],
+        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR','cajaChica'],
 
     data() {
         return {

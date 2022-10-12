@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\PettyCash;
 use App\Http\Requests\StorePettyCashRequest;
 use App\Http\Requests\UpdatePettyCashRequest;
+use App\Models\Coin;
+use App\Models\Company;
+use App\Models\Customizer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class PettyCashController extends Controller
 {
@@ -15,17 +21,15 @@ class PettyCashController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $company_id = Auth::user()->companies_id;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Inertia::render('PettyCashes/Index', [
+            'pettyCashes' => PettyCash::where('companies_id', $company_id)->get(),
+            'company' => Company::where('id', $company_id)->first(),
+            'companies' => Company::all(),
+            'coins' => Coin::all(),
+            'colors' => Customizer::where('companies_id', $company_id)->get(),
+        ]);
     }
 
     /**
@@ -36,29 +40,8 @@ class PettyCashController extends Controller
      */
     public function store(StorePettyCashRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PettyCash  $pettyCash
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PettyCash $pettyCash)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PettyCash  $pettyCash
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PettyCash $pettyCash)
-    {
-        //
+        PettyCash::create($request->all());
+        return Redirect::route('pettyCashes.index')->with('message', 'Caja Agregada');
     }
 
     /**
@@ -68,9 +51,11 @@ class PettyCashController extends Controller
      * @param  \App\Models\PettyCash  $pettyCash
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePettyCashRequest $request, PettyCash $pettyCash)
+    public function update(UpdatePettyCashRequest $request, $id)
     {
-        //
+        $pettyCash = PettyCash::find($id);
+        $pettyCash->update($request->all());
+        return Redirect::route('pettyCashes.index')->with('message', 'Datos Actualizados');
     }
 
     /**
@@ -79,8 +64,10 @@ class PettyCashController extends Controller
      * @param  \App\Models\PettyCash  $pettyCash
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PettyCash $pettyCash)
+    public function destroy($id)
     {
-        //
+        $pettyCash = PettyCash::find($id);
+        $pettyCash->delete();
+        return Redirect::route('pettyCashes.index')->with('message', 'Caja eliminada');
     }
 }
