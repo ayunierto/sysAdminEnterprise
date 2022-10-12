@@ -28,10 +28,6 @@
                     Inativo
                 </v-chip>
             </template>
-            <template v-slot:[`item.coins_id`]="{ item }">
-                <td v-if="item.coins_id==1">SOLES</td>
-                <td v-if="item.coins_id==2">DOLARES</td>
-            </template>
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Lista de Cajas</v-toolbar-title>
@@ -66,13 +62,12 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-select v-model="editedItem.coins_id" hint="Seleccione Moneda"
-                                                :items="coins" item-text="code" item-value="id"
-                                                label="Seleccione Moneda" single-line></v-select>
+                                            <v-text-field type="number" v-model="editedItem.amount_pen" label="Monto en Soles"
+                                                :rules="requiredField" hint="Monto de apertura" required></v-text-field>
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field type="number" v-model="editedItem.amount" label="Monto"
+                                            <v-text-field type="number" v-model="editedItem.amount_usd" label="Monto en Dólares"
                                                 :rules="requiredField" hint="Monto de apertura" required></v-text-field>
                                         </v-col>
 
@@ -146,8 +141,9 @@
                                     aquí</v-timeline-item>
                                 <v-timeline-item>Si el monto es menor al total de una compra, no podra realizar la
                                     operación</v-timeline-item>
-                                <v-timeline-item>Debe tener habilitada máximo una caja chica por tipo de moneda, para
-                                    evitar errores en el sistema</v-timeline-item>
+                                <v-timeline-item>Debe tener habilitada máximo una caja chica, para
+                                    evitar errores en el sistema
+                                </v-timeline-item>
                                 <v-timeline-item>Puede editar el monto de caja chica en cualquier momento
                                 </v-timeline-item>
                             </v-timeline>
@@ -176,7 +172,6 @@ export default {
     props: [
         'pettyCashes',
         'companies',
-        'coins'
     ],
     components: {
         AdminLayout,
@@ -201,8 +196,8 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'NOMBRE', value: 'description' },
-                { text: 'MONEDA', value: 'coins_id' },
-                { text: 'MONTO', value: 'amount' },
+                { text: 'MONTO SOLES', value: 'amount_pen' },
+                { text: 'MONTO DOLARES', value: 'amount_usd' },
                 { text: 'ESTADO', value: 'state' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
@@ -213,7 +208,8 @@ export default {
             editedItem: {
                 companies_id: this.$page.props.user.companies_id,
                 pettyCashes_id: '',
-                coins_id: this.coins[0].id,
+                amount_pen:0,
+                amount_usd:0,
                 description: '',
                 state: 1,
             },
@@ -221,7 +217,8 @@ export default {
             defaultItem: {
                 companies_id: this.$page.props.user.companies_id,
                 pettyCashes_id: '',
-                coins_id: this.coins[0].id,
+                amount_pen:0,
+                amount_usd:0,
                 description: '',
                 state: 1,
             },

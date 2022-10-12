@@ -12,6 +12,7 @@ use App\Models\Customizer;
 use App\Models\Document;
 use App\Models\Mark;
 use App\Models\PaymentMethod;
+use App\Models\PettyCash;
 use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\ProofPayment;
@@ -88,14 +89,20 @@ class PurchaseController extends Controller
      */
     public function create()
     {
+        $company = Auth::user()->companies_id;
         $query = new SunatController;
         if ($query->exchange_rate() == 'error') {
             $exchange_rate = 0;
         } else {
             $exchange_rate = $query->exchange_rate()['compra'];
         }
+        $datosCaja = PettyCash::where('companies_id', $company)->where('state', 1)->get();
+        if ($datosCaja == '[]') {
+            $dstCajaChica = 0;
+        } else {
+            $dstCajaChica = $datosCaja;
+        }
 
-        $company = Auth::user()->companies_id;
         return Inertia::render('Purchases/Create', [
             'company' => Company::find($company),
             'colors' => Customizer::where('companies_id', $company)->get(),
@@ -107,6 +114,7 @@ class PurchaseController extends Controller
             'coins' => Coin::all(),
             'exchange_rate' => $exchange_rate,
             'documents' => Document::all(),
+            'cajaChica' => $dstCajaChica,
             'products' => Product::where('companies_id', $company)->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
@@ -183,7 +191,7 @@ class PurchaseController extends Controller
             if ($value['type'] == 'Producto') {
                 $dtsProducto->update([
                     $dtsProducto->stock += $cant,
-                    $dtsProducto->purchase_price= $value['purchase_price'],
+                    $dtsProducto->purchase_price = $value['purchase_price'],
                     $dtsProducto->sale_price = $value['sale_price'],
                 ]);
             }
@@ -195,6 +203,18 @@ class PurchaseController extends Controller
                 $accountReceivable->payment = $request->totalPago;
                 $accountReceivable->debt = $request->total - $request->totalPago;
                 $accountReceivable->save();
+            }
+            $pettyCash = PettyCash::where('companies_id', $request->companies_id)->where('state', 1)->get();
+            if ($request->cajaChica == 1 && $request->coins_id == 1) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_pen -= $request->totalPago,
+                ]);
+            } else {
+                if ($request->cajaChica == 1 && $request->coins_id == 2) {
+                    $pettyCash[0]->update([
+                        $pettyCash[0]->amount_usd -= $request->totalPago,
+                    ]);
+                }
             }
         }
 

@@ -27,7 +27,6 @@ class PettyCashController extends Controller
             'pettyCashes' => PettyCash::where('companies_id', $company_id)->get(),
             'company' => Company::where('id', $company_id)->first(),
             'companies' => Company::all(),
-            'coins' => Coin::all(),
             'colors' => Customizer::where('companies_id', $company_id)->get(),
         ]);
     }

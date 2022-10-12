@@ -545,7 +545,8 @@ export default {
         'presentations',
         'affectationIgvs',
         'products',
-        'exchange_rate'
+        'exchange_rate',
+        'cajaChica',
     ],
     components: {
         AdminLayout,
@@ -586,6 +587,7 @@ export default {
                 total: 0,
                 totalPago: 0,
                 print: 0,
+                cajaChica:0,
             },
             editedIndexQuotas: -1,
             quotasHeaders: [
@@ -963,6 +965,10 @@ export default {
                 this.snackbar = true;
                 return;
             }
+            
+            if (this.cajaChica != 0) {
+                this.form.cajaChica=1
+            }
             // Datos Formulario
             this.form.proof_payments_id = this.tipoComprobate.id
             this.form.documents_id = this.tipoDoc.id
@@ -973,7 +979,6 @@ export default {
 
             this.form.quotasVenta = this.quotas
             this.form.nroQuotas = this.quotas.length
-
 
             if (this.form.products == '') {
                 this.snackbar_text = 'Carrito Vacio';
@@ -988,6 +993,7 @@ export default {
                 this.snackbar = true;
                 return;
             }
+
             // Validar Si algun dato del form es nulo o cacio
             // const isEmpty = Object.values(this.form).some(x => (x === ''))
             // if (isEmpty == true) {

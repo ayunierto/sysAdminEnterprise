@@ -16,9 +16,9 @@ class CreatePettyCashesTable extends Migration
         Schema::create('petty_cashes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('companies_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('coins_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('description')->nullable();
-            $table->decimal('amount', 8, 2);
+            $table->decimal('amount_pen', 8, 2);
+            $table->decimal('amount_usd', 8, 2);
             $table->boolean('state')->default(1);            
             $table->timestamps();
         });

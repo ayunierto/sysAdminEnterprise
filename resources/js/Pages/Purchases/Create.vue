@@ -100,7 +100,7 @@
                                                     <v-container>
                                                         <v-row>
                                                             <v-col cols="12" sm="6" md="6">
-                                                                <v-radio-group row v-model="editedItem.igv" @change="cambioRadio">
+                                                                <v-radio-group row v-model="editedItem.igv">
                                                                     <v-radio color="red" label="IGV Incluido"
                                                                         value='IGV Incluido'>
                                                                     </v-radio>
@@ -319,7 +319,7 @@
 
         <!-- <pre>{{ editedItem }}</pre> -->
         <!-- <pre>{{ editedIndex }}</pre> -->
-        <!-- <pre>{{ form.products }}</pre> -->
+        <pre>{{ cajaChica }}</pre>
 
     </admin-layout>
 </template>
@@ -336,7 +336,8 @@ export default {
         'coins',
         'exchange_rate',
         'products',
-        'presentations'
+        'presentations',
+        'cajaChica',
     ],
     components: {
         AdminLayout,
@@ -369,6 +370,7 @@ export default {
                 products: '',
                 totalPago: 0,
                 total: 0,
+                cajaChica:0,
             },
             editedItem: {
                 datosProducto: '',
@@ -544,6 +546,16 @@ export default {
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
                 return;
+            }
+            if (this.cajaChica != 0 ) {
+                if (this.pagoCompra > this.cajaChica[0].amount_pen) {
+                    this.snackbar_text = 'Dinero insuficiente';
+                    this.snackbar_color = 'amber';
+                    this.snackbar = true;
+                    return;
+                }else{
+                    this.form.cajaChica=1
+                }
             }
             // Datos Formulario
             this.form.providers_id = this.datosProveedor.id

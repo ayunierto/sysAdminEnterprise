@@ -423,6 +423,18 @@
                                         </v-list-item>
                                     </inertia-link>
 
+                                    <inertia-link :href="route('pettyCashes.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-safe</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>ABRIR CAJA</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
                                     <inertia-link :href="route('printingMachines.index')">
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>

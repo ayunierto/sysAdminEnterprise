@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountPayable;
 use App\Models\AccountReceivable;
 use App\Models\Company;
 use App\Models\Product;
@@ -49,26 +50,29 @@ class DashboardController extends Controller
         foreach ($totalVd as $key => $p) {
             $totalVentasDiaDolares += $p->total;
         }
-        $cjc = 0;
-        $hola = PettyCash::where('companies_id', $company_id)->get();
-        if ($hola == '[]') {
-            $cjc = 0;
+        $cajaChSoles=0;
+        $cajaChDolares=0;
+        $datosCaja = PettyCash::where('companies_id', $company_id)->where('state', 1)->get();
+        if ($datosCaja == '[]') {
+            $cajaChSoles=0;
+            $cajaChDolares=0;
         } else {
-            $cjc = $hola[0]->amount;
+            $cajaChSoles = $datosCaja[0]->amount_pen;
+            $cajaChDolares = $datosCaja[0]->amount_usd;
         }
         return Inertia::render('Dashboard', [
             'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->count(),
             'services' => Product::where('companies_id', $company_id)->where('type', 'Servicio')->count(),
             'accountsR' => AccountReceivable::where('companies_id', $company_id)->where('state', 0)->count(),
+            'accountsR' => AccountPayable::where('companies_id', $company_id)->where('state', 0)->count(),
             'orders' => Order::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'purchases' => Purchase::where('companies_id', $company_id)->where('date', $DateAndTime)->count(),
             'colors' => Customizer::where('companies_id', $company_id)->get(),
             'company' => Company::find($company_id),
             'totalVentSol' => number_format($totalVentasDiaSoles, 2),
             'totalVentDolar' => number_format($totalVentasDiaDolares, 2),
-            'cajaChica' => $cjc,
-            // 'cajaChica' => PettyCash::where('companies_id', $company_id)->get(),
-
+            'cajaChicaSoles' => $cajaChSoles,
+            'cajaChicaDolares' => $cajaChDolares,
         ]);
     }
 }

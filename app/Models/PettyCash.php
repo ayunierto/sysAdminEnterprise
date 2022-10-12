@@ -11,9 +11,9 @@ class PettyCash extends Model
     use HasFactory;
     protected $fillable = [
         'companies_id',
-        'coins_id',
         'description',
-        'amount',
+        'amount_pen',
+        'amount_usd',
         'state',
     ];
 }
