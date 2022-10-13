@@ -61,7 +61,7 @@
                                                 GANANCIAS
                                             </div>
                                             <v-list-item-title>
-                                                {{valores}}
+                                                S/. {{totalPrecioCompra}}
                                             </v-list-item-title>                                            
                                         </v-list-item-content>
 
@@ -205,7 +205,7 @@ export default {
         'purchases',
         'totalVentas',
         'totOrders',
-        'valores',
+        'totalPrecioCompra',
     ],
     components: {
         AdminLayout,

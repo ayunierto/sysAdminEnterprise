@@ -189,11 +189,19 @@ class PurchaseController extends Controller
             $dtsProducto = Product::find($value['productId']);
             $cant = $value['amount'] * $value['equivalence'];
             if ($value['type'] == 'Producto') {
-                $dtsProducto->update([
-                    $dtsProducto->stock += $cant,
-                    $dtsProducto->purchase_price = $value['purchase_price'],
-                    $dtsProducto->sale_price = $value['sale_price'],
-                ]);
+                if($value['sale_price']>0){
+                    $dtsProducto->update([
+                        $dtsProducto->stock += $cant,
+                        $dtsProducto->purchase_price = $value['precio_compra'],
+                        $dtsProducto->sale_price = $value['sale_price'],
+                    ]);
+                }else{
+                    $dtsProducto->update([
+                        $dtsProducto->stock += $cant,
+                        $dtsProducto->purchase_price = $value['precio_compra'],
+                    ]);
+                }
+                
             }
             // Registra cuentas por Pagar
             if ($request->totalPago < $request->total) {

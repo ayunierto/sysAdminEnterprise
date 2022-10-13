@@ -44,18 +44,17 @@ class ReportController extends Controller
         foreach ($total_usd as $key => $p) {
             $totalVentasDiaDolares += ($p->total * $p->exchange_rate);
         }
-        $total_pen_usd =number_format(($totalVentasDiaSoles + round($totalVentasDiaDolares)), 2) ;
+        $total_pen_usd = ($totalVentasDiaSoles + round($totalVentasDiaDolares));
 
         // Obntener ganancias del dia
-        $datosDetalle=array();
-        $totalsasd=0;
-        $ordertot=Order::where('companies_id', $company)->where('date', $DateAndTime)->get();
-        foreach ($ordertot as $key => $p) {
-            array_push($datosDetalle,OrderDetail::where('orders_id', $p->id)->get());
+        $total_ganancia = 0;
+        $gananciaTotal = Order::join("order_details", "orders.id", "=", "order_details.orders_id")->join("products", "products.id", "=", "order_details.products_id")->where('orders.companies_id', $company)->where('orders.date', $DateAndTime)->select("products.purchase_price", "order_details.quantity")->get();
+        foreach ($gananciaTotal as $key => $p) {
+            $total_ganancia += ($p->purchase_price * $p->quantity);
         }
         return Inertia::render('Reports/Index', [
-            'totalVentas' => $total_pen_usd,
-            'valores'=>$datosDetalle,
+            'totalVentas' =>number_format((round($total_pen_usd)), 2),
+            'totalPrecioCompra' =>number_format((round($total_pen_usd-$total_ganancia)), 2),
             'totOrders' => Order::where('companies_id', $company)->where('date', $DateAndTime)->count(),
             'orders' => Order::where('companies_id', $company)->where('date', $DateAndTime)->get()->map(function ($p) {
                 return [
@@ -92,7 +91,6 @@ class ReportController extends Controller
                             'igv' => $d->igv,
                             'subTotal' => $d->subTotal,
                         ];
-                        
                     }),
                 ];
             }),
