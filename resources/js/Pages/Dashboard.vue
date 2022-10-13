@@ -191,11 +191,11 @@
                     </v-hover>
                 </v-col>
 
-                <!-- Cuetas por pAGAR -->
+                <!-- Cuetas por Pagar -->
                 <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('accountPayables.index')">
-                            <v-card color="indigo lighten-4" :elevation="hover ? 16 : 2">
+                            <v-card color="red darken-1" :elevation="hover ? 16 : 2">
                                 <v-row>
                                     <v-col cols="9" sm="9">
                                         <v-list-item three-line>

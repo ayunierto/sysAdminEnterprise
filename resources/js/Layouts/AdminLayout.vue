@@ -401,6 +401,45 @@
                             </v-list-item>
                         </inertia-link>
 
+                        <!-- Utilidades -->
+                        <v-list-group v-if="$page.props.user.role == 'master'">
+                            <v-icon slot="prependIcon" :style="item_style()">mdi-tools</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content :style="item_style()">
+                                    <v-list-item-title>UTILIDADES</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-card :color="colorSubMenu">
+                                <v-list-item-group>
+
+                                    <inertia-link :href="route('reports.index')">
+                                        <v-list-item :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon small :style="item_style()">mdi-file-document</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>REPORTES</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link :href="route('barcodeGenerator.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-qrcode-edit</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>Barcode- QR</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+                                </v-list-item-group>
+                            </v-card>
+                        </v-list-group>
+
+                        <!-- Ajustes -->
                         <v-list-group v-if="$page.props.user.role == 'master'">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-spin mdi-cog</v-icon>
                             <template v-slot:activator>
@@ -439,10 +478,10 @@
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-printer</v-icon>
+                                                <v-icon :style="item_style()" small>mdi-printer-pos</v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title>
-                                                <h5>IMPRESORAS</h5>
+                                                <h5>IMPRESORAS POS</h5>
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>

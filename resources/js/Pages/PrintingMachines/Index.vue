@@ -128,9 +128,11 @@
                                 sus comprobantes</strong>
 
                             <v-timeline align-top dense>
+                                <v-timeline-item>Solo registrar impresorar compatibles con POS</v-timeline-item>
                                 <v-timeline-item>Compartir su Impresora</v-timeline-item>
                                 <v-timeline-item>Verificar que el nombre de la impresora coincida con el nombre
-                                    registrado</v-timeline-item>
+                                    registrado
+                                </v-timeline-item>
                                 <v-timeline-item>Solo tener activa una impresora</v-timeline-item>
                             </v-timeline>
                         </v-card-text>
