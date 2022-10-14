@@ -37,12 +37,6 @@ class DashboardController extends Controller
                 array_push($stock_min, $p);
             }
         }
-        // Calcular Total de inversion en productos
-        $totalInversion = 0;
-        $totalI = Product::where('companies_id', $company_id)->get();
-        foreach ($totalI as $key => $p) {
-            $totalInversion += $p->purchase_price * $p->stock;
-        }
 
         $DateAndTime = date('Y-m-d');
         $totalV = Order::where('companies_id', $company_id)->where('date', $DateAndTime)
@@ -59,11 +53,14 @@ class DashboardController extends Controller
         }
         $cajaChSoles = 0;
         $cajaChDolares = 0;
+        $existeCaja = 0;
         $datosCaja = PettyCash::where('companies_id', $company_id)->where('state', 1)->get();
         if ($datosCaja == '[]') {
             $cajaChSoles = 0;
             $cajaChDolares = 0;
+            $existeCaja = 0;
         } else {
+            $existeCaja = 1;
             $cajaChSoles = $datosCaja[0]->amount_pen;
             $cajaChDolares = $datosCaja[0]->amount_usd;
         }
@@ -78,9 +75,9 @@ class DashboardController extends Controller
             'company' => Company::find($company_id),
             'totalVentSol' => number_format($totalVentasDiaSoles, 2),
             'totalVentDolar' => number_format($totalVentasDiaDolares, 2),
-            'totInver' => number_format($totalInversion, 2),
-            'cajaChicaSoles' => $cajaChSoles,
-            'cajaChicaDolares' => $cajaChDolares,
+            'cajaE' => $existeCaja,
+            'cajaChicaSoles' => number_format($cajaChSoles, 2),
+            'cajaChicaDolares' => number_format($cajaChDolares, 2),
         ]);
     }
 }

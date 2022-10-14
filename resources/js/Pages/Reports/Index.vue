@@ -77,15 +77,16 @@
                         :search="searchV">
                         <template v-slot:top>
                             <v-toolbar flat>
-                                <v-toolbar-title>
+                                <!-- <v-toolbar-title>
                                     <v-text-field type="date" class="mt-8 ma-2" outlined dense>
                                     </v-text-field>
-                                </v-toolbar-title>
-                                <v-spacer></v-spacer>
+                                </v-toolbar-title> -->
+                                <!-- <v-spacer></v-spacer> -->
                                 <v-spacer></v-spacer>
                                 <v-text-field v-model="searchV" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
                                 </v-text-field>
+                                <v-spacer></v-spacer>
                             </v-toolbar>
                         </template>
                         <!-- Acciones -->
@@ -156,7 +157,8 @@
                                                         <tr>
                                                             <th class="text-left"> PRODUCTO </th>
                                                             <th class="text-left"> CANTIDAD </th>
-                                                            <th class="text-left"> PRECIO </th>
+                                                            <th class="text-left"> PRECIO COMPRA </th>
+                                                            <th class="text-left"> PRECIO VENTA </th>
                                                             <th class="text-left"> IGV </th>
                                                             <th class="text-left"> SUB TOTAL </th>
                                                         </tr>
@@ -167,6 +169,7 @@
                                                             :key="item.products_id">
                                                             <td>{{ item.product_name }}</td>
                                                             <td>{{ item.quantity }}</td>
+                                                            <td>{{ item.product_purchase_price }}</td>
                                                             <td>{{ item.price }}</td>
                                                             <td>{{ item.igv }}</td>
                                                             <td>{{ item.subTotal }}</td>
@@ -238,15 +241,16 @@
                         :search="searchC">
                         <template v-slot:top>
                             <v-toolbar flat>
-                                <v-toolbar-title>
+                                <!-- <v-toolbar-title>
                                     <v-text-field type="date" class="mt-8 ma-2" outlined dense>
                                     </v-text-field>
-                                </v-toolbar-title>
+                                </v-toolbar-title> -->
                                 <v-spacer></v-spacer>
-                                <v-spacer></v-spacer>
+                                <!-- <v-spacer></v-spacer> -->
                                 <v-text-field v-model="searchC" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
                                 </v-text-field>
+                                <v-spacer></v-spacer>
                             </v-toolbar>
                         </template>
                         <!-- Acciones -->

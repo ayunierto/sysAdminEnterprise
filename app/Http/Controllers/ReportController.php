@@ -29,6 +29,7 @@ class ReportController extends Controller
      */
     public function index()
     {
+        
         $company = Auth::user()->companies_id;
         $DateAndTime = date('Y-m-d');
         // VENTAS 
@@ -160,7 +161,7 @@ class ReportController extends Controller
                             'companies_id' => $d->companies_id,
                             'purchases_id' => $d->purchases_id,
                             'products_id' => $d->products_id,
-                            'product_name' => Product::find($d->products_id)->name,
+                            'product_name' => Product::find($d->products_id)->name,                            
                             'amount' => $d->amount,
                             'price' => $d->price,
                             'transporte' => $d->transporte,
