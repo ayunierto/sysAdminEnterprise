@@ -44,7 +44,7 @@
                                     <v-col cols="9" sm="9">
                                         <v-list-item three-line>
                                             <v-list-item-content>
-                                                    <div class="white--text">
+                                                <div class="white--text">
                                                     <h4>CANTIDAD: {{products}} <br> S/. {{totInver}}</h4>
                                                 </div>
                                                 <v-list-item-subtitle class="white--text">PRODUCTOS
@@ -63,6 +63,59 @@
                         </inertia-link>
                     </v-hover>
                 </v-col>
+
+                <!-- Vender -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('orders.create')">
+                            <v-card color="teal darken-1" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="9" sm="9">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <v-list-item-subtitle class="white--text">VENDER
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="3" sm="3">
+                                        <v-avatar size="60" class="ml-n10 mt-5" tile>
+                                            <v-img contain src="/img/dashboard/ventas.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
+                    </v-hover>
+                </v-col>
+
+                <!-- Comprar -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('orders.create')">
+                            <v-card color="green " :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="9" sm="9">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <v-list-item-subtitle class="white--text">COMPRAR
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="3" sm="3">
+                                        <v-avatar size="60" class="ml-n10 mt-5" tile>
+                                            <v-img contain src="/img/dashboard/compras.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
+                    </v-hover>
+                </v-col>
+
                 <!-- Servicios -->
                 <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.services>0" v-show="true">
                     <v-hover v-slot="{ hover }" open-delay="200">
@@ -93,32 +146,8 @@
                         </inertia-link>
                     </v-hover>
                 </v-col>
-                <!-- Reportes del Día -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
-                    <v-hover v-slot="{ hover }" open-delay="200">
-                        <inertia-link :href="route('reports.index')">
-                            <v-card color="purple darken-1" :elevation="hover ? 16 : 2">
-                                <v-row>
-                                    <v-col cols="9" sm="9">
-                                        <v-list-item three-line>
-                                            <v-list-item-content>
-                                                <v-list-item-subtitle class="white--text">REPORTES DEL DÍA
-                                                </v-list-item-subtitle>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </v-col>
-                                    <v-col cols="3" sm="3">
-                                        <v-avatar size="60" class="ml-n10 mt-5" tile>
-                                            <v-img contain src="/img/dashboard/reportes.png">
-                                            </v-img>
-                                        </v-avatar>
-                                    </v-col>
-                                </v-row>
-                            </v-card>
-                        </inertia-link>
-                    </v-hover>
-                </v-col>
-                <!-- Cuetas por Cobrar -->
+
+                <!-- Cuentas por Cobrar -->
                 <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('accountReceivables.index')">
@@ -180,31 +209,31 @@
                     </v-hover>
                 </v-col>
 
-                <!-- Grafica de ventas -->
-                <!-- <v-col cols="12" sm="4" md="3" class="mt-2">
-                    <v-card class="mx-auto text-center" color="green" dark>
-                        <v-card-text>
-                            <div class="text-h5 font-weight-thin" style="height: 10px;">
-                                VENTAS DIARIAS
-                            </div>
-                        </v-card-text>
-                        <v-card-text>
-                            <v-sheet color="transparent">
-                                <v-sparkline auto-draw :value="datos" :labels="texto" color="rgba(255, 255, 255, .7)"
-                                    height="40" line-width="1" smooth>
-                                </v-sparkline>
-                            </v-sheet>
-                        </v-card-text>
-
-                        <v-divider></v-divider>
-
-                        <v-card-actions class="justify-center">
-                            <v-btn block text>
-                                DESCARGAR REPORTE
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-col> -->
+                <!-- Reportes del Día -->
+                <v-col cols="12" sm="4" md="3" class="mt-5">
+                    <v-hover v-slot="{ hover }" open-delay="200">
+                        <inertia-link :href="route('reports.index')">
+                            <v-card color="deep-orange accent-2" :elevation="hover ? 16 : 2">
+                                <v-row>
+                                    <v-col cols="9" sm="9">
+                                        <v-list-item three-line>
+                                            <v-list-item-content>
+                                                <v-list-item-subtitle class="white--text">REPORTES DEL DÍA
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+                                    </v-col>
+                                    <v-col cols="3" sm="3">
+                                        <v-avatar size="60" class="ml-n10 mt-5" tile>
+                                            <v-img contain src="/img/dashboard/reportes.png">
+                                            </v-img>
+                                        </v-avatar>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </inertia-link>
+                    </v-hover>
+                </v-col>
             </v-row>
         </v-container>
     </admin-layout>
@@ -219,30 +248,12 @@ export default {
     },
 
     props: ['products', 'services', 'company', 'orders',
-        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR','accountsP',
-        'cajaChicaSoles', 'cajaChicaDolares','totInver'],
+        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR', 'accountsP',
+        'cajaChicaSoles', 'cajaChicaDolares', 'totInver'],
 
     data() {
         return {
             search: '',
-            // datos: [
-            //     10,
-            //     23,
-            //     34,
-            //     9,
-            //     18,
-            //     24,
-            //     36,
-            // ],
-            // texto: [
-            //     'LU',
-            //     'MA',
-            //     'MI',
-            //     'JU',
-            //     'VI',
-            //     'SA',
-            //     'DO',
-            // ],
         }
     },
 }

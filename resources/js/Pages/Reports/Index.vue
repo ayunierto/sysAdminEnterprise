@@ -12,9 +12,6 @@
                 <v-tab>
                     PRODUCTOS
                 </v-tab>
-                <v-tab>
-                    QRCode
-                </v-tab>
                 <!-- Ventas del día -->
                 <v-tab-item><br>
                     <v-card elevation="0">
@@ -80,28 +77,33 @@
                         :search="searchV">
                         <template v-slot:top>
                             <v-toolbar flat>
+                                <v-toolbar-title>
+                                    <v-text-field type="date" class="mt-8 ma-2" outlined dense>
+                                    </v-text-field>
+                                </v-toolbar-title>
+                                <v-spacer></v-spacer>
                                 <v-spacer></v-spacer>
                                 <v-text-field v-model="searchV" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
                                 </v-text-field>
-                                <v-spacer></v-spacer>
                             </v-toolbar>
                         </template>
                         <!-- Acciones -->
                         <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon small class="mr-2" @click="printItem(item)">
+                            <!-- <v-icon small class="mr-2" @click="printItem(item)">
                                 mdi-printer
-                            </v-icon>
+                            </v-icon> -->
                             <v-icon small class="mr-2" @click="viewItem(item)">
                                 mdi-eye
                             </v-icon>
                         </template>
                     </v-data-table>
                 </v-tab-item>
+                <!-- Fin Ventas Día -->
                 <!-- Ver detalles Ventas -->
                 <template>
                     <v-row justify="center">
-                        <v-dialog v-model="dialog_view" max-width="700">
+                        <v-dialog v-model="dialog_viewVentas" max-width="700">
 
                             <v-card>
                                 <v-card-title class="text-h5">
@@ -178,7 +180,7 @@
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn color="green darken-1" text @click="dialog_view = false">
+                                    <v-btn color="green darken-1" text @click="dialog_viewVentas = false">
                                         Cerrar
                                     </v-btn>
                                 </v-card-actions>
@@ -188,7 +190,7 @@
                 </template>
                 <!-- Fin Ver detalles Ventas -->
 
-                <!-- Compras del dia -->
+                <!-- Compras del Día -->
                 <v-tab-item> <br>
                     <v-card elevation="0">
                         <v-container>
@@ -201,12 +203,12 @@
                                                 N° COMPRAS
                                             </div>
                                             <v-list-item-title>
-                                                {{totOrders}}
+                                                {{totPurchases}}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
                                         <v-list-item-avatar tile size="30">
-                                            <v-img contain src="/img/dashboard/ventas.png">
+                                            <v-img contain src="/img/dashboard/compras.png">
                                             </v-img>
                                         </v-list-item-avatar>
                                     </v-list-item>
@@ -218,7 +220,7 @@
                                                 TOTAL EN COMPRAS
                                             </div>
                                             <v-list-item-title>
-                                                S/. {{totalVentas}}
+                                                S/. {{totalCompras}}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -236,24 +238,178 @@
                         :search="searchC">
                         <template v-slot:top>
                             <v-toolbar flat>
+                                <v-toolbar-title>
+                                    <v-text-field type="date" class="mt-8 ma-2" outlined dense>
+                                    </v-text-field>
+                                </v-toolbar-title>
+                                <v-spacer></v-spacer>
                                 <v-spacer></v-spacer>
                                 <v-text-field v-model="searchC" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
                                 </v-text-field>
-                                <v-spacer></v-spacer>
                             </v-toolbar>
                         </template>
                         <!-- Acciones -->
                         <template v-slot:[`item.actions`]="{ item }">
-                            <v-icon small class="mr-2" @click="printItem(item)">
+                            <!-- <v-icon small class="mr-2" @click="printItem(item)">
                                 mdi-printer
-                            </v-icon>
-                            <v-icon small class="mr-2" @click="viewItem(item)">
+                            </v-icon> -->
+                            <v-icon small class="mr-2" @click="viewItemC(item)">
                                 mdi-eye
                             </v-icon>
                         </template>
                     </v-data-table>
                 </v-tab-item>
+                <!-- Fin Compras Día -->
+                <!-- Ver detalles Compras -->
+                <template>
+                    <v-row justify="center">
+                        <v-dialog v-model="dialog_viewCompras" max-width="700">
+                            <v-card>
+                                <v-card-title class="text-h5">
+                                    Detalle de Compra
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-row>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="CLIENTE" v-model="editedItemCompras.provider_name"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="METODO PAGO" v-model="editedItemCompras.payment_method"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="COMPROBANTE" v-model="editedItemCompras.proof_payment"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="MONEDA" v-model="editedItemCompras.coin" readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="Tipo de cambio"
+                                                v-model="editedItemCompras.exchange_rate" readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="TOTAL" v-model="editedItemCompras.total" readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="FECHA" v-model="editedItemCompras.date" readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" sm="6" md="3">
+                                            <v-text-field label="ESTADO" v-model="editedItemCompras.state_name"
+                                                readonly>
+                                            </v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                    <v-card elevation="2">
+                                        <v-card-text>
+                                            <v-simple-table fixed-header height="250px">
+                                                <template v-slot:default>
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-left"> PRODUCTO </th>
+                                                            <th class="text-left"> CANTIDAD </th>
+                                                            <th class="text-left"> PRECIO </th>
+                                                            <th class="text-left"> TRANSPORTE </th>
+                                                            <th class="text-left"> IGV </th>
+                                                            <th class="text-left"> SUB TOTAL </th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr v-for="item in editedItemCompras.details"
+                                                            :key="item.products_id">
+                                                            <td>{{ item.product_name }}</td>
+                                                            <td>{{ item.amount }}</td>
+                                                            <td>{{ item.price }}</td>
+                                                            <td>{{ item.transporte }}</td>
+                                                            <td>{{ item.igv }}</td>
+                                                            <td>{{ item.subTotal }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </template>
+                                            </v-simple-table>
+                                        </v-card-text>
+                                    </v-card>
+
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="green darken-1" text @click="dialog_viewCompras = false">
+                                        Cerrar
+                                    </v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                    </v-row>
+                </template>
+                <!-- Fin Ver detalles Compras -->
+                <!-- Datos Productos -->
+                <v-tab-item> <br>
+                    <v-card elevation="0">
+                        <v-container>
+                            <v-row>
+                                <v-spacer></v-spacer>
+                                <v-card class="mx-5" max-width="180" outlined>
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                CANTIDAD PRODUCTOS
+                                            </div>
+                                            <v-list-item-title>
+                                                {{totProducts}}
+                                            </v-list-item-title>
+                                        </v-list-item-content>
+
+                                        <v-list-item-avatar tile size="30">
+                                            <v-img contain src="/img/dashboard/productos.png">
+                                            </v-img>
+                                        </v-list-item-avatar>
+                                    </v-list-item>
+                                </v-card>
+                                <v-card class="mx-5" max-width="180" outlined>
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                TOTAL INVERSIÓN
+                                            </div>
+                                            <v-list-item-title>
+                                                S/. {{inversionTotal}}
+                                            </v-list-item-title>
+                                        </v-list-item-content>
+
+                                        <v-list-item-avatar tile size="30">
+                                            <v-img contain src="/img/dashboard/totalVentas.png">
+                                            </v-img>
+                                        </v-list-item-avatar>
+                                    </v-list-item>
+                                </v-card>
+                                <v-spacer></v-spacer>
+                            </v-row>
+                        </v-container>
+                    </v-card>
+                    <v-data-table :headers="productsItems" :items="dessertsProducts" sort-by="stock"
+                        class="elevation-24" :search="searchP">
+                        <template v-slot:top>
+                            <v-toolbar flat>
+                                <v-spacer></v-spacer>
+                                <v-text-field v-model="searchP" append-icon="mdi-magnify" label="Buscar" outlined dense
+                                    hide-details>
+                                </v-text-field>
+                                <v-spacer></v-spacer>
+                            </v-toolbar>
+                        </template>
+                    </v-data-table>
+                </v-tab-item>
+                <!-- Datos productos -->
             </v-tabs>
         </v-card>
         <!-- <pre>{{ valores }}</pre> -->
@@ -268,6 +424,11 @@ export default {
         'totalVentas',
         'totOrders',
         'totalPrecioCompra',
+        'totPurchases',
+        'totalCompras',
+        'products',
+        'totProducts',
+        'inversionTotal',
     ],
     components: {
         AdminLayout,
@@ -276,7 +437,9 @@ export default {
         return {
             searchV: '',
             searchC: '',
-            dialog_view: false,
+            searchP: '',
+            dialog_viewVentas: false,
+            dialog_viewCompras: false,
 
             // VENTAS
             ventasDia: [
@@ -337,7 +500,7 @@ export default {
 
             // COMPRAS
             comprasDia: [
-            { text: 'FECHA', value: 'date' },
+                { text: 'FECHA', value: 'date' },
                 { text: 'PROVEEDOR', value: 'provider_name' },
                 { text: 'TOTAL', value: 'total' },
                 { text: 'MONEDA', value: 'coin' },
@@ -350,16 +513,14 @@ export default {
                 id: '',
                 companies_id: '',
                 company_name: '',
-                customers_id: '',
-                customers_name: '',
+                providers_id: '',
+                provider_name: '',
                 payment_methods_id: '',
                 payment_method: '',
                 proof_payments_id: '',
                 proof_payment: '',
                 coins_id: '',
                 coin: '',
-                documents_id: '',
-                documents_name: '',
                 exchange_rate: '',
                 total: '',
                 date: '',
@@ -373,16 +534,14 @@ export default {
                 id: '',
                 companies_id: '',
                 company_name: '',
-                customers_id: '',
-                customers_name: '',
+                providers_id: '',
+                provider_name: '',
                 payment_methods_id: '',
                 payment_method: '',
                 proof_payments_id: '',
                 proof_payment: '',
                 coins_id: '',
                 coin: '',
-                documents_id: '',
-                documents_name: '',
                 exchange_rate: '',
                 total: '',
                 date: '',
@@ -391,6 +550,18 @@ export default {
                 description: '',
                 details: '',
             },
+            // PRODUCTOS
+            productsItems: [
+                { text: 'NOMBRE', value: 'name' },
+                { text: 'STOCK', value: 'stock' },
+                { text: 'PRECIO COMPRA', value: 'purchase_price' },
+                { text: 'PRECIO VENTA', value: 'sale_price' },
+                { text: 'INVERSIÓN S/.', value: 'totalInversion' },
+                { text: 'FECHA DE VENCIMIENTO', value: 'expiration_date' },
+            ],
+            dessertsProducts: [],
+
+            editedIndexProducts: -1,
 
         }
     },
@@ -402,11 +573,17 @@ export default {
         initialize() {
             this.dessertsVentas = this.orders
             this.dessertsCompras = this.purchases
+            this.dessertsProducts = this.products
         },
         viewItem(item) {
             this.editedIndexVentas = this.dessertsVentas.indexOf(item)
             this.editedItemVentas = Object.assign({}, item)
-            this.dialog_view = true
+            this.dialog_viewVentas = true
+        },
+        viewItemC(item) {
+            this.editedIndexCompras = this.dessertsCompras.indexOf(item)
+            this.editedItemCompras = Object.assign({}, item)
+            this.dialog_viewCompras = true
         },
     },
 }
