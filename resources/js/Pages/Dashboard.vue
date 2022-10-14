@@ -4,11 +4,11 @@
         <template v-slot:company_name>
             <div>{{ company.name }}</div>
         </template>
-
+        
         <v-container>
             <v-row>
                 <!-- Caja chica -->
-                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="cajaE==1">
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.$page.props.user.role != 'seller' &&cajaE==1">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('pettyCashes.index')">
                             <v-card color="light-green" :elevation="hover ? 16 : 2">
@@ -125,7 +125,7 @@
                 </v-col>
 
                 <!-- Comprar -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.$page.props.user.role != 'seller'">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('purchases.create')">
                             <v-card color="green " :elevation="hover ? 16 : 2">
@@ -151,7 +151,7 @@
                 </v-col>
 
                 <!-- Cuentas por Cobrar -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.$page.props.user.role != 'seller'">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('accountReceivables.index')">
                             <v-card color="orange accent-2" :elevation="hover ? 16 : 2">
@@ -182,7 +182,7 @@
                 </v-col>
 
                 <!-- Cuetas por Pagar -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.$page.props.user.role != 'seller'">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('accountPayables.index')">
                             <v-card color="red darken-1" :elevation="hover ? 16 : 2">
@@ -213,7 +213,7 @@
                 </v-col>
 
                 <!-- Reportes del Día -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
+                <v-col cols="12" sm="4" md="3" class="mt-5" v-if="this.$page.props.user.role != 'seller'">
                     <v-hover v-slot="{ hover }" open-delay="200">
                         <inertia-link :href="route('reports.index')">
                             <v-card color="deep-orange accent-2" :elevation="hover ? 16 : 2">

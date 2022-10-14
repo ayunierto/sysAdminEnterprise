@@ -44,7 +44,7 @@
                     <v-list-item-group color="primary">
 
                         <inertia-link :href="route('dashboard')">
-                            <v-list-item link v-if="$page.props.user.role != 'seller'" :style="item_style()">
+                            <v-list-item link :style="item_style()">
                                 <v-list-item-icon>
                                     <v-icon :style="item_style()">mdi-monitor-multiple</v-icon>
                                 </v-list-item-icon>
@@ -163,7 +163,7 @@
                             </v-card>
                         </v-list-group>
 
-                        <v-list-group :style="item_style()" v-if="$page.props.user.role != 'seller'">
+                        <v-list-group :style="item_style()">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-cart</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content :style="item_style()">
@@ -198,7 +198,8 @@
                                     </inertia-link>
 
                                     <inertia-link :href="route('accountReceivables.index')">
-                                        <v-list-item link :style="item_style()">
+                                        <v-list-item v-if="$page.props.user.role != 'seller'" link
+                                            :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
                                                 <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
@@ -248,7 +249,8 @@
                                     </inertia-link>
 
                                     <inertia-link :href="route('accountPayables.index')">
-                                        <v-list-item link :style="item_style()">
+                                        <v-list-item v-if="$page.props.user.role != 'seller'" link
+                                            :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
                                                 <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
@@ -402,7 +404,7 @@
                         </inertia-link>
 
                         <!-- Utilidades -->
-                        <v-list-group v-if="$page.props.user.role == 'master'">
+                        <v-list-group v-if="$page.props.user.role != 'seller'">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-tools</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content :style="item_style()">
@@ -440,7 +442,7 @@
                         </v-list-group>
 
                         <!-- Ajustes -->
-                        <v-list-group v-if="$page.props.user.role == 'master'">
+                        <v-list-group v-if="$page.props.user.role != 'seller'">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-spin mdi-cog</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content :style="item_style()">
@@ -515,7 +517,7 @@
                     </inertia-link>
                 </v-list-item>
                 <v-card>
-                    
+
                 </v-card>
 
                 <v-menu left bottom>
