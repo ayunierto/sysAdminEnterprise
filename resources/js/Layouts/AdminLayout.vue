@@ -9,7 +9,7 @@
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                    <v-img aspect-ratio="2.5" contain :src='logoEmpresa'>
+                    <v-img aspect-ratio="2.5" contain :src='"../../"+logoEmpresa'>
                     </v-img>
                     <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
@@ -543,7 +543,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ $page }}</pre>
+            <!-- <pre>{{ $page }}</pre> -->
         </v-main>
 
         <!-- PIE DE PAGINA -->
