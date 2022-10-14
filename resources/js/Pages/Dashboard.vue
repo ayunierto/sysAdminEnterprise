@@ -17,8 +17,8 @@
                                         <v-list-item three-line>
                                             <v-list-item-content>
                                                 <div class="white--text">
-                                                    <h4>S/. {{cajaChicaSoles}}</h4>
-                                                    <h4>$. {{cajaChicaDolares}}</h4>
+                                                    <h3>S/. {{cajaChicaSoles}}</h3>
+                                                    <h3>$. {{cajaChicaDolares}}</h3>
                                                 </div>
                                                 <v-list-item-subtitle class="white--text">CAJA CHICA
                                                 </v-list-item-subtitle>
