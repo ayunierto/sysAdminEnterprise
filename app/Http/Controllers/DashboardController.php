@@ -37,6 +37,13 @@ class DashboardController extends Controller
                 array_push($stock_min, $p);
             }
         }
+        // Calcular Total de inversion en productos
+        $totalInversion = 0;
+        $totalI = Product::where('companies_id', $company_id)->get();
+        foreach ($totalI as $key => $p) {
+            $totalInversion += $p->purchase_price*$p->stock;
+        }
+
         $DateAndTime = date('Y-m-d');
         $totalV = Order::where('companies_id', $company_id)->where('date', $DateAndTime)
             ->where('coins_id', 1)->get();
@@ -71,6 +78,7 @@ class DashboardController extends Controller
             'company' => Company::find($company_id),
             'totalVentSol' => number_format($totalVentasDiaSoles, 2),
             'totalVentDolar' => number_format($totalVentasDiaDolares, 2),
+            'totInver'=> $totalInversion,
             'cajaChicaSoles' => $cajaChSoles,
             'cajaChicaDolares' => $cajaChDolares,
         ]);

@@ -286,7 +286,6 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'NOMBRE', value: 'name' },
-                { text: 'BARCODE', value: 'bar_code' },
                 { text: 'STOCK', value: 'stock' },
                 { text: 'PRECIO COMPRA', value: 'purchase_price' },
                 { text: 'PRECIO VENTA', value: 'sale_price' },

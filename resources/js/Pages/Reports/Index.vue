@@ -10,7 +10,7 @@
                     COMPRAS DEL DÍA
                 </v-tab>
                 <v-tab>
-                    QRCode
+                    PRODUCTOS
                 </v-tab>
                 <v-tab>
                     QRCode
@@ -20,7 +20,8 @@
                     <v-card elevation="0">
                         <v-container>
                             <v-row>
-                                <v-card class="mx-auto" max-width="180" outlined>
+                                <v-spacer></v-spacer>
+                                <v-card class="mx-5" max-width="180" outlined>
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
@@ -37,7 +38,7 @@
                                         </v-list-item-avatar>
                                     </v-list-item>
                                 </v-card>
-                                <v-card class="mx-auto" max-width="180" outlined>
+                                <v-card class="mx-5" max-width="180" outlined>
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
@@ -54,7 +55,7 @@
                                         </v-list-item-avatar>
                                     </v-list-item>
                                 </v-card>
-                                <v-card class="mx-auto" max-width="180" outlined>
+                                <v-card class="mx-5" max-width="180" outlined>
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
@@ -62,7 +63,7 @@
                                             </div>
                                             <v-list-item-title>
                                                 S/. {{totalPrecioCompra}}
-                                            </v-list-item-title>                                            
+                                            </v-list-item-title>
                                         </v-list-item-content>
 
                                         <v-list-item-avatar tile size="30">
@@ -71,15 +72,16 @@
                                         </v-list-item-avatar>
                                     </v-list-item>
                                 </v-card>
+                                <v-spacer></v-spacer>
                             </v-row>
                         </v-container>
                     </v-card>
                     <v-data-table :headers="ventasDia" :items="dessertsVentas" sort-by="name" class="elevation-24"
-                        :search="search">
+                        :search="searchV">
                         <template v-slot:top>
                             <v-toolbar flat>
                                 <v-spacer></v-spacer>
-                                <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" outlined dense
+                                <v-text-field v-model="searchV" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
                                 </v-text-field>
                                 <v-spacer></v-spacer>
@@ -186,15 +188,75 @@
                 </template>
                 <!-- Fin Ver detalles Ventas -->
 
-                <!-- Ganancias del dia -->
+                <!-- Compras del dia -->
                 <v-tab-item> <br>
-                    <v-data-table :headers="comprasDia" :items="dessertsVentas" sort-by="name" class="elevation-24"
-                        :search="search">
+                    <v-card elevation="0">
+                        <v-container>
+                            <v-row>
+                                <v-spacer></v-spacer>
+                                <v-card class="mx-5" max-width="180" outlined>
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                N° COMPRAS
+                                            </div>
+                                            <v-list-item-title>
+                                                {{totOrders}}
+                                            </v-list-item-title>
+                                        </v-list-item-content>
+
+                                        <v-list-item-avatar tile size="30">
+                                            <v-img contain src="/img/dashboard/ventas.png">
+                                            </v-img>
+                                        </v-list-item-avatar>
+                                    </v-list-item>
+                                </v-card>
+                                <v-card class="mx-5" max-width="180" outlined>
+                                    <v-list-item three-line>
+                                        <v-list-item-content>
+                                            <div>
+                                                TOTAL EN COMPRAS
+                                            </div>
+                                            <v-list-item-title>
+                                                S/. {{totalVentas}}
+                                            </v-list-item-title>
+                                        </v-list-item-content>
+
+                                        <v-list-item-avatar tile size="30">
+                                            <v-img contain src="/img/dashboard/totalVentas.png">
+                                            </v-img>
+                                        </v-list-item-avatar>
+                                    </v-list-item>
+                                </v-card>
+                                <v-spacer></v-spacer>
+                            </v-row>
+                        </v-container>
+                    </v-card>
+                    <v-data-table :headers="comprasDia" :items="dessertsCompras" sort-by="name" class="elevation-24"
+                        :search="searchC">
+                        <template v-slot:top>
+                            <v-toolbar flat>
+                                <v-spacer></v-spacer>
+                                <v-text-field v-model="searchC" append-icon="mdi-magnify" label="Buscar" outlined dense
+                                    hide-details>
+                                </v-text-field>
+                                <v-spacer></v-spacer>
+                            </v-toolbar>
+                        </template>
+                        <!-- Acciones -->
+                        <template v-slot:[`item.actions`]="{ item }">
+                            <v-icon small class="mr-2" @click="printItem(item)">
+                                mdi-printer
+                            </v-icon>
+                            <v-icon small class="mr-2" @click="viewItem(item)">
+                                mdi-eye
+                            </v-icon>
+                        </template>
                     </v-data-table>
                 </v-tab-item>
             </v-tabs>
         </v-card>
-        <pre>{{ valores }}</pre>
+        <!-- <pre>{{ valores }}</pre> -->
     </admin-layout>
 </template>
 <script>
@@ -212,7 +274,8 @@ export default {
     },
     data() {
         return {
-            search: '',
+            searchV: '',
+            searchC: '',
             dialog_view: false,
 
             // VENTAS
@@ -273,16 +336,62 @@ export default {
             },
 
             // COMPRAS
-
             comprasDia: [
-                { text: 'FECHA', value: 'name' },
-                { text: 'CLIENTE', value: 'description' },
+            { text: 'FECHA', value: 'date' },
+                { text: 'PROVEEDOR', value: 'provider_name' },
                 { text: 'TOTAL', value: 'total' },
+                { text: 'MONEDA', value: 'coin' },
                 { text: 'ESTADO', value: 'state_name' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
             dessertsCompras: [],
             editedIndexCompras: -1,
+            editedItemCompras: {
+                id: '',
+                companies_id: '',
+                company_name: '',
+                customers_id: '',
+                customers_name: '',
+                payment_methods_id: '',
+                payment_method: '',
+                proof_payments_id: '',
+                proof_payment: '',
+                coins_id: '',
+                coin: '',
+                documents_id: '',
+                documents_name: '',
+                exchange_rate: '',
+                total: '',
+                date: '',
+                state: '',
+                state_name: '',
+                description: '',
+                details: '',
+            },
+
+            defaultItemCompras: {
+                id: '',
+                companies_id: '',
+                company_name: '',
+                customers_id: '',
+                customers_name: '',
+                payment_methods_id: '',
+                payment_method: '',
+                proof_payments_id: '',
+                proof_payment: '',
+                coins_id: '',
+                coin: '',
+                documents_id: '',
+                documents_name: '',
+                exchange_rate: '',
+                total: '',
+                date: '',
+                state: '',
+                state_name: '',
+                description: '',
+                details: '',
+            },
+
         }
     },
     created() {
@@ -292,7 +401,7 @@ export default {
     methods: {
         initialize() {
             this.dessertsVentas = this.orders
-            // this.dessertsCompras = this.orders
+            this.dessertsCompras = this.purchases
         },
         viewItem(item) {
             this.editedIndexVentas = this.dessertsVentas.indexOf(item)

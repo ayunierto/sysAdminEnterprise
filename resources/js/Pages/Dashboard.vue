@@ -44,10 +44,8 @@
                                     <v-col cols="9" sm="9">
                                         <v-list-item three-line>
                                             <v-list-item-content>
-                                                <div>
-                                                    <v-list-item-title class="headline mb-2 white--text">
-                                                        {{ products }}
-                                                    </v-list-item-title>
+                                                    <div class="white--text">
+                                                    <h4>CANTIDAD: {{products}} <br> S/. {{totInver}}</h4>
                                                 </div>
                                                 <v-list-item-subtitle class="white--text">PRODUCTOS
                                                 </v-list-item-subtitle>
@@ -95,63 +93,23 @@
                         </inertia-link>
                     </v-hover>
                 </v-col>
-                <!-- Ventas -->
+                <!-- Reportes del Día -->
                 <v-col cols="12" sm="4" md="3" class="mt-5">
                     <v-hover v-slot="{ hover }" open-delay="200">
-                        <inertia-link :href="route('orders.index')">
-                            <v-card color="cyan darken-1" :elevation="hover ? 16 : 2">
+                        <inertia-link :href="route('reports.index')">
+                            <v-card color="purple darken-1" :elevation="hover ? 16 : 2">
                                 <v-row>
                                     <v-col cols="9" sm="9">
                                         <v-list-item three-line>
                                             <v-list-item-content>
-                                                <div>
-
-                                                    <v-list-item-title class="headline mb-1 white--text">
-                                                        {{ orders }}
-                                                    </v-list-item-title>
-
-                                                </div>
-                                                <v-list-item-subtitle class="white--text">VENTAS DEL DÍA
+                                                <v-list-item-subtitle class="white--text">REPORTES DEL DÍA
                                                 </v-list-item-subtitle>
                                             </v-list-item-content>
                                         </v-list-item>
                                     </v-col>
                                     <v-col cols="3" sm="3">
                                         <v-avatar size="60" class="ml-n10 mt-5" tile>
-                                            <v-img contain src="/img/dashboard/ventas.png">
-                                            </v-img>
-                                        </v-avatar>
-                                    </v-col>
-                                </v-row>
-                            </v-card>
-                        </inertia-link>
-                    </v-hover>
-                </v-col>
-                <!-- Compras -->
-                <v-col cols="12" sm="4" md="3" class="mt-5">
-                    <v-hover v-slot="{ hover }" open-delay="200">
-                        <inertia-link :href="route('purchases.index')">
-                            <v-card color="yellow darken-4" :elevation="hover ? 16 : 2">
-                                <v-row>
-                                    <v-col cols="9" sm="9">
-                                        <v-list-item three-line>
-                                            <v-list-item-content>
-                                                <div>
-
-                                                    <v-list-item-title class="headline mb-1 white--text">
-                                                        {{ purchases }}
-                                                    </v-list-item-title>
-
-                                                </div>
-
-                                                <v-list-item-subtitle class="white--text">COMPRAS DEL DÍA
-                                                </v-list-item-subtitle>
-                                            </v-list-item-content>
-                                        </v-list-item>
-                                    </v-col>
-                                    <v-col cols="3" sm="3">
-                                        <v-avatar size="60" class="ml-n10 mt-5" tile>
-                                            <v-img contain src="/img/dashboard/compras.png">
+                                            <v-img contain src="/img/dashboard/reportes.png">
                                             </v-img>
                                         </v-avatar>
                                     </v-col>
@@ -261,7 +219,8 @@ export default {
     },
 
     props: ['products', 'services', 'company', 'orders',
-        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR','accountsP','cajaChicaSoles', 'cajaChicaDolares'],
+        'totalVentSol', 'totalVentDolar', 'purchases', 'accountsR','accountsP',
+        'cajaChicaSoles', 'cajaChicaDolares','totInver'],
 
     data() {
         return {

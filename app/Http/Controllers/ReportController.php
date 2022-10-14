@@ -12,6 +12,9 @@ use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
 use App\Models\Product;
 use App\Models\ProofPayment;
+use App\Models\Provider;
+use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -53,6 +56,7 @@ class ReportController extends Controller
             $total_ganancia += ($p->purchase_price * $p->quantity);
         }
         return Inertia::render('Reports/Index', [
+            // Ventas
             'totalVentas' =>number_format((round($total_pen_usd)), 2),
             'totalPrecioCompra' =>number_format((round($total_pen_usd-$total_ganancia)), 2),
             'totOrders' => Order::where('companies_id', $company)->where('date', $DateAndTime)->count(),
@@ -90,6 +94,43 @@ class ReportController extends Controller
                             'discount' => $d->discount,
                             'igv' => $d->igv,
                             'subTotal' => $d->subTotal,
+                        ];
+                    }),
+                ];
+            }),
+            // Compras
+            'purchases' => Purchase::where('companies_id', $company)->where('date', $DateAndTime)->get()->map(function ($p) {
+                return [
+                    'id' => $p->id,
+                    'companies_id' => $p->companies_id,
+                    'company_name' => Company::find($p->companies_id)->name,
+                    'providers_id' => $p->providers_id,
+                    'provider_name' => Provider::find($p->providers_id)->name,
+                    'payment_methods_id' => $p->payment_methods_id,
+                    'payment_method' => PaymentMethod::find($p->payment_methods_id)->description,
+                    'proof_payments_id' => $p->proof_payments_id,
+                    'proof_payment' => ProofPayment::find($p->proof_payments_id)->name,
+                    'coins_id' => $p->coins_id,
+                    'coin' => Coin::find($p->coins_id)->code,
+                    'voucher_number' => $p->voucher_number,
+                    'total' => $p->total,
+                    'date' => $p->date,
+                    'state' => $p->state,
+                    'exchange_rate' => $p->exchange_rate,
+                    'state_name' => $p->state == 1 ? 'Registrado' : 'Pendiente',
+                    'description' => $p->description,
+                    'details' => PurchaseDetail::where('purchases_id', $p->id)->get()->map(function ($d) {
+                        return [
+                            'id' => $d->id,
+                            'companies_id' => $d->companies_id,
+                            'purchases_id' => $d->purchases_id,
+                            'products_id' => $d->products_id,
+                            'product_name' => Product::find($d->products_id)->name,
+                            'amount' => $d->amount,
+                            'price' => $d->price,
+                            'transporte' => $d->transporte,
+                            'igv' => $d->igv,
+                            'subTotal' => $d->total,
                         ];
                     }),
                 ];
