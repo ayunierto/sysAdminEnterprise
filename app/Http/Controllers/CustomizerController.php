@@ -52,7 +52,7 @@ class CustomizerController extends Controller
                 'color_header' => $request->color_header,
                 'color_footer' => $request->color_footer,
                 'color_text' => $request->color_text,
-                'logo' => '../../' . $directorio,
+                'logo' => $directorio,
             ]);
         } else {
             Customizer::create([
@@ -62,7 +62,7 @@ class CustomizerController extends Controller
                 'color_header' => $request->color_header,
                 'color_footer' => $request->color_footer,
                 'color  _text' => $request->color_text,
-                'logo' => '../../img/empresa/logo_empresa.png',
+                'logo' => 'img/empresa/logo_empresa.png',
             ]);
         }
 
@@ -101,7 +101,7 @@ class CustomizerController extends Controller
                 'color_header' => $request->color_header,
                 'color_footer' => $request->color_footer,
                 'color_text' => $request->color_text,
-                'logo' => '../../' . $directorio,
+                'logo' => $directorio,
             ]);
         } else {
             $customizer->update([

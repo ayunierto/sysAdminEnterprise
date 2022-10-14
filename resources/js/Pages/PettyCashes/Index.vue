@@ -19,7 +19,7 @@
         </div>
         <!-- Fin de Alertas -->
 
-        <v-data-table :headers="headers" :items="desserts" sort-by="name" class="elevation-24" :search="search">
+        <v-data-table :headers="headers" :items="desserts" sort-by="description" class="elevation-24" :search="search">
             <template v-slot:[`item.state`]="{ item }">
                 <v-chip :color="getColor(item.state)" dark v-if="item.state==1">
                     Activo
@@ -30,7 +30,7 @@
             </template>
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Lista de Impresoras</v-toolbar-title>
+                    <v-toolbar-title>Lista de Cajas</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical></v-divider>
 
@@ -40,7 +40,7 @@
 
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                                Agregar Impresora
+                                Abrir Caja
                             </v-btn>
                             <v-spacer></v-spacer>
                             <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar" single-line
@@ -62,9 +62,20 @@
                                         </v-col>
 
                                         <v-col cols="12" sm="6" md="6">
-                                            <v-text-field v-model="editedItem.name" label="Nombre"
-                                                :rules="requiredField" required></v-text-field>
+                                            <v-text-field type="number" v-model="editedItem.amount_pen" label="Monto en Soles"
+                                                :rules="requiredField" hint="Monto de apertura" required></v-text-field>
                                         </v-col>
+
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field type="number" v-model="editedItem.amount_usd" label="Monto en Dólares"
+                                                :rules="requiredField" hint="Monto de apertura" required></v-text-field>
+                                        </v-col>
+
+                                        <v-col cols="12" sm="6" md="6">
+                                            <v-text-field v-model="editedItem.description" label="Nombre" required>
+                                            </v-text-field>
+                                        </v-col>
+
                                         <v-col cols="12" sm="6" md="6">
                                             <v-select v-model="editedItem.state" :items="items_state" item-text="name"
                                                 item-value="value" label="Seleccione estado"></v-select>
@@ -111,8 +122,6 @@
                     mdi-delete
                 </v-icon>
             </template>
-
-
         </v-data-table>
 
         <template>
@@ -124,14 +133,19 @@
                         </v-card-title>
 
                         <v-card-text>
-                            <strong>Tener en cuenta los siguientes puntos para evitar problemas al momento de imprimir
-                                sus comprobantes</strong>
+                            <br>
+                            <strong> A Tener en cuenta al momento de abrir una Caja Chica</strong>
 
                             <v-timeline align-top dense>
-                                <v-timeline-item>Compartir su Impresora</v-timeline-item>
-                                <v-timeline-item>Verificar que el nombre de la impresora coincida con el nombre
-                                    registrado</v-timeline-item>
-                                <v-timeline-item>Solo tener activa una impresora</v-timeline-item>
+                                <v-timeline-item>Al aperturar una Caja Chica todos sus gastos y ventas se almacenaran
+                                    aquí</v-timeline-item>
+                                <v-timeline-item>Si el monto es menor al total de una compra, no podra realizar la
+                                    operación</v-timeline-item>
+                                <v-timeline-item>Debe tener habilitada máximo una caja chica, para
+                                    evitar errores en el sistema
+                                </v-timeline-item>
+                                <v-timeline-item>Puede editar el monto de caja chica en cualquier momento
+                                </v-timeline-item>
                             </v-timeline>
                         </v-card-text>
 
@@ -156,7 +170,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
-        'printers',
+        'pettyCashes',
         'companies',
     ],
     components: {
@@ -181,7 +195,9 @@ export default {
             dialog: false,
             dialogDelete: false,
             headers: [
-                { text: 'NOMBRE', value: 'name' },
+                { text: 'NOMBRE', value: 'description' },
+                { text: 'MONTO SOLES', value: 'amount_pen' },
+                { text: 'MONTO DOLARES', value: 'amount_usd' },
                 { text: 'ESTADO', value: 'state' },
                 { text: 'ACCIONES', value: 'actions', sortable: false },
             ],
@@ -191,15 +207,19 @@ export default {
 
             editedItem: {
                 companies_id: this.$page.props.user.companies_id,
-                printers_id: '',
-                name: '',
+                pettyCashes_id: '',
+                amount_pen:0,
+                amount_usd:0,
+                description: '',
                 state: 1,
             },
 
             defaultItem: {
                 companies_id: this.$page.props.user.companies_id,
-                printers_id: '',
-                name: '',
+                pettyCashes_id: '',
+                amount_pen:0,
+                amount_usd:0,
+                description: '',
                 state: 1,
             },
 
@@ -211,7 +231,7 @@ export default {
     },
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Nueva Impresora' : 'Editar Impresora'
+            return this.editedIndex === -1 ? 'Caja Chica' : 'Editar Caja Chica'
         },
     },
 
@@ -249,7 +269,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.printers
+            this.desserts = this.pettyCashes
         },
         getColor(state) {
             if (state == 1) return 'green'
@@ -273,7 +293,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('printers.destroy', this.editedItem))
+            this.$inertia.delete(this.route('pettyCashes.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -304,7 +324,7 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.patch(route('printers.update', this.editedItem), this.editedItem)
+                this.$inertia.patch(route('pettyCashes.update', this.editedItem), this.editedItem)
                 // ***************************************
 
             } else {
@@ -312,7 +332,7 @@ export default {
                 // Store
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.post(route('printers.store'), this.editedItem)
+                this.$inertia.post(route('pettyCashes.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
 

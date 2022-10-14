@@ -16,6 +16,7 @@ use App\Models\Coin;
 use App\Models\Mark;
 use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
+use App\Models\PettyCash;
 use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\Quota;
@@ -90,14 +91,19 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $company = Auth::user()->companies_id;
         $query = new SunatController;
         if ($query->exchange_rate() == 'error') {
             $exchange_rate = 0;
         } else {
             $exchange_rate = $query->exchange_rate()['venta'];
         }
-
-        $company = Auth::user()->companies_id;
+        $datosCaja = PettyCash::where('companies_id', $company)->where('state', 1)->get();
+        if ($datosCaja == '[]') {
+            $dstCajaChica = 0;
+        } else {
+            $dstCajaChica = $datosCaja;
+        }
         return Inertia::render('Orders/Create', [
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find($company),
@@ -109,6 +115,7 @@ class OrderController extends Controller
             'presentations' => Presentation::where('companies_id', $company)->get(),
             'affectationIgvs' => AffectationIgv::all(),
             'exchange_rate' => $exchange_rate,
+            'cajaChica' => $dstCajaChica,
             'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 1)->count() + 1),
             'nroFacturas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 2)->count() + 1),
             'nroBoletas' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 3)->count() + 1),
@@ -207,6 +214,18 @@ class OrderController extends Controller
                 $quota->save();
             }
         }
+        $pettyCash = PettyCash::where('companies_id', $request->companies_id)->where('state', 1)->get();
+            if ($request->cajaChica == 1 && $request->coins_id == 1) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_pen += $request->totalPago,
+                ]);
+            } else {
+                if ($request->cajaChica == 1 && $request->coins_id == 2) {
+                    $pettyCash[0]->update([
+                        $pettyCash[0]->amount_usd += $request->totalPago,
+                    ]);
+                }
+            }
         // imprimir Comprobante
         // $nombreImpresora = "EPSON L3210 Series";
         // $profile = CapabilityProfile::load("simple");

@@ -505,8 +505,8 @@
                                                 <v-btn color="red" text @click="closeDialoPago">
                                                     Cancelar
                                                 </v-btn>
-                                                <v-btn color="green"  text @click="send_form(1)">
-                                                    Pagar e imprimir 
+                                                <v-btn color="green" text @click="send_form(1)">
+                                                    Pagar e imprimir
                                                 </v-btn>
                                                 <v-btn color="primary" text @click="send_form">
                                                     Pagar
@@ -545,7 +545,8 @@ export default {
         'presentations',
         'affectationIgvs',
         'products',
-        'exchange_rate'
+        'exchange_rate',
+        'cajaChica',
     ],
     components: {
         AdminLayout,
@@ -586,6 +587,7 @@ export default {
                 total: 0,
                 totalPago: 0,
                 print: 0,
+                cajaChica: 0,
             },
             editedIndexQuotas: -1,
             quotasHeaders: [
@@ -871,8 +873,13 @@ export default {
                     var precUni = totalVenta1 / prIgv
                     var totalVenta = cant * precUni
                     var igvTotal = totalVenta * 0.18
-                    this.editedItem.sale_price = precUni
-                    this.editedItem.igv = igvTotal
+                    if (this.tipoComprobate.code == '0A1') {
+                        this.editedItem.sale_price = totalVenta1 / cant
+                        this.editedItem.igv = 0
+                    } else {
+                        this.editedItem.sale_price = precUni
+                        this.editedItem.igv = igvTotal
+                    }
                 } else {
                     var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
@@ -920,8 +927,13 @@ export default {
                     var precUni = totalVenta1 / prIgv
                     var totalVenta = cant * precUni
                     var igvTotal = totalVenta * 0.18
-                    this.editedItem.sale_price = precUni
-                    this.editedItem.igv = igvTotal
+                    if (this.tipoComprobate.code == '0A1') {
+                        this.editedItem.sale_price = totalVenta1 / cant
+                        this.editedItem.igv = 0
+                    } else {
+                        this.editedItem.sale_price = precUni
+                        this.editedItem.igv = igvTotal
+                    }
                 } else {
                     var des = Number.parseFloat(this.editedItem.discount)
                     var cant = Number.parseFloat(this.editedItem.quantity)
@@ -952,7 +964,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
             })
         },
-        send_form( print = 0 ) {
+        send_form(print = 0) {
             if (print == 1) {
                 this.form.print = 1
             }
@@ -962,6 +974,10 @@ export default {
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
                 return;
+            }
+
+            if (this.cajaChica != 0) {
+                this.form.cajaChica = 1
             }
             // Datos Formulario
             this.form.proof_payments_id = this.tipoComprobate.id
@@ -973,7 +989,6 @@ export default {
 
             this.form.quotasVenta = this.quotas
             this.form.nroQuotas = this.quotas.length
-
 
             if (this.form.products == '') {
                 this.snackbar_text = 'Carrito Vacio';
@@ -988,6 +1003,7 @@ export default {
                 this.snackbar = true;
                 return;
             }
+
             // Validar Si algun dato del form es nulo o cacio
             // const isEmpty = Object.values(this.form).some(x => (x === ''))
             // if (isEmpty == true) {

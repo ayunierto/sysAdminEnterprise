@@ -100,7 +100,7 @@
                                                     <v-container>
                                                         <v-row>
                                                             <v-col cols="12" sm="6" md="6">
-                                                                <v-radio-group row v-model="editedItem.igv" @change="cambioRadio">
+                                                                <v-radio-group row v-model="editedItem.igv">
                                                                     <v-radio color="red" label="IGV Incluido"
                                                                         value='IGV Incluido'>
                                                                     </v-radio>
@@ -146,18 +146,19 @@
                                                                 </v-text-field>
                                                             </v-col>
                                                             <v-col cols="12" sm="6" md="3">
-                                                                <v-text-field label="Costo transporte"
+                                                                <v-text-field label="Costo Transporte"
                                                                     v-model="editedItem.transporte" type="number"
                                                                     min="0" outlined dense></v-text-field>
                                                             </v-col>
 
-                                                            <!--Calcular valor unitario en soles con o Mas IGV incluido-->
+                                                            <!-- MONEDA DÓLAR -->
+                                                            <!--Calcular valor unitario con o Mas IGV incluido-->
                                                             <v-col cols="12" sm="6" md="3" v-if="datosMoneda.code=='USD' && editedItem.igv=='IGV Incluido' 
                                                             &&form.exchange_rate!='' && editedItem.purchase_price!='' && 
                                                             form.exchange_rate>0 && editedItem.purchase_price>0 "
                                                                 v-show="true">
                                                                 <v-text-field label="Precio S/."
-                                                                    :value="(editedItem.purchase_price*form.exchange_rate)+(editedItem.transporte/editedItem.amount)"
+                                                                    :value="(editedItem.purchase_price*form.exchange_rate)+(editedItem.transporte*form.exchange_rate/editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
@@ -166,11 +167,12 @@
                                                             form.exchange_rate>0 && editedItem.purchase_price>0 "
                                                                 v-show="true">
                                                                 <v-text-field label="Precio S/. +IGV"
-                                                                    :value="(editedItem.purchase_price*form.exchange_rate+((editedItem.purchase_price*form.exchange_rate)*0.18))+(editedItem.transporte/editedItem.amount)"
+                                                                    :value="(editedItem.purchase_price*form.exchange_rate+((editedItem.purchase_price*form.exchange_rate)*0.18))+(editedItem.transporte*form.exchange_rate/editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
 
+                                                            <!-- MONEDA SOLES -->
                                                             <!-- Calcular precio en soles +igv -->
                                                             <v-col cols="12" sm="6" md="3"
                                                                 v-if="datosMoneda.code=='PEN' && editedItem.igv=='IGV Incluido' && editedItem.transporte>0
@@ -190,7 +192,7 @@
                                                             </v-col>
 
                                                             <v-col cols="12" sm="6" md="3">
-                                                                <v-text-field label="Precio Venta"
+                                                                <v-text-field label="Precio Venta S/."
                                                                     v-model="editedItem.sale_price" type="number"
                                                                     min="0" required outlined dense>
                                                                 </v-text-field>
@@ -203,7 +205,7 @@
                                                 <v-card-actions>
                                                     <v-spacer></v-spacer>
                                                     <v-btn color="secondary" elevation="9" text @click="close">
-                                                        Cancelar
+                                                        Cerrar
                                                     </v-btn>
                                                     <v-btn
                                                         v-if="editedItem.amount > 0 && editedItem.purchase_price > 0 && editedItem.datosProducto != ''"
@@ -261,7 +263,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="red" dark elevation="9">
+                <v-btn color="red" dark elevation="9" @click="limpiarCarrito">
                     Cancelar
                 </v-btn>
                 &nbsp;
@@ -319,7 +321,7 @@
 
         <!-- <pre>{{ editedItem }}</pre> -->
         <!-- <pre>{{ editedIndex }}</pre> -->
-        <!-- <pre>{{ form.products }}</pre> -->
+        <!-- <pre>{{ cajaChica }}</pre> -->
 
     </admin-layout>
 </template>
@@ -336,7 +338,8 @@ export default {
         'coins',
         'exchange_rate',
         'products',
-        'presentations'
+        'presentations',
+        'cajaChica',
     ],
     components: {
         AdminLayout,
@@ -369,6 +372,7 @@ export default {
                 products: '',
                 totalPago: 0,
                 total: 0,
+                cajaChica: 0,
             },
             editedItem: {
                 datosProducto: '',
@@ -381,6 +385,7 @@ export default {
                 equivalence: this.presentations[0].equivalence,
                 amount: 1,
                 purchase_price: 0,
+                precio_compra: 0,
                 sale_price: 0,
                 subTotal: 0,
                 igv: 'IGV Incluido',
@@ -398,6 +403,7 @@ export default {
                 equivalence: this.presentations[0].equivalence,
                 amount: 1,
                 purchase_price: 0,
+                precio_compra: 0,
                 sale_price: 0,
                 subTotal: 0,
                 igv: 'IGV Incluido',
@@ -443,6 +449,18 @@ export default {
         getPresentationText(item) {
             return `${item.name}: ${item.equivalence} UND`;
         },
+        limpiarCarrito() {
+            this.desserts = []
+            this.datosComprobante= this.proof_payments[0]
+            this.datosProveedor= this.providers[0]
+            this.datosMoneda= this.coins[0]
+            this.datosMetPago= this.payment_methods[0]
+            this.form.description = ''
+            this.form.voucher_number=''
+            this.form.date=(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+            this.form.exchange_rate=this.exchange_rate
+            this.form.total = 0
+        },
         changeProduct() {
             this.editedItem.productName = this.editedItem.datosProducto.name
             this.editedItem.productId = this.editedItem.datosProducto.id
@@ -463,11 +481,23 @@ export default {
                 this.form.total -= this.editedItem.subTotal
 
                 if (this.editedItem.igv == 'IGV Incluido') {
-                    var subTotal = this.editedItem.amount * this.editedItem.purchase_price + Number.parseFloat(this.editedItem.transporte)
+                    var subTotal = (this.editedItem.amount * this.editedItem.purchase_price) + Number.parseFloat(this.editedItem.transporte)
                 }
                 if (this.editedItem.igv == 'Mas IGV') {
                     var impuesto = (this.editedItem.amount * this.editedItem.purchase_price) * 0.18
-                    var subTotal = Number.parseFloat(impuesto) + this.editedItem.amount * this.editedItem.purchase_price + Number.parseFloat(this.editedItem.transporte)
+                    var subTotal = Number.parseFloat(impuesto) + (this.editedItem.amount * this.editedItem.purchase_price) + Number.parseFloat(this.editedItem.transporte)
+                }
+                if (this.datosMoneda.code == 'USD' && this.editedItem.igv == 'IGV Incluido') {
+                    this.editedItem.precio_compra = (this.editedItem.purchase_price * this.form.exchange_rate) + (this.editedItem.transporte * this.form.exchange_rate / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'USD' && this.editedItem.igv == 'Mas IGV') {
+                    this.editedItem.precio_compra = (this.editedItem.purchase_price * this.form.exchange_rate + ((this.editedItem.purchase_price * this.form.exchange_rate) * 0.18)) + (this.editedItem.transporte * this.form.exchange_rate / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'PEN' && this.editedItem.igv == 'IGV Incluido') {
+                    this.editedItem.precio_compra = parseFloat(this.editedItem.purchase_price) + (this.editedItem.transporte / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'PEN' && this.editedItem.igv == 'Mas IGV') {
+                    this.editedItem.precio_compra = (parseFloat(this.editedItem.purchase_price) + (this.editedItem.purchase_price * 0.18)) + (this.editedItem.transporte / this.editedItem.amount)
                 }
                 this.editedItem.subTotal = subTotal
                 this.form.total += this.editedItem.subTotal
@@ -480,6 +510,18 @@ export default {
                 if (this.editedItem.igv == 'Mas IGV') {
                     var impuesto = (this.editedItem.amount * this.editedItem.purchase_price) * 0.18
                     var subTotal = Number.parseFloat(impuesto) + this.editedItem.amount * this.editedItem.purchase_price + Number.parseFloat(this.editedItem.transporte)
+                }
+                if (this.datosMoneda.code == 'USD' && this.editedItem.igv == 'IGV Incluido') {
+                    this.editedItem.precio_compra = (this.editedItem.purchase_price * this.form.exchange_rate) + (this.editedItem.transporte * this.form.exchange_rate / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'USD' && this.editedItem.igv == 'Mas IGV') {
+                    this.editedItem.precio_compra = (this.editedItem.purchase_price * this.form.exchange_rate + ((this.editedItem.purchase_price * this.form.exchange_rate) * 0.18)) + (this.editedItem.transporte * this.form.exchange_rate / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'PEN' && this.editedItem.igv == 'IGV Incluido') {
+                    this.editedItem.precio_compra = parseFloat(this.editedItem.purchase_price) + (this.editedItem.transporte / this.editedItem.amount)
+                }
+                if (this.datosMoneda.code == 'PEN' && this.editedItem.igv == 'Mas IGV') {
+                    this.editedItem.precio_compra = (parseFloat(this.editedItem.purchase_price) + (this.editedItem.purchase_price * 0.18)) + (this.editedItem.transporte / this.editedItem.amount)
                 }
                 this.editedItem.subTotal = subTotal
                 this.desserts.push(this.editedItem)
@@ -544,6 +586,16 @@ export default {
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
                 return;
+            }
+            if (this.cajaChica != 0) {
+                if (this.pagoCompra > this.cajaChica[0].amount_pen) {
+                    this.snackbar_text = 'Dinero insuficiente';
+                    this.snackbar_color = 'amber';
+                    this.snackbar = true;
+                    return;
+                } else {
+                    this.form.cajaChica = 1
+                }
             }
             // Datos Formulario
             this.form.providers_id = this.datosProveedor.id

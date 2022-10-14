@@ -9,7 +9,7 @@
                 <!-- cambio colores -->
                 <!-- v-bind:class="{ red: colorrojo}" -->
                 <v-list class="ma-2">
-                    <v-img aspect-ratio="2.5" contain :src='logoEmpresa'>
+                    <v-img aspect-ratio="2.5" contain :src='"../../"+logoEmpresa'>
                     </v-img>
                     <!-- <v-list-item class="px-2">
                         <v-avatar size="70">
@@ -44,7 +44,7 @@
                     <v-list-item-group color="primary">
 
                         <inertia-link :href="route('dashboard')">
-                            <v-list-item link v-if="$page.props.user.role != 'seller'" :style="item_style()">
+                            <v-list-item link :style="item_style()">
                                 <v-list-item-icon>
                                     <v-icon :style="item_style()">mdi-monitor-multiple</v-icon>
                                 </v-list-item-icon>
@@ -163,7 +163,7 @@
                             </v-card>
                         </v-list-group>
 
-                        <v-list-group :style="item_style()" v-if="$page.props.user.role != 'seller'">
+                        <v-list-group :style="item_style()">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-cart</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content :style="item_style()">
@@ -198,7 +198,8 @@
                                     </inertia-link>
 
                                     <inertia-link :href="route('accountReceivables.index')">
-                                        <v-list-item link :style="item_style()">
+                                        <v-list-item v-if="$page.props.user.role != 'seller'" link
+                                            :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
                                                 <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
@@ -248,7 +249,8 @@
                                     </inertia-link>
 
                                     <inertia-link :href="route('accountPayables.index')">
-                                        <v-list-item link :style="item_style()">
+                                        <v-list-item v-if="$page.props.user.role != 'seller'" link
+                                            :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
                                                 <v-icon :style="item_style()" small>mdi-account-cash</v-icon>
@@ -401,7 +403,46 @@
                             </v-list-item>
                         </inertia-link>
 
-                        <v-list-group v-if="$page.props.user.role == 'master'">
+                        <!-- Utilidades -->
+                        <v-list-group v-if="$page.props.user.role != 'seller'">
+                            <v-icon slot="prependIcon" :style="item_style()">mdi-tools</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content :style="item_style()">
+                                    <v-list-item-title>UTILIDADES</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                            <v-card :color="colorSubMenu">
+                                <v-list-item-group>
+
+                                    <inertia-link :href="route('reports.index')">
+                                        <v-list-item :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon small :style="item_style()">mdi-file-document</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>REPORTES</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link :href="route('barcodeGenerator.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-qrcode-edit</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>Barcode- QR</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+                                </v-list-item-group>
+                            </v-card>
+                        </v-list-group>
+
+                        <!-- Ajustes -->
+                        <v-list-group v-if="$page.props.user.role != 'seller'">
                             <v-icon slot="prependIcon" :style="item_style()">mdi-spin mdi-cog</v-icon>
                             <template v-slot:activator>
                                 <v-list-item-content :style="item_style()">
@@ -423,14 +464,26 @@
                                         </v-list-item>
                                     </inertia-link>
 
-                                    <inertia-link :href="route('printers.index')">
+                                    <inertia-link :href="route('pettyCashes.index')">
                                         <v-list-item link :style="item_style()">
                                             <v-list-item-icon>
                                                 <v-spacer></v-spacer>
-                                                <v-icon :style="item_style()" small>mdi-printer</v-icon>
+                                                <v-icon :style="item_style()" small>mdi-safe</v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title>
-                                                <h5>IMPRESORAS</h5>
+                                                <h5>ABRIR CAJA</h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+
+                                    <inertia-link :href="route('printingMachines.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-printer-pos</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>IMPRESORAS POS</h5>
                                             </v-list-item-title>
                                         </v-list-item>
                                     </inertia-link>
@@ -464,7 +517,7 @@
                     </inertia-link>
                 </v-list-item>
                 <v-card>
-                    
+
                 </v-card>
 
                 <v-menu left bottom>
@@ -490,7 +543,7 @@
             <v-container>
                 <slot></slot>
             </v-container>
-            <pre>{{ $page }}</pre>
+            <!-- <pre>{{ $page }}</pre> -->
         </v-main>
 
         <!-- PIE DE PAGINA -->

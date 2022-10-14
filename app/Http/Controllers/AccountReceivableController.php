@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Customizer;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\PettyCash;
 use App\Models\Product;
 use App\Models\ProofPayment;
 use Illuminate\Support\Facades\Auth;
@@ -117,15 +118,16 @@ class AccountReceivableController extends Controller
      */
     public function update(UpdateAccountReceivableRequest $request, $id)
     {
+        $company = Auth::user()->companies_id;
         $accountReceivable = AccountReceivable::find($id);
         $id_order = AccountReceivable::where('id', $id)->value('orders_id');
         $orders = Order::find($id_order);
-        $nvPago=$request->payment+$request->totalPago;
-        $nvDeuda=$request->debt-$request->totalPago;
-        if ($nvDeuda==0) {
-            $nvestado=1;
-        }else {
-            $nvestado=0;
+        $nvPago = $request->payment + $request->totalPago;
+        $nvDeuda = $request->debt - $request->totalPago;
+        if ($nvDeuda == 0) {
+            $nvestado = 1;
+        } else {
+            $nvestado = 0;
         };
         $accountReceivable->update([
             'payment' => $nvPago,
@@ -136,6 +138,18 @@ class AccountReceivableController extends Controller
         $orders->update([
             'state' => $nvestado,
         ]);
+        $pettyCash = PettyCash::where('companies_id', $company)->where('state', 1)->get();
+        if ($orders->coins_id == 1) {
+            $pettyCash[0]->update([
+                $pettyCash[0]->amount_pen += $request->totalPago,
+            ]);
+        } else {
+            if ($orders->coins_id == 2) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_usd += $request->totalPago,
+                ]);
+            }
+        }
         return Redirect::route('accountReceivables.index')->with('message', 'Pago realizado Correctamente');
     }
 

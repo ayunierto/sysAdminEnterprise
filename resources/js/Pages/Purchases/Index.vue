@@ -14,7 +14,8 @@
             </div>
         </div>
         <!-- Fin de Alertas -->
-        <v-data-table :headers="headers" :items="desserts" sort-desc sort-by="date" class="elevation-24" :search="search">
+        <v-data-table :headers="headers" :items="desserts" sort-desc sort-by="date" class="elevation-24"
+            :search="search">
             <template v-slot:top>
                 <v-toolbar flat>
                     <v-toolbar-title>Listado de Compras</v-toolbar-title>
@@ -56,14 +57,14 @@
             </template>
 
         </v-data-table>
-        <!-- Ver detalles Ventas -->
+        <!-- Ver detalles Compras -->
         <template>
             <v-row justify="center">
                 <v-dialog v-model="dialog_view" max-width="700">
 
                     <v-card>
                         <v-card-title class="text-h5">
-                            Detalle de Venta
+                            Detalle de Compra
                         </v-card-title>
                         <v-card-text>
                             <v-row>
@@ -141,7 +142,7 @@
                 </v-dialog>
             </v-row>
         </template>
-        <!-- Fin Ver detalles Ventas -->
+        <!-- Fin Ver detalles Compras -->
     </admin-layout>
 </template>
 
@@ -175,7 +176,7 @@ export default {
             editedIndex: -1,
 
             editedItem: {
-                id:'',
+                id: '',
                 companies_id: '',
                 company_name: '',
                 providers_id: '',
@@ -196,7 +197,7 @@ export default {
             },
 
             defaultItem: {
-                id:'',
+                id: '',
                 companies_id: '',
                 company_name: '',
                 providers_id: '',
