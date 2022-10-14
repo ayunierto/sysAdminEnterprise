@@ -9,7 +9,9 @@ use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Customizer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -21,8 +23,11 @@ class UserController extends Controller
     public function index()
     {
         $company = Auth::user()->companies_id;
+        $roles = Role::all();
+        // $role_selected = DB::select('select * from model_has_roles where roles_id = ?', [1]);
         return Inertia::render('Users/Index', [
             'users' => User::all(),
+            'roles' => $roles,
             'companies' => Company::all(),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
@@ -56,13 +61,16 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         $user = User::find($id);
+        
+        // Asignar roles
+        $user->roles()->sync($request->role);
 
         if ($request->change_password) {
             $user->update([
                 'companies_id' => $request->companies_id,
                 'name' => $request->name,
                 'email' => $request->email,
-                'role' => $request->role,
+                // 'role' => $request->role,
                 'password' => bcrypt($request->change_password),
             ]);
         } else {
@@ -70,7 +78,7 @@ class UserController extends Controller
                 'companies_id' => $request->companies_id,
                 'name' => $request->name,
                 'email' => $request->email,
-                'role' => $request->role,
+                // 'role' => $request->role,
             ]);
         }
         

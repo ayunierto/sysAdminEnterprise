@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'email' => 'ayunierto@gmail.com',
             'password' => bcrypt('maskmask'),
             'role' => 'master',
-        ]);
+        ])->assignRole('Master');
         
         User::create([
             'name' => 'Ronal',
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
             'email' => 'ronal@gmail.com',
             'role' => 'master',
             'password' => bcrypt('12345678'),
-        ]);
+        ])->assignRole('Master');
 
         User::create([
             'name' => 'Master',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'email' => 'master@gmail.com',
             'role' => 'master',
             'password' => bcrypt('12345678'),
-        ]);
+        ])->assignRole('Master');
 
         User::create([
             'name' => 'Admin',
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'role' => 'admin',
             'password' => bcrypt('12345678'),
-        ]);
+        ])->assignRole('Admin');
 
         User::create([
             'name' => 'Seller',
@@ -54,6 +54,6 @@ class UserSeeder extends Seeder
             'email' => 'seller@gmail.com',
             'role' => 'seller',
             'password' => bcrypt('12345678'),
-        ]);
+        ])->assignRole('Seller');
     }
 }

@@ -10,10 +10,14 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
+// Spatie package
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use LaravelPermissionToVueJS;
+    // Spatie package
     use HasRoles;
     
     use HasApiTokens;
@@ -64,4 +68,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getPermissionArray()
+    {
+        return $this->getAllPermissions()->mapWithKeys(function($pr){
+            return [$pr['name'] => true];
+        });
+
+    }
 }

@@ -59,11 +59,17 @@ class HandleInertiaRequests extends Middleware
                     'message' => fn () => $request->session()->get('message'),
                     'nrodts' => $nrodedatos
                 ],
+                'auth'=>['user' => $request->user() ?   $request->user()->only('id', 'name', 'email') : null,
+                    'can' =>$request->user() ? $request->user()->getPermissionArray() : []
+                ],
             ]);
         } catch (Exception) {
             return array_merge(parent::share($request), [
                 'flash' => [
                     'message' => fn () => $request->session()->get('message'),
+                ],
+                'auth'=>['user' => $request->user() ?   $request->user()->only('id', 'name', 'email') : null,
+                    'can' =>$request->user() ? $request->user()->getPermissionArray() : []
                 ],
             ]);
         }

@@ -84,6 +84,7 @@
                                                 ></v-select>
                                             </v-col>
 
+                                            <!-- Se mosrara cuando se valla a editar -->
                                             <v-col cols="12" sm="6" md="6" v-if="editedIndex > -1"> 
                                                 <v-text-field
                                                 v-model="editedItem.change_password"
@@ -93,10 +94,11 @@
                                                 hint="Al menos 8 carácteres"
                                                 counter
                                                 @click:append="show1 = !show1"
-                                                dense outlined required
+                                                dense outlined 
                                                 :rules="[(v) => !!v || 'La contraseña es requerida']"
                                                 ></v-text-field>
                                             </v-col>
+                                            <!-- Se mostrara cuando se valla a crear -->
                                             <v-col cols="12" sm="6" md="6" v-else>
                                                 <v-text-field
                                                 v-model="editedItem.password"
@@ -121,7 +123,7 @@
                                                 ></v-text-field>
                                             </v-col>
 
-                                            <v-col cols="12" sm="6" md="6" >
+                                            <!-- <v-col cols="12" sm="6" md="6" >
                                                 <v-select
                                                 v-model="editedItem.role"
                                                 :items="roles"
@@ -132,6 +134,21 @@
                                                 hint="Selecione permiso" 
                                                 dense outlined required
                                                 :rules="[(v) => !!v || 'El rol es requerido']"
+                                                ></v-select>
+                                            </v-col>-->
+
+                                            <v-col cols="12" sm="6" md="6" >
+                                                {{ rol_selected }}
+                                                <v-select
+                                                v-model="rol_selected"
+                                                :items="roles"
+                                                item-text="name"
+                                                item-value="id"
+                                                :menu-props="{ maxHeight: '400' }"
+                                                label="Selecione rol"
+                                                multiple chips
+                                                hint="Selecione rol"
+                                                persistent-hint
                                                 ></v-select>
                                             </v-col>
                                             
@@ -190,23 +207,17 @@
     import route from '../../../../vendor/tightenco/ziggy/src/js'
 
     export default {
-        props: ['users', 'companies', 'company'],
+        props: ['users', 'companies', 'company', 'roles'],
         components: {
             AdminLayout,
         },
         data () {
             return {
 
+                rol_selected: [],
+
                 // Para clave
                 show1: false,
-
-                // Para roles
-                select: { name: 'Vendedor', value: 'seller' },
-                roles: [
-                    { name: 'Administrador del sitio', value: 'master' },
-                    { name: 'Administrador de empresa', value: 'admin' },
-                    { name: 'Vendedor de la empresa', value: 'seller' },
-                ],
 
                 search: '',
                 dialog: false,
@@ -225,7 +236,7 @@
                     companies_id: 1,
                     email: '',
                     password: '',
-                    role: 'seller',
+                    role: [],
                     created_at: '',
                     updated_at: '',
                     change_password: '',
@@ -237,7 +248,7 @@
                     companies_id: 1,
                     email: '',
                     password: '',
-                    role: 'seller',
+                    role: [],
                     created_at: '',
                     updated_at: '',
                     change_password: '',
@@ -286,6 +297,9 @@
         methods: {
             initialize () {
                 this.desserts = this.users
+                // this.roles.forEach(rol => {
+                //     this.rol_selected.push(rol.name)
+                // });
             },
 
             editItem (item) {
@@ -327,6 +341,7 @@
             },
 
             save () {
+                this.editedItem.role = this.rol_selected
                 if (this.editedIndex > -1) {
 
                     // esto agregaba el item a la tabla con solo javascrip 
