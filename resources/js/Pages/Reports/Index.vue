@@ -77,11 +77,34 @@
                         :search="searchV">
                         <template v-slot:top>
                             <v-toolbar flat>
-                                <!-- <v-toolbar-title>
-                                    <v-text-field type="date" class="mt-8 ma-2" outlined dense>
+                                <v-toolbar-title>
+                                    <v-text-field type="date" class="mt-8 ma-2" outlined dense
+                                    v-model="date" @change="changeDate"
+                                    label="Fecha"
+                                    >
                                     </v-text-field>
-                                </v-toolbar-title> -->
-                                <!-- <v-spacer></v-spacer> -->
+                                </v-toolbar-title>
+
+                                <!-- <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
+                                    transition="scale-transition" offset-y min-width="auto" >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                            v-model="date"
+                                            label="Fecha"
+                                            readonly
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            outlined
+                                            dense
+                                        ></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                        v-model="date"
+                                        @input="menu2 = false"
+                                    ></v-date-picker>
+                                </v-menu> -->
+
+
                                 <v-spacer></v-spacer>
                                 <v-text-field v-model="searchV" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
@@ -444,6 +467,7 @@ export default {
             searchP: '',
             dialog_viewVentas: false,
             dialog_viewCompras: false,
+            date: '',
 
             // VENTAS
             ventasDia: [
@@ -588,6 +612,10 @@ export default {
             this.editedIndexCompras = this.dessertsCompras.indexOf(item)
             this.editedItemCompras = Object.assign({}, item)
             this.dialog_viewCompras = true
+        },
+        changeDate(){
+            alert('asd')
+            this.$inertia.get('/dashboard/reports/' + this.date)
         },
     },
 }

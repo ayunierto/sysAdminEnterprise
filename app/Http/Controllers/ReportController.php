@@ -27,11 +27,17 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($date = null)
     {
-        
+
         $company = Auth::user()->companies_id;
-        $DateAndTime = date('Y-m-d');
+
+        if ($date == null) {
+            $DateAndTime = date('Y-m-d');
+        } else {
+            $DateAndTime = $date;
+        }
+
         // VENTAS 
         $totalVentasDiaSoles = 0;
         $totalVentasDiaDolares = 0;

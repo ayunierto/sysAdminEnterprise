@@ -81,7 +81,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/lowStocks', LowStockController::class)->except('show');
     Route::resource('dashboard/printingMachines', PrintingMachineController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/pettyCashes', PettyCashController::class)->except('create', 'edit', 'show');
-    Route::resource('dashboard/reports', ReportController::class)->except('create', 'edit', 'show');
+    Route::get('dashboard/reports/{date?}', [ReportController::class, 'index'])->name('reports.index');
 });
 
 // Rutas de vendedores
