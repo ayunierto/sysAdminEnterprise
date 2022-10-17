@@ -17,6 +17,7 @@ use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
 use PhpParser\Node\Expr\Cast\Object_;
 
@@ -27,30 +28,31 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($date = null)
+    public function index($dateInicio = null, $dateFin = null)
     {
 
         $company = Auth::user()->companies_id;
-
-        if ($date == null) {
-            $DateAndTime = date('Y-m-d');
+        if ($dateInicio == null) {
+            $DateAndTimeInicio = date('Y-m-d');
         } else {
-            $DateAndTime = $date;
+            $DateAndTimeInicio = $dateInicio;
         }
-
+        if ($dateFin == null) {
+            $DateAndTimeFin = date('Y-m-d');
+        } else {
+            $DateAndTimeFin = $dateFin;
+        }
         // VENTAS 
         $totalVentasDiaSoles = 0;
         $totalVentasDiaDolares = 0;
         $total_pen_usd = 0;
 
-        $total_pen = Order::where('companies_id', $company)->where('date', $DateAndTime)
-            ->where('coins_id', 1)->get();
+        $total_pen = Order::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->where('coins_id', 1)->get();
 
         foreach ($total_pen as $key => $p) {
             $totalVentasDiaSoles += $p->total;
         }
-        $total_usd = Order::where('companies_id', $company)->where('date', $DateAndTime)
-            ->where('coins_id', 2)->get();
+        $total_usd = Order::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->where('coins_id', 2)->get();
 
         foreach ($total_usd as $key => $p) {
             $totalVentasDiaDolares += ($p->total * $p->exchange_rate);
@@ -62,14 +64,12 @@ class ReportController extends Controller
         $totalComprasDiaDolares = 0;
         $totalC_pen_usd = 0;
 
-        $totalC_pen = Purchase::where('companies_id', $company)->where('date', $DateAndTime)
-            ->where('coins_id', 1)->get();
+        $totalC_pen = Purchase::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->where('coins_id', 1)->get();
 
         foreach ($totalC_pen as $key => $p) {
             $totalComprasDiaSoles += $p->total;
         }
-        $totalC_usd = Purchase::where('companies_id', $company)->where('date', $DateAndTime)
-            ->where('coins_id', 2)->get();
+        $totalC_usd = Purchase::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->where('coins_id', 2)->get();
 
         foreach ($totalC_usd as $key => $p) {
             $totalComprasDiaDolares += ($p->total * $p->exchange_rate);
@@ -77,16 +77,16 @@ class ReportController extends Controller
         $totalC_pen_usd = ($totalComprasDiaSoles + round($totalComprasDiaDolares));
 
         // PRODUCTOS
-        $totInversion=0;
+        $totInversion = 0;
         $number_products = Product::where('companies_id', $company)->get();
 
         foreach ($number_products as $key => $p) {
-            $totInversion += ($p->purchase_price*$p->stock);
+            $totInversion += ($p->purchase_price * $p->stock);
         }
 
         // Obtener ganancias del dia
         $total_ganancia = 0;
-        $gananciaTotal = Order::join("order_details", "orders.id", "=", "order_details.orders_id")->join("products", "products.id", "=", "order_details.products_id")->where('orders.companies_id', $company)->where('orders.date', $DateAndTime)->select("products.purchase_price", "order_details.quantity")->get();
+        $gananciaTotal = Order::join("order_details", "orders.id", "=", "order_details.orders_id")->join("products", "products.id", "=", "order_details.products_id")->where('orders.companies_id', $company)->whereBetween('orders.date', [$DateAndTimeInicio, $DateAndTimeInicio])->select("products.purchase_price", "order_details.quantity")->get();
         foreach ($gananciaTotal as $key => $p) {
             $total_ganancia += ($p->purchase_price * $p->quantity);
         }
@@ -94,14 +94,14 @@ class ReportController extends Controller
             // Datos Ventas
             'totalVentas' => number_format((round($total_pen_usd)), 2),
             'totalPrecioCompra' => number_format((round($total_pen_usd - $total_ganancia)), 2),
-            'totOrders' => Order::where('companies_id', $company)->where('date', $DateAndTime)->count(),
+            'totOrders' => Order::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->count(),
             // N° Compras
             'totalCompras' => number_format((round($totalC_pen_usd)), 2),
             // N° Productos
             'totProducts' => Product::where('companies_id', $company)->count(),
-            'inversionTotal'=> number_format($totInversion,2),
+            'inversionTotal' => number_format($totInversion, 2),
             // lista Ventas
-            'orders' => Order::where('companies_id', $company)->where('date', $DateAndTime)->get()->map(function ($p) {
+            'orders' => Order::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
                     'companies_id' => $p->companies_id,
@@ -139,9 +139,9 @@ class ReportController extends Controller
                     }),
                 ];
             }),
-            'totPurchases' => Purchase::where('companies_id', $company)->where('date', $DateAndTime)->count(),
+            'totPurchases' => Purchase::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->count(),
             // Lista de Compras
-            'purchases' => Purchase::where('companies_id', $company)->where('date', $DateAndTime)->get()->map(function ($p) {
+            'purchases' => Purchase::where('companies_id', $company)->whereBetween('date', [$DateAndTimeInicio, $DateAndTimeFin])->get()->map(function ($p) {
                 return [
                     'id' => $p->id,
                     'companies_id' => $p->companies_id,
@@ -167,7 +167,7 @@ class ReportController extends Controller
                             'companies_id' => $d->companies_id,
                             'purchases_id' => $d->purchases_id,
                             'products_id' => $d->products_id,
-                            'product_name' => Product::find($d->products_id)->name,                            
+                            'product_name' => Product::find($d->products_id)->name,
                             'amount' => $d->amount,
                             'price' => $d->price,
                             'transporte' => $d->transporte,
@@ -183,16 +183,16 @@ class ReportController extends Controller
                     'id' => $p->id,
                     'companies_id' => $p->companies_id,
                     'warehouses_id' => $p->warehouses_id,
-                    'categories_id' =>$p->categories_id,
+                    'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
                     'type' => $p->type,
                     'name' => $p->name,
                     'code' => $p->code,
-                    'bar_code' =>$p->bar_code,
+                    'bar_code' => $p->bar_code,
                     'stock' => $p->stock,
-                    'purchase_price'=> $p->purchase_price,
+                    'purchase_price' => $p->purchase_price,
                     'sale_price' => $p->sale_price,
                     'price_by_unit' => $p->price_by_unit,
                     'wholesale_price' => $p->wholesale_price,
@@ -201,7 +201,7 @@ class ReportController extends Controller
                     'description' => $p->description,
                     'state' => $p->state,
                     'expiration_date' => $p->expiration_date,
-                    'totalInversion' => number_format(($p->purchase_price*$p->stock),2),
+                    'totalInversion' => number_format(($p->purchase_price * $p->stock), 2),
                 ];
             }),
             'colors' => Customizer::where('companies_id', $company)->get(),
