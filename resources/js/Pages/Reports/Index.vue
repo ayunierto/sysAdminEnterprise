@@ -1,24 +1,7 @@
-
 <template>
     <admin-layout>
-        <v-card>
-            <v-card-title>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-                <v-menu v-model="calendarioConsulta" :close-on-content-click="false" :nudge-right="20"
-                    transition="scale-transition" offset-y min-width="auto">
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-text-field class="mt-2" outlined dense v-model="date" label="Fecha de consulta"
-                            prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on">
-                        </v-text-field>
-                    </template>
-                    <v-date-picker locale="es-ES" v-model="date" @change="changeDate"
-                        @input="calendarioConsulta = false"></v-date-picker>
-                </v-menu>
-                <v-spacer></v-spacer>
-                <v-spacer></v-spacer>
-            </v-card-title>
-            <v-tabs fixed-tabs icons-and-text color="green lighten-1" class="mt-0">
+        <v-card color="blue lighten-5">
+            <v-tabs fixed-tabs icons-and-text color="green lighten-1">
                 <v-tab>
                     VENTAS DEL DÍA
                 </v-tab>
@@ -28,9 +11,6 @@
                 <v-tab>
                     PRODUCTOS
                 </v-tab>
-                <br>
-                <v-card>
-                </v-card>
                 <!-- Ventas del día -->
                 <v-tab-item><br>
                     <v-card elevation="0">
@@ -96,6 +76,34 @@
                         :search="searchV">
                         <template v-slot:top>
                             <v-toolbar flat>
+                                <v-toolbar-title>
+                                    <v-text-field type="date" class="mt-8 ma-2" outlined dense
+                                    v-model="date" @change="changeDate"
+                                    label="Fecha"
+                                    >
+                                    </v-text-field>
+                                </v-toolbar-title>
+
+                                <!-- <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
+                                    transition="scale-transition" offset-y min-width="auto" >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                            v-model="date"
+                                            label="Fecha"
+                                            readonly
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            outlined
+                                            dense
+                                        ></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                        v-model="date"
+                                        @input="menu2 = false"
+                                    ></v-date-picker>
+                                </v-menu> -->
+
+
                                 <v-spacer></v-spacer>
                                 <v-text-field v-model="searchV" append-icon="mdi-magnify" label="Buscar" outlined dense
                                     hide-details>
@@ -376,7 +384,7 @@
                         <v-container>
                             <v-row>
                                 <v-spacer></v-spacer>
-                                <v-card class="mx-5" max-width="180" outlined>
+                                <v-card class="mx-5" max-width="220" outlined>
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
@@ -393,7 +401,7 @@
                                         </v-list-item-avatar>
                                     </v-list-item>
                                 </v-card>
-                                <v-card class="mx-5" max-width="180" outlined>
+                                <v-card class="mx-5" max-width="220" outlined>
                                     <v-list-item three-line>
                                         <v-list-item-content>
                                             <div>
@@ -456,10 +464,10 @@ export default {
             searchV: '',
             searchC: '',
             searchP: '',
-            calendarioConsulta: false,
             dialog_viewVentas: false,
             dialog_viewCompras: false,
-            date: '',
+            dateInicio: '',
+            dateFin: '',
 
             // VENTAS
             ventasDia: [
@@ -605,7 +613,8 @@ export default {
             this.editedItemCompras = Object.assign({}, item)
             this.dialog_viewCompras = true
         },
-        changeDate() {
+        changeDate(){
+            alert('asd')
             this.$inertia.get('/dashboard/reports/' + this.date)
         },
     },
