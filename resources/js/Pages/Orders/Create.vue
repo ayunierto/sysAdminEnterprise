@@ -414,7 +414,8 @@
                                     <!-- Tabla Carrito -->
                                     <v-col cols="12">
                                         <v-data-table :headers="headers" :items="desserts" sort-by="name"
-                                            class="elevation-2" :search="search" fixed-header :items-per-page="5">
+                                            class="elevation-2" fixed-header :items-per-page="5">
+                                            <!-- class="elevation-2" :search="search" fixed-header :items-per-page="5"> -->
                                             <template v-slot:[`item.full_name`]="{ item }">{{ item.datosProducto.name }}
                                                 - {{ item.datosProducto.marks_name }} - {{
                                                 item.datosProducto.warehouses_name }}</template>
@@ -426,9 +427,9 @@
                                                     <v-divider class="mx-4" inset vertical></v-divider>
                                                     <v-spacer></v-spacer>
                                                     <v-spacer></v-spacer>
-                                                    <v-text-field v-model="search" append-icon="mdi-magnify"
+                                                    <!-- <v-text-field v-model="search" append-icon="mdi-magnify"
                                                         label="Buscar" single-line hide-details outlined dense>
-                                                    </v-text-field>
+                                                    </v-text-field> -->
                                                     <!-- Mensaje de confirmacion de borrado de p -->
                                                     <v-dialog v-model="dialogDelete" max-width="500px">
                                                         <v-card>
@@ -559,7 +560,7 @@ export default {
             dialogPrecios: false,
             dialogDelete: false,
             dialogQuotasAdd: false,
-            search: '',
+            // search: '',
             tipoComprobate: this.proofPayments[0],
             datosCliente: this.customers[0],
             tipoDoc: this.documents[0],

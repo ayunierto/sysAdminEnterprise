@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProofPayment;
 use App\Models\Provider;
 use App\Models\PurchaseDetail;
+use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use GuzzleHttp\Client;
@@ -112,6 +113,7 @@ class PurchaseController extends Controller
             'proof_payments' => ProofPayment::all(),
             'presentations' => Presentation::where('companies_id', $company)->get(),
             'coins' => Coin::all(),
+            'marks' => Mark::all(),
             'exchange_rate' => $exchange_rate,
             'documents' => Document::all(),
             'cajaChica' => $dstCajaChica,
@@ -121,8 +123,11 @@ class PurchaseController extends Controller
                     'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
                     'marks_name' => Mark::find($p->marks_id)->name,
+                    'marks' => Mark::find($p->marks_id)->get(),
+                    'marks' => Mark::where('id', $p->marks_id)->get(),
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
+                    'warehouses_name' => Warehouse::find($p->warehouses_id)->name,
                     'name' => $p->name,
                     'type' => $p->type,
                     'code' => $p->code,

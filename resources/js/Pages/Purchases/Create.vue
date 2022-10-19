@@ -81,6 +81,10 @@
                         <!-- Carrito Compras-->
                         <v-col cols="12">
                             <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+                                <template v-slot:[`item.full_name`]="{ item }">{{ item.datosProducto.name }}
+                                    - {{ item.datosProducto.marks_name }}</template>
+                                <template v-slot:[`item.presentation`]="{ item }">{{ item.presentationName
+                                }}: {{ item.equivalence }} UND</template>
                                 <template v-slot:top>
                                     <v-toolbar flat>
                                         <v-toolbar-title>CARRITO DE COMPRAS</v-toolbar-title>
@@ -119,6 +123,15 @@
                                                                     return-object required outlined dense
                                                                     @change="changeProduct"
                                                                     :hint=" editedItem.datosProducto!=''? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
+                                                                </v-autocomplete>
+                                                            </v-col>
+                                                            <v-col cols="12" sm="6" md="6">
+                                                                <v-autocomplete :items="marks"
+                                                                    v-model="editedItem.marks" color="primary"
+                                                                    item-text="name" item-value="id" label="Marca"
+                                                                    auto-select-first hide-no-data hide-selected
+                                                                    placeholder="Seleccione Marca" persistent-hint
+                                                                    return-object required outlined dense>
                                                                 </v-autocomplete>
                                                             </v-col>
                                                             <v-col cols="12" sm="6" md="6">
@@ -321,7 +334,7 @@
 
         <!-- <pre>{{ editedItem }}</pre> -->
         <!-- <pre>{{ editedIndex }}</pre> -->
-        <!-- <pre>{{ cajaChica }}</pre> -->
+        <pre>{{ products }}</pre>
 
     </admin-layout>
 </template>
@@ -338,6 +351,7 @@ export default {
         'coins',
         'exchange_rate',
         'products',
+        'marks',
         'presentations',
         'cajaChica',
     ],
@@ -380,6 +394,7 @@ export default {
                 productName: '',
                 type: '',
                 datosPresentation: this.presentations[0],
+                marks: '',
                 presentationId: this.presentations[0].id,
                 presentationName: this.presentations[0].name,
                 equivalence: this.presentations[0].equivalence,
@@ -397,6 +412,7 @@ export default {
                 productId: '',
                 productName: '',
                 type: '',
+                marks: '',
                 datosPresentation: this.presentations[0],
                 presentationId: this.presentations[0].id,
                 presentationName: this.presentations[0].name,
@@ -410,8 +426,8 @@ export default {
                 transporte: 0,
             },
             headers: [
-                { text: 'PRODUCTO', value: 'productName' },
-                { text: 'PRESENTACIÓN', value: 'presentationName' },
+                { text: 'PRODUCTO', value: 'full_name' },
+                { text: 'PRESENTACIÓN', value: 'presentation' },
                 { text: 'CANTIDAD', value: 'amount' },
                 { text: 'PRECIO COMPRA', value: 'purchase_price' },
                 { text: 'TRANSPORTE', value: 'transporte' },
@@ -444,21 +460,21 @@ export default {
             this.desserts = []
         },
         getProductText(item) {
-            return `${item.name} - ${item.marks_name}`;
+            return `${item.warehouses_name} - ${item.name}`;
         },
         getPresentationText(item) {
             return `${item.name}: ${item.equivalence} UND`;
         },
         limpiarCarrito() {
             this.desserts = []
-            this.datosComprobante= this.proof_payments[0]
-            this.datosProveedor= this.providers[0]
-            this.datosMoneda= this.coins[0]
-            this.datosMetPago= this.payment_methods[0]
+            this.datosComprobante = this.proof_payments[0]
+            this.datosProveedor = this.providers[0]
+            this.datosMoneda = this.coins[0]
+            this.datosMetPago = this.payment_methods[0]
             this.form.description = ''
-            this.form.voucher_number=''
-            this.form.date=(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
-            this.form.exchange_rate=this.exchange_rate
+            this.form.voucher_number = ''
+            this.form.date = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+            this.form.exchange_rate = this.exchange_rate
             this.form.total = 0
         },
         changeProduct() {
@@ -468,6 +484,7 @@ export default {
             this.editedItem.amount = 1
             this.editedItem.purchase_price = 0
             this.editedItem.sale_price = 0
+            this.editedItem.marks = this.editedItem.datosProducto.marks[0]
             this.totalSoles = 0
         },
         changePresentation() {
