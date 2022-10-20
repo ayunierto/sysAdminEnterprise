@@ -82,7 +82,7 @@
                         <v-col cols="12">
                             <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
                                 <template v-slot:[`item.full_name`]="{ item }">{{ item.datosProducto.name }}
-                                    - {{ item.datosProducto.marks_name }}</template>
+                                </template>
                                 <template v-slot:[`item.presentation`]="{ item }">{{ item.presentationName
                                 }}: {{ item.equivalence }} UND</template>
                                 <template v-slot:top>
@@ -103,7 +103,7 @@
                                                 <v-card-text>
                                                     <v-container>
                                                         <v-row>
-                                                            <v-col cols="12" sm="6" md="6">
+                                                            <v-col cols="7" sm="7" md="7">
                                                                 <v-radio-group row v-model="editedItem.igv">
                                                                     <v-radio color="red" label="IGV Incluido"
                                                                         value='IGV Incluido'>
@@ -113,8 +113,16 @@
                                                                     </v-radio>
                                                                 </v-radio-group>
                                                             </v-col>
+                                                            <v-col cols="1" sm="1" md="1">
+                                                                <v-divider class="mx-4" vertical></v-divider>
+                                                            </v-col>
+                                                            <v-col cols="4" sm="4" md="4">
+                                                                <v-switch v-model="editedItem.newMark"
+                                                                    label="Nueva Marca">
+                                                                </v-switch>
+                                                            </v-col>
                                                             <v-col cols="12" sm="6" md="6">
-                                                                <v-autocomplete class="ma-2" :items="products"
+                                                                <v-autocomplete :items="products"
                                                                     :item-text="getProductText"
                                                                     v-model="editedItem.datosProducto" color="primary"
                                                                     id="inputProducts" item-value="id" label="Producto"
@@ -122,17 +130,23 @@
                                                                     placeholder="Seleccione Producto" persistent-hint
                                                                     return-object required outlined dense
                                                                     @change="changeProduct"
-                                                                    :hint=" editedItem.datosProducto!=''? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
+                                                                    :hint=" editedItem.datosProducto!='' && editedItem.newMark==0? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
                                                                 </v-autocomplete>
                                                             </v-col>
-                                                            <v-col cols="12" sm="6" md="6">
+                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark==0">
                                                                 <v-autocomplete :items="marks"
                                                                     v-model="editedItem.marks" color="primary"
                                                                     item-text="name" item-value="id" label="Marca"
                                                                     auto-select-first hide-no-data hide-selected
                                                                     placeholder="Seleccione Marca" persistent-hint
-                                                                    return-object required outlined dense>
+                                                                    return-object required outlined dense readonly>
                                                                 </v-autocomplete>
+                                                            </v-col>
+                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark==1">
+                                                                <v-text-field label="Marca"
+                                                                    v-model="editedItem.newMarca" required outlined
+                                                                    dense>
+                                                                </v-text-field>
                                                             </v-col>
                                                             <v-col cols="12" sm="6" md="6">
                                                                 <v-autocomplete :items="presentations"
@@ -373,6 +387,7 @@ export default {
             datosMoneda: this.coins[0],
             datosMetPago: this.payment_methods[0],
 
+
             form: {
                 companies_id: this.$page.props.user.companies_id,
                 coins_id: '',
@@ -405,6 +420,8 @@ export default {
                 subTotal: 0,
                 igv: 'IGV Incluido',
                 transporte: 0,
+                newMarca: '',
+                newMark: 0,
 
             },
             defaultItem: {
@@ -424,6 +441,8 @@ export default {
                 subTotal: 0,
                 igv: 'IGV Incluido',
                 transporte: 0,
+                newMarca: '',
+                newMark: 0,
             },
             headers: [
                 { text: 'PRODUCTO', value: 'full_name' },

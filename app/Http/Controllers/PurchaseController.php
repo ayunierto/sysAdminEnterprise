@@ -123,7 +123,6 @@ class PurchaseController extends Controller
                     'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
                     'marks_name' => Mark::find($p->marks_id)->name,
-                    'marks' => Mark::find($p->marks_id)->get(),
                     'marks' => Mark::where('id', $p->marks_id)->get(),
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
@@ -155,7 +154,7 @@ class PurchaseController extends Controller
      */
     public function store(StorePurchaseRequest $request)
     {
-        $purchase = new Purchase();
+        $purchase = new Purchase();       
 
         $purchase->companies_id = $request->companies_id;
         $purchase->providers_id = $request->providers_id;
@@ -177,57 +176,105 @@ class PurchaseController extends Controller
         $products = $request->products;
 
         foreach ($products as $key => $value) {
-            $purchase_details = new PurchaseDetail();
+            if ($value['newMark'] == 1) {
+                // creando nueva marca
+                $newMark = new Mark();
+                $newMark->companies_id = $request->companies_id;
+                $newMark->name = $value['newMarca'];
+                $newMark->save();
+                // Obteniendo datos adicionales de producto
+                $dProducto = Product::find($value['productId']);
+                // Registrando producto con nueva marca
+                $newProduct = new Product();
+                $newProduct->companies_id = $dProducto->companies_id;
+                $newProduct->warehouses_id = $dProducto->warehouses_id;
+                $newProduct->categories_id = $dProducto->categories_id;
+                $newProduct->marks_id = $newMark->id;
+                $newProduct->measures_id = $dProducto->measures_id;
+                $newProduct->providers_id = $dProducto->providers_id;
+                $newProduct->type = $dProducto->type;
+                $newProduct->name = $dProducto->name;
+                $newProduct->save();
 
-            $purchase_details->companies_id         = $request->companies_id;
-            $purchase_details->purchases_id         = $purchase->id;
-            $purchase_details->products_id          = $value['productId'];
-            $purchase_details->amount               = $value['amount'];
-            $purchase_details->price                = $value['purchase_price'];
-            $purchase_details->transporte           = $value['transporte'];
-            $purchase_details->igv                  = $value['igv'];
-            $purchase_details->total                = $value['subTotal'];
+                $purchase_details = new PurchaseDetail();
+                $purchase_details->companies_id         = $request->companies_id;
+                $purchase_details->purchases_id         = $purchase->id;
+                $purchase_details->products_id          = $newProduct->id;
+                $purchase_details->amount               = $value['amount'];
+                $purchase_details->price                = $value['purchase_price'];
+                $purchase_details->transporte           = $value['transporte'];
+                $purchase_details->igv                  = $value['igv'];
+                $purchase_details->total                = $value['subTotal'];
+                $purchase_details->save();
 
-            $purchase_details->save();
-
-            // Actualizar el stock
-            $dtsProducto = Product::find($value['productId']);
-            $cant = $value['amount'] * $value['equivalence'];
-            if ($value['type'] == 'Producto') {
-                if($value['sale_price']>0){
-                    $dtsProducto->update([
-                        $dtsProducto->stock += $cant,
-                        $dtsProducto->purchase_price = $value['precio_compra'],
-                        $dtsProducto->sale_price = $value['sale_price'],
-                    ]);
-                }else{
-                    $dtsProducto->update([
-                        $dtsProducto->stock += $cant,
-                        $dtsProducto->purchase_price = $value['precio_compra'],
-                    ]);
+                // Actualizar el stock
+                $dtsProducto = Product::find($newProduct->id);
+                $cant = $value['amount'] * $value['equivalence'];
+                if ($newProduct->type == 'Producto') {
+                    if ($value['sale_price'] > 0) {
+                        $dtsProducto->update([
+                            $dtsProducto->stock += $cant,
+                            $dtsProducto->purchase_price = $value['precio_compra'],
+                            $dtsProducto->sale_price = $value['sale_price'],
+                        ]);
+                    } else {
+                        $dtsProducto->update([
+                            $dtsProducto->stock += $cant,
+                            $dtsProducto->purchase_price = $value['precio_compra'],
+                        ]);
+                    }
                 }
-                
-            }
-            // Registra cuentas por Pagar
-            if ($request->totalPago < $request->total) {
-                $accountReceivable = new AccountPayable();
-                $accountReceivable->companies_id = $request->companies_id;
-                $accountReceivable->purchases_id = $purchase->id;
-                $accountReceivable->payment = $request->totalPago;
-                $accountReceivable->debt = $request->total - $request->totalPago;
-                $accountReceivable->save();
-            }
-            $pettyCash = PettyCash::where('companies_id', $request->companies_id)->where('state', 1)->get();
-            if ($request->cajaChica == 1 && $request->coins_id == 1) {
-                $pettyCash[0]->update([
-                    $pettyCash[0]->amount_pen -= $request->totalPago,
-                ]);
             } else {
-                if ($request->cajaChica == 1 && $request->coins_id == 2) {
-                    $pettyCash[0]->update([
-                        $pettyCash[0]->amount_usd -= $request->totalPago,
-                    ]);
+                $purchase_details = new PurchaseDetail();
+                $purchase_details->companies_id         = $request->companies_id;
+                $purchase_details->purchases_id         = $purchase->id;
+                $purchase_details->products_id          = $value['productId'];
+                $purchase_details->amount               = $value['amount'];
+                $purchase_details->price                = $value['purchase_price'];
+                $purchase_details->transporte           = $value['transporte'];
+                $purchase_details->igv                  = $value['igv'];
+                $purchase_details->total                = $value['subTotal'];
+
+                $purchase_details->save();
+
+                // Actualizar el stock
+                $dtsProducto = Product::find($value['productId']);
+                $cant = $value['amount'] * $value['equivalence'];
+                if ($value['type'] == 'Producto') {
+                    if ($value['sale_price'] > 0) {
+                        $dtsProducto->update([
+                            $dtsProducto->stock += $cant,
+                            $dtsProducto->purchase_price = $value['precio_compra'],
+                            $dtsProducto->sale_price = $value['sale_price'],
+                        ]);
+                    } else {
+                        $dtsProducto->update([
+                            $dtsProducto->stock += $cant,
+                            $dtsProducto->purchase_price = $value['precio_compra'],
+                        ]);
+                    }
                 }
+            }
+        }
+        // Registra cuentas por Pagar
+        if ($request->totalPago < $request->total) {
+            $accountReceivable = new AccountPayable();
+            $accountReceivable->companies_id = $request->companies_id;
+            $accountReceivable->purchases_id = $purchase->id;
+            $accountReceivable->payment = $request->totalPago;
+            $accountReceivable->debt = $request->total - $request->totalPago;
+            $accountReceivable->save();
+        }
+        $pettyCash = PettyCash::where('companies_id', $request->companies_id)->where('state', 1)->get();
+        if ($request->cajaChica == 1 && $request->coins_id == 1) {
+            $pettyCash[0]->update([
+                $pettyCash[0]->amount_pen -= $request->totalPago,
+            ]);
+        } else {
+            if ($request->cajaChica == 1 && $request->coins_id == 2) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_usd -= $request->totalPago,
+                ]);
             }
         }
 

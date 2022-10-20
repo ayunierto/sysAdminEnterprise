@@ -379,7 +379,7 @@
                                                                             </v-autocomplete>
                                                                         </v-col>
                                                                         <v-col cols="12" sm="4" md="4"
-                                                                            v-if="editedItem.sale_price > 0 && editedItem.quantity > 0
+                                                                            v-if="editedItem.quantity > 0
                                                                             && parseFloat(editedItem.discount) >= 0 && editedItem.datosProducto != ''"
                                                                             v-show="true">
                                                                             <v-btn color="primary" class="white--text"
