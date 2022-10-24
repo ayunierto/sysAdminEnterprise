@@ -970,7 +970,7 @@ export default {
                 this.form.print = 1
             }
 
-            if (this.pagoVenta < 0 || this.pagoVenta == '' || this.pagoVenta > this.form.total) {
+            if (this.pagoVenta < 0 || this.pagoVenta > this.form.total) {
                 this.snackbar_text = 'Monto incorrecto';
                 this.snackbar_color = 'amber';
                 this.snackbar = true;

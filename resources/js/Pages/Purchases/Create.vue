@@ -235,7 +235,7 @@
                                                         Cerrar
                                                     </v-btn>
                                                     <v-btn
-                                                        v-if="editedItem.amount > 0 && editedItem.purchase_price > 0 && editedItem.datosProducto != ''"
+                                                        v-if="editedItem.amount > 0 && editedItem.purchase_price >= 0 && editedItem.datosProducto != ''"
                                                         v-show="true" color="primary" elevation="9" @click="save">
                                                         Añadir
                                                     </v-btn>
@@ -617,7 +617,7 @@ export default {
                 this.snackbar = true;
                 return;
             }
-            if (this.pagoCompra < 0 || this.pagoCompra == '' || this.pagoCompra > this.form.total) {
+            if (this.pagoCompra < 0 || this.pagoCompra > this.form.total) {
                 this.snackbar_text = 'Monto incorrecto';
                 this.snackbar_color = 'amber';
                 this.snackbar = true;
