@@ -98,7 +98,7 @@
                                     </v-col>
                                     <!-- Dialog Quotas -->
                                     <v-col cols="2" sm="1" md="1"
-                                        v-if="metodoPago.description == 'Credito' && tipoComprobate.name=='Factura'">
+                                        v-if="metodoPago.description == 'Credito' && tipoComprobate.name == 'Factura'">
                                         <v-container>
                                             <v-layout row justify-center>
                                                 <v-dialog v-model="dialogQuotasAdd" persistent max-width="420">
@@ -126,8 +126,8 @@
                                                                     </v-text-field>
                                                                 </v-col>
                                                                 <v-col cols="1" sm="1" md="1"
-                                                                    v-if="editedItemQuotas.montoQuota>0 
-                                                                    && editedItemQuotas.montoQuota!='' && editedItemQuotas.dateQuota!=''"
+                                                                    v-if="editedItemQuotas.montoQuota > 0
+                                                                    && editedItemQuotas.montoQuota != '' && editedItemQuotas.dateQuota != ''"
                                                                     v-show="true">
                                                                     <v-btn color="amber accent-3" small
                                                                         class=" white--text" fab @click="addQuota">
@@ -156,7 +156,7 @@
                                                                 class="mr-2">
                                                                 Cancelar</v-btn>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn v-if="this.quotas.length>0" v-show="true"
+                                                            <v-btn v-if="this.quotas.length > 0" v-show="true"
                                                                 color="primary" text @click="ConfirmarQuotas()">
                                                                 Confirmar</v-btn>
                                                         </v-card-actions>
@@ -221,7 +221,7 @@
                                                                                 persistent-hint return-object
                                                                                 @change="changeProduct" required
                                                                                 outlined dense
-                                                                                :hint=" editedItem.datosProducto!=''? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
+                                                                                :hint="editedItem.datosProducto != '' ? 'Stock: ' + editedItem.datosProducto.stock : 'Stock: 0'">
                                                                             </v-autocomplete>
                                                                             <!-- @keyup.enter="save" Colocar en boton cuando se va a usar lector de barras -->
                                                                         </v-col>
@@ -418,7 +418,8 @@
                                             <!-- class="elevation-2" :search="search" fixed-header :items-per-page="5"> -->
                                             <template v-slot:[`item.full_name`]="{ item }">{{ item.datosProducto.name }}
                                                 - {{ item.datosProducto.marks_name }} - {{
-                                                item.datosProducto.warehouses_name }}</template>
+                                                        item.datosProducto.warehouses_name
+                                                }}</template>
                                             <template v-slot:[`item.presentation`]="{ item }">{{ item.presentationName
                                             }}: {{ item.equivalence }} UND</template>
                                             <template v-slot:top>

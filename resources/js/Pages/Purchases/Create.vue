@@ -130,10 +130,10 @@
                                                                     placeholder="Seleccione Producto" persistent-hint
                                                                     return-object required outlined dense
                                                                     @change="changeProduct"
-                                                                    :hint=" editedItem.datosProducto!='' && editedItem.newMark==0? 'Stock: '+editedItem.datosProducto.stock: 'Stock: 0'">
+                                                                    :hint="editedItem.datosProducto != '' && editedItem.newMark == 0 ? 'Stock: ' + editedItem.datosProducto.stock : 'Stock: 0'">
                                                                 </v-autocomplete>
                                                             </v-col>
-                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark==0">
+                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark == 0">
                                                                 <v-autocomplete :items="marks"
                                                                     v-model="editedItem.marks" color="primary"
                                                                     item-text="name" item-value="id" label="Marca"
@@ -142,7 +142,7 @@
                                                                     return-object required outlined dense readonly>
                                                                 </v-autocomplete>
                                                             </v-col>
-                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark==1">
+                                                            <v-col cols="12" sm="6" md="6" v-if="editedItem.newMark == 1">
                                                                 <v-text-field label="Marca"
                                                                     v-model="editedItem.newMarca" required outlined
                                                                     dense>
@@ -180,21 +180,21 @@
 
                                                             <!-- MONEDA DÓLAR -->
                                                             <!--Calcular valor unitario con o Mas IGV incluido-->
-                                                            <v-col cols="12" sm="6" md="3" v-if="datosMoneda.code=='USD' && editedItem.igv=='IGV Incluido' 
-                                                            &&form.exchange_rate!='' && editedItem.purchase_price!='' && 
-                                                            form.exchange_rate>0 && editedItem.purchase_price>0 "
+                                                            <v-col cols="12" sm="6" md="3" v-if="datosMoneda.code == 'USD' && editedItem.igv == 'IGV Incluido'
+                                                            && form.exchange_rate != '' && editedItem.purchase_price != '' &&
+                                                            form.exchange_rate > 0 && editedItem.purchase_price > 0"
                                                                 v-show="true">
                                                                 <v-text-field label="Precio S/."
-                                                                    :value="(editedItem.purchase_price*form.exchange_rate)+(editedItem.transporte*form.exchange_rate/editedItem.amount)"
+                                                                    :value="(editedItem.purchase_price * form.exchange_rate) + (editedItem.transporte * form.exchange_rate / editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
-                                                            <v-col cols="12" sm="6" md="3" v-if="datosMoneda.code=='USD' && editedItem.igv=='Mas IGV' 
-                                                            &&form.exchange_rate!='' && editedItem.purchase_price!='' && 
-                                                            form.exchange_rate>0 && editedItem.purchase_price>0 "
+                                                            <v-col cols="12" sm="6" md="3" v-if="datosMoneda.code == 'USD' && editedItem.igv == 'Mas IGV'
+                                                            && form.exchange_rate != '' && editedItem.purchase_price != '' &&
+                                                            form.exchange_rate > 0 && editedItem.purchase_price > 0"
                                                                 v-show="true">
                                                                 <v-text-field label="Precio S/. +IGV"
-                                                                    :value="(editedItem.purchase_price*form.exchange_rate+((editedItem.purchase_price*form.exchange_rate)*0.18))+(editedItem.transporte*form.exchange_rate/editedItem.amount)"
+                                                                    :value="(editedItem.purchase_price * form.exchange_rate + ((editedItem.purchase_price * form.exchange_rate) * 0.18)) + (editedItem.transporte * form.exchange_rate / editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
@@ -202,18 +202,18 @@
                                                             <!-- MONEDA SOLES -->
                                                             <!-- Calcular precio en soles +igv -->
                                                             <v-col cols="12" sm="6" md="3"
-                                                                v-if="datosMoneda.code=='PEN' && editedItem.igv=='IGV Incluido' && editedItem.transporte>0
-                                                                && editedItem.purchase_price!='' && editedItem.purchase_price>0 " v-show="true">
+                                                                v-if="datosMoneda.code == 'PEN' && editedItem.igv == 'IGV Incluido' && editedItem.transporte > 0
+                                                                && editedItem.purchase_price != '' && editedItem.purchase_price > 0" v-show="true">
                                                                 <v-text-field label="Precio + Impuestos"
-                                                                    :value="parseFloat(editedItem.purchase_price)+(editedItem.transporte/editedItem.amount)"
+                                                                    :value="parseFloat(editedItem.purchase_price) + (editedItem.transporte / editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
                                                             <v-col cols="12" sm="6" md="3"
-                                                                v-if="datosMoneda.code=='PEN' && editedItem.igv=='Mas IGV' 
-                                                                && editedItem.purchase_price!='' && editedItem.purchase_price>0 " v-show="true">
+                                                                v-if="datosMoneda.code == 'PEN' && editedItem.igv == 'Mas IGV'
+                                                                && editedItem.purchase_price != '' && editedItem.purchase_price > 0" v-show="true">
                                                                 <v-text-field label="Precio + Impuestos"
-                                                                    :value="(parseFloat(editedItem.purchase_price)+(editedItem.purchase_price*0.18))+(editedItem.transporte/editedItem.amount)"
+                                                                    :value="(parseFloat(editedItem.purchase_price) + (editedItem.purchase_price * 0.18)) + (editedItem.transporte / editedItem.amount)"
                                                                     type="number" readonly outlined dense>
                                                                 </v-text-field>
                                                             </v-col>
