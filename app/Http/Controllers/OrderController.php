@@ -292,6 +292,13 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $orders = Order::find($id);
+        $order_details = OrderDetail::where('orders_id', $orders->id)->get();        
+        foreach ($order_details as $key => $p) {
+            $products=Product::find($p->products_id);
+            $products->update([
+                $products->stock += $p->quantity,
+            ]);
+        }
         $orders->delete();
         return Redirect::route('orders.index')->with('message', 'Venta eliminada');
     }

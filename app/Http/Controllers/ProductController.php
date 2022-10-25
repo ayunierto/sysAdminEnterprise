@@ -39,6 +39,31 @@ class ProductController extends Controller
             'providers' => Provider::where('companies_id', $company_id)->get(),
             'company' => Company::where('id', $company_id)->first(),
             'colors' => Customizer::where('companies_id', $company_id)->get(),
+            // 'products' => Product::where('companies_id', $company_id)->where('type', 'Producto')->get()->map(function ($p) {
+            //     return [
+            //         'id' => $p->id,
+            //         'categories_id' => $p->categories_id,
+            //         'marks_id' => $p->marks_id,
+            //         'marks_name' => Mark::find($p->marks_id)->name,
+            //         'marks' => Mark::where('id', $p->marks_id)->get(),
+            //         'measures_id' => $p->measures_id,
+            //         'providers_id' => $p->providers_id,
+            //         'warehouses_name' => Warehouse::find($p->warehouses_id)->name,
+            //         'name' => $p->name,
+            //         'type' => $p->type,
+            //         'code' => $p->code,
+            //         'bar_code' => $p->bar_code,
+            //         'stock' => $p->stock,
+            //         'purchase_price' => $p->purchase_price,
+            //         'sale_price' => $p->sale_price,
+            //         'price_by_unit' => $p->price_by_unit,
+            //         'wholesale_price' => $p->wholesale_price,
+            //         'special_price' => $p->special_price,
+            //         'description' => $p->description,
+            //         'state' => $p->state,
+            //         // 'presentation' => Presentation::where('products_id', $p->id)->first(),
+            //     ];
+            // }),
         ]);
     }
 
