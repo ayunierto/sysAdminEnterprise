@@ -507,9 +507,9 @@
                                                 <v-btn color="red" text @click="closeDialoPago">
                                                     Cancelar
                                                 </v-btn>
-                                                <v-btn color="green" text @click="send_form(1)">
+                                                <!-- <v-btn color="green" text @click="send_form(1)">
                                                     Pagar e imprimir
-                                                </v-btn>
+                                                </v-btn> -->
                                                 <v-btn color="primary" text @click="send_form">
                                                     Pagar
                                                 </v-btn>
@@ -966,11 +966,11 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem)
             })
         },
-        send_form(print = 0) {
-            if (print == 1) {
-                this.form.print = 1
-            }
-
+        // send_form(print = 0) {
+        //     if (print == 1) {
+        //         this.form.print = 1
+        //     }
+        send_form() {
             if (this.pagoVenta < 0 || this.pagoVenta > this.form.total) {
                 this.snackbar_text = 'Monto incorrecto';
                 this.snackbar_color = 'amber';
