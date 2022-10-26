@@ -69,6 +69,7 @@ class PurchaseController extends Controller
                             'purchases_id' => $d->purchases_id,
                             'products_id' => $d->products_id,
                             'product_name' => Product::find($d->products_id)->name,
+                            'mark_name'=>Mark::find(Product::find($d->products_id)->marks_id)->name,
                             'amount' => $d->amount,
                             'price' => $d->price,
                             'transporte' => $d->transporte,

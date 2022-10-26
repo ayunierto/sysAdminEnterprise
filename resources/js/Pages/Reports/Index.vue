@@ -576,6 +576,7 @@ export default {
             // PRODUCTOS
             productsItems: [
                 { text: 'NOMBRE', value: 'name' },
+                { text: 'MARCA', value: 'marks_name' },
                 { text: 'STOCK', value: 'stock' },
                 { text: 'PRECIO COMPRA', value: 'purchase_price' },
                 { text: 'PRECIO VENTA', value: 'sale_price' },

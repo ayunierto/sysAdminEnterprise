@@ -242,10 +242,10 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import route from '../../../../vendor/tightenco/ziggy/src/js'
 import Alerts from '../../Components/Alerts'
-import VueBarcode from 'vue-barcode'
-import VueQrcode from '@chenfengyuan/vue-qrcode';
-import domtoimage from "dom-to-image-more";
-import { saveAs } from 'file-saver';
+// import VueBarcode from 'vue-barcode'
+// import VueQrcode from '@chenfengyuan/vue-qrcode';
+// import domtoimage from "dom-to-image-more";
+// import { saveAs } from 'file-saver';
 
 export default {
     props: [
@@ -261,10 +261,10 @@ export default {
     components: {
         AdminLayout,
         Alerts,
-        'barcode': VueBarcode,
-        'qrcode': VueQrcode,
-        domtoimage,
-        saveAs,
+        // 'barcode': VueBarcode,
+        // 'qrcode': VueQrcode,
+        // domtoimage,
+        // saveAs,
     },
     data() {
         return {
@@ -286,6 +286,7 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'NOMBRE', value: 'name' },
+                { text: 'MARCA', value: 'marks_name' },
                 { text: 'STOCK', value: 'stock' },
                 { text: 'PRECIO COMPRA', value: 'purchase_price' },
                 { text: 'PRECIO VENTA', value: 'sale_price' },
@@ -381,12 +382,12 @@ export default {
     },
 
     methods: {
-        guardarImagen() {
-            var extension = this.editedItem.name
-            domtoimage.toBlob(document.getElementById("my-node")).then(function (blob) {
-                window.saveAs(blob, extension + '.png');
-            });
-        },
+        // guardarImagen() {
+        //     var extension = this.editedItem.name
+        //     domtoimage.toBlob(document.getElementById("my-node")).then(function (blob) {
+        //         window.saveAs(blob, extension + '.png');
+        //     });
+        // },
         initialize() {
             this.desserts = this.products
         },

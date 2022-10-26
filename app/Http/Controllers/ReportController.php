@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Customer;
 use App\Models\Customizer;
 use App\Models\Document;
+use App\Models\Mark;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentMethod;
@@ -185,6 +186,7 @@ class ReportController extends Controller
                     'warehouses_id' => $p->warehouses_id,
                     'categories_id' => $p->categories_id,
                     'marks_id' => $p->marks_id,
+                    'marks_name' => Mark::find($p->marks_id)->name,
                     'measures_id' => $p->measures_id,
                     'providers_id' => $p->providers_id,
                     'type' => $p->type,
