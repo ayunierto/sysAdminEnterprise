@@ -25,13 +25,13 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('code')->nullable();
             $table->string('bar_code')->nullable();
-            $table->bigInteger('stock')->nullable();
+            $table->decimal('special_price', 11, 2)->nullable();
             $table->decimal('purchase_price', 11,2)->nullable();
             $table->decimal('sale_price', 11, 2)->nullable();
             $table->decimal('price_by_unit', 11, 2)->nullable();
             $table->decimal('wholesale_price', 11, 2)->nullable();
             $table->decimal('special_price', 11, 2)->nullable();
-            $table->integer('stock_min')->nullable();
+            $table->decimal('special_price', 11, 2)->nullable();
             $table->string('description')->nullable();
             $table->boolean('state')->default(1);
             $table->date('expiration_date')->nullable();

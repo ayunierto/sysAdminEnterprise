@@ -232,12 +232,12 @@ class OrderController extends Controller
         }
         // Agregar monto segun caja seleccionada
         $cashRegister = CashRegister::where('companies_id', $request->companies_id)->where('id', $request->cash_registers_id)->get();
-        if ($request->coins_id == 1) {            
+        if ($request->coins_id == 1) {
             $cashRegister[0]->update([
                 $cashRegister[0]->amount_pen += $request->totalPago,
             ]);
         } else {
-            if ($request->coins_id == 2) {              
+            if ($request->coins_id == 2) {
                 $cashRegister[0]->update([
                     $cashRegister[0]->amount_usd += $request->totalPago,
                 ]);
@@ -315,6 +315,29 @@ class OrderController extends Controller
             $products->update([
                 $products->stock += $p->quantity,
             ]);
+        }
+        $caja = CashRegister::find($orders->cash_registers_id);
+        if ($orders->state == 0) {
+            $cuentaPendiente = AccountReceivable::where('orders_id', $orders->id)->get();
+            if ($orders->coins_id == 1) {
+                $caja->update([
+                    $caja->amount_pen -= $cuentaPendiente[0]->payment,
+                ]);
+            } else {
+                $caja->update([
+                    $caja->amount_usd -= $cuentaPendiente[0]->payment,
+                ]);
+            }
+        } else {
+            if ($orders->coins_id == 1) {
+                $caja->update([
+                    $caja->amount_pen -= $orders->total,
+                ]);
+            } else {
+                $caja->update([
+                    $caja->amount_usd -= $orders->total,
+                ]);
+            }
         }
         $orders->delete();
         return Redirect::route('orders.index')->with('message', 'Venta eliminada');
