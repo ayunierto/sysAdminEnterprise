@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountPayableController;
 use App\Http\Controllers\AccountReceivableController;
 use App\Http\Controllers\BarcodeGeneratorController;
+use App\Http\Controllers\CashRegisterController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CompanyController;
@@ -81,6 +82,7 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/lowStocks', LowStockController::class)->except('show');
     Route::resource('dashboard/printingMachines', PrintingMachineController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/pettyCashes', PettyCashController::class)->except('create', 'edit', 'show');
+    Route::resource('dashboard/cashRegisters', CashRegisterController::class)->except('create', 'edit', 'show');
     Route::get('dashboard/reports/{dateInicio?}/{dateFin?}', [ReportController::class, 'index'])->name('reports.index');
 });
 

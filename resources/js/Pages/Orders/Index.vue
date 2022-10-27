@@ -53,7 +53,7 @@
                 <v-icon small class="mr-2" @click="viewItem(item)">
                     mdi-eye
                 </v-icon>
-                <v-icon small @click="deleteItem(item)">
+                <v-icon :disabled="deleteB" small @click="deleteItem(item)">
                     mdi-delete
                 </v-icon>
             </template>
@@ -160,6 +160,7 @@ export default {
     },
     data() {
         return {
+            deleteB:true,
 
             dialog_view: false,
             menu: false,
@@ -223,6 +224,12 @@ export default {
                 details: '',
             },
 
+        }
+    },
+    // Metodos al cargar formulario
+    mounted() {
+        if (this.$page.props.user.role != 'seller') {
+            this.deleteB = false
         }
     },
     watch: {

@@ -30,7 +30,7 @@
             </template>
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>LISTA CAJAS</v-toolbar-title>
+                    <v-toolbar-title>Lista de Cajas</v-toolbar-title>
 
                     <v-divider class="mx-4" inset vertical></v-divider>
 
@@ -134,18 +134,13 @@
 
                         <v-card-text>
                             <br>
-                            <strong> A Tener en cuenta al momento de abrir una Caja General</strong>
+                            <strong> A TENER EN CUENTA AL ABRIR CAJAS</strong>
 
                             <v-timeline align-top dense>
-                                <v-timeline-item>Al aperturar una Caja General todos sus gastos y ventas se almacenaran
-                                    aquí</v-timeline-item>
-                                <v-timeline-item>Si el monto es menor al total de una compra, no podra realizar la
-                                    operación</v-timeline-item>
-                                <v-timeline-item>Debe tener habilitada máximo una Caja General, para
-                                    evitar errores en el sistema
-                                </v-timeline-item>
-                                <v-timeline-item>Puede editar el monto de Caja General en cualquier momento
-                                </v-timeline-item>
+                                <v-timeline-item>Puede aperturar un número ilimitado de cajas</v-timeline-item>
+                                <v-timeline-item>Las cajas aperturadas en este módulo, permiten elegir donde se va a almacenar el total de una venta</v-timeline-item>
+                                <v-timeline-item>Puede inciar un caja con un monto de dólares o soles</v-timeline-item>
+                                <v-timeline-item>Los montos de las cajas pueden ser modificados en cualquier momento</v-timeline-item>
                             </v-timeline>
                         </v-card-text>
 
@@ -170,7 +165,7 @@ import route from '../../../../vendor/tightenco/ziggy/src/js'
 
 export default {
     props: [
-        'pettyCashes',
+        'cashRegisters',
         'companies',
     ],
     components: {
@@ -207,7 +202,7 @@ export default {
 
             editedItem: {
                 companies_id: this.$page.props.user.companies_id,
-                pettyCashes_id: '',
+                cashRegisters_id: '',
                 amount_pen:0,
                 amount_usd:0,
                 description: '',
@@ -216,7 +211,7 @@ export default {
 
             defaultItem: {
                 companies_id: this.$page.props.user.companies_id,
-                pettyCashes_id: '',
+                cashRegisters_id: '',
                 amount_pen:0,
                 amount_usd:0,
                 description: '',
@@ -269,7 +264,7 @@ export default {
     methods: {
 
         initialize() {
-            this.desserts = this.pettyCashes
+            this.desserts = this.cashRegisters
         },
         getColor(state) {
             if (state == 1) return 'green'
@@ -293,7 +288,7 @@ export default {
 
             // ***************************************
             // enviando formulario para eliminar
-            this.$inertia.delete(this.route('pettyCashes.destroy', this.editedItem))
+            this.$inertia.delete(this.route('cashRegisters.destroy', this.editedItem))
             // ***************************************
         },
 
@@ -324,7 +319,7 @@ export default {
                 // Update
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.patch(route('pettyCashes.update', this.editedItem), this.editedItem)
+                this.$inertia.patch(route('cashRegisters.update', this.editedItem), this.editedItem)
                 // ***************************************
 
             } else {
@@ -332,7 +327,7 @@ export default {
                 // Store
                 // ***************************************
                 // enviado formulario de almacenar 
-                this.$inertia.post(route('pettyCashes.store'), this.editedItem)
+                this.$inertia.post(route('cashRegisters.store'), this.editedItem)
 
                 // this.desserts.push(this.editedItem)
 

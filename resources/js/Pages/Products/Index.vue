@@ -226,11 +226,10 @@
             </template>
 
             <template v-slot:[`item.actions`]="{ item }">
-                <v-icon small class="mr-2" @click="editItem(item)">
+                <v-icon :disabled="editB" small class="mr-2" @click="editItem(item)">
                     mdi-pencil
                 </v-icon>
-
-                <v-icon small @click="deleteItem(item)">
+                <v-icon :disabled="deleteB" small @click="deleteItem(item)">
                     mdi-delete
                 </v-icon>
             </template>
@@ -268,6 +267,9 @@ export default {
     },
     data() {
         return {
+            editB: true,
+            deleteB: true,
+
             // Validaciones
             requiredField: [
                 v => !!v || '*Campo Ogligatorio',
@@ -341,6 +343,13 @@ export default {
                 expiration_date: '',
             },
 
+        }
+    },
+    // Metodos al cargar formulario
+    mounted() {
+        if (this.$page.props.user.role != 'seller') {
+            this.editB = false
+            this.deleteB = false
         }
     },
 

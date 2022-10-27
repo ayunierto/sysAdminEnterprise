@@ -14,10 +14,10 @@
                     <v-date-picker locale="es-ES" v-model="date" @change="changeDate"
                         @input="calendarioConsulta = false"></v-date-picker>
                 </v-menu> -->
-                <v-autocomplete class="mt-8 ma-2" color="primary" :items="warehouses" item-text="name" item-value="id"
+                <!-- <v-autocomplete v-model="consultaAlmacen" class="mt-8 ma-2" color="primary" :items="warehouses" item-text="name" item-value="id"
                     label="Almacén" auto-select-first hide-no-data hide-selected placeholder="Seleccione Almacén"
                     persistent-hint required outlined dense>
-                </v-autocomplete>
+                </v-autocomplete> -->
                 <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateInicio" label="Fecha Inicio">
                 </v-text-field>
                 <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateFin" label="Fecha Fin">
@@ -612,7 +612,7 @@ export default {
             this.dialog_viewCompras = true
         },
         ConsultaFechas() {
-            this.$inertia.get('/dashboard/reports/' + this.dateInicio + '/' + this.dateFin)
+            this.$inertia.get('/dashboard/reports/'+ this.dateInicio + '/' + this.dateFin)
         },
     },
 }

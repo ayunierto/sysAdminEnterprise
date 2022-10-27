@@ -360,6 +360,34 @@
                             </v-card>
 
                         </v-list-group>
+                        <v-list-group :style="item_style()" v-if="$page.props.user.role != 'seller'">
+                            <v-icon slot="prependIcon" :style="item_style()">mdi-cash-register</v-icon>
+                            <template v-slot:activator>
+                                <v-list-item-content :style="item_style()">
+                                    <v-list-item-title>CAJAS</v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+
+                            <v-card :color="colorSubMenu">
+                                <v-list-item-group :style="item_style()">
+
+                                    <inertia-link :href="route('cashRegisters.index')">
+                                        <v-list-item link :style="item_style()">
+                                            <v-list-item-icon>
+                                                <v-spacer></v-spacer>
+                                                <v-icon :style="item_style()" small>mdi-format-list-bulleted</v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title>
+                                                <h5>
+                                                    LISTA CAJAS
+                                                </h5>
+                                            </v-list-item-title>
+                                        </v-list-item>
+                                    </inertia-link>
+                                </v-list-item-group>
+                            </v-card>
+
+                        </v-list-group>
 
                         <inertia-link :href="route('customers.index')" v-if="$page.props.user.role != 'seller'">
                             <v-list-item link :style="item_style()">
