@@ -16,6 +16,7 @@ use App\Models\ProofPayment;
 use App\Models\Provider;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -208,6 +209,7 @@ class ReportController extends Controller
             }),
             'colors' => Customizer::where('companies_id', $company)->get(),
             'company' => Company::find(Auth::user()->companies_id),
+            'warehouses' => Warehouse::where('companies_id', $company)->get(),
         ]);
     }
 

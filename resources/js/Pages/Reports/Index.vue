@@ -14,12 +14,16 @@
                     <v-date-picker locale="es-ES" v-model="date" @change="changeDate"
                         @input="calendarioConsulta = false"></v-date-picker>
                 </v-menu> -->
+                <v-autocomplete class="mt-8 ma-2" color="primary" :items="warehouses" item-text="name" item-value="id"
+                    label="Almacén" auto-select-first hide-no-data hide-selected placeholder="Seleccione Almacén"
+                    persistent-hint required outlined dense>
+                </v-autocomplete>
                 <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateInicio" label="Fecha Inicio">
                 </v-text-field>
                 <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateFin" label="Fecha Fin">
                 </v-text-field>
-                <v-btn @click="ConsultaFechas" small color="primary" dark>
-                    consultar
+                <v-btn @click="ConsultaFechas" color="primary" dark>
+                    Buscar
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-spacer></v-spacer>
@@ -50,7 +54,7 @@
                                                 N° VENTAS
                                             </div>
                                             <v-list-item-title>
-                                                {{totOrders}}
+                                                {{ totOrders }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -67,7 +71,7 @@
                                                 TOTAL VENTAS
                                             </div>
                                             <v-list-item-title>
-                                                S/. {{totalVentas}}
+                                                S/. {{ totalVentas }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -84,7 +88,7 @@
                                                 GANANCIAS
                                             </div>
                                             <v-list-item-title>
-                                                S/. {{totalPrecioCompra}}
+                                                S/. {{ totalPrecioCompra }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -226,7 +230,7 @@
                                                 N° COMPRAS
                                             </div>
                                             <v-list-item-title>
-                                                {{totPurchases}}
+                                                {{ totPurchases }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -243,7 +247,7 @@
                                                 TOTAL EN COMPRAS
                                             </div>
                                             <v-list-item-title>
-                                                S/. {{totalCompras}}
+                                                S/. {{ totalCompras }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -389,7 +393,7 @@
                                                 CANTIDAD PRODUCTOS
                                             </div>
                                             <v-list-item-title>
-                                                {{totProducts}}
+                                                {{ totProducts }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -406,7 +410,7 @@
                                                 TOTAL INVERSIÓN
                                             </div>
                                             <v-list-item-title>
-                                                S/. {{inversionTotal}}
+                                                S/. {{ inversionTotal }}
                                             </v-list-item-title>
                                         </v-list-item-content>
 
@@ -453,6 +457,7 @@ export default {
         'products',
         'totProducts',
         'inversionTotal',
+        'warehouses',
     ],
     components: {
         AdminLayout,
