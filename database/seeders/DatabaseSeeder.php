@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             RoleSedder::class,
             UserSeeder::class,
-            CategorySeeder::class,
+            // CategorySeeder::class,
             // MarkSeeder::class,
             MeasureSeeder::class,
             // ProviderSeeder::class,

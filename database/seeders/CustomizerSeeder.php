@@ -21,7 +21,7 @@ class CustomizerSeeder extends Seeder
             'color_header' => '#195497',
             'color_footer' => '#195497',
             'color_text' => '#FFFCF9',
-            'logo' => '/img/logo_user.png',
+            'logo' => 'img/empresa/logo_empresa.png',
         ]);
         // Customizer::factory(16)->create();
     }

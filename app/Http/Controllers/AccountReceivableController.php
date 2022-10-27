@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AccountReceivable;
 use App\Http\Requests\StoreAccountReceivableRequest;
 use App\Http\Requests\UpdateAccountReceivableRequest;
+use App\Models\CashRegister;
 use App\Models\Coin;
 use App\Models\Company;
 use App\Models\Customer;
@@ -138,15 +139,34 @@ class AccountReceivableController extends Controller
         $orders->update([
             'state' => $nvestado,
         ]);
+        // Caja General
         $pettyCash = PettyCash::where('companies_id', $company)->where('state', 1)->get();
-        if ($orders->coins_id == 1) {
-            $pettyCash[0]->update([
-                $pettyCash[0]->amount_pen += $request->totalPago,
+        if ($pettyCash == '[]') {
+            echo 'error';
+        } else {
+            if ($orders->coins_id == 1) {
+                $pettyCash[0]->update([
+                    $pettyCash[0]->amount_pen += $request->totalPago,
+                ]);
+            } else {
+                if ($orders->coins_id == 2) {
+                    $pettyCash[0]->update([
+                        $pettyCash[0]->amount_usd += $request->totalPago,
+                    ]);
+                }
+            }
+        }
+
+        // Agregar pagos segun caja seleccionada
+        $cashRegister = CashRegister::where('companies_id', $company)->where('id', $orders->cash_registers_id)->get();
+        if ($orders->coins_id == 1) {            
+            $cashRegister[0]->update([
+                $cashRegister[0]->amount_pen += $request->totalPago,
             ]);
         } else {
-            if ($orders->coins_id == 2) {
-                $pettyCash[0]->update([
-                    $pettyCash[0]->amount_usd += $request->totalPago,
+            if ($orders->coins_id == 2) {              
+                $cashRegister[0]->update([
+                    $cashRegister[0]->amount_usd += $request->totalPago,
                 ]);
             }
         }

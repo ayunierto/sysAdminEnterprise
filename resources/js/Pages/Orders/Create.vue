@@ -90,10 +90,16 @@
                                     <v-col cols="12">
                                         <h3>DETALLE DE VENTA</h3>
                                     </v-col>
-                                    <v-col cols="9" sm="3" md="3">
-                                        <v-select :items="paymentMethods" label="Contado/crédito"
-                                            item-text="description" item-value="description" v-model="metodoPago"
+                                    <v-col cols="12" sm="3" md="3">
+                                        <v-select :items="cashRegisters" label="Caja"
+                                            item-text="description" item-value="id" v-model="cajaRegistro"
                                             return-object outlined dense>
+                                        </v-select>
+                                    </v-col>
+                                    <v-col cols="9" sm="2" md="2">
+                                        <v-select :items="paymentMethods" label="Método Pago"
+                                            item-text="description" item-value="description" v-model="metodoPago"
+                                            return-object outlined dense readonly>
                                         </v-select>
                                     </v-col>
                                     <!-- Dialog Quotas -->
@@ -166,7 +172,7 @@
                                         </v-container>
                                     </v-col>
                                     <!-- Fin Dialog Quotas -->
-                                    <v-col cols="12" sm="3" md="3">
+                                    <v-col cols="12" sm="2" md="2">
                                         <v-select v-if="parseFloat(form.total) > 0" readonly :items="coins"
                                             label="Moneda" item-text="code" item-value="code" v-model="form.coins"
                                             @change="changeMoneda" return-object outlined dense>
@@ -186,6 +192,11 @@
                                         <v-text-field label="Total" type="number" v-model="form.total" outlined
                                             :prefix="simboloMoneda" readonly dense>
                                         </v-text-field>
+                                    </v-col>                                    
+                                    <v-col cols="12" sm="5">
+                                        <v-textarea filled label="Comentario" type="text" rows="1" outlined
+                                            v-model="form.description">
+                                        </v-textarea>
                                     </v-col>
                                     <!-- Dialog add Productos a carrito -->
                                     <v-col cols="12" sm="1" md="1">
@@ -406,11 +417,6 @@
                                         </template>
                                     </v-col>
                                     <!-- Fin Dialog add Productos a carrito -->
-                                    <v-col cols="12" sm="5">
-                                        <v-textarea filled label="Comentario" type="text" rows="1" outlined
-                                            v-model="form.description">
-                                        </v-textarea>
-                                    </v-col>
                                     <!-- Tabla Carrito -->
                                     <v-col cols="12">
                                         <v-data-table :headers="headers" :items="desserts" sort-by="name"
@@ -549,6 +555,7 @@ export default {
         'products',
         'exchange_rate',
         'cajaChica',
+        'cashRegisters',
     ],
     components: {
         AdminLayout,
@@ -566,6 +573,7 @@ export default {
             datosCliente: this.customers[0],
             tipoDoc: this.documents[0],
             metodoPago: this.paymentMethods[0],
+            cajaRegistro:this.cashRegisters[0],
             snackbar: false,
             snackbar_text: '',
             snackbar_color: '',
@@ -582,13 +590,14 @@ export default {
                 coins_id: this.coins[0].id,
                 coins: this.coins[0],
                 exchange_rate: this.exchange_rate,
+                cash_registers_id: '',
                 description: '',
                 products: '',
                 quotasVenta: '',
                 nroQuotas: 0,
                 total: 0,
                 totalPago: 0,
-                print: 0,
+                // print: 0,
                 cajaChica: 0,
             },
             editedIndexQuotas: -1,
@@ -842,6 +851,7 @@ export default {
             this.datosCliente = this.customers[0]
             this.tipoDoc = this.documents[0]
             this.metodoPago = this.paymentMethods[0]
+            this.cajaRegistro = this.cashRegisters[0]
             this.form.total = 0
             this.form.coins = this.coins[0]
             this.simboloMoneda = 'S/'
@@ -984,8 +994,9 @@ export default {
             // Datos Formulario
             this.form.proof_payments_id = this.tipoComprobate.id
             this.form.documents_id = this.tipoDoc.id
-            this.form.customers_id = this.datosCliente.id
+            this.form.customers_id = this.datosCliente.id 
             this.form.payment_methods_id = this.metodoPago.id
+            this.form.cash_registers_id = this.cajaRegistro.id
             this.form.totalPago = this.pagoVenta
             this.form.products = this.desserts
 

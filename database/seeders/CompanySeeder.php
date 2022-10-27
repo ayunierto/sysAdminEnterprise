@@ -27,7 +27,7 @@ class CompanySeeder extends Seeder
             'state' => 1,
         ]);
 
-        Company::factory(5)->create();
+        // Company::factory(5)->create();
 
     }
 }

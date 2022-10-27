@@ -12,6 +12,7 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\AccountReceivable;
 use App\Models\AffectationIgv;
+use App\Models\CashRegister;
 use App\Models\Coin;
 use App\Models\Mark;
 use App\Models\OrderDetail;
@@ -69,7 +70,7 @@ class OrderController extends Controller
                             'orders_id' => $d->orders_id,
                             'products_id' => $d->products_id,
                             'product_name' => Product::find($d->products_id)->name,
-                            'mark_name'=>Mark::find(Product::find($d->products_id)->marks_id)->name,
+                            'mark_name' => Mark::find(Product::find($d->products_id)->marks_id)->name,
                             'quantity' => $d->quantity,
                             'price' => $d->price,
                             'discount' => $d->discount,
@@ -115,6 +116,7 @@ class OrderController extends Controller
             'coins' => Coin::all(),
             'presentations' => Presentation::where('companies_id', $company)->get(),
             'affectationIgvs' => AffectationIgv::all(),
+            'cashRegisters' => CashRegister::where('companies_id', $company)->where('state', 1)->get(),
             'exchange_rate' => $exchange_rate,
             'cajaChica' => $dstCajaChica,
             'nroComprobantes' => sprintf("%08d", Order::where('companies_id', $company)->where('proof_payments_id', 1)->count() + 1),
@@ -164,6 +166,7 @@ class OrderController extends Controller
         $order->proof_payments_id = $request->proof_payments_id;
         $order->coins_id = $request->coins_id;
         $order->documents_id = $request->documents_id;
+        $order->cash_registers_id = $request->cash_registers_id;
         $order->voucher_number = $request->voucher_number;
         $order->exchange_rate = $request->exchange_rate;
         $order->total = $request->total;
@@ -216,17 +219,30 @@ class OrderController extends Controller
             }
         }
         $pettyCash = PettyCash::where('companies_id', $request->companies_id)->where('state', 1)->get();
-            if ($request->cajaChica == 1 && $request->coins_id == 1) {
+        if ($request->cajaChica == 1 && $request->coins_id == 1) {
+            $pettyCash[0]->update([
+                $pettyCash[0]->amount_pen += $request->totalPago,
+            ]);
+        } else {
+            if ($request->cajaChica == 1 && $request->coins_id == 2) {
                 $pettyCash[0]->update([
-                    $pettyCash[0]->amount_pen += $request->totalPago,
+                    $pettyCash[0]->amount_usd += $request->totalPago,
                 ]);
-            } else {
-                if ($request->cajaChica == 1 && $request->coins_id == 2) {
-                    $pettyCash[0]->update([
-                        $pettyCash[0]->amount_usd += $request->totalPago,
-                    ]);
-                }
             }
+        }
+        // Agregar monto segun caja seleccionada
+        $cashRegister = CashRegister::where('companies_id', $request->companies_id)->where('id', $request->cash_registers_id)->get();
+        if ($request->coins_id == 1) {            
+            $cashRegister[0]->update([
+                $cashRegister[0]->amount_pen += $request->totalPago,
+            ]);
+        } else {
+            if ($request->coins_id == 2) {              
+                $cashRegister[0]->update([
+                    $cashRegister[0]->amount_usd += $request->totalPago,
+                ]);
+            }
+        }
         // imprimir Comprobante
         // $nombreImpresora = "EPSON L3210 Series";
         // $profile = CapabilityProfile::load("simple");
@@ -243,10 +259,10 @@ class OrderController extends Controller
         // $impresora->feed(5);
         // $impresora->close();
 
-        if ($request->print == 1) {
-            $print = new PrintController($order->id);
-            // PrintController::class;
-        }
+        // if ($request->print == 1) {
+        //     $print = new PrintController($order->id);
+        //     // PrintController::class;
+        // }
 
         return Redirect::route('orders.index')->with('message', 'Venta agregada');
     }
@@ -293,9 +309,9 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $orders = Order::find($id);
-        $order_details = OrderDetail::where('orders_id', $orders->id)->get();        
+        $order_details = OrderDetail::where('orders_id', $orders->id)->get();
         foreach ($order_details as $key => $p) {
-            $products=Product::find($p->products_id);
+            $products = Product::find($p->products_id);
             $products->update([
                 $products->stock += $p->quantity,
             ]);

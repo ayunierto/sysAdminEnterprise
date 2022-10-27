@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Customizer;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
+use App\Models\CashRegister;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Mark;
@@ -61,7 +62,13 @@ class CompanyController extends Controller
         $warehouse->name = "Almacén General";
         $warehouse->contact_number  = 000000000;
         $warehouse->save();
-
+        // agregar un cliente general
+        $cashRegister = new CashRegister();
+        $cashRegister->companies_id = $company->id;
+        $cashRegister->description = "Caja General";
+        $cashRegister->amount_pen = 0;
+        $cashRegister->amount_usd = 0;
+        $cashRegister->save();
         //agregar un Presentación general
         $presenation = new Presentation();
         $presenation->companies_id = $company->id;

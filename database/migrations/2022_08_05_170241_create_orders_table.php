@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('proof_payments_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('coins_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('documents_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('cash_registers_id')->default(1);
             $table->string('voucher_number');
             $table->decimal('exchange_rate', 5, 3)->nullable();
             $table->decimal('total', 8, 2);
