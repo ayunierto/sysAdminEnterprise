@@ -83,7 +83,8 @@ Route::middleware(['auth:sanctum', 'verified', 'CheckAdmin'])->group(function ()
     Route::resource('dashboard/printingMachines', PrintingMachineController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/pettyCashes', PettyCashController::class)->except('create', 'edit', 'show');
     Route::resource('dashboard/cashRegisters', CashRegisterController::class)->except('create', 'edit', 'show');
-    Route::get('dashboard/reports/{dateInicio?}/{dateFin?}', [ReportController::class, 'index'])->name('reports.index');
+    // Route::get('dashboard/reports/{datInicio?}/{datFin?}', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('dashboard/reports/{nroCaja?}/{datInicio?}/{datFin?}', [ReportController::class, 'index'])->name('reports.index');
 });
 
 // Rutas de vendedores

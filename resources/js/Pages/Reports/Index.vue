@@ -14,13 +14,13 @@
                     <v-date-picker locale="es-ES" v-model="date" @change="changeDate"
                         @input="calendarioConsulta = false"></v-date-picker>
                 </v-menu> -->
-                <!-- <v-autocomplete v-model="consultaAlmacen" class="mt-8 ma-2" color="primary" :items="warehouses" item-text="name" item-value="id"
-                    label="Almacén" auto-select-first hide-no-data hide-selected placeholder="Seleccione Almacén"
-                    persistent-hint required outlined dense>
-                </v-autocomplete> -->
-                <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateInicio" label="Fecha Inicio">
+                <v-autocomplete v-model="nroCaja" class="mt-8 ma-2" color="primary" :items="cashRegisters"
+                    item-text="description" item-value="id" label="Seleccionar Caja" auto-select-first hide-no-data
+                    hide-selected placeholder="Seleccione Caja" persistent-hint required outlined dense>
+                </v-autocomplete>
+                <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="datInicio" label="Fecha Inicio">
                 </v-text-field>
-                <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="dateFin" label="Fecha Fin">
+                <v-text-field type="date" class="mt-8 ma-2" outlined dense v-model="datFin" label="Fecha Fin">
                 </v-text-field>
                 <v-btn @click="ConsultaFechas" color="primary" dark>
                     Buscar
@@ -180,6 +180,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-left"> PRODUCTO </th>
+                                                            <th class="text-left"> MARCA </th>
                                                             <th class="text-left"> CANTIDAD </th>
                                                             <th class="text-left"> PRECIO COMPRA </th>
                                                             <th class="text-left"> PRECIO VENTA </th>
@@ -192,6 +193,7 @@
                                                         <tr v-for="item in editedItemVentas.details"
                                                             :key="item.products_id">
                                                             <td>{{ item.product_name }}</td>
+                                                            <td>{{ item.mark_name }}</td>
                                                             <td>{{ item.quantity }}</td>
                                                             <td>{{ item.product_purchase_price }}</td>
                                                             <td>{{ item.price }}</td>
@@ -344,6 +346,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-left"> PRODUCTO </th>
+                                                            <th class="text-left"> MARCA </th>
                                                             <th class="text-left"> CANTIDAD </th>
                                                             <th class="text-left"> PRECIO </th>
                                                             <th class="text-left"> TRANSPORTE </th>
@@ -356,6 +359,7 @@
                                                         <tr v-for="item in editedItemCompras.details"
                                                             :key="item.products_id">
                                                             <td>{{ item.product_name }}</td>
+                                                            <td>{{ item.mark_name }}</td>
                                                             <td>{{ item.amount }}</td>
                                                             <td>{{ item.price }}</td>
                                                             <td>{{ item.transporte }}</td>
@@ -440,7 +444,7 @@
                 <!-- Datos productos -->
             </v-tabs>
         </v-card>
-        <!-- <pre>{{ valores }}</pre> -->
+        <!-- <pre>{{ consultaCaja }}</pre> -->
     </admin-layout>
 </template>
 <script>
@@ -457,7 +461,10 @@ export default {
         'products',
         'totProducts',
         'inversionTotal',
-        'warehouses',
+        'cashRegisters',
+        'consultaCaja',
+        'dateInicio',
+        'dateFin',
     ],
     components: {
         AdminLayout,
@@ -470,8 +477,9 @@ export default {
             calendarioConsulta: false,
             dialog_viewVentas: false,
             dialog_viewCompras: false,
-            dateInicio: '',
-            dateFin: '',
+            datInicio: this.dateInicio,
+            datFin: this.dateFin,
+            nroCaja: this.consultaCaja,
             // VENTAS
             ventasDia: [
                 { text: 'FECHA', value: 'date' },
@@ -612,7 +620,8 @@ export default {
             this.dialog_viewCompras = true
         },
         ConsultaFechas() {
-            this.$inertia.get('/dashboard/reports/'+ this.dateInicio + '/' + this.dateFin)
+            // this.$inertia.get('/dashboard/reports/'+ this.datInicio + '/' + this.datFin)
+            this.$inertia.get('/dashboard/reports/' + this.nroCaja + '/' + this.datInicio + '/' + this.datFin)
         },
     },
 }
