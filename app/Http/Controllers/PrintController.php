@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Customizer;
+use App\Models\Mark;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Presentation;
@@ -29,6 +30,7 @@ class PrintController extends Controller
                 'quantity' => $o->quantity,
                 'product' => Product::find($o->products_id)->name,
                 // 'presentation' => Presentation::find($o->presentations_id)->name,
+                'mark_name' => Mark::find(Product::find($o->products_id)->marks_id)->name,
                 'price' => $o->price,
                 'igv' => $o->igv,
                 'subTotal' => $o->subTotal

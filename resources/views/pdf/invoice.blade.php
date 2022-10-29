@@ -85,7 +85,7 @@ $medidaTicket = 180;
 
 <body>
     <div class="contenedor">
-        <img width="90" src="{{public_path($customizer->logo)}}" alt="Logo Empresa">
+        {{-- <img width="90" src="{{public_path($customizer->logo)}}" alt="Logo Empresa"> --}}
         <h1>{{ $company->name }}</h1>
         <h2>R.U.C. {{ $company->ruc }}</h2>
         <h6>Dirección: {{ $company->address }}</h6>
@@ -118,7 +118,7 @@ $medidaTicket = 180;
             @foreach ($order_details as $item)
                 <tr class="centrado">
                     <td class="cantidad">{{ $item['quantity'] }}</td>
-                    <td class="producto">{{ $item['product'] }}</td>
+                    <td class="producto">{{ $item['product'] }} - {{ $item['mark_name'] }} </td>
                     <td class="precio"> {{ $item['price'] }}</td>
                     <td class="subTot"> {{ $item['quantity'] * $item['price'] }}</td>
                 </tr>

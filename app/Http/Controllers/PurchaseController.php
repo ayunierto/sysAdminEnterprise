@@ -330,7 +330,15 @@ class PurchaseController extends Controller
      */
     public function destroy($id)
     {
-        $purchase = Purchase::find($id)->delete();
+        $purchases = Purchase::find($id);
+        $purchase_details = PurchaseDetail::where('purchases_id', $purchases->id)->get();
+        foreach ($purchase_details as $key => $p) {
+            $products = Product::find($p->products_id);
+            $products->update([
+                $products->stock -= $p->amount,
+            ]);
+        }
+        $purchases->delete();
         return Redirect::route('purchases.index')->with('message', 'Compra eliminada');
     }
 }
